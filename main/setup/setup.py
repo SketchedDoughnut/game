@@ -131,7 +131,9 @@ class Install:
             try:
                 # downloading
                 #downloader.download(self.install_path, 'game_name', True)
-                downloader.download(self.install_path)
+                downloader.download(self.install_path, 'main/top-level', True)
+
+                # writing run path to text file (not used, not up to date)
                 url_path = f'{self.install_path}/essentials/run_game/content_url.txt'
                 print(url_path)
                 f = open(url_path, 'w')
