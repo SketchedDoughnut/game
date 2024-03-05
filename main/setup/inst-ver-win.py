@@ -75,7 +75,7 @@ class Install:
                 print('no install')
 
         else:
-            print('Cleaning up directories before install')
+            print('Pre: Cleaning up directories before install')
 
             ## removing temp tree
             #try:
@@ -89,7 +89,7 @@ class Install:
             except:
                 print('no install')
 
-            print('Done cleaning; continuing...')
+            print('Pre: Done cleaning; continuing...')
             time.sleep(1)
             print('---------------')
 
@@ -131,7 +131,7 @@ class Install:
             try:
                 # downloading
                 #downloader.download(self.install_path, 'game_name', True)
-                downloader.download(self.install_path, 'main/top-level', True)
+                downloader.download(self.install_path)
 
                 # writing run path to text file (not used, not up to date)
                 url_path = f'{self.install_path}/essentials/run_game/content_url.txt'
@@ -161,12 +161,22 @@ class Install:
     #    except:
     #        pass
         print('---------------')
-        print('Cleaning up')
+        print('Post: Cleaning up')
+        #shutil.rmtree('../')
         #print('---------------')
         #shutil.rmtree('./temp/')
         print('Note: If directory is not present, or is empty, check your inputs and run again.')
         print('--------------')
-        print('Done')
+        print('Post: Done')
+
+
+    def quit_install(self):
+        # print(f'Downloading complete. Run executable at {install.install_path}/essentials/run_game/run_game.exe')
+        print('---------------')
+        print('Install complete. Exit in:')
+        for i in range(3, 0, -1):
+            print(f'{i}')
+            time.sleep(1)
 
 
     def run(self):
@@ -176,6 +186,7 @@ class Install:
         self.create()
         self.download()
         self.post_clean()
+        self.quit_install()
 
 ########################################################################
 ########################################################################
@@ -314,13 +325,3 @@ class Install:
 
 install = Install()
 install.run()
-# print('Install done, waiting 3 seconds then running fractal. If nothing happens, click enter.')
-# for i in range(3,0, -1):
-#     print(f'{i}...')
-#     time.sleep(1)
-
-#print(f'Downloading complete. Run executable at {install.install_path}/essentials/run_game/run_game.exe')
-print('Download complete.')
-for i in range(10, 0, -1):
-    print(f'exiting in {i}s')
-    time.sleep(1)
