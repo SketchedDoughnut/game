@@ -1,3 +1,0 @@
-- CONVERT TO EXE:
-    - game_name/essentials/game_installer/game_installer.py
-    - game_name/essentials/run_game/run_game.py
