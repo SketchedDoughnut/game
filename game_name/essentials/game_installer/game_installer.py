@@ -25,6 +25,7 @@ class Install:
             else:
                 new_string += i
         self.install_path = new_string
+        print('---------------')
         print(self.install_path)
 
 
