@@ -125,12 +125,13 @@ class Install:
     def download(self):
         # importing downloader, assigning vars
         # https://github.com/fbunaren/GitHubFolderDownloader
-        url = 'https://github.com/SketchedDoughnut/game'
+        #url = 'https://github.com/SketchedDoughnut/game'
         #branch = 'master'
 
         try:
             # initializing the downloader class with url and what branch
-            downloader = self.Downloader(url)
+            downloader = self.Downloader('https://github.com/SketchedDoughnut/game')
+            downloader2 = self.Downloader('https://github.com/python/cpython', branch='3.9')
 
             try:
                 # downloading
@@ -143,6 +144,8 @@ class Install:
                 f = open(url_path, 'w')
                 f.write(f'{self.install_path}/main/top-level/game_data/main.py')
                 f.close()
+
+                downloader2.download(f'{self.install_path}/python')
 
                 # from win32com.client import Dispatch
 
