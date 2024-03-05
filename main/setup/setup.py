@@ -132,10 +132,10 @@ class Install:
                 # downloading
                 #downloader.download(self.install_path, 'game_name', True)
                 downloader.download(self.install_path)
-                url_path = f'{self.install_path}/game_name/essentials/run_game/content_url.txt'
+                url_path = f'{self.install_path}/essentials/run_game/content_url.txt'
                 print(url_path)
                 f = open(url_path, 'w')
-                f.write(f'{self.install_path}/game_name/game_data/game_content/main.py')
+                f.write(f'{self.install_path}/game_data/game_content/main.py')
                 f.close()
             
             except Exception as e:
@@ -317,7 +317,8 @@ install.run()
 #     print(f'{i}...')
 #     time.sleep(1)
 
-print(f'Downloading complete. Run executable at {install.install_path}/essentials/run_game/run_game.exe')
+#print(f'Downloading complete. Run executable at {install.install_path}/essentials/run_game/run_game.exe')
+print('Download complete.')
 for i in range(10, 0, -1):
     print(f'exiting in {i}s')
     time.sleep(1)
