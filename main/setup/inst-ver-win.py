@@ -105,7 +105,7 @@ class Install:
     #    self.url = input('Input repository URL: ')
     #    self.branch = input('Input respository branch: ')
     #    print('---------------')
-        desktop_shortcut = (input('Do you want to add a desktop shortcut? (y/n) \n--> ').lower()) == 'y'
+        self.desktop_shortcut = (input('Do you want to add a desktop shortcut? (y/n) \n--> ').lower()) == 'y'
 
 
     # create temp dir and establish code file
@@ -143,6 +143,16 @@ class Install:
                 f = open(url_path, 'w')
                 f.write(f'{self.install_path}/main/top-level/game_data/main.py')
                 f.close()
+
+                # from win32com.client import Dispatch
+
+                # path = r"C:\Users\user\Desktop\game_name.lnk"  #This is where the shortcut will be created
+                # target = rf"{self.install_path}/main/setup/inst-ver-win.py" # directory to which the shortcut is created
+
+                # shell = Dispatch('WScript.Shell')
+                # shortcut = shell.CreateShortCut(path)
+                # shortcut.Targetpath = target
+                # shortcut.save()
             
             except Exception as e:
                 print(f'!!! Error while downloading: {e}')
