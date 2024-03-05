@@ -299,7 +299,7 @@ install.run()
 #     print(f'{i}...')
 #     time.sleep(1)
 
-print('Downloading complete. Run executable at ./game_name/essentials/run_game/run.exe')
+print(f'Downloading complete. Run executable at {install.install_path}essentials/run_game/run_game.exe')
 for i in range(10, 0, -1):
     print(f'exiting in {i}s')
     time.sleep(1)
