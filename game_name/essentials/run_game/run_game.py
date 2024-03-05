@@ -6,4 +6,4 @@ run_path = f.read()
 f.close()
 
 print(f'Running game: {run_path}')
-os.system(run_path)
+os.system(f'python {run_path}')
