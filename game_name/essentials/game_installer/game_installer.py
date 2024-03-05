@@ -16,7 +16,7 @@ class Install:
     # init
     def __init__(self):
         #self.install_path = './game_name/'
-        self.install_path = (input('Input wanted file directory for install below: \n--> ') + 'game_name')
+        self.install_path = (input('Input wanted file directory for install below: \n--> ') + 'game_name/')
 
 
     # making sure they are sure of their choice
@@ -288,7 +288,7 @@ install.run()
 #     print(f'{i}...')
 #     time.sleep(1)
 
-print('Downloading complete. Run executable at ./game_name/game_data/run/run.exe')
+print('Downloading complete. Run executable at ./game_name/essentials/run_game/run.exe')
 for i in range(10, 0, -1):
     print(f'exiting in {i}s')
     time.sleep(1)
