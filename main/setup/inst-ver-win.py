@@ -132,12 +132,12 @@ class Install:
             # initializing the downloader class with url and what branch
             downloader = self.Downloader('https://github.com/SketchedDoughnut/game')
             
-            try:
-                # creating second download object
-                downloader2 = self.Downloader()
-                downloader2.load_repository(url='https://github.com/python/cpython', branch='3.9')
-            except Exception as e:
-                print(f'!!! Second initial failed: {e}')
+            # try:
+            #     # creating second download object
+            #     downloader2 = self.Downloader()
+            #     downloader2.load_repository('https://github.com/python/cpython/tree/3.9')
+            # except Exception as e:
+            #     print(f'!!! Second initial failed: {e}')
 
             try:
                 # downloading
@@ -154,12 +154,12 @@ class Install:
                 except Exception as e:
                     print(f'!!! Error with text file: {e}')
 
-                # running second installer to install python
-                try:
-                    downloader2.download(f'{self.install_path}/python')
-                    print('! Python 3.9 installed')
-                except Exception as e:
-                    print(f'!!! Python install failed: {e}')
+                # # running second installer to install python
+                # try:
+                #     downloader2.download(f'{self.install_path}/python')
+                #     print('! Python 3.9 installed')
+                # except Exception as e:
+                #     print(f'!!! Python install failed: {e}')
 
                 # from win32com.client import Dispatch
 
