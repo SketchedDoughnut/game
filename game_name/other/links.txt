@@ -1,9 +1,0 @@
-https://stackoverflow.com/questions/9960583/how-do-you-make-an-installer-for-your-python-program
-
-https://installforge.net/
-
-https://github.com/BirdLogics/sb3topy
-
-https://pyinstaller.org/en/stable/
-
-https://github.com/abi/screenshot-to-code
