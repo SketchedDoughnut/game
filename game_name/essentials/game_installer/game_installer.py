@@ -133,7 +133,7 @@ class Install:
                 #downloader.download(self.install_path, 'game_name', True)
                 downloader.download(self.install_path)
                 #print(f'{self.install_path}game_data/content_url.txt')
-                f = open(f'{self.install_path}/game_name/game_data/content_url.txt', 'w')
+                f = open(f'{self.install_path}/game_name/essentials/run_game/content_url.txt', 'w')
                 f.write(self.install_path + '/game_data/game_content/main.py')
                 f.close()
             
