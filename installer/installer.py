@@ -15,27 +15,22 @@ import urllib.request
 class Install:
     # init
     def __init__(self):
-        # files paths
-        #self.temp_path = './temp'
-        self.install_path = './install/'
-        self.url = 'https://github.com/SketchedDoughnut/game'
-        self.branch = 'game_files'
-        self.run()
+        self.install_path = './game_name/'
 
 
     # making sure they are sure of their choice
     def safety_check(self):
         print("""
               You are running the installer again; this will overwrite pre-existing files.
-              To confirm, type "i confirm" below.
+              To confirm, type "confirm" below.
               """)
         
         # checking if input confirms proceeding, cancelling if not
-        if input('--> ') == "i confirm":
-            try:
-                os.system('clear')
-            except:
-                pass
+        if input('--> ') == "confirm":
+            #try:
+            #    os.system('clear')
+            #except:
+            #    pass
             pass
         else:
             print('Cancelling...')
@@ -75,14 +70,14 @@ class Install:
             print('---------------')
 
     
-    # getting info
-    def setup(self):
-        # getting inputs
-        ## https://github.com/BirdLogics/sb3topy
-        ## master
-        self.url = input('Input repository URL: ')
-        self.branch = input('Input respository branch: ')
-        print('---------------')
+    ## getting info
+    #def setup(self):
+    #    # getting inputs
+    #    ## https://github.com/BirdLogics/sb3topy
+    #    ## master
+    #    self.url = input('Input repository URL: ')
+    #    self.branch = input('Input respository branch: ')
+    #    print('---------------')
 
 
     # create temp dir and establish code file
@@ -100,29 +95,31 @@ class Install:
 
    # function for running code written into the file (above)
     def download(self):
-        # importing downloader 
+        # importing downloader, assigning vars
         # https://github.com/fbunaren/GitHubFolderDownloader
+        url = 'https://github.com/SketchedDoughnut/game'
+        #branch = 'master'
 
         try:
             # initializing the downloader class with url and what branch
-            downloader = self.Downloader(self.url, self.branch)
+            downloader = self.Downloader(url)
 
             try:
                 # downloading
-                downloader.download(self.install_path)
+                downloader.download(self.install_path, 'game_data', True)
             
             except Exception as e:
                 print(f'Error while downloading: {e}')
-                print('Cleaning up then exiting...')
-                self.pre_clean('error')
-                exit()
+                #print('Cleaning up then exiting...')
+                #self.pre_clean('error')
+                #exit()
 
         except Exception as e:
             print(f'Error while creating object: {e}')
-            print('Consider re-entering branch name / github url')
-            print('Cleaning up then exiting...')
-            self.pre_clean('error')
-            exit()         
+            #print('Consider re-entering branch name / github url')
+            #print('Cleaning up then exiting...')
+            #self.pre_clean('error')
+            #exit()         
 
 
     # deletes temp tree
@@ -147,7 +144,6 @@ class Install:
         self.create()
         self.download()
         self.post_clean()
-        #print('Run done')
 
 ########################################################################
 ########################################################################
@@ -285,8 +281,13 @@ class Install:
 ########################################################################
 
 install = Install()
-print('Install done, waiting 5 seconds then running fractal. If nothing happens, click enter.')
-for i in range(5,0, -1):
-    print(f'in {i}...')
+install.run()
+# print('Install done, waiting 3 seconds then running fractal. If nothing happens, click enter.')
+# for i in range(3,0, -1):
+#     print(f'{i}...')
+#     time.sleep(1)
+
+print('Downloading complete. Run executable at ./game_name/game_data/run/run.exe')
+for i in range(10, 0, -1):
+    print(f'exiting in {i}s')
     time.sleep(1)
-os.system(f'python ./main.py')
