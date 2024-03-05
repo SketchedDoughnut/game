@@ -178,6 +178,9 @@ class Install:
             print(f'{i}')
             time.sleep(1)
 
+            # ensure an exit happens
+            exit()
+
 
     def run(self):
         self.safety_check()
