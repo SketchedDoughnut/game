@@ -1,2 +1,1 @@
-# installer
-installer
+temporary development location of game
