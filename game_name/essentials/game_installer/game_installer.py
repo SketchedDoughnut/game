@@ -17,7 +17,8 @@ class Install:
     def __init__(self):
         #self.install_path = './game_name/'
         new_string = ''
-        self.install_path = (input('Input wanted file directory for install below: \n--> ') + '/game_name/')
+        #self.install_path = (input('Input wanted file directory for install below: \n--> ') + '/game_name/')
+        self.install_path = (input('Input wanted file directory for install below: \n--> '))
         list = [str(i) for i in self.install_path]
         for i in list:
             if i == '\\':
@@ -25,6 +26,17 @@ class Install:
             else:
                 new_string += i
         self.install_path = new_string
+        self.install_path = [str(i) for i in self.install_path]
+        if self.install_path[len(self.install_path) - 1] == '/':
+            #self.install_path += '/'
+            self.install_path.pop(len(self.install_path) - 1)
+        else:
+            pass
+        new_string = ''
+        for i in self.install_path:
+            new_string += i
+        self.install_path = new_string
+        self.install_path += '/game_name'
         print('---------------')
         print(self.install_path)
 
@@ -32,7 +44,7 @@ class Install:
     # making sure they are sure of their choice
     def safety_check(self):
         print("""
-              You are running the installer again; this will overwrite pre-existing files created by the installer.
+              You are running the installer; this will overwrite pre-existing files created by the installer previously.
               To confirm, type "confirm" below. Otherwise, type anything else.
               """)
         
@@ -121,8 +133,8 @@ class Install:
                 #downloader.download(self.install_path, 'game_name', True)
                 downloader.download(self.install_path)
                 #print(f'{self.install_path}game_data/content_url.txt')
-                f = open(f'{self.install_path}game_data/content_url.txt', 'w')
-                f.write(self.install_path + 'game_data/game_content/main.py')
+                f = open(f'{self.install_path}/game_name/game_data/content_url.txt', 'w')
+                f.write(self.install_path + '/game_data/game_content/main.py')
                 f.close()
             
             except Exception as e:
@@ -304,7 +316,7 @@ install.run()
 #     print(f'{i}...')
 #     time.sleep(1)
 
-print(f'Downloading complete. Run executable at {install.install_path}essentials/run_game/run_game.exe')
+print(f'Downloading complete. Run executable at {install.install_path}/essentials/run_game/run_game.exe')
 for i in range(10, 0, -1):
     print(f'exiting in {i}s')
     time.sleep(1)
