@@ -135,7 +135,7 @@ class Install:
                 url_path = f'{self.install_path}/game_name/essentials/run_game/content_url.txt'
                 print(url_path)
                 f = open(url_path, 'w')
-                f.write(f'{self.install_path}/game_data/game_content/main.py')
+                f.write(f'{self.install_path}/game_data/game_data/game_content/main.py')
                 f.close()
             
             except Exception as e:
