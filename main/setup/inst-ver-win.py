@@ -72,6 +72,7 @@ class Install:
             # removing install tree
             try:
                 shutil.rmtree(self.install_path)
+                print('! install cleaned')
             except:
                 print('! no install')
 
@@ -87,6 +88,7 @@ class Install:
             # removing install tree
             try:
                 shutil.rmtree(self.install_path)
+                print('! install cleaned')
             except:
                 print('! no install')
 
@@ -168,7 +170,6 @@ class Install:
         #print('---------------')
         #shutil.rmtree('./temp/')
         print('Note: If directory is not present, or is empty, check your inputs and run again.')
-        print('--------------')
         print('Post: Done')
 
 
@@ -180,8 +181,8 @@ class Install:
             print(f'{i}')
             time.sleep(1)
 
-            # ensure an exit happens
-            exit()
+        # ensure an exit happens
+        exit()
 
 
     def run(self):
