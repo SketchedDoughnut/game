@@ -16,7 +16,16 @@ class Install:
     # init
     def __init__(self):
         #self.install_path = './game_name/'
-        self.install_path = (input('Input wanted file directory for install below: \n--> ') + 'game_name/')
+        new_string = ''
+        self.install_path = (input('Input wanted file directory for install below: \n--> ') + '/game_name/')
+        list = [str(i) for i in self.install_path]
+        for i in list:
+            if i == '\\':
+                new_string += '/'
+            else:
+                new_string += i
+        self.install_path = new_string
+        print(self.install_path)
 
 
     # making sure they are sure of their choice
@@ -68,6 +77,7 @@ class Install:
                 print('no install')
 
             print('Done cleaning; continuing...')
+            time.sleep(1)
             print('---------------')
 
     
@@ -107,7 +117,8 @@ class Install:
 
             try:
                 # downloading
-                downloader.download(self.install_path, 'game_data', True)
+                #downloader.download(self.install_path, 'game_name', True)
+                downloader.download(self.install_path)
             
             except Exception as e:
                 print(f'Error while downloading: {e}')
