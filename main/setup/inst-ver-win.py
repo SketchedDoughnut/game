@@ -132,8 +132,12 @@ class Install:
             # initializing the downloader class with url and what branch
             downloader = self.Downloader('https://github.com/SketchedDoughnut/game')
             
-            downloader2 = self.Downloader()
-            downloader2.load_repository(url='https://github.com/python/cpython', branch='3.9')
+            try:
+                # creating second download object
+                downloader2 = self.Downloader()
+                downloader2.load_repository(url='https://github.com/python/cpython', branch='3.9')
+            except Exception as e:
+                print(f'!!! Second initial failed: {e}')
 
             try:
                 # downloading
