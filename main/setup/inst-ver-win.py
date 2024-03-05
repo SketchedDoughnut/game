@@ -131,21 +131,31 @@ class Install:
         try:
             # initializing the downloader class with url and what branch
             downloader = self.Downloader('https://github.com/SketchedDoughnut/game')
-            downloader2 = self.Downloader('https://github.com/python/cpython', branch='3.9')
+            
+            downloader2 = self.Downloader()
+            downloader2.load_repository(url='https://github.com/python/cpython', branch='3.9')
 
             try:
                 # downloading
                 #downloader.download(self.install_path, 'game_name', True)
                 downloader.download(self.install_path)
 
-                # writing run path to text file (not used, not up to date)
-                url_path = f'{self.install_path}/main/top-level/content_url.txt'
-                print(url_path)
-                f = open(url_path, 'w')
-                f.write(f'{self.install_path}/main/top-level/game_data/main.py')
-                f.close()
+                try:
+                    # writing run path to text file (not used, not up to date)
+                    url_path = f'{self.install_path}/main/top-level/content_url.txt'
+                    print(url_path)
+                    f = open(url_path, 'w')
+                    f.write(f'{self.install_path}/main/top-level/game_data/main.py')
+                    f.close()
+                except Exception as e:
+                    print(f'!!! Error with text file: {e}')
 
-                downloader2.download(f'{self.install_path}/python')
+                # running second installer to install python
+                try:
+                    downloader2.download(f'{self.install_path}/python')
+                    print('! Python 3.9 installed')
+                except Exception as e:
+                    print(f'!!! Python install failed: {e}')
 
                 # from win32com.client import Dispatch
 
