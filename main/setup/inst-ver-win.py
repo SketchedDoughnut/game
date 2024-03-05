@@ -57,6 +57,7 @@ class Install:
             pass
         else:
             print('Cancelling...')
+            time.sleep(2)
             exit()
 
 
@@ -72,7 +73,7 @@ class Install:
             try:
                 shutil.rmtree(self.install_path)
             except:
-                print('no install')
+                print('! no install')
 
         else:
             print('Pre: Cleaning up directories before install')
@@ -87,7 +88,7 @@ class Install:
             try:
                 shutil.rmtree(self.install_path)
             except:
-                print('no install')
+                print('! no install')
 
             print('Pre: Done cleaning; continuing...')
             time.sleep(1)
@@ -95,13 +96,14 @@ class Install:
 
     
     ## getting info
-    #def setup(self):
-    #    # getting inputs
+    def setup(self):
+        # getting inputs
     #    ## https://github.com/BirdLogics/sb3topy
     #    ## master
     #    self.url = input('Input repository URL: ')
     #    self.branch = input('Input respository branch: ')
     #    print('---------------')
+        desktop_shortcut = (input('Do you want to add a desktop shortcut? (y/n) \n--> ').lower()) == 'y'
 
 
     # create temp dir and establish code file
@@ -134,20 +136,20 @@ class Install:
                 downloader.download(self.install_path)
 
                 # writing run path to text file (not used, not up to date)
-                url_path = f'{self.install_path}/essentials/run_game/content_url.txt'
+                url_path = f'{self.install_path}/main/top-level/content_url.txt'
                 print(url_path)
                 f = open(url_path, 'w')
-                f.write(f'{self.install_path}/game_data/game_content/main.py')
+                f.write(f'{self.install_path}/main/top-level/game_data/main.py')
                 f.close()
             
             except Exception as e:
-                print(f'Error while downloading: {e}')
+                print(f'!!! Error while downloading: {e}')
                 #print('Cleaning up then exiting...')
                 #self.pre_clean('error')
                 #exit()
 
         except Exception as e:
-            print(f'Error while creating object: {e}')
+            print(f'!!! Error while creating object: {e}')
             #print('Consider re-entering branch name / github url')
             #print('Cleaning up then exiting...')
             #self.pre_clean('error')
@@ -185,7 +187,7 @@ class Install:
     def run(self):
         self.safety_check()
         self.pre_clean()
-        #self.setup()
+        self.setup()
         self.create()
         self.download()
         self.post_clean()
