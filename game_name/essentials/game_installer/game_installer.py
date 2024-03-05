@@ -120,6 +120,10 @@ class Install:
                 # downloading
                 #downloader.download(self.install_path, 'game_name', True)
                 downloader.download(self.install_path)
+                #print(f'{self.install_path}game_data/content_url.txt')
+                f = open(f'{self.install_path}game_data/content_url.txt', 'w')
+                f.write(self.install_path + 'game_data/game_content/main.py')
+                f.close()
             
             except Exception as e:
                 print(f'Error while downloading: {e}')
