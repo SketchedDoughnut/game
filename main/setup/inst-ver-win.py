@@ -54,6 +54,7 @@ class Install:
             #    os.system('clear')
             #except:
             #    pass
+            print('---------------')
             pass
         else:
             print('Cancelling...')
@@ -106,6 +107,22 @@ class Install:
     #    self.branch = input('Input respository branch: ')
     #    print('---------------')
         self.desktop_shortcut = (input('Do you want to add a desktop shortcut? (y/n) \n--> ').lower()) == 'y'
+        
+        # make sure they have python installed
+        print('---------------')
+        print("""
+              Before we proceed, you need to have an installation of python installed.
+              If you already have one, type "y" to proceed. If you don't, do the following instructions:
+              - go to Microsoft Store
+              - search "Python 3.9"
+              - Install
+              - You're done!
+              Once done doing these instructions, type 'y' (anything else to cancel).
+              """)
+        if input('--> ').lower() != 'y':
+            exit()
+        else:
+            print('---------------')
 
 
     # create temp dir and establish code file
@@ -135,7 +152,7 @@ class Install:
             # try:
             #     # creating second download object
             #     downloader2 = self.Downloader()
-            #     downloader2.load_repository('https://github.com/python/cpython/tree/3.9')
+            #     downloader2.load_repository('https://github.com/python/cpython/')
             # except Exception as e:
             #     print(f'!!! Second initial failed: {e}')
 
