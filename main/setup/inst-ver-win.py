@@ -14,31 +14,42 @@ import urllib.request
 
 class Install:
     # init
-    def __init__(self):
-        #self.install_path = './game_name/'
-        new_string = ''
-        #self.install_path = (input('Input wanted file directory for install below: \n--> ') + '/game_name/')
-        self.install_path = (input('Input wanted file directory for install below: \n--> '))
-        list = [str(i) for i in self.install_path]
-        for i in list:
-            if i == '\\':
-                new_string += '/'
+    def __init__(self, mode=0):
+        if mode == 0:
+            #self.install_path = './game_name/'
+            new_string = ''
+            #self.install_path = (input('Input wanted file directory for install below: \n--> ') + '/game_name/')
+            print('Input wanted file directory for install below. If no input, will install where installer is.')
+            self.install_path = input('--> ')
+            if self.install_path != "":
+                list = [str(i) for i in self.install_path]
+                for i in list:
+                    if i == '\\':
+                        new_string += '/'
+                    else:
+                        new_string += i
+                self.install_path = new_string
+                self.install_path = [str(i) for i in self.install_path]
+                if self.install_path[len(self.install_path) - 1] == '/':
+                    #self.install_path += '/'
+                    self.install_path.pop(len(self.install_path) - 1)
+                else:
+                    pass
+                new_string = ''
+                for i in self.install_path:
+                    new_string += i
+                self.install_path = new_string
+                self.install_path += '/game_name'
+                print('---------------')
+                print(self.install_path)
             else:
-                new_string += i
-        self.install_path = new_string
-        self.install_path = [str(i) for i in self.install_path]
-        if self.install_path[len(self.install_path) - 1] == '/':
-            #self.install_path += '/'
-            self.install_path.pop(len(self.install_path) - 1)
-        else:
-            pass
-        new_string = ''
-        for i in self.install_path:
-            new_string += i
-        self.install_path = new_string
-        self.install_path += '/game_name'
-        print('---------------')
-        print(self.install_path)
+                print('---------------')
+                self.install_path += '/game_name'
+                print(self.install_path)
+        
+        elif mode == 1:
+            #self.install_path = self.install_path
+            return self.install_path
 
 
     # making sure they are sure of their choice
@@ -166,11 +177,11 @@ class Install:
 
         try:
             # initializing the downloader class with url and what branch
-            downloader = self.Downloader('https://github.com/SketchedDoughnut/game')
+            downloader = Downloader('https://github.com/SketchedDoughnut/game')
             
             # try:
             #     # creating second download object
-            #     downloader2 = self.Downloader()
+            #     downloader2 = Downloader()
             #     downloader2.load_repository('https://github.com/python/cpython/')
             # except Exception as e:
             #     print(f'!!! Second initial failed: {e}')
@@ -192,15 +203,18 @@ class Install:
                     print(f'!!! Error with text file: {e}')
 
                 try:
-                    #print('---------------')
-                    print('Creating shortcut')
-                    import winshell
-                    desktop = winshell.desktop()
-                    path = os.path.join(desktop, "game_name.lnk")
-                    target = f"{self.install_path}/main/top-level/start.py" # CHANGE TO EXE
-                    wDir = f"{self.install_path}/main/top-level"
-                    icon = f"{self.install_path}/main/top-level/start.py"
-                    self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)
+                    if self.desktop_shortcut == True:
+                        #print('---------------')
+                        print('Creating shortcut')
+                        import winshell
+                        desktop = winshell.desktop()
+                        path = os.path.join(desktop, "game_name.lnk")
+                        target = f"{self.install_path}/main/top-level/start.py" # CHANGE TO EXE
+                        wDir = f"{self.install_path}/main/top-level"
+                        icon = f"{self.install_path}/main/top-level/start.py"
+                        self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)
+                    else:
+                        pass
 
                 except Exception as e:
                     print(f'Error creating shortcut: {e}')
@@ -257,6 +271,11 @@ class Install:
         exit()
 
 
+
+    #def return_path(self):
+    #    self.install_path
+    
+
     def run(self):
         self.safety_check()
         self.pre_clean()
@@ -273,127 +292,123 @@ class Install:
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-    '''
-    GitHub Folder Downloader
-    Created by Fransiscus Emmanuel Bunaren
-    https://bunaren.com
-    '''
+'''
+GitHub Folder Downloader
+Created by Fransiscus Emmanuel Bunaren
+https://bunaren.com
+'''
 
-    class Downloader:
+class Downloader:
 
-        def __init__(self, repository_url='', branch=''):
-            if not repository_url:
-                self.repo_url = ''
-                self.files = []
-                self.location = dict()
+    def __init__(self, repository_url='', branch=''):
+        if not repository_url:
+            self.repo_url = ''
+            self.files = []
+            self.location = dict()
+        else:
+            self.load_repository(repository_url, branch)
+
+    @classmethod
+    def __get_branch_from_url(self, url, branch=''):
+        if '/tree/' in url and not branch:
+            branch = url.split('/tree/')[1]
+            branch = branch.split('/')[0]
+        else:
+            branch = 'master'
+        return branch
+
+    @classmethod
+    def __get_raw_url(self, file_path, url, branch=''):
+        tmp_url = url.replace(
+            'https://api.github.com/repos/',
+            'https://raw.githubusercontent.com/')
+        tmp_url = tmp_url.split('/git/blobs/')[0]
+        tmp_url = tmp_url + '/' + branch + '/' + file_path
+        return tmp_url
+
+    def load_repository(self, url, branch=''):
+
+        # Check if URL contains branch name
+
+        branch = self.__get_branch_from_url(url, branch)
+
+        # Convert URL to match GitHub API URI
+
+        tmp_url = url.replace('https://github.com/',
+                            'https://api.github.com/repos/')
+        tmp_url += '/git/trees/{}?recursive=1'.format(branch)
+
+        # Make GET Request
+
+        api = requests.get(tmp_url).text
+        files = json.loads(api)
+
+        # Turn the API Data into List
+
+        output = []
+        location = dict()
+        for (k, i) in enumerate(files['tree']):
+            if i['type'] == 'blob':
+                tmp = [i['path']]
+
+                # Get RAW URL
+
+                tmp += [self.__get_raw_url(tmp[0], i['url'], branch)]
+                output.append(tmp)
             else:
-                self.load_repository(repository_url, branch)
+                location[i['path']] = k
+        self.files = output
+        self.location = location
 
-        @classmethod
-        def __get_branch_from_url(self, url, branch=''):
-            if '/tree/' in url and not branch:
-                branch = url.split('/tree/')[1]
-                branch = branch.split('/')[0]
-            else:
-                branch = 'master'
-            return branch
+        # Set Repo URL for memoization
 
-        @classmethod
-        def __get_raw_url(self, file_path, url, branch=''):
-            tmp_url = url.replace(
-                'https://api.github.com/repos/',
-                'https://raw.githubusercontent.com/')
-            tmp_url = tmp_url.split('/git/blobs/')[0]
-            tmp_url = tmp_url + '/' + branch + '/' + file_path
-            return tmp_url
+        self.repo_url = url
 
-        def load_repository(self, url, branch=''):
+    def __mkdirs(self, path):
 
-            # Check if URL contains branch name
+        # Make directory if not exist
 
-            branch = self.__get_branch_from_url(url, branch)
+        if not os.path.isdir(path):
+            os.makedirs(path)
 
-            # Convert URL to match GitHub API URI
+    def download(
+        self,
+        destination,
+        target_folder='*',
+        recursive=True,
+    ):
 
-            tmp_url = url.replace('https://github.com/',
-                                'https://api.github.com/repos/')
-            tmp_url += '/git/trees/{}?recursive=1'.format(branch)
+        # Make directory if not exist
 
-            # Make GET Request
+        self.__mkdirs(destination)
 
-            api = requests.get(tmp_url).text
-            files = json.loads(api)
+        # Find Folder Position
 
-            # Turn the API Data into List
+        if target_folder == '*':
+            start = 0
+        else:
 
-            output = []
-            location = dict()
-            for (k, i) in enumerate(files['tree']):
-                if i['type'] == 'blob':
-                    tmp = [i['path']]
+            # Remove Relative Path Symbol from string
 
-                    # Get RAW URL
+            tmp_target = target_folder.replace('./', '')
+            tmp_target = tmp_target.replace('../', '')
 
-                    tmp += [self.__get_raw_url(tmp[0], i['url'], branch)]
-                    output.append(tmp)
-                else:
-                    location[i['path']] = k
-            self.files = output
-            self.location = location
+            # Remove "/"
 
-            # Set Repo URL for memoization
+            tmp_target = (tmp_target if tmp_target[-1] != '/'
+                        else tmp_target[:-1])
+            start = self.location[target_folder]
 
-            self.repo_url = url
+        # Start Downloading
 
-        def __mkdirs(self, path):
+        for i in self.files[start:]:
+            if recursive or i[0].split(target_folder)[1].count('/') \
+                    <= 1:
+                self.__mkdirs(destination + '/' + os.path.dirname(i[0]))
+                urllib.request.urlretrieve(i[1], destination + '/' + i[0])
 
-            # Make directory if not exist
-
-            if not os.path.isdir(path):
-                os.makedirs(path)
-
-        def download(
-            self,
-            destination,
-            target_folder='*',
-            recursive=True,
-        ):
-
-            # Make directory if not exist
-
-            self.__mkdirs(destination)
-
-            # Find Folder Position
-
-            if target_folder == '*':
-                start = 0
-            else:
-
-                # Remove Relative Path Symbol from string
-
-                tmp_target = target_folder.replace('./', '')
-                tmp_target = tmp_target.replace('../', '')
-
-                # Remove "/"
-
-                tmp_target = (tmp_target if tmp_target[-1] != '/'
-                            else tmp_target[:-1])
-                start = self.location[target_folder]
-
-            # Start Downloading
-
-            for i in self.files[start:]:
-                if recursive or i[0].split(target_folder)[1].count('/') \
-                        <= 1:
-                    self.__mkdirs(destination + '/' + os.path.dirname(i[0]))
-                    urllib.request.urlretrieve(i[1], destination + '/' + i[0])
-
-                    # modified segment
-                    # try:
-                    #     os.system('clear')
-                    # except:
-                    #     print('x')
-                    print(f'Installing file: {i}')
+                # modified segment by me
+                print(f'Installing file: /{i}')
 
 
 ########################################################################
