@@ -5,11 +5,11 @@
 
     "setup": true, 
 
-    "create": false, 
+    "create": true, 
 
-    "download": false,
+    "download": true,
     
     "post_clean": true, 
-    
+
     "quit_install": true
 }

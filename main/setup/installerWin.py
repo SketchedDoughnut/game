@@ -69,8 +69,9 @@ class Install:
 
     # making sure they are sure of their choice
     def safety_check(self):
-        print("""
-              You are running the installer; this will overwrite pre-existing files created by the installer previously.
+        print(f"""
+              You are running the installer; this will overwrite pre-existing files created by the installer previously
+              inside of {self.install_path}.
               To confirm, type "confirm" below. Otherwise, type anything else.
               """)
         
@@ -95,9 +96,9 @@ class Install:
             # removing install tree
             try:
                 shutil.rmtree(self.install_path)
-                print('! install cleaned')
+                print(f'! install cleaned {self.install_path}')
             except:
-                print('! no install')
+                print(f'! no install {self.install_path}')
 
         else:
             print('Pre: Cleaning up directories before install')
@@ -111,9 +112,9 @@ class Install:
             # removing install tree
             try:
                 shutil.rmtree(self.install_path)
-                print('! install cleaned')
+                print(f'! install cleaned {self.install_path}')
             except:
-                print('! no install')
+                print(f'! no install {self.install_path}')
 
             print('Pre: Done cleaning; continuing...')
             time.sleep(1)
@@ -234,6 +235,10 @@ class Install:
     def post_clean(self):
         print('---------------')
         print('Post: Cleaning up')
+
+        ## to delete setup folder if needed (not used)
+        #shutil.rmtree(f'{self.install_path}/main/setup')
+
         #shutil.rmtree('./temp/')
         print('Note: If directory is not present, or is empty, check your inputs and run again.')
         print('Post: Done')
