@@ -123,9 +123,9 @@ class Install:
             # removing install tree
             try:
                 shutil.rmtree(self.install_path)
-                print(f'! install cleaned {self.install_path}')
+                print(f'! install cleaned')
             except:
-                print(f'! no install {self.install_path}')
+                print(f'! no install')
 
         else:
             print('Pre: Cleaning up directories before install')
@@ -139,9 +139,9 @@ class Install:
             # removing install tree
             try:
                 shutil.rmtree(self.install_path)
-                print(f'! install cleaned {self.install_path}')
+                print(f'! install cleaned')
             except:
-                print(f'! no install {self.install_path}')
+                print(f'! no install')
 
             print('Pre: Done cleaning; continuing...')
             time.sleep(1)
@@ -268,7 +268,7 @@ class Install:
 
         #shutil.rmtree('./temp/')
         print('Note: If directory is not present, or is empty, check your inputs and run again.')
-        print('Post: Done')
+        print('Post: Done cleaning; continuing...')
 
 
     # quits install file (to make sure it goes right)
