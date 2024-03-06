@@ -25,6 +25,7 @@ class Install:
                 Sources are in: (install location)/gitignore/sources.txt.
                   
         To change config order, change values in "config.json", then restart this installer.
+                        General config info in "general_info.txt"
             to get information about what each thing does, check "config_info.txt".
                   
             """)
