@@ -189,7 +189,10 @@ class Install:
 
         try:
             # initializing the downloader class with url and what branch
-            downloader = Downloader('https://github.com/SketchedDoughnut/game')
+            f = open('config.json', 'r')
+            rules = json.load(f)
+            f.close()
+            downloader = Downloader(rules['repo'])
             
             # try:
             #     # creating second download object
@@ -296,8 +299,10 @@ class Install:
 
     def run(self):
         rules = {}
-        f = open('main/setup/config.json', 'r')
+        #f = open('main/setup/config.json', 'r')
+        f = open('config.json', 'r')
         rules = json.load(f)
+        f.close()
 
         if rules['safety_check'] == True: self.safety_check()
         if rules['pre_clean'] == True: self.pre_clean()

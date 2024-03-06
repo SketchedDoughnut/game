@@ -1,0 +1,22 @@
+------------------------ info for 'config.json' ------------------------
+
+safety_check (paired with pre_clean)
+    - checks if you are sure before removing files installed previously, cancels if not
+
+pre_clean (paired with safety_check)
+    - cleans files before continuing
+
+setup 
+    - make sure python 3.9 is installed, cancels if not 
+
+create
+    - makes directory for the game installed
+
+download
+    - downloads files from the github respository located in config.json ('repo')
+
+post_clean
+    - cleans up files afterwards (affect varies)
+
+quit_install
+    - quits install file after a countdown

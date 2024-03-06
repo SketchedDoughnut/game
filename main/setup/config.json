@@ -5,5 +5,7 @@
     "create": true, 
     "download": true,
     "post_clean": true, 
-    "quit_install": true
+    "quit_install": true,
+
+    "repo": "https://github.com/SketchedDoughnut/game"
 }
