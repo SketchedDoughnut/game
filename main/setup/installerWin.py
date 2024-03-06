@@ -1,4 +1,4 @@
-# imports
+# importing builtin
 import os
 import time
 import shutil
@@ -15,26 +15,25 @@ import urllib.request
 class Install:
     # init
     def __init__(self, mode=0):
+
+        # default
         if mode == 0:
-            #self.install_path = './game_name/'
+
+            # assigning var
             new_string = ''
             
+            # printing start statement, format, prompting
             print("""
             Welcome to the open-source file installer created by (placeholder)! 
-                    Code is written by me with snippets from others.
+                Code is written by (placeholder) with snippets from others.
                 Sources are in: (install location)/gitignore/sources.txt.   
+    To change config, change values in "config.json", then restart this installer.
             """)
-
-            # notes 
-            '''
-            To change config order, change values in "config.json", then restart this installer.
-                        General config info in "general_info.txt"
-            to get information about what each thing does, check "config_info.txt".
-            '''
             print('---------------')
             print('Input file directory for install below.')
-            print('Note: Must be absolute path.')
-            print('Example: C:\\install_location')
+            print('Note: Must be absolute path. Ex: C:\\install_location')
+
+            # getting path, formatting
             self.install_path = input('--> ')
             #if self.install_path != "":
             list = [str(i) for i in self.install_path]
@@ -62,6 +61,7 @@ class Install:
                 #self.install_path += '/game_name'
                 #print(self.install_path)
         
+        # return self.install_path
         elif mode == 1:
             #self.install_path = self.install_path
             return self.install_path
@@ -76,10 +76,6 @@ class Install:
         
         # checking if input confirms proceeding, cancelling if not
         if input('--> ') == "confirm":
-            #try:
-            #    os.system('clear')
-            #except:
-            #    pass
             print('---------------')
             pass
         else:
@@ -128,22 +124,20 @@ class Install:
     def setup(self):
         # getting inputs
     #    ## https://github.com/BirdLogics/sb3topy
-    #    ## master
     #    self.url = input('Input repository URL: ')
     #    self.branch = input('Input respository branch: ')
-    #    print('---------------')
         self.desktop_shortcut = (input('Do you want to add a desktop shortcut? (y/n) \n--> ').lower()) == 'y'
         
         # make sure they have python installed
         print('---------------')
         print("""
-              Before we proceed, you need to have an installation of python installed.
+                     Before we proceed, you need to have an installation of python installed.
               If you already have one, type "y" to proceed. If you don't, do the following instructions:
               - go to Microsoft Store
               - search "Python 3.9"
               - Install
               - You're done!
-              Once done doing these instructions, type 'y' (anything else to cancel).
+                        Once done doing these instructions, type 'y' (anything else to cancel).
               """)
         if input('--> ').lower() != 'y':
             exit()
@@ -153,19 +147,14 @@ class Install:
 
     # create temp dir and establish code file
     def create(self):
+
         # creating directories
-        #print(f'Creating directory: {self.temp_path}')
-        #os.mkdir(self.temp_path)
         print(f'Creating directory: {self.install_path}')
         os.mkdir(self.install_path)
 
-        ## writing code to file
-        #print('Writing code to file')
-        #f = open(f'{self.temp_path}/gh_downloader.py', 'w')
-
-    # https://www.blog.pythonlibrary.org/2010/01/23/using-python-to-create-shortcuts/ -------- example 3
+    # https://www.blog.pythonlibrary.org/2010/01/23/using-python-to-create-shortcuts/ -> example 3
     def createShortcut(self, path, target='', wDir='', icon=''):  
-        from win32com.client import Dispatch  
+        from win32com.client import Dispatch
         ext = path[-3:]
         if ext == 'url':
             shortcut = file(path, 'w')
@@ -183,67 +172,48 @@ class Install:
                 shortcut.IconLocation = icon
             shortcut.save()
 
-   # function for running code written into the file (above)
+
+   # function to download incorporating class: https://github.com/fbunaren/GitHubFolderDownloader
     def download(self):
-        # importing downloader, assigning vars
-        # https://github.com/fbunaren/GitHubFolderDownloader
-        #url = 'https://github.com/SketchedDoughnut/game'
-        #branch = 'master'
 
+        # initializing the downloader class
         try:
-            # initializing the downloader class with url and what branch
             downloader = Downloader("https://github.com/SketchedDoughnut/development")
-            
-            # try:
-            #     # creating second download object
-            #     downloader2 = Downloader()
-            #     downloader2.load_repository('https://github.com/python/cpython/')
-            # except Exception as e:
-            #     print(f'!!! Second initial failed: {e}')
 
+            # downloading
             try:
-                # downloading
-                #downloader.download(self.install_path, 'game_name', True)
                 downloader.download(self.install_path)
 
+                # writing run path to text file (not used, not up to date)
                 try:
-                    # writing run path to text file (not used, not up to date)
                     print('Assembling text file')
                     url_path = f'{self.install_path}/main/top-level/content_url.txt'
-                    #print(url_path)
                     f = open(url_path, 'w')
                     f.write(f'{self.install_path}/main/top-level/game_data/main.py')
                     f.close()
+
                 except Exception as e:
                     print(f'!!! Error with text file: {e}')
 
+                # formats info and runs shortcut making function
                 try:
                     if self.desktop_shortcut == True:
                         #print('---------------')
-                        print('Creating shortcut')
                         import winshell
+                        print('Creating shortcut')
                         desktop = winshell.desktop()
                         path = os.path.join(desktop, "game_name.lnk")
                         target = f"{self.install_path}/main/top-level/start.exe" # CHANGE TO EXE
                         wDir = f"{self.install_path}/main/top-level"
-                        icon = f"{self.install_path}/main/top-level/start.exe"
+                        icon = f"{self.install_path}/main/top-level/start.exe" # CHANGE TO EXE
+
+                        # calls on function here with data from above
                         self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)
                     else:
                         pass
 
                 except Exception as e:
                     print(f'Error creating shortcut: {e}')
-
-
-
-                # # running second installer to install python
-                # try:
-                #     downloader2.download(f'{self.install_path}/python')
-                #     print('! Python 3.9 installed')
-                # except Exception as e:
-                #     print(f'!!! Python install failed: {e}')
-            
-
 
             except Exception as e:
                 print(f'!!! Error while downloading: {e}')
@@ -259,29 +229,17 @@ class Install:
             #exit()         
 
 
-    # deletes temp tree
+    # doing file cleanup
     def post_clean(self):
-    #    try:
-    #        os.system('clear')
-    #    except:
-    #        pass
         print('---------------')
         print('Post: Cleaning up')
-        #shutil.rmtree('../')
-        #print('---------------')
         #shutil.rmtree('./temp/')
         print('Note: If directory is not present, or is empty, check your inputs and run again.')
         print('Post: Done')
 
-    
-    #def file_clean(self):
-    #    os.system(f'python {self.install_path}/clean.py')
-    #    os.rmdir(f'{self.install_path}/clean.py')
-    #    os.rmdir
 
-
+    # quits install file (to make sure it goes right)
     def quit_install(self):
-        # print(f'Downloading complete. Run executable at {install.install_path}/essentials/run_game/run_game.exe')
         print('---------------')
         print('Install complete. Exit in:')
         for i in range(3, 0, -1):
@@ -292,11 +250,7 @@ class Install:
         exit()
 
 
-
-    #def return_path(self):
-    #    self.install_path
-    
-
+    # runs all the functions in order, by config rules (can be changed in config.json)
     def run(self):
         rules = {}
         #f = open('main/setup/config.json', 'r')
@@ -309,14 +263,15 @@ class Install:
         if rules['setup'] == True: self.setup()
         if rules['create'] == True: self.create()
         if rules['download'] == True: self.download()
-        #if rules['file_clean'] == True: self.file_clean()
         if rules['post_clean'] == True: self.post_clean()
         if rules['quit_install'] == True: self.quit_install()
 
+        # if someone cancelled all operations
         else:
             print('Running no files; cancelling in 5s')
             time.sleep(5)
             exit()
+
 
 ########################################################################
 ########################################################################
@@ -449,5 +404,11 @@ class Downloader:
 ########################################################################
 ########################################################################
 
+
+
+## ONLY TWO ACTING LINES OF CODE
+# initializes Install class
 install = Install()
+
+# calls on run function
 install.run()
