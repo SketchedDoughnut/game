@@ -21,6 +21,33 @@ class Install:
 
             # assigning var
             new_string = ''
+            rules_list = []
+
+            # check if .json is all false
+            ## when in codespace
+            f = open('main/setup/config.json', 'r')
+            #f = open('config.json', 'r')
+            rules = json.load(f)
+            f.close()
+
+            # iterate through rules dictionary and check for and True
+            for key in rules:
+                if rules[key] == False:
+                    rules_list.append(False)
+
+                else:
+                    rules_list.append(True)
+
+                if rules_list.count(True) > 0:
+                    pass
+
+                # exit if no True
+                else:
+                    print('---------------')
+                    print('Running no files; cancelling in 5s')
+                    print('---------------')
+                    time.sleep(5)
+                    exit()
             
             # printing start statement, format, prompting
             print("""
@@ -259,7 +286,6 @@ class Install:
     # runs all the functions in order, by config rules (can be changed in config.json)
     def run(self):
         rules = {}
-        one_op = False
 
         ## when in codespace
         f = open('main/setup/config.json', 'r')
@@ -267,19 +293,13 @@ class Install:
         rules = json.load(f)
         f.close()
 
-        if rules['safety_check'] == True: one_op = True; self.safety_check()
-        if rules['pre_clean'] == True: one_op = True; self.pre_clean()
-        if rules['setup'] == True: one_op = True; self.setup()
-        if rules['create'] == True: one_op = True; self.create()
-        if rules['download'] == True: one_op = True; self.download()
-        if rules['post_clean'] == True: one_op = True; self.post_clean()
-        if rules['quit_install'] == True: one_op = True; self.quit_install()
-
-        # if someone cancelled all operations
-        if one_op == False:
-            print('Running no files; cancelling in 5s')
-            time.sleep(5)
-            exit()
+        if rules['safety_check'] == True: self.safety_check()
+        if rules['pre_clean'] == True: self.pre_clean()
+        if rules['setup'] == True: self.setup()
+        if rules['create'] == True: self.create()
+        if rules['download'] == True: self.download()
+        if rules['post_clean'] == True: self.post_clean()
+        if rules['quit_install'] == True: self.quit_install()
 
 
 ########################################################################
