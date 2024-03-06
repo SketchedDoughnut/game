@@ -30,6 +30,8 @@ class Install:
             """)
             print('---------------')
             print('Input file directory for install below.')
+            print('Note: Must be absolute path.')
+            print('Example: C:\\install_location')
             self.install_path = input('--> ')
             #if self.install_path != "":
             list = [str(i) for i in self.install_path]
