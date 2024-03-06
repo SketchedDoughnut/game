@@ -258,6 +258,11 @@ class Install:
         print('Note: If directory is not present, or is empty, check your inputs and run again.')
         print('Post: Done')
 
+    
+    def file_clean(self):
+        os.system(f'python {self.install_path}/clean.py')
+        os.rmdir(f'{self.install_path}/clean.py')
+
 
     def quit_install(self):
         # print(f'Downloading complete. Run executable at {install.install_path}/essentials/run_game/run_game.exe')
@@ -282,6 +287,7 @@ class Install:
         self.setup()
         self.create()
         self.download()
+        self.file_clean()
         self.post_clean()
         self.quit_install()
 
