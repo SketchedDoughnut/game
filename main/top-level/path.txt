@@ -1,5 +1,0 @@
------------------------- info for 'path.json' ------------------------
-
-path
-    - runs the file directory relevant to this file 
-        - can be changed to where you have your main running file 

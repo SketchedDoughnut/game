@@ -1,9 +1,0 @@
------------------------- overall config info ------------------------
-
-config.json
-    - allows you to configure the installer with a variety of options.
-      Check "config.txt" for more
-
-top-level/path.json
-    - allows you to configure the running files to change what file it runs (relavant to it)
-      check "top-level/path.txt" for more      

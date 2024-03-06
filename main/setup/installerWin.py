@@ -22,13 +22,15 @@ class Install:
             print("""
             Welcome to the open-source file installer created by (placeholder)! 
                     Code is written by me with snippets from others.
-                Sources are in: (install location)/gitignore/sources.txt.
-                  
-        To change config order, change values in "config.json", then restart this installer.
+                Sources are in: (install location)/gitignore/sources.txt.   
+            """)
+
+            # notes 
+            '''
+            To change config order, change values in "config.json", then restart this installer.
                         General config info in "general_info.txt"
             to get information about what each thing does, check "config_info.txt".
-                  
-            """)
+            '''
             print('---------------')
             print('Input file directory for install below.')
             print('Note: Must be absolute path.')
@@ -190,10 +192,7 @@ class Install:
 
         try:
             # initializing the downloader class with url and what branch
-            f = open('config.json', 'r')
-            rules = json.load(f)
-            f.close()
-            downloader = Downloader(rules['repo'])
+            downloader = Downloader("https://github.com/SketchedDoughnut/development")
             
             # try:
             #     # creating second download object
