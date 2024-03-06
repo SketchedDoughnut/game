@@ -209,9 +209,9 @@ class Install:
                         import winshell
                         desktop = winshell.desktop()
                         path = os.path.join(desktop, "game_name.lnk")
-                        target = f"{self.install_path}/main/top-level/start.py" # CHANGE TO EXE
+                        target = f"{self.install_path}/main/top-level/start.exe" # CHANGE TO EXE
                         wDir = f"{self.install_path}/main/top-level"
-                        icon = f"{self.install_path}/main/top-level/start.py"
+                        icon = f"{self.install_path}/main/top-level/start.exe"
                         self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)
                     else:
                         pass
