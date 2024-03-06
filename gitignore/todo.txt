@@ -1,1 +1,3 @@
-- Add a .json deciding which functions run, allow users to edit
+- create a file to delete if user wishes
+- consider:
+  - https://www.pygame.org/project/1316
