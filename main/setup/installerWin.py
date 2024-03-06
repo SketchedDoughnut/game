@@ -205,6 +205,9 @@ class Install:
     def download(self):
 
         # initializing the downloader class
+        # NOTE: Alternatively, initialize .Downloader empty and instead do load repository with url
+        # NOTE: Do this because you can link branch in that url and it will identify it
+        # NOTE: .download still runs the same
         try:
             downloader = Downloader("https://github.com/SketchedDoughnut/development")
 
