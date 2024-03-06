@@ -21,8 +21,12 @@ class Install:
             
             print("""
             Welcome to the open-source file installer created by (placeholder)! 
-                    Code is written by me with snippets from others
+                    Code is written by me with snippets from others.
                 Sources are in: (install location)/gitignore/sources.txt.
+                  
+        To change config order, change values in "config.json", then restart this installer.
+            to get information about what each thing does, check "config_info.txt".
+                  
             """)
             print('---------------')
             print('Input file directory for install below.')
