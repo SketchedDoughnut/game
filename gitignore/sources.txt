@@ -1,4 +1,5 @@
-https://www.blog.pythonlibrary.org/2010/01/23/using-python-to-create-shortcuts/
+To create a shortcut on desktop:
+    - https://www.blog.pythonlibrary.org/2010/01/23/using-python-to-create-shortcuts/
 
-https://github.com/fbunaren/GitHubFolderDownloader
-
+To download files from a github repository:
+    - https://github.com/fbunaren/GitHubFolderDownloader

@@ -18,7 +18,13 @@ class Install:
         if mode == 0:
             #self.install_path = './game_name/'
             new_string = ''
-            #self.install_path = (input('Input wanted file directory for install below: \n--> ') + '/game_name/')
+            
+            print("""
+            Welcome to the open-source file installer created by (placeholder)! 
+                    Code is written by me with snippets from others
+                Sources are in: (install location)/gitignore/sources.txt.
+            """)
+            print('---------------')
             print('Input file directory for install below.')
             self.install_path = input('--> ')
             #if self.install_path != "":
@@ -283,14 +289,23 @@ class Install:
     
 
     def run(self):
-        self.safety_check()
-        self.pre_clean()
-        self.setup()
-        self.create()
-        self.download()
-        #self.file_clean()
-        self.post_clean()
-        self.quit_install()
+        rules = {}
+        f = open('main/setup/config.json', 'r')
+        rules = json.load(f)
+
+        if rules['safety_check'] == True: self.safety_check()
+        if rules['pre_clean'] == True: self.pre_clean()
+        if rules['setup'] == True: self.setup()
+        if rules['create'] == True: self.create()
+        if rules['download'] == True: self.download()
+        #if rules['file_clean'] == True: self.file_clean()
+        if rules['post_clean'] == True: self.post_clean()
+        if rules['quit_install'] == True: self.quit_install()
+
+        else:
+            print('Running no files; cancelling in 5s')
+            time.sleep(5)
+            exit()
 
 ########################################################################
 ########################################################################
