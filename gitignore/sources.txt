@@ -1,0 +1,4 @@
+https://www.blog.pythonlibrary.org/2010/01/23/using-python-to-create-shortcuts/
+
+https://github.com/fbunaren/GitHubFolderDownloader
+

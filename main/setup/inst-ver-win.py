@@ -137,6 +137,25 @@ class Install:
         #print('Writing code to file')
         #f = open(f'{self.temp_path}/gh_downloader.py', 'w')
 
+    # https://www.blog.pythonlibrary.org/2010/01/23/using-python-to-create-shortcuts/ -------- example 3
+    def createShortcut(self, path, target='', wDir='', icon=''):  
+        from win32com.client import Dispatch  
+        ext = path[-3:]
+        if ext == 'url':
+            shortcut = file(path, 'w')
+            shortcut.write('[InternetShortcut]\n')
+            shortcut.write('URL=%s' % target)
+            shortcut.close()
+        else:
+            shell = Dispatch('WScript.Shell')
+            shortcut = shell.CreateShortCut(path)
+            shortcut.Targetpath = target
+            shortcut.WorkingDirectory = wDir
+            if icon == '':
+                pass
+            else:
+                shortcut.IconLocation = icon
+            shortcut.save()
 
    # function for running code written into the file (above)
     def download(self):
@@ -163,13 +182,30 @@ class Install:
 
                 try:
                     # writing run path to text file (not used, not up to date)
+                    print('Assembling text file')
                     url_path = f'{self.install_path}/main/top-level/content_url.txt'
-                    print(url_path)
+                    #print(url_path)
                     f = open(url_path, 'w')
                     f.write(f'{self.install_path}/main/top-level/game_data/main.py')
                     f.close()
                 except Exception as e:
                     print(f'!!! Error with text file: {e}')
+
+                try:
+                    #print('---------------')
+                    print('Creating shortcut')
+                    import winshell
+                    desktop = winshell.desktop()
+                    path = os.path.join(desktop, "game_name.lnk")
+                    target = f"{self.install_path}/main/top-level/start.py" # CHANGE TO EXE
+                    wDir = f"{self.install_path}/main/top-level"
+                    icon = f"{self.install_path}/main/top-level/start.py"
+                    self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)
+
+                except Exception as e:
+                    print(f'Error creating shortcut: {e}')
+
+
 
                 # # running second installer to install python
                 # try:
@@ -177,17 +213,9 @@ class Install:
                 #     print('! Python 3.9 installed')
                 # except Exception as e:
                 #     print(f'!!! Python install failed: {e}')
-
-                # from win32com.client import Dispatch
-
-                # path = r"C:\Users\user\Desktop\game_name.lnk"  #This is where the shortcut will be created
-                # target = rf"{self.install_path}/main/setup/inst-ver-win.py" # directory to which the shortcut is created
-
-                # shell = Dispatch('WScript.Shell')
-                # shortcut = shell.CreateShortCut(path)
-                # shortcut.Targetpath = target
-                # shortcut.save()
             
+
+
             except Exception as e:
                 print(f'!!! Error while downloading: {e}')
                 #print('Cleaning up then exiting...')
