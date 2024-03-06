@@ -19,7 +19,7 @@ class Install:
             #self.install_path = './game_name/'
             new_string = ''
             #self.install_path = (input('Input wanted file directory for install below: \n--> ') + '/game_name/')
-            print('Input wanted file directory for install below. If no input, will install where installer is.')
+            print('Input file directory for install below.')
             self.install_path = input('--> ')
             #if self.install_path != "":
             list = [str(i) for i in self.install_path]
