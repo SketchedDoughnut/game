@@ -259,9 +259,10 @@ class Install:
         print('Post: Done')
 
     
-    def file_clean(self):
-        os.system(f'python {self.install_path}/clean.py')
-        os.rmdir(f'{self.install_path}/clean.py')
+    #def file_clean(self):
+    #    os.system(f'python {self.install_path}/clean.py')
+    #    os.rmdir(f'{self.install_path}/clean.py')
+    #    os.rmdir
 
 
     def quit_install(self):
@@ -287,7 +288,7 @@ class Install:
         self.setup()
         self.create()
         self.download()
-        self.file_clean()
+        #self.file_clean()
         self.post_clean()
         self.quit_install()
 
