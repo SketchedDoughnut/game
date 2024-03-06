@@ -202,13 +202,14 @@ class Install:
                         import winshell
                         print('Creating shortcut')
                         desktop = winshell.desktop()
-                        path = os.path.join(desktop, "game_name.lnk")
+                        path = os.path.join(desktop, "game_name.lnk") # CHANGE game_name TO NAME
                         target = f"{self.install_path}/main/top-level/start.exe" # CHANGE TO EXE
                         wDir = f"{self.install_path}/main/top-level"
                         icon = f"{self.install_path}/main/top-level/start.exe" # CHANGE TO EXE
 
                         # calls on function here with data from above
                         self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)
+
                     else:
                         pass
 
@@ -253,21 +254,24 @@ class Install:
     # runs all the functions in order, by config rules (can be changed in config.json)
     def run(self):
         rules = {}
-        #f = open('main/setup/config.json', 'r')
-        f = open('config.json', 'r')
+        one_op = False
+
+        ## when in codespace
+        f = open('main/setup/config.json', 'r')
+        #f = open('config.json', 'r')
         rules = json.load(f)
         f.close()
 
-        if rules['safety_check'] == True: self.safety_check()
-        if rules['pre_clean'] == True: self.pre_clean()
-        if rules['setup'] == True: self.setup()
-        if rules['create'] == True: self.create()
-        if rules['download'] == True: self.download()
-        if rules['post_clean'] == True: self.post_clean()
-        if rules['quit_install'] == True: self.quit_install()
+        if rules['safety_check'] == True: one_op = True; self.safety_check()
+        if rules['pre_clean'] == True: one_op = True; self.pre_clean()
+        if rules['setup'] == True: one_op = True; self.setup()
+        if rules['create'] == True: one_op = True; self.create()
+        if rules['download'] == True: one_op = True; self.download()
+        if rules['post_clean'] == True: one_op = True; self.post_clean()
+        if rules['quit_install'] == True: one_op = True; self.quit_install()
 
         # if someone cancelled all operations
-        else:
+        if one_op == False:
             print('Running no files; cancelling in 5s')
             time.sleep(5)
             exit()
