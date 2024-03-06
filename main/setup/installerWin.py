@@ -406,7 +406,6 @@ class Downloader:
 ########################################################################
 
 
-
 ## ONLY TWO ACTING LINES OF CODE
 # initializes Install class
 install = Install()
