@@ -21,31 +21,31 @@ class Install:
             #self.install_path = (input('Input wanted file directory for install below: \n--> ') + '/game_name/')
             print('Input wanted file directory for install below. If no input, will install where installer is.')
             self.install_path = input('--> ')
-            if self.install_path != "":
-                list = [str(i) for i in self.install_path]
-                for i in list:
-                    if i == '\\':
-                        new_string += '/'
-                    else:
-                        new_string += i
-                self.install_path = new_string
-                self.install_path = [str(i) for i in self.install_path]
-                if self.install_path[len(self.install_path) - 1] == '/':
-                    #self.install_path += '/'
-                    self.install_path.pop(len(self.install_path) - 1)
+            #if self.install_path != "":
+            list = [str(i) for i in self.install_path]
+            for i in list:
+                if i == '\\':
+                    new_string += '/'
                 else:
-                    pass
-                new_string = ''
-                for i in self.install_path:
                     new_string += i
-                self.install_path = new_string
-                self.install_path += '/game_name'
-                print('---------------')
-                print(self.install_path)
+            self.install_path = new_string
+            self.install_path = [str(i) for i in self.install_path]
+            if self.install_path[len(self.install_path) - 1] == '/':
+                #self.install_path += '/'
+                self.install_path.pop(len(self.install_path) - 1)
             else:
-                print('---------------')
-                self.install_path += '/game_name'
-                print(self.install_path)
+                pass
+            new_string = ''
+            for i in self.install_path:
+                new_string += i
+            self.install_path = new_string
+            self.install_path += '/game_name'
+            print('---------------')
+            print(self.install_path)
+            #else:
+                #print('---------------')
+                #self.install_path += '/game_name'
+                #print(self.install_path)
         
         elif mode == 1:
             #self.install_path = self.install_path

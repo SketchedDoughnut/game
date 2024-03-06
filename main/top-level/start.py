@@ -6,6 +6,6 @@ import os
 # f.close()
 
 #run_path = 'main/top-level/game_data/main.py'
-run_path = 'game_data/main.py'
+run_path = 'game_data/main.exe'
 print(f'Running game: {run_path}')
 os.system(f'python {run_path}')
