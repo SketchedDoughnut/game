@@ -1,3 +1,4 @@
 - create a file to delete if user wishes
 - consider:
   - https://www.pygame.org/project/1316
+- refine program into a standalone installer, remove some customization (besides config.json) from main program
