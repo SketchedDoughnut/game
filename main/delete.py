@@ -17,11 +17,17 @@ import time
 
 #################################################################
 
+'''
+{
+    "remove_path": ""
+}
+'''
+
 # get path from delete.json
 print('Delete: Acquiring JSON path')
 
 # - for codespace
-read_file = open('main/setup/delete.json', 'r')
+read_file = open('main/delete.json', 'r')
              
 # for run
 #read_file = open('delete.json', 'r')
@@ -44,7 +50,7 @@ shutil.rmtree(path_content)
 print('Delete: Directory gone. Emptying data file.')
 
 # - for codespace
-write_file = open('main/setup/delete.json', 'w')
+write_file = open('main/delete.json', 'w')
              
 # for run
 #write_file = open('delete.json', 'w')

@@ -1,0 +1,5 @@
+- get all github info
+- installed file name
+- shortcut info 
+- functionality systems
+- safety systems
