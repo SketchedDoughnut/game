@@ -17,17 +17,25 @@ class Install:
     def __init__(self, mode=0):
 
         # default
-        if mode == 0:
+        if mode == 0: 
 
-            # assigning var
+            # assigning vars (local)
             new_string = ''
             rules_list = []
 
             # check if .json is all false
-
             ## for codespace
-            f = open('main/setup/config.json', 'r')
-            #f = open('config.json', 'r')
+            try:
+                f = open('config.json', 'r')
+            except:
+                try:
+                    f = open('main/setup/config.json', 'r')
+                except Exception as e:
+                    print(f'error: {e}')
+                    print('vsc handling: exiting')
+                    time.sleep(5)
+                    exit()
+
             rules = json.load(f)
             f.close()
 
@@ -77,8 +85,16 @@ class Install:
 
                     # runs delete file
                     ## for codespace
-                    os.system(f'python main/setup/delete.py')
-                    #os.system(f'python delete.py')
+                    try:
+                        os.system(f'python delete.py')
+                    except:
+                        try:
+                            os.system(f'python main/setup/delete.py')
+                        except Exception as e:
+                            print(f'error: {e}')
+                            print('vsc handling: exiting')
+                            time.sleep(5)
+                            exit()
 
                     # final, then finishes
                     print('---------------')
@@ -219,8 +235,17 @@ class Install:
 
         # opening delete file and writing path
         ## for codespace
-        rules = open('main/setup/delete.json', 'r')
-        #rules = open('delete.json', 'r')
+        try:
+            rules = open('delete.json', 'r')
+        except:
+            try:
+                rules = open('main/setup/delete.json', 'r')
+            except Exception as e:
+                print(f'error: {e}')
+                print('vsc handling: exiting')
+                time.sleep(5)
+                exit()
+                
         rules_content = json.load(rules)
         rules.close()
         rules_content["remove_path"] = self.install_path
@@ -342,8 +367,17 @@ class Install:
         rules = {}
 
         ## for codespace
-        f = open('main/setup/config.json', 'r')
-        #f = open('config.json', 'r')
+        try:
+            f = open('config.json', 'r')
+        except:
+            try:
+                f = open('main/setup/config.json', 'r')
+            except Exception as e:
+                print(f'error: {e}')
+                print('vsc handling: exiting')
+                time.sleep(5)
+                exit()
+
         rules = json.load(f)
         f.close()
 

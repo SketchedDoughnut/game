@@ -7,8 +7,17 @@ import time
 print('Delete: Acquiring JSON path')
 
 ## for codespace
-file = open('main/setup/delete.json', 'r')
-#file = open('delete.json', 'r')
+try:
+    file = open('delete.json', 'r')
+except:
+    try:
+        file = open('main/setup/delete.json', 'r')
+    except Exception as e:
+        print(f'error: {e}')
+        print('vsc handling: exiting')
+        time.sleep(5)
+        exit()
+
 path = json.load(file)
 path = path["remove_path"]
 file.close()
