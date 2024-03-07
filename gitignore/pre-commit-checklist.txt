@@ -1,0 +1,4 @@
+- MAKE SURE PROGRAMS ARE WORKING PROPERLY
+- make sure file directories are adapted for intent (codespace/VSCode, or normal pc)
+- clear any specific files of their directories (ie. delete.json)
+- make sure all .exe are compiled and organized right
