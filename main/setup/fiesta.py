@@ -25,7 +25,7 @@ class Install:
 
             # check if .json is all false
 
-            ## when in codespace
+            ## for codespace
             f = open('main/setup/config.json', 'r')
             #f = open('config.json', 'r')
             rules = json.load(f)
@@ -82,6 +82,7 @@ class Install:
 
                     # final, then finishes
                     print('---------------')
+                    print('NOTE: Shortcut will note be deleted.')
                     print('Delete done. This installer will exit in 20 seconds; afterwards, delete the folder it is in. Thank you for using this installer! :3')
                     for i in range(20, 0, -1):
                         print(i)
@@ -217,7 +218,7 @@ class Install:
         os.mkdir(self.install_path)
 
         # opening delete file and writing path
-        ## for codespaces
+        ## for codespace
         rules = open('main/setup/delete.json', 'r')
         #rules = open('delete.json', 'r')
         rules_content = json.load(rules)
@@ -340,7 +341,7 @@ class Install:
     def run(self):
         rules = {}
 
-        ## when in codespace
+        ## for codespace
         f = open('main/setup/config.json', 'r')
         #f = open('config.json', 'r')
         rules = json.load(f)
