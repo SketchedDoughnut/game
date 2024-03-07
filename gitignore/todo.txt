@@ -1,4 +1,5 @@
 - consider:
   - https://www.pygame.org/project/1316
+  - https://stackoverflow.com/questions/64788656/exe-file-made-with-pyinstaller-being-reported-as-a-virus-threat-by-windows-defen
   
 - refine program into a standalone installer

@@ -15,3 +15,11 @@ https://github.com/fbunaren/GitHubFolderDownloader
 https://stackoverflow.com/questions/63321852/efficient-way-to-process-multiple-files-in-parallel-with-different-arguments-and
 
 https://www.tutorialspoint.com/how-to-run-multiple-python-files-in-a-folder-one-after-another
+
+https://www.geeksforgeeks.org/read-json-file-using-python/?ref=ml_lbp
+
+https://answers.microsoft.com/en-us/windows/forum/all/windows-defender-thinks-my-exe-file-is-a-virus/6f2562f3-772d-4696-bc29-43dbac8185f2
+
+PYGAME:
+    - https://github.com/techwithtim/PygameForBeginners
+    - https://github.com/search?q=pygame&type=repositories
