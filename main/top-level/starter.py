@@ -16,11 +16,13 @@ alt_path = 'main/top-level/game_data/main.py'
 print(f'Running game: {run_path}')
 print(f'Alt: {alt_path}')
 
-# for codespace
+# - for codespace
 os.system(f'python {alt_path}')
 
 # for run 
 #os.system(f'python {run_path}')
+
+#################################################################
 
 #tries to run, if can't errors then quits
 # try:

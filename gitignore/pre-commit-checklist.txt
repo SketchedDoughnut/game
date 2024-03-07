@@ -2,8 +2,8 @@
 
 - make sure file directories are adapted for intent (codespace/VSCode, or normal pc)
     - lookup:
-        - for codespace
-        - for run
+        - # - for codespace
+        - # for run
 
 - clear any specific files of their directories (ie. delete.json)
 

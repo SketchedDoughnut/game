@@ -3,9 +3,6 @@ import os
 import json
 import time
 
-# get path from delete.json
-print('Delete: Acquiring JSON path')
-
 # for codespace
 # try:
     # file = open('delete.json', 'r')
@@ -18,19 +15,35 @@ print('Delete: Acquiring JSON path')
         # time.sleep(5)
         # exit()
 
-## for codespace
-file = open('main/setup/delete.json', 'r')
+#################################################################
+
+# get path from delete.json
+print('Delete: Acquiring JSON path')
+
+# - for codespace
+read_file = open('main/setup/delete.json', 'r')
              
 # for run
-#file = open('delete.json', 'r')
+#read_file = open('delete.json', 'r')
 
-path = json.load(file)
-path = path["remove_path"]
-file.close()
-print(f'Delete: JSON path: {path}/delete.json')
+path = json.load(read_file)
+path_content = path["remove_path"]
+read_file.close()
+print(f'Delete: JSON path: {path_content}/')
 
 # deleting folder
 print('Delete: deleting folder and everything within...')
-shutil.rmtree(path)
-print('Delete: Directory gone. Finishing...')
+shutil.rmtree(path_content)
+
+print('Delete: Directory gone. Emptying data file.')
+
+# - for codespace
+write_file = open('main/setup/delete.json', 'w')
+             
+# for run
+#write_file = open('delete.json', 'w')
+
+path["remove_path"] = ""
+json.dump(path, write_file)
+write_file.close()
 exit()

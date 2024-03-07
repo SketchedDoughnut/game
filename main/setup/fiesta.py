@@ -36,7 +36,7 @@ class Install:
                     # time.sleep(5)
                     # exit()
 
-            ## for codespace
+            # - for codespace
             f = open('main/setup/config.json', 'r')
 
             ## for run
@@ -72,14 +72,14 @@ class Install:
     To change config, change values in "config.json", then restart this installer.
             """)
             print('---------------')
-            print('Input file directory for install below (or type "un-install" to uninstall").')
+            print('Input file directory for install below (or type "delete" to delete").')
             print('Note: Must be absolute path. Ex: C:\\install_location')
             self.install_path = input('--> ')
 
             # checking for uninstall, doing uninstall if so
             if self.install_path == "un-install":
                 print('---------------')
-                if input('Are you sure? (y/n): ') == 'y':
+                if input('Are you sure? Type: "confirm-delete": ') == 'confirm-delete':
 
                     # opening delete.json and getting path
                     temp = open('main/setup/delete.json', 'r')
@@ -102,7 +102,7 @@ class Install:
                     #         time.sleep(5)
                     #         exit()
 
-                    ## for codespace
+                    # - for codespace
                     os.system(f'python main/setup/delete.py')
                             
                     ## for run
@@ -261,7 +261,7 @@ class Install:
         #        time.sleep(5)
         #        exit()
         
-        ## for codespace
+        # - for codespace
         rules = open('main/setup/delete.json', 'r')
 
         # for run
@@ -399,7 +399,7 @@ class Install:
                 # time.sleep(5)
                 # exit()
 
-        ## for codespace
+        # - for codespace
         f = open('main/setup/config.json', 'r')
 
         # for run
