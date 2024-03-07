@@ -28,6 +28,12 @@ read_file = open('main/setup/delete.json', 'r')
 
 path = json.load(read_file)
 path_content = path["remove_path"]
+
+if ('game_name' in path_content) == False:
+    print(f'No game name found ({path_content}). exiting in 5s...')
+    time.sleep(5)
+    exit()
+
 read_file.close()
 print(f'Delete: JSON path: {path_content}/')
 
