@@ -187,7 +187,8 @@ class Install:
         from win32com.client import Dispatch
         ext = path[-3:]
         if ext == 'url':
-            shortcut = file(path, 'w')
+            #shortcut = file(path, 'w')
+            shortcut = open(path, 'w')
             shortcut.write('[InternetShortcut]\n')
             shortcut.write('URL=%s' % target)
             shortcut.close()
