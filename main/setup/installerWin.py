@@ -236,9 +236,9 @@ class Install:
                         print('Creating shortcut')
                         desktop = winshell.desktop()
                         path = os.path.join(desktop, "game_name.lnk") # CHANGE game_name TO NAME
-                        target = f"{self.install_path}/main/top-level/start.exe" # CHANGE TO EXE
+                        target = f"{self.install_path}/main/top-level/starter.exe" # CHANGE TO EXE
                         wDir = f"{self.install_path}/main/top-level"
-                        icon = f"{self.install_path}/main/top-level/start.exe" # CHANGE TO EXE
+                        icon = f"{self.install_path}/main/top-level/starter.exe" # CHANGE TO EXE
 
                         # calls on function here with data from above
                         self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)
