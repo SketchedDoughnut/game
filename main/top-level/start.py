@@ -1,5 +1,4 @@
 import os
-import time
 
 ## when in codespace
     #run_path = 'main/top-level/game_data/main.py'
@@ -18,12 +17,4 @@ run_path = 'game_data/main.py'
 print(f'Running game: {run_path}')
 
 # tries to run, if can't errors then quits
-try:
-    os.system(f'python {run_path}')
-    
-except Exception as e:
-    print(f'Error running: {e}')
-    print('Exiting in 30s...')
-    for i in range(30, 0, -1):
-        print(i)
-    exit()
+os.system(f'python {run_path}')
