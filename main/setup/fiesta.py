@@ -26,9 +26,8 @@ class Install:
             # check if .json is all false
 
             ## when in codespace
-            #f = open('main/setup/config.json', 'r')
-            f = open('config.json', 'r')
-
+            f = open('main/setup/config.json', 'r')
+            #f = open('config.json', 'r')
             rules = json.load(f)
             f.close()
 
@@ -59,37 +58,72 @@ class Install:
     To change config, change values in "config.json", then restart this installer.
             """)
             print('---------------')
-            print('Input file directory for install below.')
+            print('Input file directory for install below (or type "un-install" to uninstall").')
             print('Note: Must be absolute path. Ex: C:\\install_location')
-
-            # getting path, formatting
             self.install_path = input('--> ')
-            #if self.install_path != "":
-            list = [str(i) for i in self.install_path]
-            for i in list:
-                if i == '\\':
-                    new_string += '/'
+
+            # checking for uninstall, doing uninstall if so
+            if self.install_path == "un-install":
+                print('---------------')
+                if input('Are you sure? (y/n): ') == 'y':
+
+                    # opening delete.json and getting path
+                    temp = open('main/setup/delete.json', 'r')
+                    delete_path = json.load(temp)
+                    delete_path = delete_path["remove_path"]
+                    temp.close()
+                    print('---------------')
+                    print(f'Un-installing game from the following directory: {delete_path}')
+
+                    # runs delete file
+                    ## for codespace
+                    os.system(f'python main/setup/delete.py')
+                    #os.system(f'python delete.py')
+
+                    # final, then finishes
+                    print('---------------')
+                    print('Delete done. This installer will exit in 20 seconds; afterwards, delete the folder it is in. Thank you for using this installer! :3')
+                    for i in range(20, 0, -1):
+                        print(i)
+                        time.sleep(1)
+                    exit()
+                
                 else:
-                    new_string += i
-            self.install_path = new_string
-            self.install_path = [str(i) for i in self.install_path]
-            if self.install_path[len(self.install_path) - 1] == '/':
-                #self.install_path += '/'
-                self.install_path.pop(len(self.install_path) - 1)
+                    print('Cancelling deletion, cancelling file in 5s...')
+                    for i in range(5, 0, -1):
+                        print(i)
+                        time.sleep(1)
+                    exit()
+
             else:
-                pass
-            new_string = ''
-            for i in self.install_path:
-                new_string += i
-            self.install_path = new_string
-            self.install_path += '/game_name'
-            print('---------------')
-            print(self.install_path)
-            #else:
-                #print('---------------')
-                #self.install_path += '/game_name'
-                #print(self.install_path)
-        
+
+                # getting path, formatting
+                #if self.install_path != "":
+                list = [str(i) for i in self.install_path]
+                for i in list:
+                    if i == '\\':
+                        new_string += '/'
+                    else:
+                        new_string += i
+                self.install_path = new_string
+                self.install_path = [str(i) for i in self.install_path]
+                if self.install_path[len(self.install_path) - 1] == '/':
+                    #self.install_path += '/'
+                    self.install_path.pop(len(self.install_path) - 1)
+                else:
+                    pass
+                new_string = ''
+                for i in self.install_path:
+                    new_string += i
+                self.install_path = new_string
+                self.install_path += '/game_name'
+                print('---------------')
+                print(self.install_path)
+                #else:
+                    #print('---------------')
+                    #self.install_path += '/game_name'
+                    #print(self.install_path)
+
         # return self.install_path
         elif mode == 1:
             #self.install_path = self.install_path
@@ -100,8 +134,8 @@ class Install:
     def safety_check(self):
         print(f"""
               You are running the installer; this will overwrite pre-existing files created by the installer previously
-              inside of {self.install_path}.
-              To confirm, type "confirm" below. Otherwise, type anything else.
+                                        inside of {self.install_path}.
+                                To confirm, type "confirm" below. Otherwise, type anything else.
               """)
         
         # checking if input confirms proceeding, cancelling if not
@@ -181,6 +215,19 @@ class Install:
         # creating directories
         print(f'Creating directory: {self.install_path}')
         os.mkdir(self.install_path)
+
+        # opening delete file and writing path
+        ## for codespaces
+        rules = open('main/setup/delete.json', 'r')
+        #rules = open('delete.json', 'r')
+        rules_content = json.load(rules)
+        rules.close()
+        rules_content["remove_path"] = self.install_path
+        rules = open('main/setup/delete.json', 'w')
+        #rules = open('delete.json', 'w')
+        json.dump(rules_content, rules)
+        rules.close()
+
 
     # https://www.blog.pythonlibrary.org/2010/01/23/using-python-to-create-shortcuts/ -> example 3
     def createShortcut(self, path, target='', wDir='', icon=''):  
@@ -294,8 +341,8 @@ class Install:
         rules = {}
 
         ## when in codespace
-        #f = open('main/setup/config.json', 'r')
-        f = open('config.json', 'r')
+        f = open('main/setup/config.json', 'r')
+        #f = open('config.json', 'r')
         rules = json.load(f)
         f.close()
 
