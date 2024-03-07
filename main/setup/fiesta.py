@@ -77,9 +77,9 @@ class Install:
             self.install_path = input('--> ')
 
             # checking for uninstall, doing uninstall if so
-            if self.install_path == "un-install":
+            if self.install_path == "delete":
                 print('---------------')
-                if input('Are you sure? Type: "confirm-delete": ') == 'confirm-delete':
+                if input('Are you sure you want to delete?  \nType: "confirm-delete", anything else to cancel \n--> ') == 'confirm-delete':
 
                     # opening delete.json and getting path
                     temp = open('main/setup/delete.json', 'r')
@@ -111,7 +111,7 @@ class Install:
 
                     # final, then finishes
                     print('---------------')
-                    print('NOTE: Shortcut will note be deleted.')
+                    print('NOTE: Shortcut will not be deleted.')
                     print('Delete done. This installer will exit in 20 seconds; afterwards, delete the folder it is in. Thank you for using this installer! :3')
                     for i in range(20, 0, -1):
                         print(i)
