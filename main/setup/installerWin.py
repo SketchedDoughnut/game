@@ -24,9 +24,11 @@ class Install:
             rules_list = []
 
             # check if .json is all false
+
             ## when in codespace
-            f = open('main/setup/config.json', 'r')
-            #f = open('config.json', 'r')
+            #f = open('main/setup/config.json', 'r')
+            f = open('config.json', 'r')
+
             rules = json.load(f)
             f.close()
 
@@ -291,8 +293,8 @@ class Install:
         rules = {}
 
         ## when in codespace
-        f = open('main/setup/config.json', 'r')
-        #f = open('config.json', 'r')
+        #f = open('main/setup/config.json', 'r')
+        f = open('config.json', 'r')
         rules = json.load(f)
         f.close()
 
