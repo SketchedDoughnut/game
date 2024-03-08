@@ -4,15 +4,17 @@ What inputs should look like (test case):
 -------------------------------------------------------------------------
 DOWNLOADING
     - python version: 3.9
-    - repo url: https://github.com/SketchedDoughnut/development
+    - repo url: https://github.com/BillyBob/carnival
 
 SHORTCUT
     - shortcut_path: shortcut name
-    - shortcut_target: /game_data/starter.exe
+    - shortcut_target: /game_data/start.exe
     - shortcut_wDir: /game_data
-    - shortcut_icon: /game_data/starter.exe 
+    - shortcut_icon: /game_data/start.exe 
 
 Section notes:
-shortcut_icon and shortcut_target are the same
+    - shortcut_icon and shortcut_target are the same
+    - repo_url can be used with repositories under organizations (supposedly)
 -------------------------------------------------------------------------
 How to use files:
+- TBD
