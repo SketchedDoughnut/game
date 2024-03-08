@@ -57,24 +57,40 @@ class Install:
 Welcome to the installation agent designed by Sketched Doughnut!
 This installer will run you through the steps required to set up, and then your installer is ready to go! 
 It is coded in python and compiled with pyinstaller. This enables you to install and run python files. 
---------------------------------------------------------------------------
+
 Information about the files and steps to follow along can be found in "help.txt", and it is heavily encouraged you
-have that open while using this installer for reference.
-""")
+have that open while using this installer for reference.""")
+            print('--------------------------------------------------------------------------')
             input('Enter anything to continue: ')
             print("""--------------------------------------------------------------------------
 GENERAL INFO
 
+                  
 Here is the rundown on how the installer will work, user-side:
                   
-    - Gets file directory for installation, and formats. (__init__)
-    - After confirmation, deletes everything previously installed by the installer to then re-install. (safety_check, pre_clean)
-    - Asks if you want a shortcut created, and makes sure you have python installed. (setup)
-    - Creates directory for game folder within inputted file directory done at step 1, and writes that path into delete.json. (create)
-    - Downloads files from an inputted github link, and optionally a branch of said repository (download)
-        - NOTE: Some respositories have had issues with getting code grabbed from them; cause: unknown.
-    - Cleans up any temporary files afterwards. (post_clean)
-    - Finishes up then quits install after a set time. (quit_install)
+    - Gets file directory for installation, and formats. 
+        - (__init__)
+                  
+    - After confirmation, deletes everything previously installed by the installer to then re-install. 
+        - (safety_check)
+        - (pre_clean)
+                  
+    - Asks if you want a shortcut created, and makes sure you have python installed. 
+        - (setup)
+                  
+    - Creates directory for main folder within inputted file directory done at step 1, and writes that path into delete.json. 
+        - (create)
+                  
+    - Downloads files from an inputted github link, and optionally a branch of said repository 
+        - (download)
+                  
+        - NOTE: Some respositories have had issues with getting code downloaded from them. Cause: unknown.
+    - Cleans up any temporary files afterwards. 
+        - (post_clean)
+                  
+    - Finishes up then quits install after a set time. 
+        - (quit_install)
+
                   
 Refer to "help.txt" for configuring these functions.
                   
@@ -86,6 +102,7 @@ These values unfortunately can not be changed. They have been optimized for a sm
             while input_loop == True:
                 print('--------------------------------------------------------------------------')
                 print("""SETUP
+                      
 We will now proceed into setup.
 in order to run, info must be inputted by you for this to work.
 To follow along, please check "help.txt" for further elaboration on each step.
@@ -414,7 +431,7 @@ OTHER:
                     delete_path = delete_path["remove_path"]
                     temp.close()
                     print('---------------')
-                    print(f'Un-installing game from the following directory: {delete_path}')
+                    print(f'Un-installing main from the following directory: {delete_path}')
 
                     # runs delete file
                     ## for codespace

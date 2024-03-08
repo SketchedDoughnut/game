@@ -1,6 +1,10 @@
 Welcome to the file to help you setting up your installer.
+-------------------------------------------------------------------------
+
 
 What inputs should look like (test case):
+
+
 -------------------------------------------------------------------------
 DOWNLOADING
     - python version: 3.9
@@ -12,19 +16,25 @@ SHORTCUT
     - shortcut_wDir: main/
     - shortcut_icon: main/data/start.exe 
 
+
 Section notes:
     - when shortcut is setup, the path must be relative to where the installation is made.
+    - example:
         - installation path is "C:\main"
         - the path you input for shortcut_target is from "C:/main" to where the file you want to execute is.
         - lets say the folder "data" is installed via the installer in "C:/main". 
         - shortcut should route inside that install path "C:/main" to your file.
-        - say your executable is in a folder named "data" that gets installed inside of main.
-            - example you would input:
-                - data/file.exe
+        - say your executable is in the data folder. 
+            - what you would input:
+                    - data/file.exe
     - shortcut_icon and shortcut_target are the same
     - repo_url can be used with repositories under organizations (supposedly)
 -------------------------------------------------------------------------
+
+
 File info:
+
+
 -------------------------------------------------------------------------
 ALL .JSON
 
@@ -55,6 +65,7 @@ ALL .JSON
                 - Cleans up files after installation
 
             - quit_install: 
+                - finishes up and quits installatoni after a set time
     
 
     - delete.json: 
@@ -81,11 +92,62 @@ FOLDERS
 
 OTHER FILES
     - delete.py:
-        - is used when user wishes to un-install installed files.
+        - is used when user wishes to un-install installed files. (DO NOT MODIFY)
                 
     - help.txt:
         - helps with installation; will be removed at the end.
 -------------------------------------------------------------------------
-"_example/"" explanation:
--------------------------------------------------------------------------
 
+
+"_example/"" explanation:
+
+
+-------------------------------------------------------------------------
+NOTE: this program is not how every program will look. 
+      that is how I chose to format the example installation.
+
+
+DIAGRAM:
+
+main
+|
+--> setup
+|   |
+|   --> config.json
+|   --> delete.json
+|   --> delete.py
+|   --> installer.exe
+|
+--> top-level
+    |
+    --> game_data
+    |   |
+    |   --> main.py
+    |
+    --> content_url.txt
+    --> starter.exe
+
+
+PATHS:
+
+main
+    main/setup
+        main/setup/config.json
+        main/setup/delete.json
+        main/setup/delete.py
+        main/setup/installer.exe
+
+    main/top-level
+        main/top-level/game_data
+            main/top-level/game_data/main.py
+            main/top-level/content_url.txt
+            main/top-level/starter.exe
+
+
+SHORTCUT:
+
+(absolute path to main)/top-level/starter.exe
+
+Section notes:
+    - main: directory made by installer. All installed files go in here
+-------------------------------------------------------------------------
