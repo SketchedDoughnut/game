@@ -234,7 +234,7 @@ Enter "y" to start test installation.""")
     - _internal""")
             
             print('-------------------------------------------------------------------------')
-            self.read_setup_value['mode'] == 'install'
+            self.read_setup_value['mode'] = 'install'
             self.read_setup = open('setup.json', 'w')
             self.temp = json.dump(self.read_setup_value, self.read_setup)
             print('Changed mode to install.')
