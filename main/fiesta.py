@@ -76,7 +76,7 @@ Here is the rundown on the files included with this installer:
         - delete.py:
             - is used when user wishes to un-install installed files.
                   
-        - example.txt:
+        - help.txt:
             - helps with installation; will be removed at the end.
 
 
@@ -220,9 +220,13 @@ Enter "y" to start test installation.""")
             print('Your installer should now be configured to install your programs,')
             print('and also create a shortcut to run your program.')
             print('-------------------------------------------------------------------------')
-            print('File cleanup is next: files in question being examples and instructions.')
+            print('File cleanup is next: files in question being (_example/) and (help.txt).')
             input('Enter anything to authorize cleanup: ')
             
+            shutil.rmtree('help.txt')
+            shutil.rmtree('_example')
+            print('-------------------------------------------------------------------------')
+            print('(example/) and (help.txt) removed.')
 
                 
 
