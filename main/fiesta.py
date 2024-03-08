@@ -142,7 +142,7 @@ These values unfortunately can not be changed. They have been optimized for a sm
                 #self.read_setup = open('main/setup.json', 'w')
 
                 # for run
-                self.read_setup = open('setup.json', 'r')
+                self.read_setup = open('setup.json', 'w')
 
                 # dumping data
                 # downloading
