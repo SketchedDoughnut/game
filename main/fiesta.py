@@ -181,12 +181,12 @@ Enter "y" to start test installation.""")
                     #os.mkdir(main_path)
 
                     # for run
-                    main_path = '/temp-inst'
+                    main_path = 'temp-inst'
                     os.mkdir(main_path)
 
                     downloader = Downloader()
                     downloader.load_repository(url=self.repo_url)
-                    downloader.download(main_path, "*", True)
+                    downloader.download(main_path)
                     print('-------------------------------------------------------------------------')
                     print('Installation is done. Creating shortcut.')
                     print('-------------------------------------------------------------------------')
