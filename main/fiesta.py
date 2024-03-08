@@ -107,7 +107,7 @@ These values unfortunately can not be changed. They have been optimized for a sm
                     print('--------------------------------------------------------------------------')
 
                     print('DOWNLOADING: ')
-                    self.py_version = input('- What is version Python version # you want them to install? (Ex: 3.9) \n--> ')
+                    self.py_version = input('- What is Python version you want them to install? (Ex: 3.9) \n--> ')
                     self.repo_url = input('- Input a link to the PUBLIC github repository for install \n--> ')
                     #self.repo_branch = input('- Input the name of the repository branch for install \n--> ')
 
@@ -148,6 +148,7 @@ These values unfortunately can not be changed. They have been optimized for a sm
                 self.read_setup_value['py_version'] = self.py_version
                 self.read_setup_value['repo_url'] = self.repo_url
                 #self.read_setup_value['repo_branch'] = self.repo_branch
+                self.read_setup_value['repo_branch'] = 'x'
 
                 # shortcut
                 self.read_setup_value['shortcut_path'] = self.shortcut_path
@@ -198,6 +199,7 @@ Enter "y" to start test installation.""")
 
                         # calls on function here with data from above
                         self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)
+
                     except:
                         print('Shortcut error; run file individually not through an interpreter')
                     print('-------------------------------------------------------------------------')
@@ -208,10 +210,20 @@ Enter "y" to start test installation.""")
                     input('Enter anything to proceed to cleanup: ')
                     print('Cleaning up installating at /temp-inst...')
                     shutil.rmtree(main_path)
+                    print('Cleanup done; continuing')
 
 
                 elif run_test_install == 'skip':
                     print('Skipping test installation.')
+            
+            print('--------------------------------------------------------------------------')
+            print('Your installer should now be configured to install your programs,')
+            print('and also create a shortcut to run your program.')
+            print('-------------------------------------------------------------------------')
+            print('File cleanup is next: files in question being examples and instructions.')
+            input('Enter anything to authorize cleanup: ')
+            
+
                 
 
     # https://www.blog.pythonlibrary.org/2010/01/23/using-python-to-create-shortcuts/ -> example 3

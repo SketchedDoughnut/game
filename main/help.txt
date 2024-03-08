@@ -1,0 +1,18 @@
+Welcome to the file to help you setting up your installer.
+
+What inputs should look like (test case):
+-------------------------------------------------------------------------
+DOWNLOADING
+    - python version: 3.9
+    - repo url: https://github.com/SketchedDoughnut/development
+
+SHORTCUT
+    - shortcut_path: shortcut name
+    - shortcut_target: /game_data/starter.exe
+    - shortcut_wDir: /game_data
+    - shortcut_icon: /game_data/starter.exe 
+
+Section notes:
+shortcut_icon and shortcut_target are the same
+-------------------------------------------------------------------------
+How to use files:
