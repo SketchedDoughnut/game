@@ -3,4 +3,5 @@
   - https://stackoverflow.com/questions/64788656/exe-file-made-with-pyinstaller-being-reported-as-a-virus-threat-by-windows-defen
   
 - refine program into a standalone installer
-- mesh all .json
+- mesh all .json(?)
+- fix the shortcut system to be integrated with the installer setup
