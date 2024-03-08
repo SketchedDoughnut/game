@@ -8,13 +8,83 @@ DOWNLOADING
 
 SHORTCUT
     - shortcut_path: shortcut name
-    - shortcut_target: /game_data/start.exe
-    - shortcut_wDir: /game_data
-    - shortcut_icon: /game_data/start.exe 
+    - shortcut_target: main/data/start.exe
+    - shortcut_wDir: main/
+    - shortcut_icon: main/data/start.exe 
 
 Section notes:
+    - when shortcut is setup, the path must be relative to where the installation is made.
+        - installation path is "C:\main"
+        - the path you input for shortcut_target is from "C:/main" to where the file you want to execute is.
+        - lets say the folder "data" is installed via the installer in "C:/main". 
+        - shortcut should route inside that install path "C:/main" to your file.
+        - say your executable is in a folder named "data" that gets installed inside of main.
+            - example you would input:
+                - data/file.exe
     - shortcut_icon and shortcut_target are the same
     - repo_url can be used with repositories under organizations (supposedly)
 -------------------------------------------------------------------------
-How to use files:
-- TBD
+File info:
+-------------------------------------------------------------------------
+ALL .JSON
+
+    - config.json: 
+        NOTE: THE ONLY FILE WHERE EDITING IS ALLOWED
+        - Allows you to change which functions from the file will run (true/false values)
+        - Rundown:
+            - safety_check:
+                - Checks before clearing inputted directory of pre-installed files from installer
+
+            - pre_clean:
+                - Cleans up pre-installed files
+
+            - setup: 
+                - Asks if shortcut is wanted, makes sure they have python installed
+
+            - create:
+                - NOTE: PAIRED WITH DOWNLOAD (create value should be same as download value)
+                - Creates file directory for installation: "main"
+                - Updates file path in delete.json
+
+            - download: 
+                NOTE: PAIRED WITH CREATE (download value should be same as create value)
+                - Downloads from url inputted during setup of installer
+                - Creates shortcut using path inputted during setup of installer
+
+            - post_clean:
+                - Cleans up files after installation
+
+            - quit_install: 
+    
+
+    - delete.json: 
+        - A file used by delete.py (DO NOT MODIFY)
+
+
+    - setup.json:
+        - A file used by the installer when setting up; necessary for info.  (DO NOT MODIFY)
+
+
+
+
+
+FOLDERS
+    - _internal:
+        - Files necessary for this installer to run. (DO NOT MODIFY)
+                
+    - _example:
+        - An example of how things should generally look when the installer is installing your files.
+
+
+
+
+
+OTHER FILES
+    - delete.py:
+        - is used when user wishes to un-install installed files.
+                
+    - help.txt:
+        - helps with installation; will be removed at the end.
+-------------------------------------------------------------------------
+"_example/"" explenation:
+-------------------------------------------------------------------------
