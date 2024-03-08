@@ -17,6 +17,8 @@ import urllib.request
     "mode": "setup", 
     
     "py_version": "",
+    "py_use": false,
+
     "repo_url": "",
     "repo_branch": "",
 
@@ -91,7 +93,11 @@ Also, an example folder has been installed to refer to, named "_example/" (check
                 print('--------------------------------------------------------------------------')
 
                 print('DOWNLOADING: ')
-                self.py_version = input('- What is Python version you want them to install? (Ex: 3.9) \n--> ')
+                self.py_use = input('- Does this file involve any python files? (y/n): \n--> ').lower() == 'y'
+                if self.py_use == True:
+                    self.py_version = input('   - What is Python version you want them to install? (Ex: 3.9) \n     --> ')
+                else:
+                    self.py_version = 0
                 self.repo_url = input('\n- Input a link to the PUBLIC github repository for install \n--> ')
                 #self.repo_branch = input('- Input the name of the repository branch for install \n--> ')
 
@@ -101,6 +107,7 @@ Also, an example folder has been installed to refer to, named "_example/" (check
                 self.shortcut_wDir = input('\n- Input the folder that your intended file to execute is in \n--> ')
                 self.shortcut_icon = self.shortcut_target
                 print('--------------------------------------------------------------------------')
+
                 print('Here is a current data sheet of what has been inputted: ')
                 print(f"""--------------------------------------------------------------------------
 DOWNLOADING
@@ -139,6 +146,7 @@ SHORTCUT
             self.read_setup_value['shortcut_target'] = self.shortcut_target
             self.read_setup_value['shortcut_wDir'] = self.shortcut_wDir
             self.read_setup_value['shortcut_icon'] = self.shortcut_icon 
+            self.read_setup_value['py_use'] = self.py_use
             
             # finished dict
             print('Dictionary done.')
@@ -157,7 +165,8 @@ Enter "y" to start test installation.""")
 
             run_test_install = input('--> ').lower()
             if run_test_install == 'y':
-                print('Running test installation. A temporary directory will be created named "temp-inst/".')
+                print('Running test installation. A temporary directory will be created named "_temp-inst/".')
+                print('In actual installation, this will be "main".')
                 print('-------------------------------------------------------------------------')
                 
                 # - for codespace
@@ -177,6 +186,11 @@ Enter "y" to start test installation.""")
 
                 except Exception as e:
                     print(f'Download error: {e}')
+                    print('Cleaning up failed install...')
+                    try:
+                        shutil.rmtree(self.main_path)
+                    except:
+                        print('Directory deletion fail...')
                     print('The file will now quit. Restart it and input a new github url, or fix the current one.')
                     print('Repository must be PUBLIC. Due to an currently unknown error some PUBLIC URLs do not allow downloads from them.')
                     for i in range(30, 0, -1):
@@ -194,9 +208,6 @@ Enter "y" to start test installation.""")
                     target = f'{self.main_path}/{self.shortcut_target}' # file to execute
                     wDir = self.shortcut_wDir # directory of file to execute 
                     icon = self.shortcut_icon # same as target
-
-                    # setting up another variable used for shortcut creation
-                    self.install_path = f'{self.shortcut_wDir}/main_path/'
 
                     # calls on function here with data from above
                     self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)
@@ -225,6 +236,34 @@ Enter "y" to start test installation.""")
             print('Your installer should now be configured to install your programs,')
             print('and also create a shortcut to run your program.')
             print('-------------------------------------------------------------------------')
+            print(f"""Total information gathered throughout this process (all self):
+
+PATH(S)
+- {self.main_path}
+
+PY
+- {self.py_version}
+- {self.py_use}
+
+SETUP DICT
+- {self.read_setup_value}
+
+REPO URL
+- {self.repo_url}
+
+SHORTCUT INFO: name, icon, wDir, target
+- {self.shortcut_path}
+- {self.shortcut_icon}
+- {self.shortcut_wDir}
+- {self.shortcut_target}
+
+OTHER: 
+- {self.read_setup}
+- {self.temp}
+
+""")
+            input('Enter anything to continue: ')
+            print('-------------------------------------------------------------------------')
             #print('File cleanup is next: files in question being (_example/) and (help.txt).')
             #input('Enter anything to authorize cleanup: ')
             print('Installer complete! To finish up, this installer will change "mode" in "setup.json" to "install" and quit.')
@@ -240,7 +279,7 @@ Enter "y" to start test installation.""")
             self.read_setup_value['mode'] = 'install'
 
             # - for codespace
-            self.read = open('main/setup.json', 'w')
+            self.read_setup = open('main/setup.json', 'w')
 
             # for run
             #self.read_setup = open('setup.json', 'w')
@@ -326,17 +365,24 @@ Enter "y" to start test installation.""")
                     exit()
 
 
-                # establishing all contents from setup.json
-                self.read_setup = open('setup.json', 'r')
-                self.read_setup_value = json.load(self.read_setup)
-                self.read_setup.close()
+            # establishing all contents from setup.json
 
-                self.py_version = self.read_setup_value['py_version']
-                self.repo_url = self.read_setup_value['repo_url']
-                self.shortcut_path = self.read_setup_value['shortcut_path']
-                self.shortcut_target = self.read_setup_value['shortcut_target']
-                self.shortcut_wDir = self.read_setup_value['shortcut_wDir']
-                self.shortcut_icon = self.shortcut_target
+            # - for codespace
+            self.read_setup = open('main/setup.json', 'r')
+
+            # for run
+            #self.read_setup = open('setup.json', 'r')
+
+            self.read_setup_value = json.load(self.read_setup)
+            self.read_setup.close()
+
+            self.py_version = self.read_setup_value['py_version']
+            self.repo_url = self.read_setup_value['repo_url']
+            self.shortcut_path = self.read_setup_value['shortcut_path']
+            self.shortcut_target = self.read_setup_value['shortcut_target']
+            self.shortcut_wDir = self.read_setup_value['shortcut_wDir']
+            self.py_use = self.read_setup_value['py_use']
+            self.shortcut_icon = self.shortcut_target
             
             # printing start statement, format, prompting
             print("""
@@ -393,7 +439,8 @@ Enter "y" to start test installation.""")
                     # final, then finishes
                     print('---------------')
                     print('NOTE: Shortcut will not be deleted.')
-                    print('Delete done. This installer will exit in 20 seconds; afterwards, delete the folder it is in. Thank you for using this installer! :3')
+                    print('Delete done. This installer will exit in 20 seconds; afterwards, delete the folder it is in.')
+                    print('Thank you for using this installer! :3')
                     for i in range(20, 0, -1):
                         print(i)
                         time.sleep(1)
@@ -505,7 +552,8 @@ Enter "y" to start test installation.""")
         
         # make sure they have python installed
         print('---------------')
-        print(f"""
+        if self.py_use == True:
+            print(f"""
                      Before we proceed, you need to have an installation of python installed.
               If you already have one, type "y" to proceed. If you don't, do the following instructions:
               - go to Microsoft Store
@@ -514,8 +562,11 @@ Enter "y" to start test installation.""")
               - You're done!
                         Once done doing these instructions, type 'y' (anything else to cancel).
               """)
-        if input('--> ').lower() != 'y':
-            exit()
+            if input('--> ').lower() != 'y':
+                exit()
+            else:
+                print('---------------')
+        
         else:
             print('---------------')
 
