@@ -114,7 +114,7 @@ These values unfortunately can not be changed. They have been optimized for a sm
                     self.repo_url = input('- Input a link to the PUBLIC github repository for install \n--> ')
                     #self.repo_branch = input('- Input the name of the repository branch for install \n--> ')
 
-                    print("\nSHORTCUT: ")
+                    print("\nSHORTCUT (for testing): ")
                     self.shortcut_path = input('- Input the name you want for your shortcut \n--> ')
                     self.shortcut_target = input('- Input the path to your intended file to execute \n--> ')
                     self.shortcut_wDir = input('- Input the folder that your intended file to execute is in \n--> ')
@@ -268,15 +268,17 @@ Enter "y" to start test installation.""")
             # check if .json is all false
             ## for codespace
             # try:
-                # f = open('config.json', 'r')
+            #     f = open('config.json', 'r')
+
             # except:
-                # try:
-                    # f = open('main/config.json', 'r')
-                # except Exception as e:
-                    # print(f'error: {e}')
-                    # print('vsc handling: exiting')
-                    # time.sleep(5)
-                    # exit()
+            #     try:
+            #         f = open('main/config.json', 'r')
+
+            #     except Exception as e:
+            #         print(f'error: {e}')
+            #         print('vsc handling: exiting')
+            #         time.sleep(5)
+            #         exit()
 
             # - for codespace
             #f = open('main/config.json', 'r')
@@ -305,13 +307,27 @@ Enter "y" to start test installation.""")
                     print('---------------')
                     time.sleep(5)
                     exit()
+
+
+                # establishing all contents from setup.json
+                self.read_setup = open('setup.json', 'r')
+                self.read_setup_value = json.load(self.read_setup)
+                self.read_setup.close()
+
+                self.py_version = self.read_setup_value['py_version']
+                self.repo_url = self.read_setup_value['repo_url']
+                self.shortcut_path = self.read_setup_value['shortcut_path']
+                self.shortcut_target = self.read_setup_value['shortcut_target']
+                self.shortcut_wDir = self.read_setup_value['shortcut_wDir']
+                self.shortcut_icon = self.shortcut_target
             
             # printing start statement, format, prompting
             print("""
-            Welcome to the open-source file installer created by (placeholder)! 
-                Code is written by (placeholder) with snippets from others.
+            Welcome to the open-source file installer created by Sketched Doughnut! 
+                Code is written by Sketched Doughnut with snippets from others.
                 Sources are in: (install location)/gitignore/sources.txt.   
-    To change config, change values in "config.json", then restart this installer.
+        To change config, change values in "config.json", then restart this installer.
+                  To configure your own installer, install it at: (url)
             """)
             print('---------------')
             print('Input file directory for install below (or type "delete" to delete").')
@@ -471,11 +487,11 @@ Enter "y" to start test installation.""")
         
         # make sure they have python installed
         print('---------------')
-        print("""
+        print(f"""
                      Before we proceed, you need to have an installation of python installed.
               If you already have one, type "y" to proceed. If you don't, do the following instructions:
               - go to Microsoft Store
-              - search "Python 3.9"
+              - search "Python {self.py_version}"
               - Install
               - You're done!
                         Once done doing these instructions, type 'y' (anything else to cancel).
@@ -535,22 +551,22 @@ Enter "y" to start test installation.""")
         # NOTE: Do this because you can link branch in that url and it will identify it
         # NOTE: .download still runs the same
         try:
-            downloader = Downloader("https://github.com/SketchedDoughnut/development")
+            downloader = Downloader(self.repo_url)
 
             # downloading
             try:
                 downloader.download(self.install_path)
 
                 # writing run path to text file (not used, not up to date)
-                try:
-                    print('Assembling text file')
-                    url_path = f'{self.install_path}/main/top-level/content_url.txt'
-                    f = open(url_path, 'w')
-                    f.write(f'{self.install_path}/main/top-level/game_data/main.py')
-                    f.close()
+                # try:
+                #     print('Assembling text file')
+                #     url_path = f'{self.install_path}/main/top-level/content_url.txt'
+                #     f = open(url_path, 'w')
+                #     f.write(f'{self.install_path}/main/top-level/game_data/main.py')
+                #     f.close()
 
-                except Exception as e:
-                    print(f'!!! Error with text file: {e}')
+                # except Exception as e:
+                #     print(f'!!! Error with text file: {e}')
 
                 # formats info and runs shortcut making function
                 try:
@@ -559,10 +575,10 @@ Enter "y" to start test installation.""")
                         import winshell
                         print('Creating shortcut')
                         desktop = winshell.desktop()
-                        path = os.path.join(desktop, "game_name.lnk") # CHANGE game_name TO NAME
-                        target = f"{self.install_path}/main/top-level/starter.exe" # CHANGE TO EXE
-                        wDir = f"{self.install_path}/main/top-level"
-                        icon = f"{self.install_path}/main/top-level/starter.exe" # CHANGE TO EXE
+                        path = os.path.join(desktop, f'{self.shortcut_path}.lnk')
+                        target = self.shortcut_target
+                        wDir = self.shortcut_wDir
+                        icon = self.shortcut_icon
 
                         # calls on function here with data from above
                         self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)
@@ -644,6 +660,7 @@ Enter "y" to start test installation.""")
         if rules['download'] == True: self.download()
         if rules['post_clean'] == True: self.post_clean()
         if rules['quit_install'] == True: self.quit_install()
+
     # https://www.blog.pythonlibrary.org/2010/01/23/using-python-to-create-shortcuts/ -> example 3
     def createShortcut(self, path, target='', wDir='', icon=''):  
         from win32com.client import Dispatch
