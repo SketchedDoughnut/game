@@ -201,8 +201,8 @@ Enter "y" to start test installation.""")
                         # calls on function here with data from above
                         self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)
 
-                    except:
-                        print('Shortcut error; run file individually not through an interpreter')
+                    except Exception as e:
+                        print(f'Shortcut error: {e}')
                     print('-------------------------------------------------------------------------')
                     print('Shortcut created. The following should be installed: ')
                     print('installation at: /temp-inst')
@@ -223,7 +223,8 @@ Enter "y" to start test installation.""")
             print('-------------------------------------------------------------------------')
             #print('File cleanup is next: files in question being (_example/) and (help.txt).')
             #input('Enter anything to authorize cleanup: ')
-            print('Installer complete! To finish up, this installer will change "mode" in setup.json to install and quit. Change  it to "setup" to redo this after this point.')
+            print('Installer complete! To finish up, this installer will change "mode" in setup.json to install and quit.')
+            print('Change  it to "setup" to redo this after this point.')
             print("""NOTE: You only need the following files:
     - setup.json
     - config.json
