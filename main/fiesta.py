@@ -187,9 +187,14 @@ Enter "y" to start test installation.""")
                     main_path = 'temp-inst'
                     os.mkdir(main_path)
 
-                    downloader = Downloader()
-                    downloader.load_repository(url=self.repo_url)
-                    downloader.download(main_path)
+                    try:
+                        downloader = Downloader()
+                        downloader.load_repository(url=self.repo_url)
+                        downloader.download(main_path)
+                    except Exception as e:
+                        print(f'Download error: {e}')
+                        print('The file will now quit. Restart it and input a new github url, or fix the current one.')
+                        print('Repository must be PUBLIC. Due to an unkown error some PUBLIC URLs do not allow downloads from them.')
                     print('-------------------------------------------------------------------------')
                     print('Installation is done. Creating shortcut.')
                     try:
@@ -202,11 +207,12 @@ Enter "y" to start test installation.""")
 
                         # calls on function here with data from above
                         self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)
+                        print('-------------------------------------------------------------------------')
+                        print('Shortcut created.')
 
                     except Exception as e:
                         print(f'Shortcut error: {e}')
-                    print('-------------------------------------------------------------------------')
-                    print('Shortcut created.')
+
                     print('-------------------------------------------------------------------------')
                     print('The following should be installed: ')
                     print('installation at: /temp-inst')
