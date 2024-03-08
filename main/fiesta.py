@@ -111,13 +111,13 @@ These values unfortunately can not be changed. They have been optimized for a sm
 
                     print('DOWNLOADING: ')
                     self.py_version = input('- What is Python version you want them to install? (Ex: 3.9) \n--> ')
-                    self.repo_url = input('- Input a link to the PUBLIC github repository for install \n--> ')
+                    self.repo_url = input('\n- Input a link to the PUBLIC github repository for install \n--> ')
                     #self.repo_branch = input('- Input the name of the repository branch for install \n--> ')
 
-                    print("\nSHORTCUT (for testing): ")
+                    print("\nSHORTCUT: ")
                     self.shortcut_path = input('- Input the name you want for your shortcut \n--> ')
-                    self.shortcut_target = input('- Input the path to your intended file to execute \n--> ')
-                    self.shortcut_wDir = input('- Input the folder that your intended file to execute is in \n--> ')
+                    self.shortcut_target = input('\n- Input the path to your intended file to execute \n Note: Path from (install_location)/game/ \n--> ')
+                    self.shortcut_wDir = input('\n- Input the folder that your intended file to execute is in \n--> ')
                     self.shortcut_icon = self.shortcut_target
                     print('--------------------------------------------------------------------------')
                     print('Here is a current data sheet of what has been inputted: ')
@@ -409,7 +409,7 @@ Enter "y" to start test installation.""")
                 for i in self.install_path:
                     new_string += i
                 self.install_path = new_string
-                self.install_path += '/game_name'
+                self.install_path += '/game'
                 print('---------------')
                 print(self.install_path)
                 #else:
@@ -660,6 +660,8 @@ Enter "y" to start test installation.""")
         if rules['download'] == True: self.download()
         if rules['post_clean'] == True: self.post_clean()
         if rules['quit_install'] == True: self.quit_install()
+
+
 
     # https://www.blog.pythonlibrary.org/2010/01/23/using-python-to-create-shortcuts/ -> example 3
     def createShortcut(self, path, target='', wDir='', icon=''):  
