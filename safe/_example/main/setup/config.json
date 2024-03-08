@@ -1,0 +1,15 @@
+{
+    "safety_check": true,
+
+    "pre_clean": true, 
+
+    "setup": true, 
+
+    "create": true, 
+
+    "download": true,
+    
+    "post_clean": true, 
+
+    "quit_install": true
+}

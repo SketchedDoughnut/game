@@ -220,13 +220,25 @@ Enter "y" to start test installation.""")
             print('Your installer should now be configured to install your programs,')
             print('and also create a shortcut to run your program.')
             print('-------------------------------------------------------------------------')
-            print('File cleanup is next: files in question being (_example/) and (help.txt).')
-            input('Enter anything to authorize cleanup: ')
-            
-            shutil.rmtree('help.txt')
-            shutil.rmtree('_example')
+            #print('File cleanup is next: files in question being (_example/) and (help.txt).')
+            #input('Enter anything to authorize cleanup: ')
+            print('Installer complete! To finish up, this installer will change "mode" in setup.json to install and quit. Change  it to "setup" to redo this after this point.')
+            print("""NOTE: You only need the following files:
+    - setup.json
+    - config.json
+    - delete.json
+    - delete.py
+    - this installer
+    - _internal""")
+            self.read_setup_value['mode'] == 'install'
             print('-------------------------------------------------------------------------')
-            print('(example/) and (help.txt) removed.')
+            print('Changed mode to install.')
+            print('-------------------------------------------------------------------------')
+            print('Exiting in 30s...')
+            for i in range(30, 0, -1):
+                print(i)
+                time.sleep(1)
+            exit()
 
                 
 

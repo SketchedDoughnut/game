@@ -1,0 +1,34 @@
+Welcome to the file to help you setting up your installer.
+
+What inputs should look like (test case):
+-------------------------------------------------------------------------
+DOWNLOADING
+    - python version: 3.9
+    - repo url: https://github.com/SketchedDoughnut/development
+
+SHORTCUT
+    - shortcut_path: shortcut name
+    - shortcut_target: /game_data/starter.exe
+    - shortcut_wDir: /game_data
+    - shortcut_icon: /game_data/starter.exe 
+
+Section notes:
+shortcut_icon and shortcut_target are the same
+-------------------------------------------------------------------------
+How to use files:
+-------------------------------------------------------------------------
+setup.json:
+    - is configured in code, used for installer to know what to DOWNLOADING
+
+config.json:
+    - tells it what functions to run and can be configurated with true/false values
+
+delete.json:
+    - for the delete.py functions
+
+help.txt:
+    - used for helping you understand inputs
+
+_example/:
+    - lets you see an example of how things should be formatted
+-------------------------------------------------------------------------
