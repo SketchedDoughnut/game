@@ -38,10 +38,11 @@ class Install:
         # read setup.json for setup and get info
         
         # - for codespace
-        self.read_setup = open('main/setup.json', 'r')
+        #self.read_setup = open('main/setup.json', 'r')
 
         # for run
-        #self.read_setup = open('setup.json', 'r')
+        self.read_setup = open('setup.json', 'r')
+
         self.read_setup_value = json.load(self.read_setup)
 
         # establish all variables 
@@ -138,10 +139,10 @@ These values unfortunately can not be changed. They have been optimized for a sm
                 print('Setting up dictionary...')
 
                 # - for codespace
-                self.read_setup = open('main/setup.json', 'w')
+                #self.read_setup = open('main/setup.json', 'w')
 
                 # for run
-                #self.read_setup = open('setup.json', 'r')
+                self.read_setup = open('setup.json', 'r')
 
                 # dumping data
                 # downloading
@@ -176,12 +177,12 @@ Enter "y" to start test installation.""")
                     print('-------------------------------------------------------------------------')
                     
                     # - for codespace
-                    main_path = 'main/temp-inst'
-                    os.mkdir(main_path)
+                    #main_path = 'main/temp-inst'
+                    #os.mkdir(main_path)
 
                     # for run
-                    #main_path = '/temp-inst'
-                    #os.mkdir(main_path)
+                    main_path = '/temp-inst'
+                    os.mkdir(main_path)
 
                     downloader = Downloader()
                     downloader.load_repository(url=self.repo_url)
