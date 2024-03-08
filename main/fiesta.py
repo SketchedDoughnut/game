@@ -232,8 +232,11 @@ Enter "y" to start test installation.""")
     - delete.py
     - this installer
     - _internal""")
-            self.read_setup_value['mode'] == 'install'
+            
             print('-------------------------------------------------------------------------')
+            self.read_setup_value['mode'] == 'install'
+            self.read_setup = open('setup.json', 'w')
+            self.temp = json.dump(self.read_setup_value, self.read_setup)
             print('Changed mode to install.')
             print('-------------------------------------------------------------------------')
             print('Exiting in 30s...')
