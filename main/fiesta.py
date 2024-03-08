@@ -193,7 +193,7 @@ Enter "y" to start test installation.""")
                     try:
                         import winshell
                         desktop = winshell.desktop()
-                        path = os.path.join(desktop, self.shortcut_path) # CHANGE game_name TO NAME
+                        path = os.path.join(desktop, f'{self.shortcut_path}.lnk')
                         target = self.shortcut_target
                         wDir = self.shortcut_wDir
                         icon = self.shortcut_icon
