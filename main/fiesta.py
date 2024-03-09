@@ -40,10 +40,10 @@ class Install:
         # read setup.json for setup and get info
         
         # - for codespace
-        self.read_setup = open('main/setup.json', 'r')
+        #self.read_setup = open('main/setup.json', 'r')
 
         # for run
-        #self.read_setup = open('setup.json', 'r')
+        self.read_setup = open('setup.json', 'r')
 
         self.read_setup_value = json.load(self.read_setup)
 
@@ -120,11 +120,12 @@ Also, an example folder has been installed to refer to, named "_example/" (check
 
                 print("\nSHORTCUT: ")
                 self.shortcut_path = input('- Input the name you want for your shortcut \n--> ')
-                self.shortcut_target = input('\n- Input the path to your intended file to execute \n Note: Path from "main/" to where your installed files will be located. (refer to "help.txt") \n--> ')
-                self.shortcut_wDir = input('\n- Input the folder that your intended file to execute is in \n--> ')
+                self.shortcut_target = input('\n- Input the path to your intended file to execute \n- Note: Path from "main/" to where your installed files will be located (refer to "help.txt") \n--> ')
+                self.shortcut_wDir = input('\n- Input the folder that your intended file to execute is in \n- Note: if file is in root, enter nothing here \n--> ')
                 self.shortcut_icon = self.shortcut_target
                 print('--------------------------------------------------------------------------')
-
+                #if self.shortcut_wDir == " ":
+                #    self.shortcut_wDir = 
                 print('Here is a current data sheet of what has been inputted: ')
                 print(f"""--------------------------------------------------------------------------
 DOWNLOADING
@@ -146,10 +147,10 @@ SHORTCUT
             print('Setting up dictionary...')
 
             # - for codespace
-            self.read_setup = open('main/setup.json', 'w')
+            #self.read_setup = open('main/setup.json', 'w')
 
             # for run
-            #self.read_setup = open('setup.json', 'w')
+            self.read_setup = open('setup.json', 'w')
 
             # dumping data
             # downloading
@@ -187,12 +188,12 @@ Enter "y" to start test installation.""")
                 print('-------------------------------------------------------------------------')
                 
                 # - for codespace
-                self.main_path = 'main/main'
-                os.mkdir(self.main_path)
+                # self.main_path = 'main/main'
+                # os.mkdir(self.main_path)
 
                 # for run
-                #self.main_path = 'main'
-                #os.mkdir(main_path)
+                self.main_path = 'main'
+                os.mkdir(self.main_path)
 
                 try:
                     downloader = Downloader()
@@ -236,11 +237,11 @@ Enter "y" to start test installation.""")
 
                 print('-------------------------------------------------------------------------')
                 print('The following should be installed (unless error occured): ')
-                print('installation at: temp-inst/')
+                print('installation at: main/')
                 print(f'shortcut on desktop at: {self.shortcut_path}')
                 print('-------------------------------------------------------------------------')
                 input('Enter anything to proceed to cleanup: ')
-                print('Cleaning up installating at /temp-inst...')
+                print('Cleaning up installation at main/...')
                 shutil.rmtree(self.main_path)
                 print('Cleanup done; continuing')
 
@@ -296,10 +297,10 @@ OTHER:
             self.read_setup_value['mode'] = 'install'
 
             # - for codespace
-            self.read_setup = open('main/setup.json', 'w')
+            #self.read_setup = open('main/setup.json', 'w')
 
             # for run
-            #self.read_setup = open('setup.json', 'w')
+            self.read_setup = open('setup.json', 'w')
             
             json.dump(self.read_setup_value, self.read_setup)
             self.read_setup.close()
@@ -354,10 +355,10 @@ OTHER:
             #         exit()
 
             # - for codespace
-            f = open('main/config.json', 'r')
+            #f = open('main/config.json', 'r')
 
             # for run
-            #f = open('config.json', 'r')
+            f = open('config.json', 'r')
 
             rules = json.load(f)
             f.close()
@@ -385,10 +386,10 @@ OTHER:
             # establishing all contents from setup.json
 
             # - for codespace
-            self.read_setup = open('main/setup.json', 'r')
+            #self.read_setup = open('main/setup.json', 'r')
 
             # for run
-            #self.read_setup = open('setup.json', 'r')
+            self.read_setup = open('setup.json', 'r')
 
             self.read_setup_value = json.load(self.read_setup)
             self.read_setup.close()
@@ -422,10 +423,10 @@ OTHER:
                     # opening delete.json and getting path
 
                     # - for codespace
-                    temp = open('main/delete.json', 'r')
+                    #temp = open('main/delete.json', 'r')
 
                     # for run
-                    #temp = open('delete.json', 'r')
+                    temp = open('delete.json', 'r')
 
                     delete_path = json.load(temp)
                     delete_path = delete_path["remove_path"]
@@ -447,10 +448,10 @@ OTHER:
                     #         exit()
 
                     # - for codespace
-                    os.system(f'python main/delete.py')
+                    #os.system(f'python main/delete.py')
                             
                     ## for run
-                    #os.system(f'python delete.py')
+                    os.system(f'python delete.py')
                             
 
                     # final, then finishes
@@ -611,20 +612,20 @@ OTHER:
         #        exit()
         
         # - for codespace
-        rules = open('main/delete.json', 'r')
+        #rules = open('main/delete.json', 'r')
 
         # for run
-        #rules = open('delete.json', 'r')
+        rules = open('delete.json', 'r')
 
         rules_content = json.load(rules)
         rules.close()
         rules_content["remove_path"] = self.install_path
 
         # - for codespace
-        rules = open('main/delete.json', 'w')
+        #rules = open('main/delete.json', 'w')
 
         # for run
-        #rules = open('delete.json', 'w')
+        rules = open('delete.json', 'w')
 
         json.dump(rules_content, rules)
         rules.close()
@@ -732,10 +733,10 @@ OTHER:
                 # exit()
 
         # - for codespace
-        f = open('main/config.json', 'r')
+        #f = open('main/config.json', 'r')
 
         # for run
-        #f = open('config.json', 'r')
+        f = open('config.json', 'r')
 
         rules = json.load(f)
         f.close()
