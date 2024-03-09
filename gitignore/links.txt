@@ -23,3 +23,7 @@ https://answers.microsoft.com/en-us/windows/forum/all/windows-defender-thinks-my
 PYGAME:
     - https://github.com/techwithtim/PygameForBeginners
     - https://github.com/search?q=pygame&type=repositories
+
+NOISE:
+    https://stackoverflow.com/questions/53365282/cant-install-noise-module
+        - https://www.lfd.uci.edu/~gohlke/pythonlibs/ 
