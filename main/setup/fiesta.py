@@ -37,10 +37,10 @@ class Install:
                     # exit()
 
             # - for codespace
-            f = open('main/setup/config.json', 'r')
+            #f = open('main/setup/config.json', 'r')
 
             ## for run
-            #f = open('config.json', 'r')
+            f = open('config.json', 'r')
 
             rules = json.load(f)
             f.close()
@@ -103,10 +103,10 @@ class Install:
                     #         exit()
 
                     # - for codespace
-                    os.system(f'python main/setup/delete.py')
+                    #os.system(f'python main/setup/delete.py')
                             
                     ## for run
-                    #os.system(f'python delete.py')
+                    os.system(f'python delete.py')
                             
 
                     # final, then finishes
@@ -262,10 +262,10 @@ class Install:
         #        exit()
         
         # - for codespace
-        rules = open('main/setup/delete.json', 'r')
+        #rules = open('main/setup/delete.json', 'r')
 
         # for run
-        #rules = open('delete.json', 'r')
+        rules = open('delete.json', 'r')
 
         rules_content = json.load(rules)
         rules.close()
@@ -400,10 +400,10 @@ class Install:
                 # exit()
 
         # - for codespace
-        f = open('main/setup/config.json', 'r')
+        #f = open('main/setup/config.json', 'r')
 
         # for run
-        #f = open('config.json', 'r')
+        f = open('config.json', 'r')
 
         rules = json.load(f)
         f.close()

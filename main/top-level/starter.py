@@ -17,10 +17,10 @@ print(f'Running game: {run_path}')
 print(f'Alt: {alt_path}')
 
 # - for codespace
-os.system(f'python {alt_path}')
+#os.system(f'python {alt_path}')
 
 # for run 
-#os.system(f'python {run_path}')
+os.system(f'python {run_path}')
 
 #################################################################
 

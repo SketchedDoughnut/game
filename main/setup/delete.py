@@ -21,10 +21,10 @@ import time
 print('Delete: Acquiring JSON path')
 
 # - for codespace
-read_file = open('main/setup/delete.json', 'r')
+#read_file = open('main/setup/delete.json', 'r')
              
 # for run
-#read_file = open('delete.json', 'r')
+read_file = open('delete.json', 'r')
 
 path = json.load(read_file)
 path_content = path["remove_path"]
@@ -44,10 +44,10 @@ shutil.rmtree(path_content)
 print('Delete: Directory gone. Emptying data file.')
 
 # - for codespace
-write_file = open('main/setup/delete.json', 'w')
+#write_file = open('main/setup/delete.json', 'w')
              
 # for run
-#write_file = open('delete.json', 'w')
+write_file = open('delete.json', 'w')
 
 path["remove_path"] = ""
 json.dump(path, write_file)
