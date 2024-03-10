@@ -15,17 +15,19 @@ import urllib.request
 
 {
     "mode": "setup", 
+
+    "py_use": false, 
+    "py_version": 0, 
+
+    "repo_url": "", 
+    "repo_branch": "", 
+
+    "shortcut_path": "", 
+    "shortcut_target": "", 
+    "shortcut_wDir": "", 
+    "shortcut_icon": "",
     
-    "py_version": "",
-    "py_use": false,
-
-    "repo_url": "",
-    "repo_branch": "",
-
-    "shortcut_path": "",
-    "shortcut_target": "",
-    "shortcut_wDir": "",
-    "shortcut_icon": ""
+    "remove_path": ""
 }
 
 '''
@@ -78,7 +80,7 @@ Here is the rundown on how the installer will work, user-side:
     - Asks if you want a shortcut created, and makes sure you have python installed. 
         - (setup)
                   
-    - Creates directory for main folder within inputted file directory done at step 1, and writes that path into delete.json. 
+    - Creates directory for main folder within inputted file directory done at step 1, and writes that path into setup.json. 
         - (create)
                   
     - Downloads files from an inputted github link, and optionally a branch of said repository 
@@ -289,7 +291,6 @@ OTHER:
             print("""NOTE: You only need the following files:
     - setup.json
     - config.json
-    - delete.json
     - delete.py
     - this installer
     - _internal""")
@@ -423,10 +424,10 @@ OTHER:
                     # opening delete.json and getting path
 
                     # - for codespace
-                    #temp = open('main/delete.json', 'r')
+                    #temp = open('main/setup.json', 'r')
 
                     # for run
-                    temp = open('delete.json', 'r')
+                    temp = open('setup.json', 'r')
 
                     delete_path = json.load(temp)
                     delete_path = delete_path["remove_path"]
@@ -448,7 +449,7 @@ OTHER:
                     #         exit()
 
                     # - for codespace
-                    #os.system(f'python main/delete.py')
+                    #os.system(f'python main/setup.py')
                             
                     ## for run
                     os.system(f'python delete.py')
@@ -612,20 +613,20 @@ OTHER:
         #        exit()
         
         # - for codespace
-        #rules = open('main/delete.json', 'r')
+        #rules = open('main/setup.json', 'r')
 
         # for run
-        rules = open('delete.json', 'r')
+        rules = open('setup.json', 'r')
 
         rules_content = json.load(rules)
         rules.close()
         rules_content["remove_path"] = self.install_path
 
         # - for codespace
-        #rules = open('main/delete.json', 'w')
+        #rules = open('main/setup.json', 'w')
 
         # for run
-        rules = open('delete.json', 'w')
+        rules = open('setup.json', 'w')
 
         json.dump(rules_content, rules)
         rules.close()
