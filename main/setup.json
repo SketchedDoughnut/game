@@ -1,12 +1,1 @@
-{
-    "mode": "setup", 
-    "py_use": false, 
-    "py_version": 0, 
-    "repo_url": "", 
-    "repo_branch": "", 
-    "shortcut_path": "", 
-    "shortcut_target": "", 
-    "shortcut_wDir": "", 
-    "shortcut_icon": "",
-    "remove_path": ""
-}
+{"mode": "setup", "py_use": false, "py_version": "", "repo_url": "", "repo_branch": "", "shortcut_path": "", "shortcut_target": "", "shortcut_wDir": "", "shortcut_icon": "", "remove_path": "", "abs_desktop_path": "", "abs_shortcut_path": ""}

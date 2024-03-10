@@ -33,19 +33,24 @@ print('Delete: Acquiring JSON path')
 read_file = open('setup.json', 'r')
 
 path = json.load(read_file)
-path_content = path["remove_path"]
+path["remove_path"]
 
-if ('main' in path_content) == False:
-    print(f'No main found ({path_content}). exiting in 5s...')
+if ('main' in path["remove_path"]) == False:
+    print(f'No main found ({path["remove_path"]}). exiting in 5s...')
     time.sleep(5)
     exit()
 
 read_file.close()
-print(f'Delete: JSON path: {path_content}/')
+print(f'Delete: JSON path: {path["remove_path"]}/')
 
 # deleting folder
 print('Delete: deleting folder and everything within...')
-shutil.rmtree(path_content)
+shutil.rmtree(path["remove_path"])
+
+time.sleep(0.5)
+
+print('Delete; deleting shortcut...')
+os.remove(path["abs_shortcut_path"])
 
 print('Delete: Directory gone. Emptying data file.')
 
@@ -56,6 +61,7 @@ print('Delete: Directory gone. Emptying data file.')
 write_file = open('setup.json', 'w')
 
 path["remove_path"] = ""
+path["abs_shortcut_path"] = ""
 json.dump(path, write_file)
 write_file.close()
 exit()

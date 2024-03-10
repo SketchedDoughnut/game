@@ -17,7 +17,7 @@ import urllib.request
     "mode": "setup", 
 
     "py_use": false, 
-    "py_version": 0, 
+    "py_version": "", 
 
     "repo_url": "", 
     "repo_branch": "", 
@@ -25,9 +25,12 @@ import urllib.request
     "shortcut_path": "", 
     "shortcut_target": "", 
     "shortcut_wDir": "", 
-    "shortcut_icon": "",
-    
-    "remove_path": ""
+    "shortcut_icon": "", 
+
+    "remove_path": "", 
+
+    "abs_desktop_path": "", 
+    "abs_shortcut_path": ""
 }
 
 '''
@@ -57,8 +60,8 @@ class Install:
             # print start message
             print("""--------------------------------------------------------------------------
 Welcome to the installation agent designed by Sketched Doughnut!
-This installer will run you through the steps required to set up, and then your installer is ready to go! 
-It is coded in python and compiled with pyinstaller. This enables you to install and run python files. 
+This installer will run you through the steps required to set up, and then your installer is done! 
+It is coded in python and compiled with pyinstaller, but can install any files you want. 
 
 Information about the files and steps to follow along can be found in "help.txt", and it is heavily encouraged you
 have that open while using this installer for reference.""")
@@ -77,17 +80,18 @@ Here is the rundown on how the installer will work, user-side:
         - (safety_check)
         - (pre_clean)
                   
-    - Asks if you want a shortcut created, and makes sure you have python installed. 
+    - Asks if you want a shortcut created, setup
         - (setup)
                   
-    - Creates directory for main folder within inputted file directory done at step 1, and writes that path into setup.json. 
+    - Creates directory for main folder within inputted file directory done at step 1, 
+      and writes that path into setup.json. 
         - (create)
                   
-    - Downloads files from an inputted github link, and optionally a branch of said repository 
+    - Downloads files from an inputted github respository link (PUBLIC ONLY)
+        - NOTE: Some respositories have had issues with getting code downloaded from them. Cause: unknown.
         - (download)
                   
-        - NOTE: Some respositories have had issues with getting code downloaded from them. Cause: unknown.
-    - Cleans up any temporary files afterwards. 
+    - Cleans up any temporary files created afterwards. 
         - (post_clean)
                   
     - Finishes up then quits install after a set time. 
@@ -106,30 +110,34 @@ These values unfortunately can not be changed. They have been optimized for a sm
                 print("""SETUP
                       
 We will now proceed into setup.
-in order to run, info must be inputted by you for this to work.
+in order to run, some information must be gathered.
+                      
 To follow along, please check "help.txt" for further elaboration on each step.
-Also, an example folder has been installed to refer to, named "_example/" (check "help.txt" to know more about "_example/").""")
+Also, an example folder has been installed to refer to, named "_example/" 
+(check "help.txt" to know more about "_example/").""")
+                print('--------------------------------------------------------------------------')
+                input('Enter anything to continue: ')
                 print('--------------------------------------------------------------------------')
 
                 print('DOWNLOADING: ')
-                self.py_use = input('- Does this file involve any python files? (y/n): \n--> ').lower() == 'y'
+                self.py_use = input('- Does this file involve any python files? (y/n): \n     --> ').lower() == 'y'
                 if self.py_use == True:
                     self.py_version = input('   - What is Python version you want them to install? (Ex: 3.9) \n     --> ')
                 else:
                     self.py_version = 0
-                self.repo_url = input('\n- Input a link to the PUBLIC github repository for install \n--> ')
+                self.repo_url = input('\n- Input a link to the PUBLIC github repository for install: \n     --> ')
                 #self.repo_branch = input('- Input the name of the repository branch for install \n--> ')
 
-                print("\nSHORTCUT: ")
-                self.shortcut_path = input('- Input the name you want for your shortcut \n--> ')
-                self.shortcut_target = input('\n- Input the path to your intended file to execute \n- Note: Path from "main/" to where your installed files will be located (refer to "help.txt") \n--> ')
-                self.shortcut_wDir = input('\n- Input the folder that your intended file to execute is in \n- Note: if file is in root, enter nothing here \n--> ')
+                print("\n\nSHORTCUT: ")
+                self.shortcut_path = input('- Input the name you want for your shortcut: \n     --> ')
+                self.shortcut_target = input('\n- Input the path to your intended file to execute \n- Note: Path from "main/" to where your installed files will be located (refer to "help.txt"): \n     --> ')
+                self.shortcut_wDir = input('\n- Input the folder that your intended file to execute is in \n- Note: if file is in root, enter nothing here: \n     --> ')
                 self.shortcut_icon = self.shortcut_target
                 print('--------------------------------------------------------------------------')
-                #if self.shortcut_wDir == " ":
-                #    self.shortcut_wDir = 
                 print('Here is a current data sheet of what has been inputted: ')
                 print(f"""--------------------------------------------------------------------------
+                  
+                      
 DOWNLOADING
     - python version: {self.py_version}
     - repository url: {self.repo_url}
@@ -139,62 +147,33 @@ SHORTCUT
     - shortcut target file: {self.shortcut_target}
     - shortcut directory of target: {self.shortcut_wDir}
     - shortcut icon: {self.shortcut_icon}
+
+    
 -------------------------------------------------------------------------""")
 # - repository branch: {self.repo_branch}
                 print('Compare these results with the example in "help.txt".')
                 if input('If everything is right, type "y". Otherwise, type "n" to re-enter info: \n--> ').lower() == 'y':
                     input_loop = False
             
-            # loop over, format dict and dump
-            print('Setting up dictionary...')
-
-            # - for codespace
-            #self.read_setup = open('main/setup.json', 'w')
-
-            # for run
-            self.read_setup = open('setup.json', 'w')
-
-            # dumping data
-            # downloading
-            self.read_setup_value['py_version'] = self.py_version
-            self.read_setup_value['repo_url'] = self.repo_url
-            #self.read_setup_value['repo_branch'] = self.repo_branch
-            #self.read_setup_value['repo_branch'] = 'x'
-
-            # shortcut
-            self.read_setup_value['shortcut_path'] = self.shortcut_path
-            self.read_setup_value['shortcut_target'] = self.shortcut_target
-            self.read_setup_value['shortcut_wDir'] = self.shortcut_wDir
-            self.read_setup_value['shortcut_icon'] = self.shortcut_icon 
-            self.read_setup_value['py_use'] = self.py_use
-            
-            # finished dict
-            print('Dictionary done.')
-            #print(self.read_setup_value)
-
-            # dumping into .json
-            print('Dumping into setup.json...')
-            self.temp = json.dump(self.read_setup_value, self.read_setup)
-            self.read_setup.close()
-            print('Dump done.')
-
-            input('Enter anything to continue: ')
             print("""-------------------------------------------------------------------------
-This file will now attempt a test installation using the information given. However, if you are confident in this then type "skip" to skip.
+This file will now attempt a test installation using the information given. 
+However, if you are confident in this, then type "skip" to skip (Not advised).
 Enter "y" to start test installation.""")
 
             run_test_install = input('--> ').lower()
             if run_test_install == 'y':
-                print('Running test installation. A temporary directory will be created named "_temp-inst/".')
-                print('In actual installation, this will be "main".')
                 print('-------------------------------------------------------------------------')
+                print('Running test installation. A temporary directory will be created named "_temp-inst/".')
+                print('In actual installation, this will be "main/".')
+                print('-------------------------------------------------------------------------')
+                time.sleep(2)
                 
                 # - for codespace
-                # self.main_path = 'main/main'
-                # os.mkdir(self.main_path)
+                #self.main_path = 'main/_temp-inst'
+                #os.mkdir(self.main_path)
 
                 # for run
-                self.main_path = 'main'
+                self.main_path = '_temp-inst'
                 os.mkdir(self.main_path)
 
                 try:
@@ -220,37 +199,54 @@ Enter "y" to start test installation.""")
     
                 try:
                     import winshell
-                    desktop = winshell.desktop()
-                    
-                    # make shortcut adapt for installation
+                    from pathlib import Path
 
-                    path = os.path.join(desktop, f'{self.shortcut_path}.lnk') # name
-                    target = f'{self.main_path}/{self.shortcut_target}' # file to execute
+                    desktop = winshell.desktop()
+
+                    # abs path to desktop
+                    self.abs_desktop_path = f'{str(Path(self.shortcut_wDir).resolve())}'
+                    print(self.abs_desktop_path)
+
+                    # make shortcut adapt for installation
+                    self.abs_shortcut_path = os.path.join(desktop, f'{self.shortcut_path}.lnk') # name
+                    
+                    #self.main_path previously
+                    target = f'{self.abs_desktop_path}/_temp-inst/{self.shortcut_target}' # file to execute
                     wDir = self.shortcut_wDir # directory of file to execute 
                     icon = self.shortcut_icon # same as target
+        
+
 
                     # calls on function here with data from above
-                    self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)
-                    print('-------------------------------------------------------------------------')
+                    self.createShortcut(target=target, path=self.abs_shortcut_path, wDir=wDir, icon=icon)
                     print('Shortcut created.')
 
                 except Exception as e:
                     print(f'Shortcut error: {e}')
 
                 print('-------------------------------------------------------------------------')
-                print('The following should be installed (unless error occured): ')
-                print('installation at: main/')
-                print(f'shortcut on desktop at: {self.shortcut_path}')
+                print(f"""
+The following should be installed:
+    - installation at: {self.main_path}/
+    - shortcut on desktop at: {self.shortcut_path}
+                """)
                 print('-------------------------------------------------------------------------')
                 input('Enter anything to proceed to cleanup: ')
-                print('Cleaning up installation at main/...')
+                print('-------------------------------------------------------------------------')
+                print('Cleaning up installation at _temp-inst/...')
                 shutil.rmtree(self.main_path)
+                time.sleep(0.5)
+                print(f'Cleaning up shortcut at {self.abs_shortcut_path}...')
+                os.remove(self.abs_shortcut_path)
                 print('Cleanup done; continuing')
+                
 
 
             elif run_test_install == 'skip':
+                print('-------------------------------------------------------------------------')
                 print('Skipping test installation.')
         
+            print('-------------------------------------------------------------------------')
             input('Enter anything to continue: ')
             print('--------------------------------------------------------------------------')
             print('Your installer should now be configured to install your programs,')
@@ -265,27 +261,63 @@ PY
 - {self.py_version}
 - {self.py_use}
 
-SETUP DICT
-- {self.read_setup_value}
-
 REPO URL
 - {self.repo_url}
 
-SHORTCUT INFO: name, icon, wDir, target
+SHORTCUT INFO: name, icon, wDir, target, abs path, abs desktop path
 - {self.shortcut_path}
 - {self.shortcut_icon}
 - {self.shortcut_wDir}
 - {self.shortcut_target}
+- {self.abs_shortcut_path}
+- {self.abs_desktop_path}
 
 OTHER: 
 - {self.read_setup}
-- {self.temp}
 
 """)
-            input('Enter anything to continue: ')
             print('-------------------------------------------------------------------------')
-            #print('File cleanup is next: files in question being (_example/) and (help.txt).')
-            #input('Enter anything to authorize cleanup: ')
+            input('Enter anything to continue: ')
+            
+            # format dict and dump
+            print('--------------------------------------------------------------------------')
+            print('Setting up dictionary...')
+
+            # - for codespace
+            #self.read_setup = open('main/setup.json', 'w')
+
+            # for run
+            self.read_setup = open('setup.json', 'w')
+
+            # dumping data
+            # downloading
+            self.read_setup_value['py_version'] = self.py_version
+            self.read_setup_value['repo_url'] = self.repo_url
+            #self.read_setup_value['repo_branch'] = self.repo_branch
+            #self.read_setup_value['repo_branch'] = 'x'
+
+            # shortcut
+            self.read_setup_value['shortcut_path'] = self.shortcut_path
+            self.read_setup_value['shortcut_target'] = self.shortcut_target
+            self.read_setup_value['shortcut_wDir'] = self.shortcut_wDir
+            self.read_setup_value['shortcut_icon'] = self.shortcut_icon 
+            self.read_setup_value['py_use'] = self.py_use
+
+            # desktop and etc
+            self.read_setup_value['abs_desktop_path'] = self.abs_desktop_path
+            self.read_setup_value['abs_shortcut_path'] = self.abs_shortcut_path
+
+            # finished dict
+            print('Dictionary done.')
+            #print(self.read_setup_value)
+
+            # dumping into .json
+            print('Dumping into setup.json...')
+            self.temp = json.dump(self.read_setup_value, self.read_setup)
+            self.read_setup.close()
+            print('Dump done.')
+
+            print('-------------------------------------------------------------------------')
             print('Installer complete! To finish up, this installer will change "mode" in "setup.json" to "install" and quit.')
             print('Change it to "setup" to redo this after this point.')
             print("""NOTE: You only need the following files:
@@ -308,7 +340,8 @@ OTHER:
             print('Changed mode to install.')
             print('-------------------------------------------------------------------------')
             print('Exiting in 30s...')
-            for i in range(30, 0, -1):
+            time.sleep(15)
+            for i in range(15, 0, -1):
                 print(i)
                 time.sleep(1)
             exit()
@@ -449,18 +482,18 @@ OTHER:
                     #         exit()
 
                     # - for codespace
-                    #os.system(f'python main/setup.py')
+                    #os.system(f'python main/delete.py')
                             
-                    ## for run
+                    # for run
                     os.system(f'python delete.py')
                             
 
                     # final, then finishes
                     print('---------------')
-                    print('NOTE: Shortcut will not be deleted.')
-                    print('Delete done. This installer will exit in 20 seconds; afterwards, delete the folder it is in.')
+                    print('Delete done. This installer will exit in 30 seconds; afterwards, delete the folder it is in.')
                     print('Thank you for using this installer! :3')
-                    for i in range(20, 0, -1):
+                    time.sleep(20)
+                    for i in range(10, 0, -1):
                         print(i)
                         time.sleep(1)
                     exit()
@@ -662,6 +695,8 @@ OTHER:
                     if self.desktop_shortcut == True:
                         #print('---------------')
                         import winshell
+                        from pathlib import Path
+
                         print('Creating shortcut')
                         desktop = winshell.desktop()
                         path = os.path.join(desktop, f'{self.shortcut_path}.lnk')
