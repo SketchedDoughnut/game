@@ -12,9 +12,9 @@ DOWNLOADING
 
 SHORTCUT
     - shortcut_path: shortcut name
-    - shortcut_target: main/data/start.exe
-    - shortcut_wDir: main/
-    - shortcut_icon: main/data/start.exe 
+    - shortcut_target: data/start.exe
+    - shortcut_wDir: data
+    - shortcut_icon: data/start.exe 
 
 
 Section notes:
