@@ -30,10 +30,18 @@ import urllib.request
     "remove_path": "", 
 
     "abs_desktop_path": "", 
-    "abs_shortcut_path": ""
+    "abs_shortcut_path": "",
+
+    "environment": "vscode"
 }
 
+## - for codespace
+# - for codespace
+## for run
+# for run
 '''
+
+
 ########################################################################
 
 # main install class
@@ -43,18 +51,22 @@ class Install:
     def __init__(self, mode=0):
 
         # read setup.json for setup and get info
-        
-        # - for codespace
-        #self.read_setup = open('main/setup.json', 'r')
 
-        # for run
-        self.read_setup = open('setup.json', 'r')
+        ## - for codespace
+        self.read_setup = open('main/setup.json', 'r')
+
+        ## for run
+        #self.read_setup = open('setup.json', 'r')
 
         self.read_setup_value = json.load(self.read_setup)
 
         self.read_setup.close()
 
-        # establish all variables 
+        # detecting wether its vscode or if its normally running
+        #run or vscode, true if its run
+        self.rov = self.read_setup_value['environment'] == 'run'
+
+        # setup installer
         if self.read_setup_value['mode'] == 'setup':
             
             # print start message
@@ -73,14 +85,14 @@ GENERAL INFO
                   
 Here is the rundown on how the installer will work, user-side:
                   
-    - Gets file directory for installation, and formats. 
+    - Gets file directory for where to install. 
         - (__init__)
                   
     - After confirmation, deletes everything previously installed by the installer to then re-install. 
         - (safety_check)
         - (pre_clean)
                   
-    - Asks if you want a shortcut created, setup
+    - Asks if you want a shortcut created, and other minor setup.
         - (setup)
                   
     - Creates directory for main folder within inputted file directory done at step 1, 
@@ -101,33 +113,41 @@ Here is the rundown on how the installer will work, user-side:
 Refer to "help.txt" for configuring these functions.
                   
 There a variety of other safety checks and functions within, such as "time.sleep()" being used multiple times. 
-These values unfortunately can not be changed. They have been optimized for a smooth experience, however.
---------------------------------------------------------------------------""")
+These values unfortunately can not be changed. They have been optimized for a smooth experience, however.""")
+            print('--------------------------------------------------------------------------')
             input('Enter anything to continue: ')
+
+            # starts loop to get inputs, loops until inputs are right
             input_loop = True
             while input_loop == True:
                 print('--------------------------------------------------------------------------')
                 print("""SETUP
                       
 We will now proceed into setup.
+                      
 in order to run, some information must be gathered.
                       
 To follow along, please check "help.txt" for further elaboration on each step.
-Also, an example folder has been installed to refer to, named "_example/" 
-(check "help.txt" to know more about "_example/").""")
+Also, an example folder has been installed to refer to, named "_example/".
+Check "help.txt" to know more about "_example/".""")
                 print('--------------------------------------------------------------------------')
                 input('Enter anything to continue: ')
                 print('--------------------------------------------------------------------------')
 
+                # gathering info for downloading
                 print('DOWNLOADING: ')
                 self.py_use = input('- Does this file involve any python files? (y/n): \n     --> ').lower() == 'y'
+
                 if self.py_use == True:
-                    self.py_version = input('   - What is Python version you want them to install? (Ex: 3.9) \n     --> ')
+                    self.py_version = input('   - What is Python version you want them to install? (Ex: 3.9) \n         --> ')
+
                 else:
                     self.py_version = 0
+
                 self.repo_url = input('\n- Input a link to the PUBLIC github repository for install: \n     --> ')
                 #self.repo_branch = input('- Input the name of the repository branch for install \n--> ')
 
+                # gathering info for shortcut
                 print("\n\nSHORTCUT: ")
                 self.shortcut_path = input('- Input the name you want for your shortcut: \n     --> ')
                 self.shortcut_target = input('\n- Input the path to your intended file to execute \n- Note: Path from "main/" to where your installed files will be located (refer to "help.txt"): \n     --> ')
@@ -151,112 +171,144 @@ SHORTCUT
     
 -------------------------------------------------------------------------""")
 # - repository branch: {self.repo_branch}
+                
+                # exits loop if inputs are right, redoes if inputs are wrong
                 print('Compare these results with the example in "help.txt".')
                 if input('If everything is right, type "y". Otherwise, type "n" to re-enter info: \n--> ').lower() == 'y':
                     input_loop = False
             
             print("""-------------------------------------------------------------------------
-This file will now attempt a test installation using the information given. 
-However, if you are confident in this, then type "skip" to skip (Not advised).
-Enter "y" to start test installation.""")
+This file will now attempt a test installation using the information given.
+Enter anything to start installation.""")
 
-            run_test_install = input('--> ').lower()
-            if run_test_install == 'y':
-                print('-------------------------------------------------------------------------')
-                print('Running test installation. A temporary directory will be created named "_temp-inst/".')
-                print('In actual installation, this will be "main/".')
-                print('-------------------------------------------------------------------------')
-                time.sleep(2)
-                
-                # - for codespace
-                #self.main_path = 'main/_temp-inst'
-                #os.mkdir(self.main_path)
-
-                # for run
-                self.main_path = '_temp-inst'
-                os.mkdir(self.main_path)
-
-                try:
-                    downloader = Downloader()
-                    downloader.load_repository(url=self.repo_url)
-                    downloader.download(self.main_path)
+            # test installation
+            input('--> ').lower()
+            run_test_install = True
+            while True:
+                if run_test_install:
                     print('-------------------------------------------------------------------------')
-                    print('Installation is done. Creating shortcut.')
+                    print('Running test installation. A temporary directory will be created named "_temp-inst/".')
+                    print('In actual installation, this will be "main/".')
+                    print('-------------------------------------------------------------------------')
+                    time.sleep(2)
 
-                except Exception as e:
-                    print(f'Download error: {e}')
-                    print('Cleaning up failed install...')
-                    try:
-                        shutil.rmtree(self.main_path)
-                    except:
-                        print('Directory deletion fail...')
-                    print('The file will now quit. Restart it and input a new github url, or fix the current one.')
-                    print('Repository must be PUBLIC. Due to an currently unknown error some PUBLIC URLs do not allow downloads from them.')
-                    for i in range(30, 0, -1):
-                        print(i)
-                        time.sleep(1)
-                    exit()
-    
-                try:
-                    import winshell
-                    from pathlib import Path
-
-                    desktop = winshell.desktop()
-
-                    # abs path to desktop
-                    self.abs_desktop_path = f'{str(Path(self.shortcut_wDir).resolve())}'
-                    print(self.abs_desktop_path)
-
-                    # make shortcut adapt for installation
-                    self.abs_shortcut_path = os.path.join(desktop, f'{self.shortcut_path}.lnk') # name
+                    # for run
+                    if self.rov:
+                        self.main_path = '_temp-inst'
+                        os.mkdir(self.main_path)
                     
-                    #self.main_path previously
-                    target = f'{self.abs_desktop_path}/_temp-inst/{self.shortcut_target}' # file to execute
-                    wDir = self.shortcut_wDir # directory of file to execute 
-                    icon = self.shortcut_icon # same as target
+                    # - for codespace
+                    else:
+                        self.main_path = 'main/_temp-inst'
+                        os.mkdir(self.main_path)
+
+                    # downloads files
+                    try:
+                        downloader = Downloader()
+                        downloader.load_repository(url=self.repo_url)
+                        downloader.download(self.main_path)
+                        print('-------------------------------------------------------------------------')
+                        print('Installation is done. Creating shortcut.')
+
+                    except Exception as e:
+                        print(f'Download error: {e}')
+                        print('Cleaning up failed install...')
+
+                        try:
+                            shutil.rmtree(self.main_path)
+
+                        except:
+                            print('Directory deletion fail...')
+                        print('The file will now quit. Restart it and input a new github url, or fix the current one.')
+                        print('Repository must be PUBLIC. Due to an currently unknown error some PUBLIC URLs do not allow downloads from them.')
+                        print('These typically return a tree error.')
+
+                        time.sleep(15)
+                        for i in range(15, 0, -1):
+                            print(i)
+                            time.sleep(1)
+                        exit()
         
+                    # creates shortcut
+                    try:
+                        import winshell
+                        from pathlib import Path
 
+                        desktop = winshell.desktop()
 
-                    # calls on function here with data from above
-                    self.createShortcut(target=target, path=self.abs_shortcut_path, wDir=wDir, icon=icon)
-                    print('Shortcut created.')
+                        # abs path to desktop
+                        self.abs_desktop_path = f'{str(Path(self.shortcut_wDir).resolve())}'
+                        print(self.abs_desktop_path)
 
-                except Exception as e:
-                    print(f'Shortcut error: {e}')
+                        # make shortcut adapt for installation
+                        self.abs_shortcut_path = os.path.join(desktop, f'{self.shortcut_path}.lnk') # name
+                        
+                        #self.main_path previously
+                        target = f'{self.abs_desktop_path}/_temp-inst/{self.shortcut_target}' # file to execute
+                        wDir = self.shortcut_wDir # directory of file to execute 
+                        icon = self.shortcut_icon # same as target
 
-                print('-------------------------------------------------------------------------')
-                print(f"""
-The following should be installed:
-    - installation at: {self.main_path}/
-    - shortcut on desktop at: {self.shortcut_path}
-                """)
-                print('-------------------------------------------------------------------------')
-                input('Enter anything to proceed to cleanup: ')
-                print('-------------------------------------------------------------------------')
-                print('Cleaning up installation at _temp-inst/...')
-                shutil.rmtree(self.main_path)
-                time.sleep(0.5)
-                print(f'Cleaning up shortcut at {self.abs_shortcut_path}...')
-                os.remove(self.abs_shortcut_path)
-                print('Cleanup done; continuing')
-                
+                        # calls on function here with data from above
+                        self.createShortcut(target=target, path=self.abs_shortcut_path, wDir=wDir, icon=icon)
+                        print('Shortcut created.')
 
+                    except Exception as e:
+                        print(f'Shortcut error: {e}')
 
-            elif run_test_install == 'skip':
-                print('-------------------------------------------------------------------------')
-                print('Skipping test installation.')
+                    print('-------------------------------------------------------------------------')
+                    print(f"""
+    The following should be installed:
+        - installation at: {self.main_path}/
+        - shortcut on desktop at: {self.shortcut_path}
+                    """)
+                    print('-------------------------------------------------------------------------')
+                    input('Enter anything to proceed to cleanup: ')
+                    print('-------------------------------------------------------------------------')
+                    try:
+                        print('Cleaning up installation at _temp-inst/...')
+                        shutil.rmtree(self.main_path)
+                    except Exception as e:
+                        print(f'Directory delete error: {e}')
+                    time.sleep(0.5)
+                    try:
+                        print(f'Cleaning up shortcut at {self.abs_shortcut_path}...')
+                        os.remove(self.abs_shortcut_path)
+                    except Exception as e:
+                        print(f'Shortcut delete error: {e}')
+                        print('Shortcut delete error: This can happen if the shortcut was not properly made.')
+                        print('Shortcut delet error: Due to this, shortcuts can not be made during a normal install.')
+                        print('Shortcut delete error: Make sure to run this file outside of any interpreter.')
+                        self.abs_shortcut_path = 'null'
+                        self.abs_desktop_path = 'null'
+                    print('Cleanup done; continuing')
+                    break
+
+                elif run_test_install == 'skip':
+                    print('-------------------------------------------------------------------------')
+                    print('Skipping test installation.')
+                    break
+
+                # elif not run_test_install to check if empty
+                else:
+                    print('Please re-enter input: run test installation? (y/n): ')
+                    run_test_install = input('--> ').lower()
         
+            # setup and info gathering finished
             print('-------------------------------------------------------------------------')
             input('Enter anything to continue: ')
             print('--------------------------------------------------------------------------')
             print('Your installer should now be configured to install your programs,')
             print('and also create a shortcut to run your program.')
             print('-------------------------------------------------------------------------')
-            print(f"""Total information gathered throughout this process (all self):
+            print('Total information gathered throughout this process (all self):')
+            print(f"""
+
 
 PATH(S)
+- {self.abs_desktop_path}
+- {self.abs_shortcut_path}
 - {self.main_path}
-
+                                              
 PY
 - {self.py_version}
 - {self.py_use}
@@ -264,37 +316,35 @@ PY
 REPO URL
 - {self.repo_url}
 
-SHORTCUT INFO: name, icon, wDir, target, abs path, abs desktop path
+SHORTCUT INFO: name, icon, wDir, target
 - {self.shortcut_path}
 - {self.shortcut_icon}
 - {self.shortcut_wDir}
 - {self.shortcut_target}
-- {self.abs_shortcut_path}
-- {self.abs_desktop_path}
 
-OTHER: 
-- {self.read_setup}
 
 """)
+
             print('-------------------------------------------------------------------------')
             input('Enter anything to continue: ')
+            print('--------------------------------------------------------------------------')
             
             # format dict and dump
-            print('--------------------------------------------------------------------------')
             print('Setting up dictionary...')
 
-            # - for codespace
-            #self.read_setup = open('main/setup.json', 'w')
-
             # for run
-            self.read_setup = open('setup.json', 'w')
+            if self.rov:
+                self.read_setup = open('setup.json', 'w')
+
+            # - for codespace
+            else:
+                self.read_setup = open('main/setup.json', 'w')
 
             # dumping data
             # downloading
             self.read_setup_value['py_version'] = self.py_version
             self.read_setup_value['repo_url'] = self.repo_url
             #self.read_setup_value['repo_branch'] = self.repo_branch
-            #self.read_setup_value['repo_branch'] = 'x'
 
             # shortcut
             self.read_setup_value['shortcut_path'] = self.shortcut_path
@@ -309,7 +359,6 @@ OTHER:
 
             # finished dict
             print('Dictionary done.')
-            #print(self.read_setup_value)
 
             # dumping into .json
             print('Dumping into setup.json...')
@@ -317,6 +366,7 @@ OTHER:
             self.read_setup.close()
             print('Dump done.')
 
+            # final prints
             print('-------------------------------------------------------------------------')
             print('Installer complete! To finish up, this installer will change "mode" in "setup.json" to "install" and quit.')
             print('Change it to "setup" to redo this after this point.')
@@ -327,18 +377,25 @@ OTHER:
     - this installer
     - _internal""")
             print('-------------------------------------------------------------------------')
-            self.read_setup_value['mode'] = 'install'
-
-            # - for codespace
-            #self.read_setup = open('main/setup.json', 'w')
 
             # for run
-            self.read_setup = open('setup.json', 'w')
+            if self.rov:
+                self.read_setup = open('setup.json', 'w')
+
+            # - for codespace
+            else:
+                self.read_setup = open('main/setup.json', 'w')
             
+            # updating setup.json to install
+            self.read_setup_value['mode'] = 'install'
+            
+            # dumping into setup.json
             json.dump(self.read_setup_value, self.read_setup)
             self.read_setup.close()
             print('Changed mode to install.')
             print('-------------------------------------------------------------------------')
+
+            # exits after 30s, prints after 15s
             print('Exiting in 30s...')
             time.sleep(15)
             for i in range(15, 0, -1):
@@ -374,25 +431,14 @@ OTHER:
             rules_list = []
 
             # check if .json is all false
-            ## for codespace
-            # try:
-            #     f = open('config.json', 'r')
-
-            # except:
-            #     try:
-            #         f = open('main/config.json', 'r')
-
-            #     except Exception as e:
-            #         print(f'error: {e}')
-            #         print('vsc handling: exiting')
-            #         time.sleep(5)
-            #         exit()
-
-            # - for codespace
-            #f = open('main/config.json', 'r')
 
             # for run
-            f = open('config.json', 'r')
+            if self.rov:
+                f = open('config.json', 'r')
+
+            # - for codespace
+            else:
+                f = open('main/config.json', 'r')
 
             rules = json.load(f)
             f.close()
@@ -419,11 +465,13 @@ OTHER:
 
             # establishing all contents from setup.json
 
-            # - for codespace
-            #self.read_setup = open('main/setup.json', 'r')
-
             # for run
-            self.read_setup = open('setup.json', 'r')
+            if self.rov:
+                self.read_setup = open('setup.json', 'r')
+
+            # - for codespace
+            else:
+                self.read_setup = open('main/setup.json', 'r')
 
             self.read_setup_value = json.load(self.read_setup)
             self.read_setup.close()
@@ -456,11 +504,13 @@ OTHER:
 
                     # opening delete.json and getting path
 
-                    # - for codespace
-                    #temp = open('main/setup.json', 'r')
-
                     # for run
-                    temp = open('setup.json', 'r')
+                    if self.rov:
+                        temp = open('setup.json', 'r')
+
+                    # - for codespace:
+                    else:
+                        temp = open('main/setup.json', 'r')
 
                     delete_path = json.load(temp)
                     delete_path = delete_path["remove_path"]
@@ -469,30 +519,21 @@ OTHER:
                     print(f'Un-installing main from the following directory: {delete_path}')
 
                     # runs delete file
-                    ## for codespace
-                    # try:
-                    #     os.system(f'python delete.py')
-                    # except:
-                    #     try:
-                    #         os.system(f'python main/delete.py')
-                    #     except Exception as e:
-                    #         print(f'error: {e}')
-                    #         print('vsc handling: exiting')
-                    #         time.sleep(5)
-                    #         exit()
-
-                    # - for codespace
-                    #os.system(f'python main/delete.py')
                             
                     # for run
-                    os.system(f'python delete.py')
+                    if self.rov:
+                        os.system(f'python delete.py')
+
+                    # - for codespace
+                    else:
+                        os.system(f'python main/delete.py')
                             
 
                     # final, then finishes
                     print('---------------')
-                    print('Delete done. This installer will exit in 30 seconds; afterwards, delete the folder it is in.')
+                    print('Delete done. This installer will exit in 1 minute; afterwards, delete the folder it is in.')
                     print('Thank you for using this installer! :3')
-                    time.sleep(20)
+                    time.sleep(50)
                     for i in range(10, 0, -1):
                         print(i)
                         time.sleep(1)
@@ -561,12 +602,6 @@ OTHER:
     # cleaning before any running
     def pre_clean(self, run_error=''):
         if run_error == 'error':
-        #    try:
-        #        shutil.rmtree(self.temp_path)
-        #    except:
-        #        print('no temp')
-        
-            # removing install tree
             try:
                 shutil.rmtree(self.install_path)
                 print(f'! install cleaned')
@@ -576,13 +611,6 @@ OTHER:
         else:
             print('Pre: Cleaning up directories before install')
 
-            ## removing temp tree
-            #try:
-            #    shutil.rmtree(self.temp_path)
-            #except:
-            #    print('no temp')
-            
-            # removing install tree
             try:
                 shutil.rmtree(self.install_path)
                 print(f'! install cleaned')
@@ -596,10 +624,8 @@ OTHER:
     
     ## getting info
     def setup(self):
+
         # getting inputs
-    #    ## https://github.com/BirdLogics/sb3topy
-    #    self.url = input('Input repository URL: ')
-    #    self.branch = input('Input respository branch: ')
         self.desktop_shortcut = (input('Do you want to add a desktop shortcut? (y/n) \n--> ').lower()) == 'y'
         
         # make sure they have python installed
@@ -614,8 +640,10 @@ OTHER:
               - You're done!
                         Once done doing these instructions, type 'y' (anything else to cancel).
               """)
+            
             if input('--> ').lower() != 'y':
                 exit()
+
             else:
                 print('---------------')
         
@@ -631,35 +659,26 @@ OTHER:
         os.mkdir(self.install_path)
 
         # opening delete file and writing path
-        ## for codespace
-        #try:
-            #rules = open('delete.json', 'r')
-
-        #except:
-        #    try:
-        #    rules = open('main/delete.json', 'r')
-        
-        #    except Exception as e:
-        #        print(f'error: {e}')
-        #        print('vsc handling: exiting')
-        #        time.sleep(5)
-        #        exit()
-        
-        # - for codespace
-        #rules = open('main/setup.json', 'r')
 
         # for run
-        rules = open('setup.json', 'r')
+        if self.rov:
+            rules = open('setup.json', 'r')
+
+        # - for codespace
+        else:
+            rules = open('main/setup.json', 'r')
 
         rules_content = json.load(rules)
         rules.close()
         rules_content["remove_path"] = self.install_path
 
-        # - for codespace
-        #rules = open('main/setup.json', 'w')
-
         # for run
-        rules = open('setup.json', 'w')
+        if self.rov:
+            rules = open('setup.json', 'w')
+
+        # - for codespace
+        else:
+            rules = open('main/setup.json', 'w')
 
         json.dump(rules_content, rules)
         rules.close()
@@ -678,17 +697,6 @@ OTHER:
             # downloading
             try:
                 downloader.download(self.install_path)
-
-                # writing run path to text file (not used, not up to date)
-                # try:
-                #     print('Assembling text file')
-                #     url_path = f'{self.install_path}/main/top-level/content_url.txt'
-                #     f = open(url_path, 'w')
-                #     f.write(f'{self.install_path}/main/top-level/game_data/main.py')
-                #     f.close()
-
-                # except Exception as e:
-                #     print(f'!!! Error with text file: {e}')
 
                 # formats info and runs shortcut making function
                 try:
@@ -711,16 +719,16 @@ OTHER:
                         pass
 
                 except Exception as e:
-                    print(f'Error creating shortcut: {e}')
+                    print(f'Shortcut error: {e}')
 
             except Exception as e:
-                print(f'!!! Error while downloading: {e}')
+                print(f'!!! Downlaod error: {e}')
                 #print('Cleaning up then exiting...')
                 #self.pre_clean('error')
                 #exit()
 
         except Exception as e:
-            print(f'!!! Error while creating object: {e}')
+            print(f'!!! Download error: {e}')
             #print('Consider re-entering branch name / github url')
             #print('Cleaning up then exiting...')
             #self.pre_clean('error')
@@ -756,23 +764,13 @@ OTHER:
     def run(self):
         rules = {}
 
-        ## for codespace
-        # try:
-            # f = open('config.json', 'r')
-        # except:
-            # try:
-                # f = open('main/config.json', 'r')
-            # except Exception as e:
-                # print(f'error: {e}')
-                # print('vsc handling: exiting')
-                # time.sleep(5)
-                # exit()
+        # for run
+        if self.rov:
+            f = open('config.json', 'r')
 
         # - for codespace
-        #f = open('main/config.json', 'r')
-
-        # for run
-        f = open('config.json', 'r')
+        else:
+            f = open('main/config.json', 'r')
 
         rules = json.load(f)
         f.close()
@@ -937,6 +935,8 @@ class Downloader:
 
 
 
-
+# the actual only running code - run init which either does setup or normal info gathering / formatting
 install = Install()
+
+# runs the run commands which then runs all functions in order of config.json
 install.run()

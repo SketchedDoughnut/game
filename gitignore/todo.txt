@@ -3,5 +3,9 @@ Consider:
  
   
 - refine program into a standalone installer
+
 - cleanup program
+  - comments
+  - get rid of unnecessary stuff
+
 - work on getting certificate / binary signing
