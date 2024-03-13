@@ -310,6 +310,8 @@ Otherwise, enter 'y' to continue.""")
         # NOTE: .download still runs the same
         try:
             downloader = Downloader("https://github.com/SketchedDoughnut/development")
+            #downloader = Downloader("https://github.com/a16z/ai")
+            #downloader = Downloader("https://github.com/microsoft/AI")
 
             # downloading
             try:
