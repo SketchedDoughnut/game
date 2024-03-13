@@ -214,19 +214,19 @@ Otherwise, enter 'y' to continue.""")
                 
                 loop2 = True
                 while loop2:
-                    temp = input('--> ').lower()
+                    choice = input('--> ').lower()
                     print('---------------')
 
-                    if temp == 'y':
+                    if choice == 'y':
                         state = 'y'
                         loop1 = False
                         loop2 = False
 
-                    elif temp == 'shortcut':
+                    elif choice == 'shortcut':
                         state = 'shortcut'
                         loop2 = False
                     
-                    elif temp == 'location':
+                    elif choice == 'location':
                         state = 'location'
                         loop2 = False
 
