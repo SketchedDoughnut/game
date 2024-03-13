@@ -474,7 +474,7 @@ class Downloader:
                 urllib.request.urlretrieve(i[1], destination + '/' + i[0])
 
                 # modified segment by me
-                print(f'Installing file: /{i}')
+                print(f'- Installing file: /{i}')
 
 
 ########################################################################
