@@ -114,7 +114,6 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location""")
         path = new_string
         path = [str(i) for i in path]
         if path[len(path) - 1] == '/':
-            #self.install_path += '/'
             path.pop(len(path) - 1)
 
         else:
@@ -156,9 +155,9 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location""")
             # removing install tree
             try:
                 shutil.rmtree(self.install_path)
-                print(f'! install cleaned')
+                print(f'Pre: ! install cleaned')
             except:
-                print(f'! no install')
+                print(f'Pre: ! no install')
 
         else:
             print('Pre: Cleaning up directories before install')
@@ -201,6 +200,7 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location""")
             state = ''
             loop1 = True
             loop2 = True
+
             while loop1:
                 print('---------------')
                 print(f"""Install info:
@@ -211,6 +211,7 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location""")
 If these are incorrect, type the name of what you want to re-enter. For example:
 "shortcut" or "location"
 Otherwise, enter 'y' to continue.""")
+                
                 loop2 = True
                 while loop2:
                     temp = input('--> ').lower()
@@ -231,7 +232,6 @@ Otherwise, enter 'y' to continue.""")
 
                     else:
                         print('Wrong input. Try again.')
-                        temp = input('--> ')
                     
                 if state == 'y':
                     loop1 = False
@@ -246,9 +246,6 @@ Otherwise, enter 'y' to continue.""")
                     self.install_path = self.install_path_format(input('--> '))
                     print(f'path changed to: {self.install_path}')
                 
-
-                    
-
 
     # create temp dir and establish code file
     def create(self):
