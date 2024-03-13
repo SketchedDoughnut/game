@@ -24,7 +24,7 @@ delete_path = json.load(temp)
 delete_path = delete_path["remove_path"]
 temp.close()
 print('---------------')
-print(f'Un-installing game from the following directory: {delete_path}')
+print(f'Delete: Un-installing game from the following directory: {delete_path}')
 
 # get path from delete.json
 print('Delete: Acquiring JSON path')

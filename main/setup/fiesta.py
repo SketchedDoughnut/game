@@ -30,7 +30,6 @@ class Install:
         if mode == 0: 
 
             # assigning vars (local)
-            new_string = '' # path formatting (136-148)
             rules_list = [] # checking for whats true in config.json (44-66)
 
             # iterate through rules dictionary and check for True
@@ -80,6 +79,7 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location""")
                     print('---------------')
                     print('NOTE: Shortcut will not be deleted.')
                     print('Delete done. This installer will exit in 30 seconds; afterwards, delete the folder it is in. Thank you for using this installer! :3')
+                    time.sleep(15)
                     for i in range(15, 0, -1):
                         print(i)
                         time.sleep(1)
@@ -96,35 +96,38 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location""")
             else:
 
                 # formatting file path
-                list = [str(i) for i in self.install_path]
-                for i in list:
-                    if i == '\\':
-                        new_string += '/'
-                    else:
-                        new_string += i
-
-                self.install_path = new_string
-                self.install_path = [str(i) for i in self.install_path]
-                if self.install_path[len(self.install_path) - 1] == '/':
-                    #self.install_path += '/'
-                    self.install_path.pop(len(self.install_path) - 1)
-
-                else:
-                    pass
-
-                new_string = ''
-                for i in self.install_path:
-                    new_string += i
-
-                self.install_path = new_string
-                self.install_path += '/game_name'
+                self.install_path = self.install_path_format(self.install_path)
                 print('---------------')
-                print(self.install_path)
-                #else:
-                    #print('---------------')
-                    #self.install_path += '/game_name'
-                    #print(self.install_path)
 
+
+    # format install path
+    def install_path_format(self, path):
+        new_string = ''
+        list = []
+        list = [str(i) for i in path]
+        for i in list:
+            if i == '\\':
+                new_string += '/'
+            else:
+                new_string += i
+
+        path = new_string
+        path = [str(i) for i in path]
+        if path[len(path) - 1] == '/':
+            #self.install_path += '/'
+            path.pop(len(path) - 1)
+
+        else:
+            pass
+
+        new_string = ''
+        for i in path:
+            new_string += i
+
+        path = new_string
+        path += '/game_name'
+        return path
+        
 
     # making sure they are sure of their choice
     def safety_check(self):
@@ -195,7 +198,56 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location""")
             exit()
 
         else:
-            print('---------------')
+            state = ''
+            loop1 = True
+            loop2 = True
+            while loop1:
+                print('---------------')
+                print(f"""Install info:
+                      
+        - location: {self.install_path}
+        - shortcut: {self.desktop_shortcut}
+
+If these are incorrect, type the name of what you want to re-enter. For example:
+"shortcut" or "location"
+Otherwise, enter 'y' to continue.""")
+                loop2 = True
+                while loop2:
+                    temp = input('--> ').lower()
+                    print('---------------')
+
+                    if temp == 'y':
+                        state = 'y'
+                        loop1 = False
+                        loop2 = False
+
+                    elif temp == 'shortcut':
+                        state = 'shortcut'
+                        loop2 = False
+                    
+                    elif temp == 'location':
+                        state = 'location'
+                        loop2 = False
+
+                    else:
+                        print('Wrong input. Try again.')
+                        temp = input('--> ')
+                    
+                if state == 'y':
+                    loop1 = False
+
+                elif state == 'shortcut':
+                    print("input 'y' if you want a shortcut, 'n' if you don't.")
+                    self.desktop_shortcut = input('--> ').lower() == 'y'
+                    print(f'Shortcut changed to: {self.desktop_shortcut}')
+                
+                elif state == 'location':
+                    print('input the absolute path to the installation location.')
+                    self.install_path = self.install_path_format(input('--> '))
+                    print(f'path changed to: {self.install_path}')
+                
+
+                    
 
 
     # create temp dir and establish code file
@@ -268,7 +320,7 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location""")
 
                 # writing run path to text file (not used, not up to date)
                 try:
-                    print('Assembling text file')
+                    print('Assembling text file...')
                     url_path = f'{self.install_path}/main/top-level/content_url.txt'
                     f = open(url_path, 'w')
                     f.write(f'{self.install_path}/main/top-level/game_data/main.py')
@@ -321,7 +373,7 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location""")
         #shutil.rmtree(f'{self.install_path}/main/setup')
 
         #shutil.rmtree('./temp/')
-        print('Note: If directory is not present, or is empty, check your inputs and run again.')
+        print('Post: Note: If directory is not present, or is empty, check your inputs and run again.')
         print('Post: Done cleaning; continuing...')
 
 
