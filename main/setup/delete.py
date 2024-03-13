@@ -3,28 +3,39 @@ import os
 import json
 import time
 
-# for codespace
-# try:
-    # file = open('delete.json', 'r')
-# except:
-    # try:
-        # file = open('main/setup/delete.json', 'r')
-    # except Exception as e:
-        # print(f'error: {e}')
-        # print('vsc handling: exiting')
-        # time.sleep(5)
-        # exit()
-
 #################################################################
+# - for codespace
+rules = open('main/setup/config.json', 'r')
+
+# for run
+#rules = open('config.json', 'r')
+
+rules = json.load(rules)
+
+# for run
+if rules['env'] == 'run':
+    temp = open('delete.json', 'r')
+
+# - for codespace
+else:
+    temp = open('main/setup/delete.json', 'r')
+
+delete_path = json.load(temp)
+delete_path = delete_path["remove_path"]
+temp.close()
+print('---------------')
+print(f'Un-installing game from the following directory: {delete_path}')
 
 # get path from delete.json
 print('Delete: Acquiring JSON path')
 
-# - for codespace
-#read_file = open('main/setup/delete.json', 'r')
-             
 # for run
-read_file = open('delete.json', 'r')
+if rules['env'] == 'run':
+    read_file = open('delete.json', 'r')
+
+# - for codespace
+else:
+    read_file = open('main/setup/delete.json', 'r')
 
 path = json.load(read_file)
 path_content = path["remove_path"]
@@ -43,11 +54,13 @@ shutil.rmtree(path_content)
 
 print('Delete: Directory gone. Emptying data file.')
 
-# - for codespace
-#write_file = open('main/setup/delete.json', 'w')
-             
 # for run
-write_file = open('delete.json', 'w')
+if rules['env'] == 'run':
+    write_file = open('delete.json', 'w')
+
+# - for codespace
+else:
+    write_file = open('main/setup/delete.json', 'w')
 
 path["remove_path"] = ""
 json.dump(path, write_file)

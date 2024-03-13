@@ -3,51 +3,39 @@ import os
 import time
 import shutil
 
-# downloader imports
+# downloader imports(?)
 import json
 import requests
 import urllib.request
-
 
 ########################################################################
 
 
 class Install:
+
     # init
     def __init__(self, mode=0):
 
-        # default
+        # overruling dictionary for global access
+        # - for codespace
+        self.rules = open('main/setup/config.json', 'r')
+
+        # for run
+        #self.rules = open('config.json', 'r')
+
+        # will contain everything from config.json, including environment information
+        self.rules = json.load(self.rules)
+
+        # always runs, mode is not used
         if mode == 0: 
 
             # assigning vars (local)
-            new_string = ''
-            rules_list = []
+            new_string = '' # path formatting (136-148)
+            rules_list = [] # checking for whats true in config.json (44-66)
 
-            # check if .json is all false
-            ## for codespace
-            # try:
-                # f = open('config.json', 'r')
-            # except:
-                # try:
-                    # f = open('main/setup/config.json', 'r')
-                # except Exception as e:
-                    # print(f'error: {e}')
-                    # print('vsc handling: exiting')
-                    # time.sleep(5)
-                    # exit()
-
-            # - for codespace
-            #f = open('main/setup/config.json', 'r')
-
-            ## for run
-            f = open('config.json', 'r')
-
-            rules = json.load(f)
-            f.close()
-
-            # iterate through rules dictionary and check for and True
-            for key in rules:
-                if rules[key] == False:
+            # iterate through rules dictionary and check for True
+            for key in self.rules:
+                if self.rules[key] == False:
                     rules_list.append(False)
 
                 else:
@@ -56,7 +44,7 @@ class Install:
                 if rules_list.count(True) > 0:
                     pass
 
-                # exit if no True
+                # exit if no True in config.json
                 else:
                     print('---------------')
                     print('Running no files; cancelling in 5s')
@@ -66,14 +54,13 @@ class Install:
             
             # printing start statement, format, prompting
             print("""
-            Welcome to the open-source file installer created by (placeholder)! 
-                Code is written by (placeholder) with snippets from others.
-                Sources are in: (install location)/gitignore/sources.txt.   
-    To change config, change values in "config.json", then restart this installer.
+            Welcome to the open-source installer created by Sketched Doughnut! 
+                Code is written by Sketched Doughnut with snippets from others.
+                   Sources are in: (install location)/gitignore/sources.txt.   
             """)
             print('---------------')
-            print('Input file directory for install below (or type "delete" to delete").')
-            print('Note: Must be absolute path. Ex: C:\\install_location')
+            print("""Input file directory for install below (or type "delete" to delete").'
+Note: Must be absolute path. Ex: C:\\folder\\install_location""")
             self.install_path = input('--> ')
 
             # checking for uninstall, doing uninstall if so
@@ -81,43 +68,24 @@ class Install:
                 print('---------------')
                 if input('Are you sure you want to delete?  \nType: "confirm-delete", anything else to cancel \n--> ') == 'confirm-delete':
 
-                    # opening delete.json and getting path
-                    temp = open('main/setup/delete.json', 'r')
-                    delete_path = json.load(temp)
-                    delete_path = delete_path["remove_path"]
-                    temp.close()
-                    print('---------------')
-                    print(f'Un-installing game from the following directory: {delete_path}')
-
-                    # runs delete file
-                    ## for codespace
-                    # try:
-                    #     os.system(f'python delete.py')
-                    # except:
-                    #     try:
-                    #         os.system(f'python main/setup/delete.py')
-                    #     except Exception as e:
-                    #         print(f'error: {e}')
-                    #         print('vsc handling: exiting')
-                    #         time.sleep(5)
-                    #         exit()
+                    # for run
+                    if self.rules['env'] == 'run':
+                        os.system(f'python delete.py')
 
                     # - for codespace
-                    #os.system(f'python main/setup/delete.py')
-                            
-                    ## for run
-                    os.system(f'python delete.py')
-                            
+                    else:
+                        os.system(f'python main/setup/delete.py')
 
                     # final, then finishes
                     print('---------------')
                     print('NOTE: Shortcut will not be deleted.')
-                    print('Delete done. This installer will exit in 20 seconds; afterwards, delete the folder it is in. Thank you for using this installer! :3')
-                    for i in range(20, 0, -1):
+                    print('Delete done. This installer will exit in 30 seconds; afterwards, delete the folder it is in. Thank you for using this installer! :3')
+                    for i in range(15, 0, -1):
                         print(i)
                         time.sleep(1)
                     exit()
                 
+                # cancelling uninstall if wrong input
                 else:
                     print('Cancelling deletion, cancelling file in 5s...')
                     for i in range(5, 0, -1):
@@ -127,24 +95,27 @@ class Install:
 
             else:
 
-                # getting path, formatting
-                #if self.install_path != "":
+                # formatting file path
                 list = [str(i) for i in self.install_path]
                 for i in list:
                     if i == '\\':
                         new_string += '/'
                     else:
                         new_string += i
+
                 self.install_path = new_string
                 self.install_path = [str(i) for i in self.install_path]
                 if self.install_path[len(self.install_path) - 1] == '/':
                     #self.install_path += '/'
                     self.install_path.pop(len(self.install_path) - 1)
+
                 else:
                     pass
+
                 new_string = ''
                 for i in self.install_path:
                     new_string += i
+
                 self.install_path = new_string
                 self.install_path += '/game_name'
                 print('---------------')
@@ -153,11 +124,6 @@ class Install:
                     #print('---------------')
                     #self.install_path += '/game_name'
                     #print(self.install_path)
-
-        # return self.install_path
-        elif mode == 1:
-            #self.install_path = self.install_path
-            return self.install_path
 
 
     # making sure they are sure of their choice
@@ -172,6 +138,8 @@ class Install:
         if input('--> ') == "confirm":
             print('---------------')
             pass
+
+        # cancels program if doesn't confirm clearing
         else:
             print('Cancelling...')
             time.sleep(2)
@@ -181,10 +149,6 @@ class Install:
     # cleaning before any running
     def pre_clean(self, run_error=''):
         if run_error == 'error':
-        #    try:
-        #        shutil.rmtree(self.temp_path)
-        #    except:
-        #        print('no temp')
         
             # removing install tree
             try:
@@ -196,12 +160,6 @@ class Install:
         else:
             print('Pre: Cleaning up directories before install')
 
-            ## removing temp tree
-            #try:
-            #    shutil.rmtree(self.temp_path)
-            #except:
-            #    print('no temp')
-            
             # removing install tree
             try:
                 shutil.rmtree(self.install_path)
@@ -214,12 +172,12 @@ class Install:
             print('---------------')
 
     
-    ## getting info
+    # getting info
     def setup(self):
         # getting inputs
-    #    ## https://github.com/BirdLogics/sb3topy
-    #    self.url = input('Input repository URL: ')
-    #    self.branch = input('Input respository branch: ')
+        # https://github.com/BirdLogics/sb3topy
+        #    self.url = input('Input repository URL: ')
+        #    self.branch = input('Input respository branch: ')
         self.desktop_shortcut = (input('Do you want to add a desktop shortcut? (y/n) \n--> ').lower()) == 'y'
         
         # make sure they have python installed
@@ -235,6 +193,7 @@ class Install:
               """)
         if input('--> ').lower() != 'y':
             exit()
+
         else:
             print('---------------')
 
@@ -247,33 +206,28 @@ class Install:
         os.mkdir(self.install_path)
 
         # opening delete file and writing path
-        ## for codespace
-        #try:
-            #rules = open('delete.json', 'r')
-
-        #except:
-        #    try:
-        #    rules = open('main/setup/delete.json', 'r')
-        
-        #    except Exception as e:
-        #        print(f'error: {e}')
-        #        print('vsc handling: exiting')
-        #        time.sleep(5)
-        #        exit()
+        # for run
+        if self.rules['env'] == 'run':
+            delete = open('delete.json', 'r')
         
         # - for codespace
-        #rules = open('main/setup/delete.json', 'r')
+        else:
+            delete = open('main/setup/delete.json', 'r')
+
+        delete_content = json.load(delete)
+        delete.close()
+        delete_content["remove_path"] = self.install_path
 
         # for run
-        rules = open('delete.json', 'r')
+        if self.rules['env'] == 'run':
+            rules = open('delete.json', 'w')
 
-        rules_content = json.load(rules)
-        rules.close()
-        rules_content["remove_path"] = self.install_path
-        rules = open('main/setup/delete.json', 'w')
-        #rules = open('delete.json', 'w')
-        json.dump(rules_content, rules)
-        rules.close()
+        # - for codespace
+        else:
+            delete = open('main/setup/delete.json', 'w')
+
+        json.dump(delete_content, delete)
+        delete.close()
 
 
     # https://www.blog.pythonlibrary.org/2010/01/23/using-python-to-create-shortcuts/ -> example 3
@@ -385,37 +339,17 @@ class Install:
 
     # runs all the functions in order, by config rules (can be changed in config.json)
     def run(self):
-        rules = {}
 
-        ## for codespace
-        # try:
-            # f = open('config.json', 'r')
-        # except:
-            # try:
-                # f = open('main/setup/config.json', 'r')
-            # except Exception as e:
-                # print(f'error: {e}')
-                # print('vsc handling: exiting')
-                # time.sleep(5)
-                # exit()
+        if self.rules['safety_check'] == True: self.safety_check()
+        if self.rules['pre_clean'] == True: self.pre_clean()
+        if self.rules['setup'] == True: self.setup()
+        if self.rules['create'] == True: self.create()
+        if self.rules['download'] == True: self.download()
+        if self.rules['post_clean'] == True: self.post_clean()
+        if self.rules['quit_install'] == True: self.quit_install()
 
-        # - for codespace
-        #f = open('main/setup/config.json', 'r')
 
-        # for run
-        f = open('config.json', 'r')
-
-        rules = json.load(f)
-        f.close()
-
-        if rules['safety_check'] == True: self.safety_check()
-        if rules['pre_clean'] == True: self.pre_clean()
-        if rules['setup'] == True: self.setup()
-        if rules['create'] == True: self.create()
-        if rules['download'] == True: self.download()
-        if rules['post_clean'] == True: self.post_clean()
-        if rules['quit_install'] == True: self.quit_install()
-
+########################################################################
 
 ########################################################################
 ########################################################################
@@ -545,8 +479,6 @@ class Downloader:
 
 ########################################################################
 ########################################################################
-########################################################################
-
 ########################################################################
 
 
