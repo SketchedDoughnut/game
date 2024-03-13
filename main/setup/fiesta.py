@@ -8,6 +8,12 @@ import json
 import requests
 import urllib.request
 
+'''
+{
+    "remove_path": "", 
+    "abs_shortcut": ""
+}
+'''
 ########################################################################
 
 
@@ -77,7 +83,6 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location""")
 
                     # final, then finishes
                     print('---------------')
-                    print('NOTE: Shortcut will not be deleted.')
                     print('Delete done. This installer will exit in 30 seconds; afterwards, delete the folder it is in. Thank you for using this installer! :3')
                     time.sleep(15)
                     for i in range(15, 0, -1):
@@ -255,28 +260,29 @@ Otherwise, enter 'y' to continue.""")
         os.mkdir(self.install_path)
 
         # opening delete file and writing path
+        print('Dumping delete path...')
         # for run
         if self.rules['env'] == 'run':
-            delete = open('delete.json', 'r')
+            data = open('data.json', 'r')
         
         # - for codespace
         else:
-            delete = open('main/setup/delete.json', 'r')
+            data = open('main/setup/data.json', 'r')
 
-        delete_content = json.load(delete)
-        delete.close()
-        delete_content["remove_path"] = self.install_path
+        data_content = json.load(data)
+        data.close()
+        data_content["remove_path"] = self.install_path
 
         # for run
         if self.rules['env'] == 'run':
-            rules = open('delete.json', 'w')
+            data = open('data.json', 'w')
 
         # - for codespace
         else:
-            delete = open('main/setup/delete.json', 'w')
+            data = open('main/setup/data.json', 'w')
 
-        json.dump(delete_content, delete)
-        delete.close()
+        json.dump(data_content, data)
+        data.close()
 
 
     # https://www.blog.pythonlibrary.org/2010/01/23/using-python-to-create-shortcuts/ -> example 3
@@ -309,9 +315,9 @@ Otherwise, enter 'y' to continue.""")
         # NOTE: Do this because you can link branch in that url and it will identify it
         # NOTE: .download still runs the same
         try:
-            downloader = Downloader("https://github.com/SketchedDoughnut/development")
+            #downloader = Downloader("https://github.com/SketchedDoughnut/development")
             #downloader = Downloader("https://github.com/a16z/ai")
-            #downloader = Downloader("https://github.com/microsoft/AI")
+            downloader = Downloader("https://github.com/microsoft/AI")
 
             # downloading
             try:
@@ -326,23 +332,48 @@ Otherwise, enter 'y' to continue.""")
                     f.close()
 
                 except Exception as e:
-                    print(f'!!! Error with text file: {e}')
+                    print(f'Error with text file: {e}')
 
                 # formats info and runs shortcut making function
                 try:
                     if self.desktop_shortcut == True:
                         #print('---------------')
                         import winshell
-                        print('Creating shortcut')
+                        print('Creating shortcut...')
                         desktop = winshell.desktop()
                         path = os.path.join(desktop, "game_name.lnk") # CHANGE game_name TO NAME
+                        self.abs_shortcut = path
                         target = f"{self.install_path}/main/top-level/starter.exe" # CHANGE TO EXE
                         wDir = f"{self.install_path}/main/top-level"
                         icon = f"{self.install_path}/main/top-level/starter.exe" # CHANGE TO EXE
 
                         # calls on function here with data from above
                         self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)
+                        print('Dumping shortcut path...')
 
+                        # run
+                        if self.rules['env'] == 'run':
+                            f = open('data.json', 'r')
+
+                        # - for codespace
+                        else:
+                            f = open('main/setup/data.json', 'r')
+
+                        temp = json.load(f)
+                        temp['abs_shortcut'] = self.abs_shortcut
+                        f.close()
+
+                        # run
+                        if self.rules['env'] == 'run':
+                            f = open('data.json', 'w')
+
+                        # - for codespace
+                        else:
+                            f = open('main/setup/data.json', 'w')
+                            
+                        json.dump(temp, f)
+                        f.close()
+                            
                     else:
                         pass
 
