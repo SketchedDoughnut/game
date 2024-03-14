@@ -6,10 +6,10 @@ import time
 
 #################################################################
 # - for codespace
-rules = open('main/setup/config.json', 'r')
+#rules = open('main/setup/config.json', 'r')
 
 # for run 
-#rules = open('config.json', 'r')
+rules = open('config.json', 'r')
 
 rules = json.load(rules)
 
