@@ -65,8 +65,7 @@ class Walls:
         #self.y = h
         #self.y -= h / random.randint(1, 10)
         ####### attempt changes below
-        div = h/10
-        self.y = -= h / random.randint(4, 5)
+        self.y -= h / random.randint(4, 5)
 
     def t_vertical(self):
         #self.y = h
@@ -75,7 +74,7 @@ class Walls:
         div = h/10
         frac = random.randint(1, 2)
         frac /= 2
-        self.y = add * div
+        self.y = frac * div
 
     # movement
     def move_wall(self):
@@ -123,7 +122,7 @@ while running:
         cube.gravity()
 
     if keys[K_SPACE]:
-        if cube.moving ==  False:
+        if cube.moving == False:
             print('starting wall generation, wall movement, cube movement')
         cube.moving = True
         if cube.moving == True:
@@ -140,6 +139,7 @@ while running:
         wall_1 = Walls()
         wall_1.pick_color()
         wall_1.b_vertical()
+
         wall_2 = Walls()
         wall_2.pick_color()
         wall_2.t_vertical()
@@ -147,8 +147,6 @@ while running:
     if cube.moving == True:
         wall_1.move_wall()
         wall_2.move_wall()
-
-    if cube.moving == True:
         bounds() 
 
     # make rect and update display
