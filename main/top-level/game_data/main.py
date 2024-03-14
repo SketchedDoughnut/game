@@ -50,6 +50,7 @@ class Cube:
         self.yv = self.jump
     
 cube = Cube()
+cube.pick_color()
 
 class Walls:
     def __init__(self):
@@ -62,19 +63,18 @@ class Walls:
         self.height = 550
 
     def b_vertical(self):
-        #self.y = h
-        #self.y -= h / random.randint(1, 10)
+        self.y = h
+        self.y -= h / random.randint(1, 10)
         ####### attempt changes below
-        self.y -= h / random.randint(4, 5)
+        #self.y -= h / random.randint(4, 5)
 
     def t_vertical(self):
-        #self.y = h
-        #self.y = 0.025 * (h / 10)
+        self.y = h
+        self.y = 0.025 * (h / 10)
         ####### attempt changes below 
-        div = h/10
-        frac = random.randint(1, 2)
-        frac /= 2
-        self.y = frac * div
+        # div = h / 10
+        # frac = random.randint(1, 2) / 2
+        # self.y = frac * div
 
     # movement
     def move_wall(self):
