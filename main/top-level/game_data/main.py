@@ -48,6 +48,15 @@ while run:
     if keys[K_LCTRL]:
         if keys[K_w]:
             run = False
+
+        if keys[K_e]:
+            window.fill((255, 0, 0))
+        if keys[K_r]:
+            window.fill((0, 255, 0))
+        if keys[K_f]:
+            window.fill((0, 0, 255))
+        if keys[K_SPACE]:
+            window.fill((255, 255, 255))
     
     if keys[K_x]:
         window.fill((0, 0, 0))
@@ -76,7 +85,6 @@ while run:
         color = (0, 255, 0)
     if keys[K_f]:
         color = (0, 0, 255)
-
     if keys[K_SPACE]:
         color = (255, 255, 255)
 
