@@ -114,6 +114,11 @@ while running:
         if event.type == pygame.QUIT:
             runing = False
 
+        if event.type == KEYDOWN:
+            if keys[K_SPACE]
+                if cube.moving == True:
+                    cube.jumping()
+
     # check all keys here
     keys = pygame.key.get_pressed()
     if keys[K_LCTRL]:
@@ -127,8 +132,10 @@ while running:
         if cube.moving == False:
             print('starting wall generation, wall movement, cube movement')
         cube.moving = True
-        if cube.moving == True:
-            cube.jumping()
+
+    # if keys[K_SPACE]
+    #     if cube.moving == True:
+    #         cube.jumping()
 
     # functions
     if cube.moving == True:
