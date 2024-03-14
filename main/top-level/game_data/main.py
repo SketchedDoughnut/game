@@ -1,66 +1,86 @@
 import pygame
-import math
-def findLocation(start, dir, dist):
-    x = start[0] + (math.cos(dir) * dist)
-    y = start[1] + (math.sin(dir) * dist)
-    return [x,y]
-    
-white_color = [255,255,255]
-class Line:
+from pygame.locals import *
 
-    def __init__(self, start, end):
-        self.start = start
-        self.end = end
-    def draw(self, screen):
-        pygame.draw.line(screen, white_color, self.start, self.end, 1)
+pygame.init()
 
-pygame.init
-window = pygame.display.set_mode((1200, 800))
+# https://www.techwithtim.net/tutorials/game-development-with-python/pygame-tutorial/pygame-tutorial-movement
+#screen_width = 500
+#screen_height = 500
 
-def drawFractal(degree):
-    window.fill((20, 20, 20))
+w, h = pygame.display.Info().current_w, pygame.display.Info().current_h
 
-    lines = []
-    lines.append(Line([0,700], [1200,700]))
-    newLines = []
-    for i in range(degree):
-        for line in lines:
-            
-            lineXDifference = line.end[0] - line.start[0]
-            lineYDifference = line.end[1] - line.start[1]
-            lineLength = pow(pow(lineXDifference, 2) + pow(lineYDifference, 2),0.5)
-            lineDirection = math.atan2(lineYDifference, lineXDifference)
-            lineMidPoint = [lineXDifference / 2 + line.start[0], lineYDifference / 2 + line.start[1]]
-            firstThird = Line(line.start, [line.start[0] + lineXDifference / 3,line.start[1] + lineYDifference / 3])
-            lastThird = Line([line.end[0] - lineXDifference / 3,line.end[1] - lineYDifference/3],line.end)
-            slopeUp = Line(firstThird.end,findLocation(lineMidPoint, lineDirection + math.radians(-90), lineLength/3))
-            slopeDown = Line(slopeUp.end, lastThird.start)
-            newLines.append(firstThird)
-            newLines.append(lastThird)
-            newLines.append(slopeUp)
-            newLines.append(slopeDown)
-            
-        lines = newLines
-        newLines = []
-        
-    # pygame.draw.line(window, white_color, [0,700], [1200,700], 5)
-    for line in lines:
-        line.draw(window)
-    pygame.display.update()
+window = pygame.display.set_mode((w, h))
+pygame.display.set_caption("thing!")
 
-running = True
+x = 50
+y = 50
+width = 40
+height = 40
+vel = 2.5
 
-DIVIDE = pygame.USEREVENT + 1
+def borders(axis, vel, mode):
+    if False:
+        pass
 
-pygame.time.set_timer(DIVIDE, 1250)  # 1000 milliseconds is 1 seconds.
-degree = 0
-while running:
-    drawFractal(degree)
+    else:
+        if mode == 'a':
+            axis += vel
+
+        elif mode == 's':
+            axis -= vel
+
+    print(axis)
+    return axis
+
+color = (255, 255, 255)
+
+run = True
+
+while run:
+    #pygame.time.delay(100)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
-        elif event.type == DIVIDE:
-            degree = min(degree + 1, 7)
+            run = False
+
+    keys = pygame.key.get_pressed()
+
+    if keys[K_LCTRL]:
+        if keys[K_w]:
+            run = False
+    
+    if keys[K_x]:
+        window.fill((0, 0, 0))
+
+    if keys[K_a]:
+        #x -= vel
+        x = borders(x, vel, 's')
+
+    if keys[K_d]:
+        #x += vel
+        x = borders(x, vel, 'a')
+
+    if keys[K_w]:
+        #y -= vel
+        y  =borders(y, vel, 's')
+
+    if keys[K_s]:
+        #y += vel
+        y = borders(y, vel, 'a')
 
     
-            
+    # color changing
+    if keys[K_e]:
+        color = (255, 0, 0)
+    if keys[K_r]:
+        color = (0, 255, 0)
+    if keys[K_f]:
+        color = (0, 0, 255)
+
+    if keys[K_SPACE]:
+        color = (255, 255, 255)
+
+    pygame.draw.rect(window, color, (x, y, width, height))   
+    pygame.display.update() 
+    
+pygame.quit()

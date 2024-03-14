@@ -24,10 +24,10 @@ class Install:
 
         # overruling dictionary for global access
         # - for codespace
-        self.rules = open('main/setup/config.json', 'r')
+        #self.rules = open('main/setup/config.json', 'r')
 
         # for run
-        #self.rules = open('config.json', 'r')
+        self.rules = open('config.json', 'r')
 
         # will contain everything from config.json, including environment information
         self.rules = json.load(self.rules)
@@ -315,9 +315,9 @@ Otherwise, enter 'y' to continue.""")
         # NOTE: Do this because you can link branch in that url and it will identify it
         # NOTE: .download still runs the same
         try:
-            #downloader = Downloader("https://github.com/SketchedDoughnut/development")
+            downloader = Downloader("https://github.com/SketchedDoughnut/development")
             #downloader = Downloader("https://github.com/a16z/ai")
-            downloader = Downloader("https://github.com/microsoft/AI")
+            #downloader = Downloader("https://github.com/microsoft/AI")
 
             # downloading
             try:

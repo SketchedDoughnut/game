@@ -63,7 +63,7 @@ try:
 except Exception as e:
     print(f'Delete: Directory error: {e}')
 
-time.sleep(0.025)
+time.sleep(0.05)
 
 print('Delete: Deleting shortcut...')
 time.sleep(0.025)

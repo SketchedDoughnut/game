@@ -5,7 +5,7 @@
 
     "setup": true, 
  
-    "create": true, 
+    "create": true,  
 
     "download": true,
     
@@ -13,5 +13,5 @@
 
     "quit_install": true,
 
-    "env": "vscode"
+    "env": "run"
 }
