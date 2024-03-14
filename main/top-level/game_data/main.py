@@ -62,12 +62,20 @@ class Walls:
         self.height = 550
 
     def b_vertical(self):
-        self.y = h
-        self.y -= h / random.randint(1, 10)
+        #self.y = h
+        #self.y -= h / random.randint(1, 10)
+        ####### attempt changes below
+        div = h/10
+        self.y = -= h / random.randint(4, 5)
 
     def t_vertical(self):
-        self.y = h
-        self.y = 0.025 * (h / 10)
+        #self.y = h
+        #self.y = 0.025 * (h / 10)
+        ####### attempt changes below 
+        div = h/10
+        frac = random.randint(1, 2)
+        frac /= 2
+        self.y = add * div
 
     # movement
     def move_wall(self):
@@ -125,7 +133,7 @@ while running:
     if cube.moving == True:
         cube.update_location()
 
-    cube.pick_color()
+    #cube.pick_color()
 
     if wall_1.x < -5 and wall_2.x < -5:
         print('generating new walls')
@@ -146,11 +154,11 @@ while running:
     # make rect and update display
     window.fill((0, 0, 0))
     player = pygame.draw.rect(window, cube.color, (cube.x, cube.y, cube.width, cube.height))   
-    wall_rect_1 = pygame.draw.rect(window, wall_1.color, (wall_1.x, wall_1.y, wall_1.width, wall_1.height))     
-    wall_rect_2 = pygame.draw.rect(window, wall_2.color, (wall_2.x, wall_2.y, wall_2.width, wall_2.height))    
+    wall_r1 = pygame.draw.rect(window, wall_1.color, (wall_1.x, wall_1.y, wall_1.width, wall_1.height))     
+    wall_r2 = pygame.draw.rect(window, wall_2.color, (wall_2.x, wall_2.y, wall_2.width, wall_2.height))    
 
     # https://www.youtube.com/watch?v=BHr9jxKithk 
-    if player.colliderect(wall_rect_1) or player.colliderect(wall_rect_2): 
+    if player.colliderect(wall_r1) or player.colliderect(wall_r2): 
         print('wall impact')
         running = False
 
