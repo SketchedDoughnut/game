@@ -33,6 +33,8 @@ class Cube:
         self.grav = 0.5
         self.jump = -7.5
 
+    ## functions aided by friend
+    
     # pick color
     def pick_color(self):
         self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)) 
