@@ -59,24 +59,29 @@ class Walls:
 
         # position
         self.x = w
+        #self.gap = random.randint(10, 12)
+        self.gap = 10
 
         # sizing
         self.width = 100
         self.height = 550
 
+
     def b_vertical(self):
-        self.y = h
-        self.y -= h / random.randint(1, 10)
+        #self.y = h
+        #self.y -= h / random.randint(1, 10)
         ####### attempt changes below
-        # self.y = h / random.randint(5, 6)
+        self.y = h / 2
+        self.y = random.randint(self.y, h)
+        
 
     def t_vertical(self):
-        self.y = h
-        self.y = 0.025 * (h / 10)
+        #self.y = h
+        #self.y = 0.025 * (h / 10)
         ####### attempt changes below 
-        # div = h / 10
-        # frac = random.randint(0, 1) / 2
-        # self.y = frac * div
+        self.y = h / 2
+        self.y = random.randint(0, self.y)
+        self.y += self.gap + self.height
 
     # movement
     def move_wall(self):
