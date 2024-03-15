@@ -68,14 +68,14 @@ class Walls:
         self.y = h
         self.y -= h / random.randint(1, 10)
         ####### attempt changes below
-        #self.y -= h / random.randint(4, 5)
+        # self.y = h / random.randint(5, 6)
 
     def t_vertical(self):
         self.y = h
         self.y = 0.025 * (h / 10)
         ####### attempt changes below 
         # div = h / 10
-        # frac = random.randint(1, 2) / 2
+        # frac = random.randint(0, 1) / 2
         # self.y = frac * div
 
     # movement
@@ -97,9 +97,11 @@ wall_2.t_vertical()
 def bounds():
     global running
     if cube.y >= h:
+        print('fell out of bounds: down')
         running = False
 
     elif cube.y <= 0:
+        print('fell out of bounds: top')
         running = False
 
 # main loop
@@ -113,11 +115,6 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             runing = False
-
-        if event.type == KEYDOWN:
-            if keys[K_SPACE]
-                if cube.moving == True:
-                    cube.jumping()
 
     # check all keys here
     keys = pygame.key.get_pressed()
@@ -133,9 +130,9 @@ while running:
             print('starting wall generation, wall movement, cube movement')
         cube.moving = True
 
-    # if keys[K_SPACE]
-    #     if cube.moving == True:
-    #         cube.jumping()
+    if keys[K_SPACE]:
+        if cube.moving == True:
+            cube.jumping()
 
     # functions
     if cube.moving == True:
