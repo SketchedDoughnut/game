@@ -104,6 +104,9 @@ def bounds():
         print('fell out of bounds: top')
         running = False
 
+# leveling
+level = 0
+
 # main loop
 running = True
 while running:
@@ -149,6 +152,9 @@ while running:
         wall_2 = Walls()
         wall_2.pick_color()
         wall_2.t_vertical()
+
+        level += 1
+        print(f'level up: {level}')
     
     if cube.moving == True:
         wall_1.move_wall()
