@@ -59,9 +59,8 @@ class Walls:
 
         # position
         self.x = w
-        self.gap = random.randint(6, 12) 
+        self.gap = random.randint(4, 8) 
         #self.gap = 10
-        self.shrink = 25
 
         # sizing
         self.width = 100
@@ -83,8 +82,7 @@ class Walls:
         ####### attempt changes below 
         t_pos = h / 2
         self.y = random.randint(0, t_pos)
-        self.y += self.gap -  self.height
-        self.y += self.shrink
+        self.y += self.gap - self.height
 
     # movement
     def move_wall(self):
