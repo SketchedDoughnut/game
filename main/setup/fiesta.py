@@ -342,6 +342,8 @@ Otherwise, enter 'y' to continue.""")
                         print('Creating shortcut...')
                         desktop = winshell.desktop()
                         path = os.path.join(desktop, "game_name.lnk") # CHANGE game_name TO NAME
+                        print('Deleting previous shortcut...')
+                        os.remove(path)
                         self.abs_shortcut = path
                         target = f"{self.install_path}/main/top-level/starter.exe" # CHANGE TO EXE
                         wDir = f"{self.install_path}/main/top-level"
