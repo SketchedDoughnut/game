@@ -59,29 +59,32 @@ class Walls:
 
         # position
         self.x = w
-        #self.gap = random.randint(10, 12)
-        self.gap = 10
+        self.gap = random.randint(6, 12) 
+        #self.gap = 10
+        self.shrink = 25
 
         # sizing
         self.width = 100
-        self.height = 550
+        #self.height = 550  
+        self.height = 1100
 
 
     def b_vertical(self):
         #self.y = h
         #self.y -= h / random.randint(1, 10)
-        ####### attempt changes below
-        self.y = h / 2
-        self.y = random.randint(self.y, h)
+        ####### attempt changes below  
+        b_pos = h / 2
+        self.y = random.randint(b_pos, h)
         
 
     def t_vertical(self):
         #self.y = h
         #self.y = 0.025 * (h / 10)
         ####### attempt changes below 
-        self.y = h / 2
-        self.y = random.randint(0, self.y)
-        self.y += self.gap + self.height
+        t_pos = h / 2
+        self.y = random.randint(0, t_pos)
+        self.y += self.gap -  self.height
+        self.y += self.shrink
 
     # movement
     def move_wall(self):
@@ -98,15 +101,15 @@ wall_1.b_vertical()
 wall_2 = Walls()
 wall_2.pick_color()
 wall_2.t_vertical()
-
+ 
 def bounds():
     global running
     if cube.y >= h:
-        print('fell out of bounds: down')
+        print('out of bounds: down')
         running = False
 
     elif cube.y <= 0:
-        print('fell out of bounds: top')
+        print('out of bounds: top')
         running = False
 
 # leveling
@@ -126,8 +129,9 @@ while running:
 
     # check all keys here
     keys = pygame.key.get_pressed()
-    if keys[K_LCTRL]:
+    if keys[K_LCTRL]: 
         if keys[K_w]:
+            print('ctrl + w')
             running = False
 
     if cube.moving == True:
@@ -173,8 +177,12 @@ while running:
     wall_r2 = pygame.draw.rect(window, wall_2.color, (wall_2.x, wall_2.y, wall_2.width, wall_2.height))    
 
     # https://www.youtube.com/watch?v=BHr9jxKithk 
-    if player.colliderect(wall_r1) or player.colliderect(wall_r2): 
-        print('wall impact')
+    if player.colliderect(wall_r1): 
+        print('wall impact: bottom')
+        running = False
+
+    elif player.colliderect(wall_r2): 
+        print('wall impact: top') 
         running = False
 
     pygame.display.update() 
