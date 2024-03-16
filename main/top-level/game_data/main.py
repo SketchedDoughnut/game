@@ -106,10 +106,12 @@ def bounds():
     global running
     if cube.y >= h:
         print('out of bounds: down')
+        pygame.time.delay(50000)
         running = False
 
     elif cube.y <= 0:
         print('out of bounds: top')
+        pygame.time.delay(50000)
         running = False
 
 # leveling
@@ -179,10 +181,12 @@ while running:
     # https://www.youtube.com/watch?v=BHr9jxKithk 
     if player.colliderect(wall_r1): 
         print('wall impact: bottom')
+        pygame.time.delay(50000)
         running = False
 
     elif player.colliderect(wall_r2): 
         print('wall impact: top') 
+        pygame.time.delay(50000)
         running = False
 
     pygame.display.update() 
