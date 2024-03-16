@@ -343,7 +343,10 @@ Otherwise, enter 'y' to continue.""")
                         desktop = winshell.desktop()
                         path = os.path.join(desktop, "game_name.lnk") # CHANGE game_name TO NAME
                         print('Deleting previous shortcut...')
-                        os.remove(path)
+                        try:
+                            os.remove(path)
+                        except:
+                            print('No prior shortcut.')
                         self.abs_shortcut = path
                         target = f"{self.install_path}/main/top-level/starter.exe" # CHANGE TO EXE
                         wDir = f"{self.install_path}/main/top-level"
@@ -412,10 +415,11 @@ Otherwise, enter 'y' to continue.""")
     # quits install file (to make sure it goes right)
     def quit_install(self):
         print('---------------')
-        print('Install complete. Exit in:')
-        for i in range(3, 0, -1):
-            print(f'{i}')
-            time.sleep(1)
+        input('Install complete. Enter anything to exit: ')
+        #print('Install complete. Exit in:')
+        #for i in range(3, 0, -1):
+        #    print(f'{i}')
+        #    time.sleep(1)
 
         # ensure an exit happens
         exit()
