@@ -60,13 +60,13 @@ class Walls:
 
         # position
         self.x = w
-        self.gap = random.randint(4, 8) 
+        self.gap = 6
         #self.gap = 10
 
         # sizing
         self.width = 100
-        #self.height = 550  
-        self.height = 1100
+        self.height = 550  
+        #self.height = 1100
 
 
     def b_vertical(self):
@@ -74,7 +74,7 @@ class Walls:
         #self.y -= h / random.randint(1, 10)
         ####### attempt changes below  
         self.b_pos = h / 2
-        self.y = random.randint(self.b_pos, h)
+        self.y = random.randint(self.b_pos + self.b_pos / 2, h)
         
 
     def t_vertical(self):
@@ -82,7 +82,7 @@ class Walls:
         #self.y = 0.025 * (h / 10)
         ####### attempt changes below 
         self.t_pos = h / 2
-        self.y = random.randint(0, self.t_pos)
+        self.y = random.randint(0 + self.t_pos / 2, self.t_pos)
         self.y += self.gap - self.height
 
     # movement
@@ -91,7 +91,7 @@ class Walls:
 
     # pick color
     def pick_color(self):
-        self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)) 
+        self.color = (random.randint(50, 255), random.randint(50, 255), random.randint(50, 255)) 
 
 wall_1 = Walls()
 wall_1.pick_color()
@@ -101,29 +101,8 @@ wall_2 = Walls()
 wall_2.pick_color()
 wall_2.t_vertical()
  
-def bounds():
-    global running
-    if cube.y >= h:
-        print('out of bounds: down')
-        running = False
-
-    elif cube.y <= 0:
-        print('out of bounds: top')
-        running = False
-
-# leveling
-level = 0
-
-# data
-print(f"""DATA:
-    - CUBE
-        - height: {cube.height}
-        - width: {cube.width}
-        - jump: {cube.jump}
-        - grav: {cube.grav}
-        - color: {cube.color}
-        - moving: {cube.moving}
-
+def data():
+    print(f"""DATA:
     - WALL 1 (bottom):
         - gap: {wall_1.gap}
         - width: {wall_1.width}
@@ -137,9 +116,34 @@ print(f"""DATA:
         - width: {wall_2.width}
         - height: {wall_2.height}
         - y: {wall_2.y}
-        - b_pos: {wall_2.t_pos}
+        - t_pos: {wall_2.t_pos}
         - color: {wall_2.color}
-      """)
+----------------------------------------""")
+
+#data()
+
+def bounds():
+    global running
+    if cube.y >= h:
+        print('out of bounds: down')
+        running = False
+
+    elif cube.y <= 0:
+        print('out of bounds: top')
+        running = False
+
+# leveling
+level = 0
+
+'''
+- CUBE
+        - height: {cube.height}
+        - width: {cube.width}
+        - jump: {cube.jump}
+        - grav: {cube.grav}
+        - color: {cube.color}
+        - moving: {cube.moving}
+'''
 
 # main loop
 running = True
@@ -168,6 +172,9 @@ while running:
             print('starting wall generation, wall movement, cube movement')
         cube.moving = True
 
+    if keys[K_x]:
+        cube.moving = False
+
     if keys[K_SPACE]:
         if cube.moving == True:
             cube.jumping()
@@ -176,9 +183,10 @@ while running:
     if cube.moving == True:
         cube.update_location()
 
+
     #cube.pick_color()
 
-    if wall_1.x < -5 and wall_2.x < -5:
+    if wall_1.x < -5 + -1 * wall_1.width and wall_2.x < -5 -1 * wall_2.width:
         print('generating new walls')
         wall_1 = Walls()
         wall_1.pick_color()
@@ -187,6 +195,7 @@ while running:
         wall_2 = Walls()
         wall_2.pick_color()
         wall_2.t_vertical()
+        #data()  
 
         level += 1
         print(f'level up: {level}')
