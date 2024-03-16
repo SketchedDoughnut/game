@@ -17,7 +17,8 @@ pygame.display.set_caption("thing!")
 class Cube:
     def __init__(self):
 
-        # position
+        # positionhttps://youtu.be/Ir5u9L4VZOo?list=PL3tRBEVW0hiDR4Q_ELqHvxcDqd4uvzbeO&t=110
+
         self.x = 500
         self.y = h / 2
 
@@ -72,16 +73,16 @@ class Walls:
         #self.y = h
         #self.y -= h / random.randint(1, 10)
         ####### attempt changes below  
-        b_pos = h / 2
-        self.y = random.randint(b_pos, h)
+        self.b_pos = h / 2
+        self.y = random.randint(self.b_pos, h)
         
 
     def t_vertical(self):
         #self.y = h
         #self.y = 0.025 * (h / 10)
         ####### attempt changes below 
-        t_pos = h / 2
-        self.y = random.randint(0, t_pos)
+        self.t_pos = h / 2
+        self.y = random.randint(0, self.t_pos)
         self.y += self.gap - self.height
 
     # movement
@@ -112,6 +113,33 @@ def bounds():
 
 # leveling
 level = 0
+
+# data
+print(f"""DATA:
+    - CUBE
+        - height: {cube.height}
+        - width: {cube.width}
+        - jump: {cube.jump}
+        - grav: {cube.grav}
+        - color: {cube.color}
+        - moving: {cube.moving}
+
+    - WALL 1 (bottom):
+        - gap: {wall_1.gap}
+        - width: {wall_1.width}
+        - height: {wall_1.height}
+        - y: {wall_1.y}
+        - b_pos: {wall_1.b_pos}
+        - color: {wall_1.color}
+    
+    - WALL 2 (top):
+        - gap: {wall_2.gap}
+        - width: {wall_2.width}
+        - height: {wall_2.height}
+        - y: {wall_2.y}
+        - b_pos: {wall_2.t_pos}
+        - color: {wall_2.color}
+      """)
 
 # main loop
 running = True
