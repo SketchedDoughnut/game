@@ -2,6 +2,7 @@
 import pygame
 from pygame.locals import *
 import random
+import time
 
 # init
 pygame.init()
@@ -107,17 +108,17 @@ def data():
         - gap: {wall_1.gap}
         - width: {wall_1.width}
         - height: {wall_1.height}
-        - y: {wall_1.y}
-        - b_pos: {wall_1.b_pos}
-        - color: {wall_1.color}
+            - y: {wall_1.y}
+            - b_pos: {wall_1.b_pos}
+            - color: {wall_1.color}
     
     - WALL 2 (top):
         - gap: {wall_2.gap}
         - width: {wall_2.width}
         - height: {wall_2.height}
-        - y: {wall_2.y}
-        - t_pos: {wall_2.t_pos}
-        - color: {wall_2.color}
+            - y: {wall_2.y}
+            - t_pos: {wall_2.t_pos}
+            - color: {wall_2.color}
 ----------------------------------------""")
 
 #data()
@@ -145,8 +146,24 @@ level = 0
         - moving: {cube.moving}
 '''
 
+# psuedo
+def psuedo():
+    wall_1 = Walls()
+    wall_1.pick_color()
+    wall_1.b_vertical()
+
+    wall_2 = Walls()
+    wall_2.pick_color()
+    wall_2.t_vertical()
+    data()
+    time.sleep(1.5)
+    return True
+
 # main loop
-running = True
+#running = True
+while psuedo():
+    psuedo()
+
 while running:
 
     # timer for delay
