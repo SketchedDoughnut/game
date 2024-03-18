@@ -14,7 +14,11 @@ w, h = pygame.display.Info().current_w, pygame.display.Info().current_h
 window = pygame.display.set_mode((w, h))
 pygame.display.set_caption("thing!")
 
-# cube data
+
+###################################################
+
+
+# cube
 class Cube:
     def __init__(self):
 
@@ -52,10 +56,12 @@ class Cube:
     # make cube jump
     def jumping(self):
         self.yv = self.jump
-    
-cube = Cube()
-cube.pick_color()
 
+
+###################################################
+        
+
+# wall
 class Walls:
     def __init__(self):
 
@@ -94,6 +100,13 @@ class Walls:
     def pick_color(self):
         self.color = (random.randint(50, 255), random.randint(50, 255), random.randint(50, 255)) 
 
+    
+###################################################
+# initalize cube
+cube = Cube()
+cube.pick_color()
+
+# initialize walls
 wall_1 = Walls()
 wall_1.pick_color()
 wall_1.b_vertical()
@@ -101,27 +114,49 @@ wall_1.b_vertical()
 wall_2 = Walls()
 wall_2.pick_color()
 wall_2.t_vertical()
- 
-def data():
-    print(f"""DATA:
-    - WALL 1 (bottom):
-        - gap: {wall_1.gap}
-        - width: {wall_1.width}
-        - height: {wall_1.height}
-            - y: {wall_1.y}
-            - b_pos: {wall_1.b_pos}
-            - color: {wall_1.color}
-    
-    - WALL 2 (top):
-        - gap: {wall_2.gap}
-        - width: {wall_2.width}
-        - height: {wall_2.height}
-            - y: {wall_2.y}
-            - t_pos: {wall_2.t_pos}
-            - color: {wall_2.color}
-----------------------------------------""")
 
-#data()
+# leveling
+level = 0
+
+# data list
+data_list = []
+###################################################
+
+def data():
+#     print(f"""DATA:
+#     - WALL 1 (bottom):
+#         - gap: {wall_1.gap}
+#         - width: {wall_1.width}
+#         - height: {wall_1.height}
+#         - b_pos: {wall_1.b_pos}
+#             - y: {wall_1.y}
+#             - color: {wall_1.color}
+    
+#     - WALL 2 (top):
+#         - gap: {wall_2.gap}
+#         - width: {wall_2.width}
+#         - height: {wall_2.height}
+#         - t_pos: {wall_2.t_pos}
+#             - y: {wall_2.y}
+#             - color: {wall_2.color}
+
+# Walls distance: {(wall_1.y - wall_2.height)}
+# ----------------------------------------""")
+    temp = 0
+    temp2 = 0
+    #print(data_list)
+    data_list.append(wall_1.y - wall_2.height)
+    for i in data_list:
+        temp += i 
+    temp2 = temp / len(data_list)
+    print('----------------------------------------')
+    print(f'Walls distance: {(wall_1.y - wall_2.height)}')
+    print(f'Avg: {temp2}')
+    print(f'Avg (r->2): {round(temp2, 2)}')
+    print(f'Total tests: {len(data_list)}')
+    
+    return len(data_list)
+###################################################
 
 def bounds():
     global running
@@ -133,9 +168,6 @@ def bounds():
         print('out of bounds: top')
         running = False
 
-# leveling
-level = 0
-
 '''
 - CUBE
         - height: {cube.height}
@@ -146,8 +178,48 @@ level = 0
         - moving: {cube.moving}
 '''
 
-# psuedo
+###################################################
+def config():
+    global wall_1
+    global wall_2
+
+    counter = 1
+    data_list = []
+
+    print('Analyzing screen values...')
+    while counter < param:
+
+        wall_1 = Walls()
+        wall_1.pick_color()
+        wall_1.b_vertical()
+
+        wall_2 = Walls()
+        wall_2.pick_color()
+        wall_2.t_vertical()
+        
+        data_list.append(wall_1.y - wall_2.height)
+        print(f'Test: {counter}/{param}')
+        counter += 1
+    
+    total = 0
+    avg = 0
+
+    for i in data_list:
+        total += i 
+    avg = total / len(data_list)
+    print('----------------------------------------')
+    print('Tests complete. Data:')
+    print(f'    - Walls distance: {(wall_1.y - wall_2.height)}')
+    print(f'    - Avg: {avg}')
+    print(f'    - Avg (r->2): {round(avg, 2)}')
+    print(f'    - Total tests: {len(data_list)}')
+    print('----------------------------------------')
+
+# psuedo for testing
 def psuedo():
+    global wall_1
+    global wall_2
+
     wall_1 = Walls()
     wall_1.pick_color()
     wall_1.b_vertical()
@@ -155,15 +227,22 @@ def psuedo():
     wall_2 = Walls()
     wall_2.pick_color()
     wall_2.t_vertical()
-    data()
-    time.sleep(1.5)
-    return True
+    
+    if data() == param:
+        print(f'{param} tests done; cancelling.')
+        exit()
+
+# testing
+#param = int(input('Input max test value: '))
+param = 2500
+while True:
+    #psuedo()
+    config()
+    break
 
 # main loop
 #running = True
-while psuedo():
-    psuedo()
-
+running = False
 while running:
 
     # timer for delay
