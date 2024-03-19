@@ -122,7 +122,7 @@ level = 0
 data_list = []
 ###################################################
 
-def data():
+def data(param=0):
 #     print(f"""DATA:
 #     - WALL 1 (bottom):
 #         - gap: {wall_1.gap}
@@ -153,7 +153,7 @@ def data():
     print(f'Walls distance: {(wall_1.y - wall_2.height)}')
     print(f'Avg: {temp2}')
     print(f'Avg (r->2): {round(temp2, 2)}')
-    print(f'Total tests: {len(data_list)}')
+    print(f'Total tests: {len(data_list)}/{param}')
     
     return len(data_list)
 ###################################################
@@ -197,9 +197,9 @@ def config():
         wall_2.pick_color()
         wall_2.t_vertical()
         
+        counter += 1
         data_list.append(wall_1.y - wall_2.height)
         print(f'Test: {counter}/{param}')
-        counter += 1
     
     total = 0
     avg = 0
@@ -217,28 +217,27 @@ def config():
 
 # psuedo for testing
 def psuedo():
-    global wall_1
-    global wall_2
+    param = int(input('Input max test value: '))
+    while True:
+        global wall_1
+        global wall_2
 
-    wall_1 = Walls()
-    wall_1.pick_color()
-    wall_1.b_vertical()
+        wall_1 = Walls()
+        wall_1.pick_color()
+        wall_1.b_vertical()
 
-    wall_2 = Walls()
-    wall_2.pick_color()
-    wall_2.t_vertical()
-    
-    if data() == param:
-        print(f'{param} tests done; cancelling.')
-        exit()
+        wall_2 = Walls()
+        wall_2.pick_color()
+        wall_2.t_vertical()
+        
+        if data(param) == param:
+            print(f'{param} tests done; cancelling.')
+            exit()
 
 # testing
-#param = int(input('Input max test value: '))
 param = 2500
-while True:
-    #psuedo()
-    config()
-    break
+psuedo()
+config()
 
 # simulate an environment without pygame visuals
 
