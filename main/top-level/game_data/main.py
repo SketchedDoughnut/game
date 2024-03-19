@@ -82,10 +82,11 @@ class Walls:
         #self.y -= h / random.randint(1, 10)
         ####### attempt changes below  
         self.b_pos = h / 2
-        self.y = random.randint(self.b_pos + self.b_pos / 2, h)
+        #self.y = random.randint(self.b_pos + self.b_pos / 2, h)
+        self.y = random.randint(self.b_pos, h)
         
 
-    def t_vertical(self):
+    def t_vertical(self, top_y):
         #self.y = h
         #self.y = 0.025 * (h / 10)
         ####### attempt changes below 
@@ -94,22 +95,24 @@ class Walls:
         # self.y += self.gap - self.height
         ####### new version below
 
-        self.t_pos = wall_1.y # sets position to y of first wall
-        print(wall_1.y)
-        print(f'w1 pos: {self.t_pos}')
+        self.t_pos = top_y # sets position to y of first wall
+        #print(top_y)
+        #print(f'w1 pos: {self.t_pos}')
         self.t_pos -= self.gap # goes up by gap
-        print(self.gap)
-        print(f'gap: {self.t_pos}')
+        #print(self.gap)
+        #print(f'gap: {self.t_pos}')
         self.t_pos -= self.height # goes up by height 
-        print(self.height)
-        print(f'height: {self.t_pos}')
+        #print(self.height)
+        #print(f'height: {self.t_pos}')
         # random ranging from 0 to wall_1.y - gap - height
-        print(-1 * (self.height), ',', wall_1.y - self.height - self.gap)
-        self.t_pos -= random.randint(-1 * (self.height), wall_1.y - self.height - self.gap)
-        print(f'rand: {self.t_pos}')
+        #print(-1 * (self.height), ',', top_y - self.height - self.gap)
+        # self.t_pos -= random.randint(-1 * (self.height), top_y - self.height - self.gap)
+        self.t_pos -= random.randint(0, 150)
+
+        #print(f'rand: {self.t_pos}')
         self.y = self.t_pos
-        print(f'y: {self.y}')
-        exit()
+        #print(f'y: {self.y}')
+        #exit()
 
     # movement
     def move_wall(self):
@@ -152,7 +155,7 @@ class setup:
 
         self.wall_2 = Walls()
         self.wall_2.pick_color()
-        self.wall_2.t_vertical()
+        self.wall_2.t_vertical(wall_1.y)
 
     def setup(self, mode):
         if mode:
@@ -203,7 +206,7 @@ class setup:
 
             self.wall_2 = Walls()
             self.wall_2.pick_color()
-            self.wall_2.t_vertical()
+            self.wall_2.t_vertical(wall_1.y)
             
             if self.data() == self.param:
                 self.time_list.append(time.strftime("%H:%M:%S"))
@@ -216,10 +219,10 @@ class setup:
                 #https://www.geeksforgeeks.org/how-to-check-the-execution-time-of-python-script/
                 #print("The time of execution of above program is:", (round(self.end-self.start, 2)) * 10**3, "ms, or:", (round(self.end-self.start, 2)), "s")
                 print(f"""TIME:
-        - {(round(self.end-self.start, 2)) * 10**3} ms
-        - {(round(self.end-self.start, 2))} s
-        - {(round(self.end-self.start, 2)) / 60} m
-        - {((round(self.end-self.start, 2)) / 60) / 60} h""")
+        - {round((self.end-self.start, 2)) * 10**3} ms
+        - {round((self.end-self.start, 2))} s
+        - {round((self.end-self.start, 2)) / 60} m
+        - {round(((self.end-self.start, 2)) / 60) / 60} h""")
                 print('----------------------------------------')
                 #exit()
                 break
@@ -242,7 +245,7 @@ wall_1.b_vertical()
 
 wall_2 = Walls()
 wall_2.pick_color()
-wall_2.t_vertical()
+wall_2.t_vertical(wall_1.y)
 
 # leveling
 level = 0
@@ -281,10 +284,10 @@ class Pho:
 
         wall_2 = Walls()
         wall_2.pick_color()
-        wall_2.t_vertical()
+        wall_2.t_vertical(wall_1.y)
 
         # leveling
-        level = 0
+        level = 1
 
         #obj = setup()
         #obj.run(True)
@@ -311,7 +314,7 @@ class Pho:
 
                 wall_2 = Walls()
                 wall_2.pick_color()
-                wall_2.t_vertical()
+                wall_2.t_vertical(wall_1.y)
                 #data()  
 
                 level += 1
@@ -325,39 +328,50 @@ class Pho:
             cube.y = (wall_1.y - wall_2.height) / 2
 
             # print all data maybe?
+            gap = abs(wall_1.y - wall_2.y)
+            gap -= wall_1.height
+
             os.system('clear')
             print(f"""----------------------------------------
 DATA:
     ENV
         - height: {h}
-        - width: {w}          
+        - width: {w}
     CUBE
         - y: {cube.y}
         - height: {cube.height}
         - width: {cube.width}
 
     WALLS
-        - empty: {(wall_1.y - wall_2.height)}
-        - total: {(wall_1.y + wall_2.y) + (2 * wall_1.height) + (wall_1.y - wall_2.height)}
-        - dif from top of wall_1 to bottom of wall_2: {wall_1.y - (wall_2.y + wall_2.height)}
+        - gap: {gap}
+        - total: 
+        - dif from top of wall_1 to bottom of wall_2: 
 
-    BOTTOM WALL
+    BOTTOM WALL (1)
         - x: {wall_1.x}
         - y: {wall_1.y}
         - b_pos: {wall_1.b_pos}
-        - range: {wall_1.y}, {wall_1.y + wall_1.height} ({wall_1.height})
+        - range: 
 
-    TOP WALL
+    TOP WALL (2)
         - x: {wall_2.x}
         - y: {wall_2.y}
         - t_pos: {wall_2.t_pos}
-        - range: {wall_2.y}, {wall_2.y + wall_2.height} ({wall_2.height})
+        - range: 
 
     STATES
-        - can fit in gap: {cube.height < (wall_1.y - wall_2.height)}
-        - gap conflict: {(wall_1.y - wall_2.height) < wall_1.gap}
-            {(wall_1.y - wall_2.height)} < {wall_1.gap}
+        - can fit in gap: {gap > 50}
+        - gap conflict: {gap < wall_1.gap}
+            {gap} < {wall_1.gap}?
+
+    CYCLE: {level}
     ----------------------------------------""")
+            if gap < wall_1.gap == False:
+                print('Gap conflict found.')
+                exit()
+            if gap > 50 == False:
+                print('Cube fit error found.')
+                exit()
 ###################################################
 
 while True:
@@ -418,7 +432,7 @@ while running:
 
         wall_2 = Walls()
         wall_2.pick_color()
-        wall_2.t_vertical()
+        wall_2.t_vertical(wall_1.y)
         #data()  
 
         level += 1
