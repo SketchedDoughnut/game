@@ -136,8 +136,12 @@ class setup:
         self.wall_2.pick_color()
         self.wall_2.t_vertical()
 
-    def setup(self):
-        self.param = int(input('Input max test value: '))
+    def setup(self, mode):
+        if mode:
+            self.param = 5000
+
+        elif mode == False:
+            self.param = int(input('Input max test value: '))
 
     def clear(self):
         self.data_list = []
@@ -202,8 +206,8 @@ class setup:
                 #exit()
                 break
 
-    def run(self):
-        self.setup()
+    def run(self, mode=False):
+        self.setup(mode)
         self.clear()
         self.psuedo()
 
@@ -246,11 +250,83 @@ def bounds():
         - moving: {cube.moving}
 '''
 
+def pho():
+    # initialize cube
+    cube = Cube()
+    cube.pick_color()
+
+    # initialize walls
+    wall_1 = Walls()
+    wall_1.pick_color()
+    wall_1.b_vertical()
+
+    wall_2 = Walls()
+    wall_2.pick_color()
+    wall_2.t_vertical()
+
+    # leveling
+    level = 0
+
+    obj = setup()
+    obj.run(True)
+
+    loop = True
+    while loop:
+        time.sleep(0.01)
+        if cube.moving == True:
+            cube.gravity()
+
+        if cube.moving == False:
+            input('Enter anything to start: ')
+            print('self.starting wall generation, wall movement, cube movement')
+            cube.moving = True
+
+        if cube.moving == True:
+            cube.update_location()
+        
+        if wall_1.x < (-5 + (-1 * wall_1.width)) and wall_2.x < (-5 - (1 * wall_2.width)):
+            print('generating new walls')
+            wall_1 = Walls()
+            wall_1.pick_color()
+            wall_1.b_vertical()
+
+            wall_2 = Walls()
+            wall_2.pick_color()
+            wall_2.t_vertical()
+            #data()  
+
+            level += 1
+            print(f'level up: {level}')
+        
+        if cube.moving == True:
+            wall_1.move_wall()
+            wall_2.move_wall()
+            bounds() 
+        
+        cube.y = (wall_1.y - wall_2.height) / 2
+
+        # print all data maybe?
+        os.system('clear')
+        print(f"""----------------------------------------
+DATA:          
+    CUBE
+        - y: {cube.y}
+
+    WALLS
+        - empty: {(wall_1.y - wall_2.height)}
+
+    BOTTOM WALL
+        - y: {wall_1.y}
+
+    TOP WALL
+        - y: {wall_2.y}
+----------------------------------------""")
 ###################################################
 
 while True:
-    obj = setup()
-    obj.run()
+    #obj = setup()
+    #obj.run()
+    pho()
 
 # simulate an environment without pygame visuals
 
