@@ -197,7 +197,7 @@ class setup:
         - {(round(self.end-self.start, 2)) * 10**3} ms
         - {(round(self.end-self.start, 2))} s
         - {(round(self.end-self.start, 2)) / 60} m
-        - {((round(end-self.start, 2)) / 60) / 60} h""")
+        - {((round(self.end-self.start, 2)) / 60) / 60} h""")
                 print('----------------------------------------')
                 #exit()
                 break
@@ -207,110 +207,6 @@ class setup:
         self.clear()
         self.psuedo()
 
-###################################################
-        
-    
-class setup:
-    '''
-    Everything that needs to be shared:
-        - data_list
-        - time_list
-        - param
-        - total
-        - div
-        - wall_1
-        - wall_2
-
-    Everything that needs to b reset:
-        - data_list
-        - time_list
-        - total
-    '''
-
-    def __init__(self):
-        self.data_list = []
-        self.time_list = []
-        self.total = 0
-        self.div = 0
-
-        self.wall_1 = Walls()
-        self.wall_1.pick_color()
-        self.wall_1.b_vertical()
-
-        self.wall_2 = Walls()
-        self.wall_2.pick_color()
-        self.wall_2.t_vertical()
-
-    def setup(self):
-        self.param = int(input('Input max test value: '))
-
-    def clear(self):
-        self.data_list = []
-        self.time_list = []
-        self.total = 0
-        self.div = 0
-
-    def data(self):
-        #print(data_list)
-        # data_list.append(wall_1.y - wall_2.height)
-        # for i in data_list:
-        #     temp += i 
-        # temp2 = temp / len(data_list)
-        ####################################################### new system below
-        self.data_list.append(self.wall_1.y - self.wall_2.height)
-        self.total += self.wall_1.y - self.wall_2.height
-        self.div = self.total / len(self.data_list)
-        os.system('clear')
-        print('----------------------------------------')
-        print(f'Walls distance: {(self.wall_1.y - self.wall_2.height)}')
-        print(f'Avg: {self.div}')
-        print(f'Avg (r->2): {round(self.div, 2)}')
-        print(f'Total tests: {len(self.data_list)}/{self.param}')
-        print(f'Time elapsed: {self.time_list[0]} --> {time.strftime("%H:%M:%S")}')
-        #print(len(self.data_list))
-    
-        return len(self.data_list)
-    
-
-    def psuedo(self):
-
-        # https://www.freecodecamp.org/news/python-get-current-time/
-        self.time_list.append(time.strftime("%H:%M:%S"))
-        #start = int(time.strftime("%S"))
-        self.start = time.time()
-
-        while True:
-            self.wall_1 = Walls()
-            self.wall_1.pick_color()
-            self.wall_1.b_vertical()
-
-            self.wall_2 = Walls()
-            self.wall_2.pick_color()
-            self.wall_2.t_vertical()
-            
-            if self.data() == self.param:
-                self.time_list.append(time.strftime("%H:%M:%S"))
-                #end = int(time.strftime("%S"))
-                self.end = time.time()
-                print('----------------------------------------')
-                #print(f'{param} tests done; cancelling.')
-                print(f'{self.param} tests done.')
-                
-                #https://www.geeksforgeeks.org/how-to-check-the-execution-time-of-python-script/
-                #print("The time of execution of above program is:", (round(self.end-self.start, 2)) * 10**3, "ms, or:", (round(self.end-self.start, 2)), "s")
-                print(f"""TIME:
-        - {(round(self.end-self.start, 2)) * 10**3} ms
-        - {(round(self.end-self.start, 2))} s
-        - {(round(self.end-self.start, 2)) / 60} m
-        - {((round(end-self.start, 2)) / 60) / 60} h""")
-                print('----------------------------------------')
-                #exit()
-                break
-
-    def run(self):
-        self.setup()
-        self.clear()
-        self.psuedo()
 
 ###################################################
 # initialize cube
@@ -357,9 +253,6 @@ while True:
     obj.run()
 
 # simulate an environment without pygame visuals
-
-def sim():
-    while True:
 
 # main loop
 #running = True
