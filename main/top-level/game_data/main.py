@@ -68,7 +68,7 @@ class Walls:
 
         # position
         self.x = w
-        self.gap = 6
+        self.gap = 80
         #self.gap = 10
 
         # sizing
@@ -89,9 +89,27 @@ class Walls:
         #self.y = h
         #self.y = 0.025 * (h / 10)
         ####### attempt changes below 
-        self.t_pos = h / 2
-        self.y = random.randint(0 + self.t_pos / 2, self.t_pos)
-        self.y += self.gap - self.height
+        # self.t_pos = h / 2
+        # self.y = random.randint(0 + self.t_pos / 2, self.t_pos)
+        # self.y += self.gap - self.height
+        ####### new version below
+
+        self.t_pos = wall_1.y # sets position to y of first wall
+        print(wall_1.y)
+        print(f'w1 pos: {self.t_pos}')
+        self.t_pos -= self.gap # goes up by gap
+        print(self.gap)
+        print(f'gap: {self.t_pos}')
+        self.t_pos -= self.height # goes up by height 
+        print(self.height)
+        print(f'height: {self.t_pos}')
+        # random ranging from 0 to wall_1.y - gap - height
+        print(-1 * (self.height), ',', wall_1.y - self.height - self.gap)
+        self.t_pos -= random.randint(-1 * (self.height), wall_1.y - self.height - self.gap)
+        print(f'rand: {self.t_pos}')
+        self.y = self.t_pos
+        print(f'y: {self.y}')
+        exit()
 
     # movement
     def move_wall(self):
@@ -138,7 +156,7 @@ class setup:
 
     def setup(self, mode):
         if mode:
-            self.param = 5000
+            self.param = 3000
 
         elif mode == False:
             self.param = int(input('Input max test value: '))
@@ -250,83 +268,103 @@ def bounds():
         - moving: {cube.moving}
 '''
 
-def pho():
-    # initialize cube
-    cube = Cube()
-    cube.pick_color()
+class Pho:
+    def pho(self):
+        # initialize cube
+        cube = Cube()
+        cube.pick_color()
 
-    # initialize walls
-    wall_1 = Walls()
-    wall_1.pick_color()
-    wall_1.b_vertical()
+        # initialize walls
+        wall_1 = Walls()
+        wall_1.pick_color()
+        wall_1.b_vertical()
 
-    wall_2 = Walls()
-    wall_2.pick_color()
-    wall_2.t_vertical()
+        wall_2 = Walls()
+        wall_2.pick_color()
+        wall_2.t_vertical()
 
-    # leveling
-    level = 0
+        # leveling
+        level = 0
 
-    obj = setup()
-    obj.run(True)
+        #obj = setup()
+        #obj.run(True)
 
-    loop = True
-    while loop:
-        time.sleep(0.01)
-        if cube.moving == True:
-            cube.gravity()
+        loop = True
+        while loop:
+            time.sleep(0.01)
+            if cube.moving == True:
+                cube.gravity()
 
-        if cube.moving == False:
-            input('Enter anything to start: ')
-            print('self.starting wall generation, wall movement, cube movement')
-            cube.moving = True
+            if cube.moving == False:
+                input('Enter anything to start: ')
+                print('self.starting wall generation, wall movement, cube movement')
+                cube.moving = True
 
-        if cube.moving == True:
-            cube.update_location()
-        
-        if wall_1.x < (-5 + (-1 * wall_1.width)) and wall_2.x < (-5 - (1 * wall_2.width)):
-            print('generating new walls')
-            wall_1 = Walls()
-            wall_1.pick_color()
-            wall_1.b_vertical()
+            if cube.moving == True:
+                cube.update_location()
+            
+            if wall_1.x < (-5 + (-1 * wall_1.width)) and wall_2.x < (-5 - (1 * wall_2.width)):
+                print('generating new walls')
+                wall_1 = Walls()
+                wall_1.pick_color()
+                wall_1.b_vertical()
 
-            wall_2 = Walls()
-            wall_2.pick_color()
-            wall_2.t_vertical()
-            #data()  
+                wall_2 = Walls()
+                wall_2.pick_color()
+                wall_2.t_vertical()
+                #data()  
 
-            level += 1
-            print(f'level up: {level}')
-        
-        if cube.moving == True:
-            wall_1.move_wall()
-            wall_2.move_wall()
-            bounds() 
-        
-        cube.y = (wall_1.y - wall_2.height) / 2
+                level += 1
+                print(f'level up: {level}')
+            
+            if cube.moving == True:
+                wall_1.move_wall()
+                wall_2.move_wall()
+                bounds() 
+            
+            cube.y = (wall_1.y - wall_2.height) / 2
 
-        # print all data maybe?
-        os.system('clear')
-        print(f"""----------------------------------------
-DATA:          
+            # print all data maybe?
+            os.system('clear')
+            print(f"""----------------------------------------
+DATA:
+    ENV
+        - height: {h}
+        - width: {w}          
     CUBE
         - y: {cube.y}
+        - height: {cube.height}
+        - width: {cube.width}
 
     WALLS
         - empty: {(wall_1.y - wall_2.height)}
+        - total: {(wall_1.y + wall_2.y) + (2 * wall_1.height) + (wall_1.y - wall_2.height)}
+        - dif from top of wall_1 to bottom of wall_2: {wall_1.y - (wall_2.y + wall_2.height)}
 
     BOTTOM WALL
+        - x: {wall_1.x}
         - y: {wall_1.y}
+        - b_pos: {wall_1.b_pos}
+        - range: {wall_1.y}, {wall_1.y + wall_1.height} ({wall_1.height})
 
     TOP WALL
+        - x: {wall_2.x}
         - y: {wall_2.y}
-----------------------------------------""")
+        - t_pos: {wall_2.t_pos}
+        - range: {wall_2.y}, {wall_2.y + wall_2.height} ({wall_2.height})
+
+    STATES
+        - can fit in gap: {cube.height < (wall_1.y - wall_2.height)}
+        - gap conflict: {(wall_1.y - wall_2.height) < wall_1.gap}
+            {(wall_1.y - wall_2.height)} < {wall_1.gap}
+    ----------------------------------------""")
 ###################################################
 
 while True:
     #obj = setup()
     #obj.run()
-    pho()
+    pho = Pho()
+    pho.pho()
 
 # simulate an environment without pygame visuals
 
