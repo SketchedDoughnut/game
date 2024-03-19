@@ -102,7 +102,7 @@ class Walls:
 
     
 ###################################################
-# initalize cube
+# initialize cube
 cube = Cube()
 cube.pick_color()
 
@@ -240,6 +240,11 @@ while True:
     config()
     break
 
+# simulate an environment without pygame visuals
+
+def sim():
+    while True:
+
 # main loop
 #running = True
 running = False
@@ -282,7 +287,7 @@ while running:
 
     #cube.pick_color()
 
-    if wall_1.x < -5 + -1 * wall_1.width and wall_2.x < -5 -1 * wall_2.width:
+    if wall_1.x < (-5 + (-1 * wall_1.width)) and wall_2.x < (-5 - (1 * wall_2.width)):
         print('generating new walls')
         wall_1 = Walls()
         wall_1.pick_color()
