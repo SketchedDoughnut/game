@@ -48,8 +48,9 @@ class Cube:
         self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)) 
 
     # generate gravity on cube
-    def gravity(self):
+    def gravity(self, sub=0):
         self.yv += self.grav
+        self.yv -= sub
     
     # update cubes location
     def update_location(self):
@@ -117,8 +118,8 @@ class Walls:
         #exit()
 
     # movement
-    def move_wall(self):
-        self.x -= 5
+    def move_wall(self, distance=5):
+        self.x -= distance
 
     # pick color
     def pick_color(self):
@@ -296,6 +297,11 @@ class Pho:
         self.wall_2.pick_color()
         self.wall_2.t_vertical(self.wall_1.y)
 
+        self.wy1 = self.cube.y > self.wall_1.y
+        self.wb1 = self.cube.y < self.wall_1.y + self.wall_1.height
+        self.wy2 = self.cube.y > self.wall_2.y
+        self.wb2 = self.cube.y < self.wall_2.y + self.wall_2.height
+
     def collisions(self):
         # check borders collision
         if self.cube.y > self.h:
@@ -307,6 +313,31 @@ class Pho:
             print(f'Out of bounds: top ({self.cube.y})')
             return False
         
+        if self.cube.x > self.wall_1.x:
+            print('wall within')
+            self.wy1 = self.cube.y > self.wall_1.y
+            self.wb1 = self.cube.y < self.wall_1.y + self.wall_1.height
+            self.wy2 = self.cube.y > self.wall_2.y
+            self.wb2 = self.cube.y < self.wall_2.y + self.wall_2.height
+
+            if self.wy1:
+                print(f'violating bottom wall:', self.cube.x, '>', self.wall_1.x)
+                if self.wb1:
+                    print(f'violating bottom wall:', self.cube.y, '<', self.wall_1.y + self.wall_1.height)
+                    print(f'cube y: {self.cube.y}')
+                    print(f'wall 1 y: {self.wall_1.y}')
+                    print(f'wall 1 top: {self.wall_1.y}')
+                    return False
+            
+            elif self.wy2:
+                print(f'violating top wall:', self.cube.y, '>', self.wall_2.y)
+                if self.wb2:
+                    print(f'violating top wall:', self.cube.y, '<', self.wall_2.y + self.wall_2.height)
+                    print(f'cube y: {self.cube.y}')
+                    print(f'wall 2 y: {self.wall_2.y}')
+                    print(f'wall 2 bottom: {self.wall_2.y + self.wall_2.height}')
+                    return False
+        
     def inputs(self):
         while True:
             if input():
@@ -317,36 +348,51 @@ class Pho:
                     self.cube.jumping()
                     self.cube.jumping()
 
+    def within(self):
+        # calc if within walls
+        if self.cube.y < self.wall_1.y:
+            if self.cube.y > self.wall_2.y + self.wall_2.height:
+                return True
+            else:
+                return False
+        else:
+            return False
+
+
     def pho(self):
 
         # leveling
         level = 1
 
+        corrections = 0
+
         #obj = setup()
         #obj.run(True)
 
-        self.loop = True
-
-        num = random.randint(50, 450)
         gap = abs(self.wall_1.y - self.wall_2.y)
         gap -= self.wall_1.height
 
+        num = random.randint(50, 450)
+        num = self.wall_1.y - gap / 2
+
+        self.loop = True
         while self.loop:
             time.sleep(0.01)
 
             if self.cube.moving == False:
                 input('Enter anything to start: ')
                 print('self.starting wall generation, wall movement, cube movement')
+                self.inputsv = threading.Thread(target=self.inputs,)
+                self.inputsv.start()
                 self.cube.moving = True
             
-            self.cube.y = num
             if self.cube.moving == True:
-                self.cube.gravity()
-            self.cube.y = num
+                self.cube.gravity(sub=5)
 
             if self.cube.moving == True:
                 self.cube.update_location()
-            self.cube.y = num
+
+            self.cube.y = num #####################
             
             if self.wall_1.x < (-5 + (-1 * self.wall_1.width)) and self.wall_2.x < (-5 - (1 * self.wall_2.width)):
                 print('generating new walls')
@@ -367,28 +413,45 @@ class Pho:
                 gap -= self.wall_1.height
 
                 num = random.randint(50, 450)
+                #num = self.wall_1.y - gap / 2
             
             if self.cube.moving == True:
+                #self.wall_1.move_wall(distance=2.5)
+                #self.wall_2.move_wall(distance=2.5)
                 self.wall_1.move_wall()
                 self.wall_2.move_wall()
                 if self.collisions() == False:
                     self.loop = False
                     exit()
-            
-            #cube.y = (wall_1.y - wall_2.height) / 2
-            self.inputsv = threading.Thread(target=self.inputs,)
-            self.inputsv.start()
 
-            #os.system('clear')
+            # calc if within walls
+            within = self.within()
+
+            while within == False:
+                for i in range(50, h - 50):
+                    self.cube.y = i
+                    print(f'Correcting... {self.cube.y}')
+                    #time.sleep(0.025)
+                    within = self.within()
+                    if within:
+                        break
+                #print('number found')
+                num = self.cube.y
+                corrections += 1
+            
+            os.system('clear')
             print(f"""----------------------------------------
 DATA:
     ENV
         - height: {self.h}
         - width: {self.w}
     CUBE
+        - x: {self.cube.x}
         - y: {self.cube.y}
         - height: {self.cube.height}
         - width: {self.cube.width}
+        - grav: {self.cube.grav}
+            - sub: {5}
 
     WALLS
         - gap: {gap}
@@ -399,22 +462,31 @@ DATA:
         - x: {self.wall_1.x}
         - y: {self.wall_1.y}
         - b_pos: {self.wall_1.b_pos}
-        - range: 
+        - top: {self.wall_1.y}
 
     TOP WALL (2)
         - x: {self.wall_2.x}
         - y: {self.wall_2.y}
         - t_pos: {self.wall_2.t_pos}
-        - range: 
+        - bottom: {self.wall_2.y + self.wall_2.height}
 
     STATES
+        - within gap: {within}
         - can fit in gap: {gap > 50}
         - gap conflict: {gap < self.wall_1.gap}
             {gap} < {self.wall_1.gap}?
 
     CYCLE: {level}
+    CORRECTIONS: {corrections}
     THREADS: {threading.active_count()}
- ----------------------------------------""")
+----------------------------------------""")
+            '''
+            COLLISIONS
+                - wy1: {self.wy1}
+                - wb1: {self.wb1}
+                - wy2: {self.wy2}
+                - wb2: {self.wb2}
+            '''
             if gap < self.wall_1.gap == False:
                 print('Gap conflict found.')
                 exit()
