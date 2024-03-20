@@ -376,11 +376,12 @@ class Pho:
         gap -= self.wall_1.height
 
         num = random.randint(50, 450)
-        num = self.wall_1.y - gap / 2
+        #num = self.wall_1.y - gap / 2
 
         self.loop = True
         while self.loop:
-            time.sleep(0.01)
+            #time.sleep(0.01)
+            pygame.time.delay(10)
 
             if self.cube.moving == False:
                 input('Enter anything to start: ')
@@ -428,12 +429,18 @@ class Pho:
                     self.loop = False
                     exit()
 
+                window.fill((0, 0, 0))
+                player = pygame.draw.rect(window, self.cube.color, (self.cube.x, self.cube.y, self.cube.width, self.cube.height))   
+                wall_r1 = pygame.draw.rect(window, self.wall_1.color, (self.wall_1.x, self.wall_1.y, self.wall_1.width, self.wall_1.height))     
+                wall_r2 = pygame.draw.rect(window, self.wall_2.color, (self.wall_2.x, self.wall_2.y, self.wall_2.width, self.wall_2.height))    
+                pygame.display.update() 
+
             # calc if within walls
             within = self.within()
 
             while within == False:
                 t1 = self.cube.y
-                for i in range(50, h - 50):
+                for i in range(40, h - 40):
                     self.cube.y = i
                     print(f'Correcting... {self.cube.y}')
                     #time.sleep(0.025)
@@ -446,47 +453,47 @@ class Pho:
                 correct.append([t1, t2])
                 corrections += 1
             
-            os.system('clear')
-            print(f"""----------------------------------------
-DATA:
-    ENV
-        - height: {self.h}
-        - width: {self.w}
-    CUBE
-        - x: {self.cube.x}
-        - y: {self.cube.y}
-        - height: {self.cube.height}
-        - width: {self.cube.width}
-        - grav: {self.cube.grav}
-            - sub: {5}
+            # os.system('clear')
+#             print(f"""----------------------------------------
+# DATA:
+#     ENV
+#         - height: {self.h}
+#         - width: {self.w}
+#     CUBE
+#         - x: {self.cube.x}
+#         - y: {self.cube.y}
+#         - height: {self.cube.height}
+#         - width: {self.cube.width}
+#         - grav: {self.cube.grav}
+#             - sub: {5}
 
-    WALLS
-        - gap: {gap}
-        - total: 
-        - dif from top of wall_1 to bottom of wall_2: 
+#     WALLS
+#         - gap: {gap}
+#         - total: 
+#         - dif from top of wall_1 to bottom of wall_2: 
 
-    BOTTOM WALL (1)
-        - x: {self.wall_1.x}
-        - y: {self.wall_1.y}
-        - b_pos: {self.wall_1.b_pos}
-        - top: {self.wall_1.y}
+#     BOTTOM WALL (1)
+#         - x: {self.wall_1.x}
+#         - y: {self.wall_1.y}
+#         - b_pos: {self.wall_1.b_pos}
+#         - top: {self.wall_1.y}
 
-    TOP WALL (2)
-        - x: {self.wall_2.x}
-        - y: {self.wall_2.y}
-        - t_pos: {self.wall_2.t_pos}
-        - bottom: {self.wall_2.y + self.wall_2.height}
+#     TOP WALL (2)
+#         - x: {self.wall_2.x}
+#         - y: {self.wall_2.y}
+#         - t_pos: {self.wall_2.t_pos}
+#         - bottom: {self.wall_2.y + self.wall_2.height}
 
-    STATES
-        - within gap: {within}
-        - can fit in gap: {gap > 50}
-        - gap conflict: {gap < self.wall_1.gap}
-            {gap} < {self.wall_1.gap}?
+#     STATES
+#         - within gap: {within}
+#         - can fit in gap: {gap > 50}
+#         - gap conflict: {gap < self.wall_1.gap}
+#             {gap} < {self.wall_1.gap}?
 
-    CYCLE: {level}
-    CORRECTIONS: {corrections}
-    THREADS: {threading.active_count()}
-----------------------------------------""")
+#     CYCLE: {level}
+#     CORRECTIONS: {corrections}
+#     THREADS: {threading.active_count()}
+# ----------------------------------------""")
             '''
             COLLISIONS
                 - wy1: {self.wy1}
@@ -506,14 +513,11 @@ DATA:
 ###################################################
 
 
-#obj = setup()
-#obj.run()
-while True:
-    pho = Pho(h=h, w=w)
-    pho.pho()
-    pho.inputsv.join()
-    print(f'Threads: {threading.active_count()}')
-    input('--> ')
+# obj = setup()
+# obj.run()
+                
+# pho = Pho(h=h, w=w)
+# pho.pho()
 
 # simulate an environment without pygame visuals
 
