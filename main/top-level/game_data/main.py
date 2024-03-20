@@ -4,6 +4,7 @@ from pygame.locals import *
 import random
 import time
 import os
+import threading
 
 # init
 pygame.init()
@@ -272,20 +273,51 @@ def bounds():
         - moving: {cube.moving}
 '''
 
+###################################################
+
+
+
 class Pho:
-    def pho(self):
+
+    def __init__(self, h, w):
+        self.h = h
+        self.w = w
+
         # initialize cube
-        cube = Cube()
-        cube.pick_color()
+        self.cube = Cube()
+        self.cube.pick_color()
 
         # initialize walls
-        wall_1 = Walls()
-        wall_1.pick_color()
-        wall_1.b_vertical()
+        self.wall_1 = Walls()
+        self.wall_1.pick_color()
+        self.wall_1.b_vertical()
 
-        wall_2 = Walls()
-        wall_2.pick_color()
-        wall_2.t_vertical(wall_1.y)
+        self.wall_2 = Walls()
+        self.wall_2.pick_color()
+        self.wall_2.t_vertical(self.wall_1.y)
+
+    def collisions(self):
+        # check borders collision
+        if self.cube.y > self.h:
+            print(f'Out of bounds: bottom ({self.cube.y})')
+            return False
+            
+
+        if self.cube.y < 0:
+            print(f'Out of bounds: top ({self.cube.y})')
+            return False
+        
+    def inputs(self):
+        while True:
+            if input():
+                pass
+
+            else:
+                if self.cube.moving == True:
+                    self.cube.jumping()
+                    self.cube.jumping()
+
+    def pho(self):
 
         # leveling
         level = 1
@@ -293,55 +325,70 @@ class Pho:
         #obj = setup()
         #obj.run(True)
 
-        loop = True
-        while loop:
-            time.sleep(0.01)
-            if cube.moving == True:
-                cube.gravity()
+        self.loop = True
 
-            if cube.moving == False:
+        num = random.randint(50, 450)
+        gap = abs(self.wall_1.y - self.wall_2.y)
+        gap -= self.wall_1.height
+
+        while self.loop:
+            time.sleep(0.01)
+
+            if self.cube.moving == False:
                 input('Enter anything to start: ')
                 print('self.starting wall generation, wall movement, cube movement')
-                cube.moving = True
-
-            if cube.moving == True:
-                cube.update_location()
+                self.cube.moving = True
             
-            if wall_1.x < (-5 + (-1 * wall_1.width)) and wall_2.x < (-5 - (1 * wall_2.width)):
-                print('generating new walls')
-                wall_1 = Walls()
-                wall_1.pick_color()
-                wall_1.b_vertical()
+            self.cube.y = num
+            if self.cube.moving == True:
+                self.cube.gravity()
+            self.cube.y = num
 
-                wall_2 = Walls()
-                wall_2.pick_color()
-                wall_2.t_vertical(wall_1.y)
+            if self.cube.moving == True:
+                self.cube.update_location()
+            self.cube.y = num
+            
+            if self.wall_1.x < (-5 + (-1 * self.wall_1.width)) and self.wall_2.x < (-5 - (1 * self.wall_2.width)):
+                print('generating new walls')
+                self.wall_1 = Walls()
+                self.wall_1.pick_color()
+                self.wall_1.b_vertical()
+
+                self.wall_2 = Walls()
+                self.wall_2.pick_color()
+                self.wall_2.t_vertical(self.wall_1.y)
                 #data()  
 
                 level += 1
                 print(f'level up: {level}')
-            
-            if cube.moving == True:
-                wall_1.move_wall()
-                wall_2.move_wall()
-                bounds() 
-            
-            cube.y = (wall_1.y - wall_2.height) / 2
 
-            # print all data maybe?
-            gap = abs(wall_1.y - wall_2.y)
-            gap -= wall_1.height
+                # gap calc
+                gap = abs(self.wall_1.y - self.wall_2.y)
+                gap -= self.wall_1.height
+
+                num = random.randint(50, 450)
+            
+            if self.cube.moving == True:
+                self.wall_1.move_wall()
+                self.wall_2.move_wall()
+                if self.collisions() == False:
+                    self.loop = False
+                    exit()
+            
+            #cube.y = (wall_1.y - wall_2.height) / 2
+            self.inputsv = threading.Thread(target=self.inputs,)
+            self.inputsv.start()
 
             #os.system('clear')
             print(f"""----------------------------------------
 DATA:
     ENV
-        - height: {h}
-        - width: {w}
+        - height: {self.h}
+        - width: {self.w}
     CUBE
-        - y: {cube.y}
-        - height: {cube.height}
-        - width: {cube.width}
+        - y: {self.cube.y}
+        - height: {self.cube.height}
+        - width: {self.cube.width}
 
     WALLS
         - gap: {gap}
@@ -349,37 +396,41 @@ DATA:
         - dif from top of wall_1 to bottom of wall_2: 
 
     BOTTOM WALL (1)
-        - x: {wall_1.x}
-        - y: {wall_1.y}
-        - b_pos: {wall_1.b_pos}
+        - x: {self.wall_1.x}
+        - y: {self.wall_1.y}
+        - b_pos: {self.wall_1.b_pos}
         - range: 
 
     TOP WALL (2)
-        - x: {wall_2.x}
-        - y: {wall_2.y}
-        - t_pos: {wall_2.t_pos}
+        - x: {self.wall_2.x}
+        - y: {self.wall_2.y}
+        - t_pos: {self.wall_2.t_pos}
         - range: 
 
     STATES
         - can fit in gap: {gap > 50}
-        - gap conflict: {gap < wall_1.gap}
-            {gap} < {wall_1.gap}?
+        - gap conflict: {gap < self.wall_1.gap}
+            {gap} < {self.wall_1.gap}?
 
     CYCLE: {level}
-    ----------------------------------------""")
-            if gap < wall_1.gap == False:
+    THREADS: {threading.active_count()}
+ ----------------------------------------""")
+            if gap < self.wall_1.gap == False:
                 print('Gap conflict found.')
                 exit()
             if gap > 50 == False:
                 print('Cube fit error found.')
                 exit()
+
+
+
 ###################################################
 
-# while True:
-#     #obj = setup()
-#     #obj.run()
-#     pho = Pho()
-#     pho.pho()
+
+#obj = setup()
+#obj.run()
+pho = Pho(h=h, w=w)
+pho.pho()
 
 # simulate an environment without pygame visuals
 
