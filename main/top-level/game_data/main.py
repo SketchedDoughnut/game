@@ -22,7 +22,7 @@ pygame.display.set_caption("thing!")
 
 # cube
 class Cube:
-    def __init__(self):
+    def __init__(self, jump=-7.5):
 
         # positionhttps://youtu.be/Ir5u9L4VZOo?list=PL3tRBEVW0hiDR4Q_ELqHvxcDqd4uvzbeO&t=110
 
@@ -39,7 +39,7 @@ class Cube:
 
         # environment
         self.grav = 0.5
-        self.jump = -7.5
+        self.jump = jump
 
     ## functions aided by friend
     
@@ -76,7 +76,8 @@ class Walls:
         # sizing
         self.width = 100
         #self.height = 550  
-        self.height = 1100
+        #self.height = 1100
+        self.height = h
 
 
     def b_vertical(self):
@@ -285,6 +286,7 @@ class Pho:
         self.w = w
 
         # initialize cube
+        #self.cube = Cube(jump = -3.75)
         self.cube = Cube()
         self.cube.pick_color()
 
@@ -321,7 +323,7 @@ class Pho:
             self.wb2 = self.cube.y < self.wall_2.y + self.wall_2.height
 
             if self.wy1:
-                print(f'violating bottom wall:', self.cube.x, '>', self.wall_1.x)
+                print(f'violating bottom wall:', self.cube.y, '>', self.wall_1.y)
                 if self.wb1:
                     print(f'violating bottom wall:', self.cube.y, '<', self.wall_1.y + self.wall_1.height)
                     print(f'cube y: {self.cube.y}')
@@ -337,16 +339,16 @@ class Pho:
                     print(f'wall 2 y: {self.wall_2.y}')
                     print(f'wall 2 bottom: {self.wall_2.y + self.wall_2.height}')
                     return False
+                
+            else:
+                return True
         
     def inputs(self):
         while True:
-            if input():
-                pass
-
-            else:
-                if self.cube.moving == True:
-                    self.cube.jumping()
-                    self.cube.jumping()
+            input()
+            if self.cube.moving == True:
+                self.cube.jumping()
+                self.cube.jumping()
 
     def within(self):
         # calc if within walls
@@ -387,7 +389,8 @@ class Pho:
                 self.cube.moving = True
             
             if self.cube.moving == True:
-                self.cube.gravity(sub=0.25)
+                #self.cube.gravity(sub=0.25)
+                self.cube.gravity()
 
             if self.cube.moving == True:
                 self.cube.update_location()
@@ -418,8 +421,8 @@ class Pho:
             if self.cube.moving == True:
                 self.wall_1.move_wall(distance=2.5)
                 self.wall_2.move_wall(distance=2.5)
-                # self.wall_1.move_wall()
-                # self.wall_2.move_wall()
+                #self.wall_1.move_wall()
+                #self.wall_2.move_wall()
                 if self.collisions() == False:
                     self.loop = False
                     exit()
@@ -501,8 +504,12 @@ DATA:
 
 #obj = setup()
 #obj.run()
-pho = Pho(h=h, w=w)
-pho.pho()
+while True:
+    pho = Pho(h=h, w=w)
+    pho.pho()
+    pho.inputsv.join()
+    print(f'Threads: {threading.active_count()}')
+    input('--> ')
 
 # simulate an environment without pygame visuals
 
