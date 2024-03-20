@@ -367,6 +367,7 @@ class Pho:
         level = 1
 
         corrections = 0
+        correct = []
 
         #obj = setup()
         #obj.run(True)
@@ -395,7 +396,7 @@ class Pho:
             if self.cube.moving == True:
                 self.cube.update_location()
 
-            #self.cube.y = num #####################
+            self.cube.y = num #####################
             
             if self.wall_1.x < (-5 + (-1 * self.wall_1.width)) and self.wall_2.x < (-5 - (1 * self.wall_2.width)):
                 print('generating new walls')
@@ -419,10 +420,10 @@ class Pho:
                 #num = self.wall_1.y - gap / 2
             
             if self.cube.moving == True:
-                self.wall_1.move_wall(distance=2.5)
-                self.wall_2.move_wall(distance=2.5)
-                #self.wall_1.move_wall()
-                #self.wall_2.move_wall()
+                #self.wall_1.move_wall(distance=2.5)
+                #self.wall_2.move_wall(distance=2.5)
+                self.wall_1.move_wall()
+                self.wall_2.move_wall()
                 if self.collisions() == False:
                     self.loop = False
                     exit()
@@ -430,17 +431,20 @@ class Pho:
             # calc if within walls
             within = self.within()
 
-            # while within == False:
-            #     for i in range(50, h - 50):
-            #         self.cube.y = i
-            #         print(f'Correcting... {self.cube.y}')
-            #         #time.sleep(0.025)
-            #         within = self.within()
-            #         if within:
-            #             break
-            #     #print('number found')
-            #     num = self.cube.y
-            #     corrections += 1
+            while within == False:
+                t1 = self.cube.y
+                for i in range(50, h - 50):
+                    self.cube.y = i
+                    print(f'Correcting... {self.cube.y}')
+                    #time.sleep(0.025)
+                    within = self.within()
+                    if within:
+                        break
+                #print('number found')
+                num = self.cube.y
+                t2 = num
+                correct.append([t1, t2])
+                corrections += 1
             
             os.system('clear')
             print(f"""----------------------------------------
