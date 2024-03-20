@@ -68,13 +68,13 @@ class Walls:
 
         # position
         self.x = w
-        self.gap = 80
+        self.gap = 200
         #self.gap = 10
 
         # sizing
         self.width = 100
-        self.height = 550  
-        #self.height = 1100
+        #self.height = 550  
+        self.height = 1100
 
 
     def b_vertical(self):
@@ -82,8 +82,9 @@ class Walls:
         #self.y -= h / random.randint(1, 10)
         ####### attempt changes below  
         self.b_pos = h / 2
+        self.b_pos = self.b_pos / 2
         #self.y = random.randint(self.b_pos + self.b_pos / 2, h)
-        self.y = random.randint(self.b_pos, h)
+        self.y = random.randint(self.b_pos, h + 10)
         
 
     def t_vertical(self, top_y):
@@ -107,7 +108,7 @@ class Walls:
         # random ranging from 0 to wall_1.y - gap - height
         #print(-1 * (self.height), ',', top_y - self.height - self.gap)
         # self.t_pos -= random.randint(-1 * (self.height), top_y - self.height - self.gap)
-        self.t_pos -= random.randint(0, 150)
+        self.t_pos -= random.randint(0, h / 4)
 
         #print(f'rand: {self.t_pos}')
         self.y = self.t_pos
@@ -331,7 +332,7 @@ class Pho:
             gap = abs(wall_1.y - wall_2.y)
             gap -= wall_1.height
 
-            os.system('clear')
+            #os.system('clear')
             print(f"""----------------------------------------
 DATA:
     ENV
@@ -374,17 +375,16 @@ DATA:
                 exit()
 ###################################################
 
-while True:
-    #obj = setup()
-    #obj.run()
-    pho = Pho()
-    pho.pho()
+# while True:
+#     #obj = setup()
+#     #obj.run()
+#     pho = Pho()
+#     pho.pho()
 
 # simulate an environment without pygame visuals
 
 # main loop
-#running = True
-running = False
+running = True
 while running:
 
     # timer for delay
@@ -408,6 +408,10 @@ while running:
     if keys[K_SPACE]:
         if cube.moving == False:
             print('self.starting wall generation, wall movement, cube movement')
+            #gap = abs(wall_1.y - wall_2.y)
+            #gap -= wall_1.height
+            #print(gap)
+
         cube.moving = True
 
     if keys[K_x]:
@@ -433,7 +437,12 @@ while running:
         wall_2 = Walls()
         wall_2.pick_color()
         wall_2.t_vertical(wall_1.y)
+        #print(wall_2.t_pos)
         #data()  
+
+        #gap = abs(wall_1.y - wall_2.y)
+        #gap -= wall_1.height
+        #print(gap)
 
         level += 1
         print(f'level up: {level}')
