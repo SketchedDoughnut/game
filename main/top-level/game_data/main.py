@@ -545,7 +545,7 @@ while running:
 
     if keys[K_SPACE]:
         if cube.moving == False:
-            print('self.starting wall generation, wall movement, cube movement')
+            print('starting wall generation, wall movement, cube movement')
             #gap = abs(wall_1.y - wall_2.y)
             #gap -= wall_1.height
             #print(gap)
