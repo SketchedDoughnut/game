@@ -531,7 +531,7 @@ while running:
     # checking for events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            runing = False
+            running = False
 
     # check all keys here
     keys = pygame.key.get_pressed()
