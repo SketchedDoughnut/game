@@ -13,10 +13,11 @@ import json
 
 #################################################################
 # for run
-# paths = open('start.json')
+paths = open('start.json')
 
 # - for codespace
-paths = open('main/top/start.json')
+#paths = open('main/top/start.json')
+
 paths = json.load(paths)
 
 # intended path

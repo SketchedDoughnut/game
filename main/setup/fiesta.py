@@ -66,8 +66,7 @@ class Install:
             """)
             print('---------------')
             print(f"""Input file directory for install below (or type "delete" to delete").'
-Note: Must be absolute path. Ex: C:\\folder\\install_location.
-Enter nothing for default installation path (in Program Files).""")
+Note: Must be absolute path. Ex: C:\\folder\\install_location.""") # Enter nothing for default installation path (in Program Files).
             self.install_path = input('--> ')
 
             # checking for uninstall, doing uninstall if so
