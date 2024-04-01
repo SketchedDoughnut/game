@@ -117,17 +117,39 @@ Enter nothing for default installation path (in Program Files).""")
 
     # format install path
     def install_path_format(self, path):
-        try:
-            import winshell
-            programFiles = winshell.get_folder_by_name('ProgramFiles')
-            if not path:
-                print('Path is defaulting to Program Files.')
-                path = programFiles
-                path += '/game_name'
-                return path
-            
-        except Exception as e:
-            print(f'Import error: {e}')
+        # try:
+        #     programFiles = os.path.abspath("Program Files")
+        #     if not path:
+        #         print('Path is defaulting to Program Files.')
+        #         path = programFiles
+        #         path += '\game_name'
+        #         return path
+
+        if not path:
+            print('Path is defaulting to Program Files.')
+            try:
+                path = os.path.abspath("Program Files")
+                path = os.path.join(os.environ['SystemDrive'], 'Program Files')
+                ns = ''
+                next = False
+                for letter in path:
+                    if next == False:
+                        ns += letter
+
+                    if next == True:
+                        ns += '/'
+                        ns += letter
+                        next = False
+
+                    if letter == ':':
+                        next = True
+
+                    else:
+                        next = False
+                path = ns
+        
+            except Exception as e:
+                print(f'Default path error: {e}')
 
         new_string = ''
         list = []
@@ -483,6 +505,7 @@ Otherwise, enter 'y' to continue.""")
 # -*- coding: utf-8 -*-
 
 '''
+
 GitHub Folder Downloader
 Created by Fransiscus Emmanuel Bunaren
 https://bunaren.com
