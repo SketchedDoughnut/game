@@ -404,6 +404,17 @@ Otherwise, enter 'y' to continue.""")
     def post_clean(self):
         print('---------------')
         print('Post: Cleaning up')
+        print('Post: Deleting extra files...')
+
+        # remove setup folder
+        if self.rules['env'] == 'run':
+            shutil.rtmree(f'{self.install_path}/setup')
+            os.remove(f'{self.install_path}/top/content_url.txt')
+
+        else:
+            print('Individual cleanup is not offered for this mode. Use mode run instead')
+
+        print('Post: Extra files deleted.')
 
         ## to delete setup folder if needed (not used)
         #shutil.rmtree(f'{self.install_path}/main/setup')
@@ -416,7 +427,7 @@ Otherwise, enter 'y' to continue.""")
     # quits install file (to make sure it goes right)
     def quit_install(self):
         print('---------------')
-        input('Install complete. Enter anything to exit: ')
+        input('Install complete! Enter anything to exit: ')
         #print('Install complete. Exit in:')
         #for i in range(3, 0, -1):
         #    print(f'{i}')
@@ -429,13 +440,13 @@ Otherwise, enter 'y' to continue.""")
     # runs all the functions in order, by config rules (can be changed in config.json)
     def run(self):
 
-        if self.rules['safety_check'] == True: self.safety_check()
-        if self.rules['pre_clean'] == True: self.pre_clean()
-        if self.rules['setup'] == True: self.setup()
-        if self.rules['create'] == True: self.create()
-        if self.rules['download'] == True: self.download()
-        if self.rules['post_clean'] == True: self.post_clean()
-        if self.rules['quit_install'] == True: self.quit_install()
+        if self.rules['safety_check']: self.safety_check()
+        if self.rules['pre_clean']: self.pre_clean()
+        if self.rules['setup']: self.setup()
+        if self.rules['create']: self.create()
+        if self.rules['download']: self.download()
+        if self.rules['post_clean']: self.post_clean()
+        if self.rules['quit_install']: self.quit_install()
 
 
 ########################################################################

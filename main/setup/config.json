@@ -9,9 +9,9 @@
 
     "download": true,
     
-    "post_clean": true, 
+    "post_clean": false, 
 
     "quit_install": true,
 
-    "env": "run"
+    "env": "vscode"
 }
