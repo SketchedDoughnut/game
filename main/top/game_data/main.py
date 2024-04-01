@@ -492,8 +492,8 @@ DATA:
 # obj = setup()
 # obj.run()
                 
-pho = Pho(h=h, w=w)
-pho.pho()
+#pho = Pho(h=h, w=w)
+#pho.pho()
 
 # simulate an environment without pygame visuals
 
