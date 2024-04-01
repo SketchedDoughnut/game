@@ -19,20 +19,26 @@ w, h = pygame.display.Info().current_w, pygame.display.Info().current_h
 window = pygame.display.set_mode((400, 400))
 pygame.display.set_caption("thing!")
 
+RED = (0, 255, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+
 def mouse_collisions():
     pos = pygame.mouse.get_pos()
 
     if pos[0] < 50 and pos[0] > -1 and pos[1] < 50 and pos[1] > -1:
-        window.fill((0, 255, 0))
+        window.fill(GREEN)
     
     elif pos[0] > 350 and pos[0] < 400 and pos[1] < 50 and pos[1] > -1:
-        window.fill((0, 0, 255))
+        window.fill((BLUE)
 
     elif pos[0] > 175 and pos[0] < 225 and pos[1] > 175 and pos[1] < 225:
-        window.fill((255, 0, 0))
+        window.fill(RED)
 
     else:
-        window.fill((0, 0, 0))
+        window.fill(BLACK)
 
 def drag():
     pos = pygame.mouse.get_pos()
@@ -59,7 +65,7 @@ def drag():
     #else:
     #    print('colliding')
 
-mc = (255, 255, 255)
+mc = WHITE
 sm = 0
 clicked = False
 
@@ -67,17 +73,17 @@ def change_color():
     global mc
     global sm
     if m_zone.collidepoint(pos):
-        window.fill((255, 0, 0))
+        window.fill(RED)
     elif tl_zone.collidepoint(pos):
-        window.fill((0, 255, 0))
+        window.fill(GREEN)
     elif tr_zone.collidepoint(pos):
-        window.fill((0, 0, 255))
+        window.fill(BLUE)
     elif mode.collidepoint(pos):
         if sm == 0:
             mc = (127.5, 127.5, 127.5)
             sm = 1
         elif sm == 1:
-            mc = (255, 255, 255)
+            mc = WHITE
             sm = 0
 
 pygame.mouse.set_pos((200, 200))
@@ -117,9 +123,9 @@ while running:
     if sm == 1:
         mouse_collisions()
     #drag()
-    tl_zone = pygame.draw.rect(window, (0, 255, 0), (0, 0, 50, 50))
-    tr_zone = pygame.draw.rect(window, (0, 0, 255), (350, 0, 50, 50))
-    m_zone = pygame.draw.rect(window, (255, 0, 0), (175, 175, 50, 50))
+    tl_zone = pygame.draw.rect(window, GREEN, (0, 0, 50, 50))
+    tr_zone = pygame.draw.rect(window, BLUE, (350, 0, 50, 50))
+    m_zone = pygame.draw.rect(window, RED, (175, 175, 50, 50))
     mode = pygame.draw.rect(window, mc, (0, 350, 400, 400))
 
     ### code ends here
