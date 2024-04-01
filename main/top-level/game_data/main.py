@@ -22,7 +22,7 @@ pygame.display.set_caption("thing!")
 
 # cube
 class Cube:
-    def __init__(self, jump=-7.5):
+    def __init__(self, jump=-10.5):
 
         # positionhttps://youtu.be/Ir5u9L4VZOo?list=PL3tRBEVW0hiDR4Q_ELqHvxcDqd4uvzbeO&t=110
 
@@ -522,6 +522,7 @@ class Pho:
 # simulate an environment without pygame visuals
 
 # main loop
+pressed = False
 running = True
 while running:
 
@@ -538,6 +539,9 @@ while running:
     if keys[K_LCTRL]: 
         if keys[K_w]:
             print('ctrl + w')
+            running = False
+        if keys[K_c]:
+            print('ctrl + c')
             running = False
 
     if cube.moving == True:
@@ -557,7 +561,12 @@ while running:
 
     if keys[K_SPACE]:
         if cube.moving == True:
-            cube.jumping()
+            if pressed == False:
+                cube.jumping()
+                pressed = True
+    
+    if not keys[K_SPACE]:
+        pressed = False
 
     # functions
     if cube.moving == True:

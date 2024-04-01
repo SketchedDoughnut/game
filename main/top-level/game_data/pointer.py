@@ -73,10 +73,10 @@ def change_color():
     elif tr_zone.collidepoint(pos):
         window.fill((0, 0, 255))
     elif mode.collidepoint(pos):
-        if mc == (255, 255, 255):
+        if sm == 0:
             mc = (127.5, 127.5, 127.5)
             sm = 1
-        elif mc == (127.5, 127.5, 127.5):
+        elif sm == 1:
             mc = (255, 255, 255)
             sm = 0
 
@@ -100,10 +100,15 @@ while running:
 
     pressed = pygame.mouse.get_pressed()
     if pressed[0]:
-        try:
-            change_color()
-        except Exception as e:
-            print('rect not yet made:', e)
+        if clicked == False:
+            try:
+                change_color()
+                clicked = True
+            except Exception as e:
+                print('rect not yet made:', e)
+
+    elif not pressed[0]:
+        clicked = False
 
     ### code goes here
     pos = pygame.mouse.get_pos()
@@ -116,6 +121,7 @@ while running:
     tr_zone = pygame.draw.rect(window, (0, 0, 255), (350, 0, 50, 50))
     m_zone = pygame.draw.rect(window, (255, 0, 0), (175, 175, 50, 50))
     mode = pygame.draw.rect(window, mc, (0, 350, 400, 400))
+
     ### code ends here
 
     pygame.display.update()
