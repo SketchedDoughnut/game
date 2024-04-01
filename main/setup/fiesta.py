@@ -58,14 +58,16 @@ class Install:
                     exit()
             
             # printing start statement, format, prompting
+
             print("""
             Welcome to the open-source installer created by Sketched Doughnut! 
                 Code is written by Sketched Doughnut with snippets from others.
                    Sources are in: (install location)/gitignore/sources.txt.   
             """)
             print('---------------')
-            print("""Input file directory for install below (or type "delete" to delete").'
-Note: Must be absolute path. Ex: C:\\folder\\install_location""")
+            print(f"""Input file directory for install below (or type "delete" to delete").'
+Note: Must be absolute path. Ex: C:\\folder\\install_location.
+Enter nothing for default installation path (in Program Files).""")
             self.install_path = input('--> ')
 
             # checking for uninstall, doing uninstall if so
@@ -101,14 +103,35 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location""")
             else:
 
                 # formatting file path
-                self.install_path = self.install_path_format(self.install_path)
+                try:
+                    self.install_path = self.install_path_format(self.install_path)
+
+                except Exception as e:
+                    print('---------------')
+                    print(f'Path formatting error: {e}')
+                    print('Please restart installer and enter the correct path.')
+                    input('Enter anything to exit: ')
+                    exit()
                 print('---------------')
 
 
     # format install path
     def install_path_format(self, path):
+        try:
+            import winshell
+            programFiles = winshell.get_folder_by_name('ProgramFiles')
+            if not path:
+                print('Path is defaulting to Program Files.')
+                path = programFiles
+                path += '/game_name'
+                return path
+            
+        except Exception as e:
+            print(f'Import error: {e}')
+
         new_string = ''
         list = []
+
         list = [str(i) for i in path]
         for i in list:
             if i == '\\':
@@ -347,6 +370,7 @@ Otherwise, enter 'y' to continue.""")
                         import winshell
                         print('Creating shortcut...')
                         desktop = winshell.desktop()
+                        
                         path = os.path.join(desktop, "game_name.lnk") # CHANGE game_name TO NAME
                         self.abs_shortcut = path
                         target = f"{self.install_path}/main/top/starter.exe" # CHANGE TO EXE

@@ -13,5 +13,5 @@
 
     "quit_install": true,
 
-    "env": "vscode"
+    "env": "run"
 }
