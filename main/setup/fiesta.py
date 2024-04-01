@@ -326,9 +326,9 @@ Otherwise, enter 'y' to continue.""")
                 # writing run path to text file (not used, not up to date)
                 try:
                     print('Assembling text file...')
-                    url_path = f'{self.install_path}/main/top-level/content_url.txt'
+                    url_path = f'{self.install_path}/main/top/content_url.txt'
                     f = open(url_path, 'w')
-                    f.write(f'{self.install_path}/main/top-level/game_data/main.py')
+                    f.write(f'{self.install_path}/main/top/game_data/main.py')
                     f.close()
 
                 except Exception as e:
@@ -349,9 +349,9 @@ Otherwise, enter 'y' to continue.""")
                         desktop = winshell.desktop()
                         path = os.path.join(desktop, "game_name.lnk") # CHANGE game_name TO NAME
                         self.abs_shortcut = path
-                        target = f"{self.install_path}/main/top-level/starter.exe" # CHANGE TO EXE
-                        wDir = f"{self.install_path}/main/top-level"
-                        icon = f"{self.install_path}/main/top-level/starter.exe" # CHANGE TO EXE
+                        target = f"{self.install_path}/main/top/starter.exe" # CHANGE TO EXE
+                        wDir = f"{self.install_path}/main/top"
+                        icon = f"{self.install_path}/main/top/starter.exe" # CHANGE TO EXE
 
                         # calls on function here with data from above
                         self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)

@@ -10,7 +10,7 @@ import time
 
 # intended path
 run_path = 'game_data/main.py'
-alt_path = 'main/top-level/game_data/main.py'
+alt_path = 'main/top/game_data/main.py'
 
 # prints what directory it is running
 print(f'Running game: {run_path}')
