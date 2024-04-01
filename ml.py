@@ -147,4 +147,5 @@ model2()
 Other links
     - https://www.tensorflow.org/
     - https://www.tensorflow.org/tutorials
+    - https://hackajob.com/talent/blog/top-10-open-source-python-libraries-and-frameworks-for-machine-learning-in-2022
 '''
