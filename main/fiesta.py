@@ -53,10 +53,10 @@ class Install:
         # read setup.json for setup and get info
 
         ## - for codespace
-        self.read_setup = open('main/setup.json', 'r')
+        #self.read_setup = open('main/setup.json', 'r')
 
         ## for run
-        #self.read_setup = open('setup.json', 'r')
+        self.read_setup = open('setup.json', 'r')
 
         self.read_setup_value = json.load(self.read_setup)
 
@@ -76,7 +76,9 @@ This installer will run you through the steps required to set up, and then your 
 It is coded in python and compiled with pyinstaller, but can install any files you want. 
 
 Information about the files and steps to follow along can be found in "help.txt", and it is heavily encouraged you
-have that open while using this installer for reference.""")
+have that open while using this installer for reference.
+                  
+IMPORTANT: PLEASE RUN THE INSTALLER AS NORMALLY AND NOT THROUGH ANY INTEPRETER.""")
             print('--------------------------------------------------------------------------')
             input('Enter anything to continue: ')
             print("""--------------------------------------------------------------------------
@@ -142,7 +144,7 @@ Check "help.txt" to know more about "_example/".""")
                     self.py_version = input('   - What is Python version you want them to install? (Ex: 3.9) \n         --> ')
 
                 else:
-                    self.py_version = 0
+                    self.py_version = None
 
                 self.repo_url = input('\n- Input a link to the PUBLIC github repository for install: \n     --> ')
                 #self.repo_branch = input('- Input the name of the repository branch for install \n--> ')
@@ -152,7 +154,39 @@ Check "help.txt" to know more about "_example/".""")
                 self.shortcut_path = input('- Input the name you want for your shortcut: \n     --> ')
                 self.shortcut_target = input('\n- Input the path to your intended file to execute \n- Note: Path from "main/" to where your installed files will be located (refer to "help.txt"): \n     --> ')
                 self.shortcut_wDir = input('\n- Input the folder that your intended file to execute is in \n- Note: if file is in root, enter nothing here: \n     --> ')
-                self.shortcut_icon = self.shortcut_target
+                input('\n- Insert your chosen icon for the shortcut into the "_img/" folder included in this package, and name it "icon.(png, jpeg, jpg)". When done, click enter.')
+                if self.rov:
+                    print('    - Run paths')
+                    if os.path.exists('_img/icon.png'):
+                        print('    - file type: png')
+                        self.shortcut_icon = '_img/icon.png'
+                    elif os.path.exists('_img/icon.jpg'):
+                        print('    - file type: jpg')
+                        self.shortcut_icon = '_img/icon.jpg'
+                    elif os.path.exists('_img/icon.jpeg'):
+                        print('    - file type: jpeg')
+                        self.shortcut_icon = '_img/icon.jpeg'
+
+                    else:
+                        print('    - No file found, defaulting to executed file icon.')
+                        self.shortcut_icon = self.shortcut_target
+
+                elif not self.rov:
+                    print('    - Intepreter paths')
+                    if os.path.exists('main/_img/icon.png'):
+                        print('    - file type: png')
+                        self.shortcut_icon = 'main/_img/icon.png'
+                    elif os.path.exists('main/_img/icon.jpg'):
+                        print('    - file type: jpg')
+                        self.shortcut_icon = 'main/_img/icon.jpg'
+                    elif os.path.exists('main/_img/icon.jpeg'):
+                        print('    - file type: jpeg')
+                        self.shortcut_icon = 'main/_img/icon.jpeg'
+
+                    else:
+                        print('    - No file found, defaulting to executed file icon.')
+                        self.shortcut_icon = self.shortcut_target
+
                 print('--------------------------------------------------------------------------')
                 print('Here is a current data sheet of what has been inputted: ')
                 print(f"""--------------------------------------------------------------------------
@@ -276,10 +310,10 @@ Enter anything to start installation.""")
                     except Exception as e:
                         print(f'Shortcut delete error: {e}')
                         print('Shortcut delete error: This can happen if the shortcut was not properly made.')
-                        print('Shortcut delet error: Due to this, shortcuts can not be made during a normal install.')
+                        print('Shortcut delete error: Due to this, shortcuts can not be made during a normal install.')
                         print('Shortcut delete error: Make sure to run this file outside of any interpreter.')
-                        self.abs_shortcut_path = 'null'
-                        self.abs_desktop_path = 'null'
+                        self.abs_shortcut_path = None
+                        self.abs_desktop_path = None
                     print('Cleanup done; continuing')
                     break
 
@@ -375,7 +409,8 @@ SHORTCUT INFO: name, icon, wDir, target
     - config.json
     - delete.py
     - this installer
-    - _internal""")
+    - _internal/
+    - _img/""")
             print('-------------------------------------------------------------------------')
 
             # for run

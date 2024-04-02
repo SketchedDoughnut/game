@@ -14,10 +14,10 @@ import time
 print('Delete: Acquiring JSON path')
 
 ## - for codespace
-read_file = open('main/setup.json', 'r')
+#read_file = open('main/setup.json', 'r')
              
 ## for run
-#read_file = open('setup.json', 'r')
+read_file = open('setup.json', 'r')
 
 path = json.load(read_file)
 read_file.close()
