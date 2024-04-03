@@ -531,8 +531,8 @@ while running:
         if keys[K_c]:
             print('ctrl + c')
             running = False
-    #if keys[K_ESC]: ## fix at some poitn?
-    #    running = False
+    if keys[K_ESCAPE]: ## fix at some poitn?
+        running = False
 
     if cube.moving == True:
         cube.gravity()
