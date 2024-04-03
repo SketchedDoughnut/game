@@ -509,102 +509,105 @@ DATA:
 
 # simulate an environment without pygame visuals
 
-# main loop
-pressed = False
-running = True
-while running:
-
-    # timer for delay
-    pygame.time.delay(10)
-
-    # checking for events
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+# MAIN GAME LOOP
+while True:
+    # main loop vars
+    pressed = False
+    running = True
+    # start inner loop
+    while running:
+    
+        # timer for delay
+        pygame.time.delay(10)
+    
+        # checking for events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+    
+        # check all keys here
+        keys = pygame.key.get_pressed()
+        if keys[K_LCTRL]: 
+            if keys[K_w]:
+                print('ctrl + w')
+                running = False
+            if keys[K_c]:
+                print('ctrl + c')
+                running = False
+        if keys[K_ESCAPE]: ## fix at some poitn?
             running = False
-
-    # check all keys here
-    keys = pygame.key.get_pressed()
-    if keys[K_LCTRL]: 
-        if keys[K_w]:
-            print('ctrl + w')
-            running = False
-        if keys[K_c]:
-            print('ctrl + c')
-            running = False
-    if keys[K_ESCAPE]: ## fix at some poitn?
-        running = False
-
-    if cube.moving == True:
-        cube.gravity()
-
-    if keys[K_SPACE]:
-        if cube.moving == False:
-            print('starting wall generation, wall movement, cube movement')
+    
+        if cube.moving == True:
+            cube.gravity()
+    
+        if keys[K_SPACE]:
+            if cube.moving == False:
+                print('starting wall generation, wall movement, cube movement')
+                #gap = abs(wall_1.y - wall_2.y)
+                #gap -= wall_1.height
+                #print(gap)
+    
+            cube.moving = True
+    
+        if keys[K_x]:
+            cube.moving = False
+    
+        if keys[K_SPACE]:
+            if cube.moving == True:
+                if pressed == False:
+                    cube.jumping()
+                    pressed = True
+        
+        if not keys[K_SPACE]:
+            pressed = False
+    
+        # functions
+        if cube.moving == True:
+            cube.update_location()
+    
+    
+        #cube.pick_color()
+    
+        if wall_1.x < (-5 + (-1 * wall_1.width)) and wall_2.x < (-5 - (1 * wall_2.width)):
+            print('generating new walls')
+            wall_1 = Walls()
+            wall_1.pick_color()
+            wall_1.b_vertical()
+    
+            wall_2 = Walls()
+            wall_2.pick_color()
+            wall_2.t_vertical(wall_1.y)
+            #print(wall_2.t_pos)
+            #data()  
+    
             #gap = abs(wall_1.y - wall_2.y)
             #gap -= wall_1.height
             #print(gap)
-
-        cube.moving = True
-
-    if keys[K_x]:
-        cube.moving = False
-
-    if keys[K_SPACE]:
+    
+            level += 1
+            print(f'level up: {level}')
+        
         if cube.moving == True:
-            if pressed == False:
-                cube.jumping()
-                pressed = True
+            wall_1.move_wall()
+            wall_2.move_wall()
+            bounds() 
     
-    if not keys[K_SPACE]:
-        pressed = False
-
-    # functions
-    if cube.moving == True:
-        cube.update_location()
-
-
-    #cube.pick_color()
-
-    if wall_1.x < (-5 + (-1 * wall_1.width)) and wall_2.x < (-5 - (1 * wall_2.width)):
-        print('generating new walls')
-        wall_1 = Walls()
-        wall_1.pick_color()
-        wall_1.b_vertical()
-
-        wall_2 = Walls()
-        wall_2.pick_color()
-        wall_2.t_vertical(wall_1.y)
-        #print(wall_2.t_pos)
-        #data()  
-
-        #gap = abs(wall_1.y - wall_2.y)
-        #gap -= wall_1.height
-        #print(gap)
-
-        level += 1
-        print(f'level up: {level}')
+        # make rect and update display
+        window.fill((0, 0, 0))
+        player = pygame.draw.rect(window, cube.color, (cube.x, cube.y, cube.width, cube.height))   
+        wall_r1 = pygame.draw.rect(window, wall_1.color, (wall_1.x, wall_1.y, wall_1.width, wall_1.height))     
+        wall_r2 = pygame.draw.rect(window, wall_2.color, (wall_2.x, wall_2.y, wall_2.width, wall_2.height))    
     
-    if cube.moving == True:
-        wall_1.move_wall()
-        wall_2.move_wall()
-        bounds() 
-
-    # make rect and update display
-    window.fill((0, 0, 0))
-    player = pygame.draw.rect(window, cube.color, (cube.x, cube.y, cube.width, cube.height))   
-    wall_r1 = pygame.draw.rect(window, wall_1.color, (wall_1.x, wall_1.y, wall_1.width, wall_1.height))     
-    wall_r2 = pygame.draw.rect(window, wall_2.color, (wall_2.x, wall_2.y, wall_2.width, wall_2.height))    
-
-    # https://www.youtube.com/watch?v=BHr9jxKithk 
-    if player.colliderect(wall_r1): 
-        print('wall impact: bottom')
-        running = False
-
-    elif player.colliderect(wall_r2): 
-        print('wall impact: top') 
-        running = False
-
-    pygame.display.update() 
+        # https://www.youtube.com/watch?v=BHr9jxKithk 
+        if player.colliderect(wall_r1): 
+            print('wall impact: bottom')
+            running = False
+    
+        elif player.colliderect(wall_r2): 
+            print('wall impact: top') 
+            running = False
+    
+        pygame.display.update() 
 
 # quit if exit loop
 pygame.quit()
