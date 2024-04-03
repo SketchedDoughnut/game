@@ -73,7 +73,8 @@ class Install:
             print("""--------------------------------------------------------------------------
 Welcome to the installation agent designed by Sketched Doughnut!
 This installer will run you through the steps required to set up, and then your installer is done! 
-It is coded in python and compiled with pyinstaller, but can install any files you want. 
+It is coded in Python and compiled with pyinstaller, but can install any files you want. 
+This installer was compiled for Windows 10 and above.
 
 Information about the files and steps to follow along can be found in "help.txt", and it is heavily encouraged you
 have that open while using this installer for reference.
@@ -154,18 +155,21 @@ Check "help.txt" to know more about "_example/".""")
                 self.shortcut_path = input('- Input the name you want for your shortcut: \n     --> ')
                 self.shortcut_target = input('\n- Input the path to your intended file to execute \n- Note: Path from "main/" to where your installed files will be located (refer to "help.txt"): \n     --> ')
                 self.shortcut_wDir = input('\n- Input the folder that your intended file to execute is in \n- Note: if file is in root, enter nothing here: \n     --> ')
-                input('\n- Insert your chosen icon for the shortcut into the "_img/" folder included in this package, and name it "icon.(png, jpeg, jpg)". When done, click enter. \n     --> ')
+                input('\n- Insert your chosen icon for the shortcut into the "_img/" folder included in this package, and name it "icon.ico". When done, click enter. \n     --> ')
                 if self.rov:
                     print('    - Run paths')
-                    if os.path.exists('_img/icon.png'):
-                        print('    - file type: png')
-                        self.shortcut_icon = '_img/icon.png'
-                    elif os.path.exists('_img/icon.jpg'):
-                        print('    - file type: jpg')
-                        self.shortcut_icon = '_img/icon.jpg'
-                    elif os.path.exists('_img/icon.jpeg'):
-                        print('    - file type: jpeg')
-                        self.shortcut_icon = '_img/icon.jpeg'
+                    # if os.path.exists('_img/icon.png'):
+                    #     print('    - file type: png')
+                    #     self.shortcut_icon = '_img/icon.png'
+                    # elif os.path.exists('_img/icon.jpg'):
+                    #     print('    - file type: jpg')
+                    #     self.shortcut_icon = '_img/icon.jpg'
+                    # elif os.path.exists('_img/icon.jpeg'):
+                    #     print('    - file type: jpeg')
+                    #     self.shortcut_icon = '_img/icon.jpeg'
+                    if os.path.exists('_img/icon.ico'):
+                        print('    - file type: ico')
+                        self.shortcut_icon = '_img/icon.ico'
 
                     else:
                         print('    - No file found, defaulting to executed file icon.')
@@ -173,15 +177,18 @@ Check "help.txt" to know more about "_example/".""")
 
                 elif not self.rov:
                     print('    - Intepreter paths')
-                    if os.path.exists('main/_img/icon.png'):
-                        print('    - file type: png')
-                        self.shortcut_icon = 'main/_img/icon.png'
-                    elif os.path.exists('main/_img/icon.jpg'):
-                        print('    - file type: jpg')
-                        self.shortcut_icon = 'main/_img/icon.jpg'
-                    elif os.path.exists('main/_img/icon.jpeg'):
-                        print('    - file type: jpeg')
-                        self.shortcut_icon = 'main/_img/icon.jpeg'
+                    # if os.path.exists('main/_img/icon.png'):
+                    #     print('    - file type: png')
+                    #     self.shortcut_icon = 'main/_img/icon.png'
+                    # elif os.path.exists('main/_img/icon.jpg'):
+                    #     print('    - file type: jpg')
+                    #     self.shortcut_icon = 'main/_img/icon.jpg'
+                    # elif os.path.exists('main/_img/icon.jpeg'):
+                    #     print('    - file type: jpeg')
+                    #     self.shortcut_icon = 'main/_img/icon.jpeg'
+                    if os.path.exists('main/_img/icon.ico'):
+                        print('    - file type: ico')
+                        self.shortcut_icon = 'main/_img/icon.ico'
 
                     else:
                         print('    - No file found, defaulting to executed file icon.')
@@ -273,14 +280,14 @@ Enter anything to start installation.""")
                         # abs path to desktop, in backslashes
                         self.abs_desktop_path = desktop
                         #self.abs_desktop_path = f'{str(Path(self.shortcut_wDir).resolve())}'
-                        print(self.abs_desktop_path)
+                        #print(self.abs_desktop_path)
 
                         # make shortcut adapt for installation
                         self.abs_shortcut_path = os.path.join(desktop, f'{self.shortcut_path}.lnk') # name
                         
                         #self.main_path previously
                         target = f'{self.abs_desktop_path}/_temp-inst/{self.shortcut_target}' # file to execute
-                        
+
                         wDir = self.shortcut_wDir # directory of file to execute 
                         icon = self.shortcut_icon # same as target
 
@@ -424,9 +431,10 @@ SHORTCUT INFO: name, icon, wDir, target
             print('Dump done.')
 
             # final prints
-            print('-------------------------------------------------------------------------')
-            print('Installer complete! To finish up, this installer will change "mode" in "setup.json" to "install" and quit.')
-            print('Change it to "setup" to redo this after this point.')
+            print("""-------------------------------------------------------------------------
+Installer complete! Your installer is now ready to be packaged and distributed. 
+To finish up, this installer will change "mode" in "setup.json" to "install" and quit.
+Change it to "setup" to redo this after this point.""")
             print("""NOTE: You only need the following files:
     - setup.json
     - config.json
