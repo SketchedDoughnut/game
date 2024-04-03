@@ -154,7 +154,7 @@ Check "help.txt" to know more about "_example/".""")
                 print("\n\nSHORTCUT: ")
                 self.shortcut_path = input('- Input the name you want for your shortcut: \n     --> ')
                 self.shortcut_target = input('\n- Input the path to your intended file to execute \n- Note: Path from "main/" to where your installed files will be located (refer to "help.txt"): \n     --> ')
-                self.shortcut_wDir = input('\n- Input the folder that your intended file to execute is in \n- Note: if file is in root, enter nothing here: \n     --> ')
+                self.shortcut_wDir2 = input('\n- Input the folder that your intended file to execute is in \n- Note: if file is in root, enter nothing here: \n     --> ')
                 input('\n- Insert your chosen icon for the shortcut into the "_img/" folder included in this package, and name it "icon.ico". When done, click enter. \n     --> ')
                 if self.rov:
                     print('    - Run paths')
@@ -206,7 +206,7 @@ DOWNLOADING
 SHORTCUT
     - shortcut name: {self.shortcut_path}
     - shortcut target file: {self.shortcut_target}
-    - shortcut directory of target: {self.shortcut_wDir}
+    - shortcut directory of target: {self.shortcut_wDir2}
     - shortcut icon: {self.shortcut_icon}
 
     
@@ -280,15 +280,21 @@ Enter anything to start installation.""")
                         # abs path to desktop, in backslashes
                         self.abs_desktop_path = desktop
                         #self.abs_desktop_path = f'{str(Path(self.shortcut_wDir).resolve())}'
+                        self.shortcut_wDir = f"{os.path.abspath('main')}/{self.shortcut_wDir2}"
+                        self.shortcut_wDir = f'{str(Path(self.shortcut_wDir).resolve())}'
                         #print(self.abs_desktop_path)
 
                         # make shortcut adapt for installation
                         self.abs_shortcut_path = os.path.join(desktop, f'{self.shortcut_path}.lnk') # name
                         
                         #self.main_path previously
-                        target = f'{self.abs_desktop_path}/_temp-inst/{self.shortcut_target}' # file to execute
+                        #target = f'{self.abs_desktop_path}/_temp-inst/{self.shortcut_target}' # file to execute
+                        target = f"{os.path.abspath('_temp-inst')}/{self.shortcut_target}" # file to execute
 
-                        wDir = self.shortcut_wDir # directory of file to execute 
+                        # overriding to the abs path?
+                        #self.shortcut_wDir = f"{os.path.abspath('_temp-inst')}"
+
+                        wDir = f"{os.path.abspath('_temp-inst')}/{self.shortcut_wDir2}" # directory of file to execute 
                         icon = self.shortcut_icon # same as target
 
                         # dev prints
@@ -308,6 +314,7 @@ Enter anything to start installation.""")
 
 # wDir: {wDir}
 #     - dependency: shortcut wDir: {self.shortcut_wDir}
+#     - dependency: shortcut wDir2: {self.shortcut_wDir2}
 
 # icon: {icon}
 #     - dependency: shortcut icon: {self.shortcut_icon}""")
@@ -414,6 +421,7 @@ SHORTCUT INFO: name, icon, wDir, target
             self.read_setup_value['shortcut_path'] = self.shortcut_path
             self.read_setup_value['shortcut_target'] = self.shortcut_target
             self.read_setup_value['shortcut_wDir'] = self.shortcut_wDir
+            self.read_setup_value['shortcut_wDir2'] = self.shortcut_wDir2
             self.read_setup_value['shortcut_icon'] = self.shortcut_icon 
             self.read_setup_value['py_use'] = self.py_use
 
@@ -434,7 +442,8 @@ SHORTCUT INFO: name, icon, wDir, target
             print("""-------------------------------------------------------------------------
 Installer complete! Your installer is now ready to be packaged and distributed. 
 To finish up, this installer will change "mode" in "setup.json" to "install" and quit.
-Change it to "setup" to redo this after this point.""")
+Change it to "setup" to redo this after this point.
+""")
             print("""NOTE: You only need the following files:
     - setup.json
     - config.json
@@ -462,7 +471,9 @@ Change it to "setup" to redo this after this point.""")
             print('-------------------------------------------------------------------------')
 
             # exits after 30s, prints after 15s
-            print('Exiting in 30s...')
+            #print('Exiting in 30s...')
+            input('Enter anything to exit: ')
+            exit()
             time.sleep(15)
             for i in range(15, 0, -1):
                 print(i)
@@ -547,6 +558,7 @@ Change it to "setup" to redo this after this point.""")
             self.shortcut_path = self.read_setup_value['shortcut_path']
             self.shortcut_target = self.read_setup_value['shortcut_target']
             self.shortcut_wDir = self.read_setup_value['shortcut_wDir']
+            self.shortcut_wDir2 = self.read_setup_value['shortcut_wDir2']
             self.py_use = self.read_setup_value['py_use']
             self.shortcut_icon = self.shortcut_target
             
@@ -775,7 +787,8 @@ Change it to "setup" to redo this after this point.""")
                         desktop = winshell.desktop()
                         path = os.path.join(desktop, f'{self.shortcut_path}.lnk')
                         target = f'{self.install_path}/{self.shortcut_target}'
-                        wDir = self.shortcut_wDir
+                        #wDir = self.shortcut_wDir
+                        wDir = f"{self.install_path}/{self.shortcut_wDir2}"
                         icon = self.shortcut_icon
 
                         # calls on function here with data from above
@@ -788,7 +801,7 @@ Change it to "setup" to redo this after this point.""")
                     print(f'Shortcut error: {e}')
 
             except Exception as e:
-                print(f'!!! Downlaod error: {e}')
+                print(f'!!! Download error: {e}')
                 #print('Cleaning up then exiting...')
                 #self.pre_clean('error')
                 #exit()
@@ -817,7 +830,9 @@ Change it to "setup" to redo this after this point.""")
     # quits install file (to make sure it goes right)
     def quit_install(self):
         print('---------------')
-        print('Install complete. Exit in:')
+        #print('Install complete. Exit in:')
+        input('Install complete. Enter anything to exit: ')
+        exit()
         for i in range(3, 0, -1):
             print(f'{i}')
             time.sleep(1)

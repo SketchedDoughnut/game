@@ -25,8 +25,8 @@ read_file.close()
 rov = path['environment'] == 'run'
 
 # checking if main in file path
-if ('main' in path["remove_path"]) == False:
-    print(f'Nn main found ({path["remove_path"]})... skipping')
+if not ('main' in path["remove_path"]):
+    print(f'No main found ({path["remove_path"]})... skipping')
 
 # run if main is present in file path
 else:

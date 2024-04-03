@@ -20,7 +20,7 @@ SHORTCUT
 Section notes:
     - when shortcut is setup, the path must be relative to where the installation is made.
     - example:
-        - installation path is "C:\main"
+        - installation path is "(dir)/main"
         - the path you input for shortcut_target is from "C:/main" to where the file you want to execute is.
         - lets say the folder "data" is installed via the installer in "C:/main". 
         - shortcut should route inside that install path "C:/main" to your file.
