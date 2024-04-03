@@ -513,23 +513,27 @@ DATA:
 
 # simulate an environment without pygame visuals
 
-# MAIN GAME LOOP
+# CONTROL LOOP
 while True:
-    #reinitialize walls
+    #re-initialize cube
+    cube = Cube()
+    cube.pick_color()
+
+    #re-initialize walls
     wall_1 = Walls()
     wall_1.pick_color()
     wall_1.b_vertical()
-    
     wall_2 = Walls()
     wall_2.pick_color()
     wall_2.t_vertical(wall_1.y)
 
-    # main loop vars
+    # main loop vars / cases
     pressed = False
     running = True
-    # start inner loop
+    break_main = False
+
+    # MAIN GAME LOOP
     while running:
-    
         # timer for delay
         pygame.time.delay(10)
     
@@ -543,11 +547,17 @@ while True:
         if keys[K_LCTRL]: 
             if keys[K_w]:
                 print('ctrl + w')
+                break_main = True
                 running = False
+
             if keys[K_c]:
                 print('ctrl + c')
+                break_main = True
                 running = False
+
         if keys[K_ESCAPE]: ## fix at some poitn?
+            print('escape')
+            break_main = True
             running = False
     
         if cube.moving == True:
@@ -621,6 +631,12 @@ while True:
             running = False
     
         pygame.display.update() 
+
+    if break_main == True:
+        break
+    
+    else:
+        time.sleep(1)
 
 # quit if exit loop
 pygame.quit()
