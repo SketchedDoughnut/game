@@ -136,7 +136,7 @@ class Walls:
         #         self.x -= distance + 3
 
         ## new incremental system
-        self.x -= distance + (level // 5) * 5
+        self.x -= distance + (level // 5) * 5 # *5 = for challenge, don't multiply for normal (imo slow) increase
 
     # pick color
     def pick_color(self):
