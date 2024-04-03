@@ -511,6 +511,15 @@ DATA:
 
 # MAIN GAME LOOP
 while True:
+    #reinitialize walls
+    wall_1 = Walls()
+    wall_1.pick_color()
+    wall_1.b_vertical()
+    
+    wall_2 = Walls()
+    wall_2.pick_color()
+    wall_2.t_vertical(wall_1.y)
+
     # main loop vars
     pressed = False
     running = True
