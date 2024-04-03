@@ -63,6 +63,8 @@ class Cube:
 
 ###################################################
         
+# leveling, defined below when objects for walls and cubes are made
+level = 0
 
 # wall
 class Walls:
@@ -120,7 +122,17 @@ class Walls:
 
     # movement
     def move_wall(self, distance=5):
-        self.x -= distance
+        if level < 6:
+            self.x -= distance
+        else:
+            if level > 4:
+                self.x -= distance + 1
+
+            if level > 9:
+                self.x -= distance + 2
+
+            if level > 14:
+                self.x -= distance + 3
 
     # pick color
     def pick_color(self):
@@ -519,6 +531,8 @@ while running:
         if keys[K_c]:
             print('ctrl + c')
             running = False
+    if keys[K_ESC]:
+        running = False
 
     if cube.moving == True:
         cube.gravity()
