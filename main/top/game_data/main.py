@@ -122,17 +122,21 @@ class Walls:
 
     # movement
     def move_wall(self, distance=5):
-        if level < 6:
-            self.x -= distance
-        else:
-            if level > 4:
-                self.x -= distance + 1
+        ## old incremental system
+        # if level < 6:
+        #     self.x -= distance
+        # else:
+        #     if level > 4:
+        #         self.x -= distance + 1
 
-            if level > 9:
-                self.x -= distance + 2
+        #     if level > 9:
+        #         self.x -= distance + 2
 
-            if level > 14:
-                self.x -= distance + 3
+        #     if level > 14:
+        #         self.x -= distance + 3
+
+        ## new incremental system
+        self.x -= distance + (level // 5) * 5
 
     # pick color
     def pick_color(self):
