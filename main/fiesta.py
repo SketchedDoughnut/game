@@ -78,7 +78,7 @@ It is coded in python and compiled with pyinstaller, but can install any files y
 Information about the files and steps to follow along can be found in "help.txt", and it is heavily encouraged you
 have that open while using this installer for reference.
                   
-IMPORTANT: PLEASE RUN THE INSTALLER AS NORMALLY AND NOT THROUGH ANY INTEPRETER.""")
+IMPORTANT: PLEASE RUN THE INSTALLER BY ITSELF AND NOT THROUGH ANY INTEPRETER.""")
             print('--------------------------------------------------------------------------')
             input('Enter anything to continue: ')
             print("""--------------------------------------------------------------------------
@@ -154,7 +154,7 @@ Check "help.txt" to know more about "_example/".""")
                 self.shortcut_path = input('- Input the name you want for your shortcut: \n     --> ')
                 self.shortcut_target = input('\n- Input the path to your intended file to execute \n- Note: Path from "main/" to where your installed files will be located (refer to "help.txt"): \n     --> ')
                 self.shortcut_wDir = input('\n- Input the folder that your intended file to execute is in \n- Note: if file is in root, enter nothing here: \n     --> ')
-                input('\n- Insert your chosen icon for the shortcut into the "_img/" folder included in this package, and name it "icon.(png, jpeg, jpg)". When done, click enter.')
+                input('\n- Insert your chosen icon for the shortcut into the "_img/" folder included in this package, and name it "icon.(png, jpeg, jpg)". When done, click enter. \n     --> ')
                 if self.rov:
                     print('    - Run paths')
                     if os.path.exists('_img/icon.png'):
@@ -270,8 +270,9 @@ Enter anything to start installation.""")
 
                         desktop = winshell.desktop()
 
-                        # abs path to desktop
-                        self.abs_desktop_path = f'{str(Path(self.shortcut_wDir).resolve())}'
+                        # abs path to desktop, in backslashes
+                        self.abs_desktop_path = desktop
+                        #self.abs_desktop_path = f'{str(Path(self.shortcut_wDir).resolve())}'
                         print(self.abs_desktop_path)
 
                         # make shortcut adapt for installation
@@ -279,9 +280,31 @@ Enter anything to start installation.""")
                         
                         #self.main_path previously
                         target = f'{self.abs_desktop_path}/_temp-inst/{self.shortcut_target}' # file to execute
+                        
                         wDir = self.shortcut_wDir # directory of file to execute 
                         icon = self.shortcut_icon # same as target
 
+                        # dev prints
+#                         print('-----------------------')
+#                         print(f"""SHORTCUT DATA:
+# desktop: {desktop}
+# (V) abs desktop path: {self.abs_desktop_path}
+#     - dependency: desktop: above
+
+# (V) abs shortcut path: {self.abs_shortcut_path}
+#     - dependency: desktop: above
+#     - dependency: shortcut path: {self.shortcut_path}
+
+# target: {target}
+#     - dependency: abs desktop path: above
+#     - dependency: shortcut target: {self.shortcut_target}
+
+# wDir: {wDir}
+#     - dependency: shortcut wDir: {self.shortcut_wDir}
+
+# icon: {icon}
+#     - dependency: shortcut icon: {self.shortcut_icon}""")
+                        
                         # calls on function here with data from above
                         self.createShortcut(target=target, path=self.abs_shortcut_path, wDir=wDir, icon=icon)
                         print('Shortcut created.')
