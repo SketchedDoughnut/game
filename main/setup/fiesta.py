@@ -614,13 +614,16 @@ class Downloader:
         # Start Downloading
 
         for i in self.files[start:]:
-            if recursive or i[0].split(target_folder)[1].count('/') \
-                    <= 1:
-                self.__mkdirs(destination + '/' + os.path.dirname(i[0]))
-                urllib.request.urlretrieve(i[1], destination + '/' + i[0])
-
-                # modified segment by me
-                print(f'- Installing file: /{i}')
+            try:
+                if recursive or i[0].split(target_folder)[1].count('/') \
+                        <= 1:
+                    self.__mkdirs(destination + '/' + os.path.dirname(i[0]))
+                    urllib.request.urlretrieve(i[1], destination + '/' + i[0])
+    
+                    # modified segment by me
+                    print(f'- Installing file: /{i}')
+            except Exception as e:
+                print(f'File download error: {e}')
 
 
 ########################################################################
