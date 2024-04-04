@@ -2,6 +2,7 @@ import shutil
 import os
 import json
 import time
+import pip
 
 
 #################################################################
@@ -75,6 +76,17 @@ try:
 
 except Exception as e:
     print(f'Delete: Shortcut error: {e}')
+
+# print('Delete: Deleting pygame...')
+# time.sleep(0.025)
+
+# try:
+#     pip.main('uninstall', 'pygame')
+#     print('Delete: pygame gone.')
+#     time.sleep(0.025)
+
+# except Exception as e:
+#     print(f'Delete: pygame error: {e}')
 
 print('Delete: Clearing data...')
 time.sleep(0.025)

@@ -1,4 +1,10 @@
 # imports
+# installs pygame because quirky (only will run once, otherwise requirements are satisfied)
+rpip = True
+if rpip:
+    import pip
+    pip.main(['install', 'pygame'])
+
 import pygame
 from pygame.locals import *
 import random
@@ -580,6 +586,9 @@ while True:
     mouse_pressed = False
     running = True
     break_main = False
+
+    # level
+    level = 0
 
     # MAIN GAME LOOP
     while running:
