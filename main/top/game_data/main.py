@@ -136,16 +136,53 @@ class Walls:
         #         self.x -= distance + 3
 
         ## new incremental system
-        self.x -= distance + (level // 5) * 5 # *5 = for challenge, don't multiply for normal (imo slow) increase
+        if challenge.challenge == True:
+            # *5 = for challenge, don't multiply for normal (imo slow) increase
+
+            self.x -= distance + (level // 5) * 5 
+        
+        elif challenge.challenge == False:
+            self.x -= distance + (level // 5)
 
     # pick color
     def pick_color(self):
         self.color = (random.randint(50, 255), random.randint(50, 255), random.randint(50, 255)) 
 
-    
+
 ###################################################
         
+class Challenge:
+    def __init__(self):
+        # dimensions
+        self.width = 30
+        self.height = 30
+
+        # colors
+        self.white = (255, 255, 255)
+        self.red = (255, 0, 0)
+        self.color = (self.white)
+
+        # mode
+        self.challenge = False
+        
+        # position
+        self.x = 0
+        self.y = h - self.height # h - 30
+
+    def collisions(self):
+        pos = pygame.mouse.get_pos()
+        if challenge_rect.collidepoint(pos):
+            if self.challenge == False:
+                self.color = self.red
+                self.challenge = True
+            
+            elif self.challenge == True:
+                self.color = self.white
+                self.challenge = False
+
     
+
+###################################################
 class setup:
     '''
     Everything that needs to be shared:
@@ -266,6 +303,9 @@ wall_1.b_vertical()
 wall_2 = Walls()
 wall_2.pick_color()
 wall_2.t_vertical(wall_1.y)
+
+#initialize challenge
+challenge = Challenge()
 
 # leveling
 level = 0
@@ -514,6 +554,11 @@ DATA:
 # simulate an environment without pygame visuals
 
 # CONTROL LOOP
+
+## loads fonts
+## https://www.geeksforgeeks.org/python-display-text-to-pygame-window/#google_vignette
+font = pygame.font.Font('freesansbold.ttf', 36)
+
 while True:
     #re-initialize cube
     cube = Cube()
@@ -527,8 +572,12 @@ while True:
     wall_2.pick_color()
     wall_2.t_vertical(wall_1.y)
 
+    #initialize challenge
+    challenge = Challenge()
+
     # main loop vars / cases
-    pressed = False
+    space_pressed = False
+    mouse_pressed = False
     running = True
     break_main = False
 
@@ -555,13 +604,14 @@ while True:
                 break_main = True
                 running = False
 
-        if keys[K_ESCAPE]: ## fix at some poitn?
+        if keys[K_ESCAPE]:
             print('escape')
             break_main = True
             running = False
     
         if cube.moving == True:
             cube.gravity()
+            #cube.y = wall_1.y - (wall_1.gap / 2) - (cube.height / 2)      #####################
     
         if keys[K_SPACE]:
             if cube.moving == False:
@@ -577,13 +627,26 @@ while True:
     
         if keys[K_SPACE]:
             if cube.moving == True:
-                if pressed == False:
+                if space_pressed == False:
                     cube.jumping()
-                    pressed = True
+                    space_pressed = True
         
         if not keys[K_SPACE]:
-            pressed = False
+            space_pressed = False
     
+        mouse = pygame.mouse.get_pressed()
+        if mouse[0]:
+            if mouse_pressed == False:
+                try:
+                    challenge.collisions()
+                    mouse_pressed = True
+
+                except Exception as e:
+                    print(f'no rect yet: {e}')
+        
+        if not mouse[0]:
+            mouse_pressed = False
+
         # functions
         if cube.moving == True:
             cube.update_location()
@@ -619,8 +682,18 @@ while True:
         window.fill((0, 0, 0))
         player = pygame.draw.rect(window, cube.color, (cube.x, cube.y, cube.width, cube.height))   
         wall_r1 = pygame.draw.rect(window, wall_1.color, (wall_1.x, wall_1.y, wall_1.width, wall_1.height))     
-        wall_r2 = pygame.draw.rect(window, wall_2.color, (wall_2.x, wall_2.y, wall_2.width, wall_2.height))    
-    
+        wall_r2 = pygame.draw.rect(window, wall_2.color, (wall_2.x, wall_2.y, wall_2.width, wall_2.height))
+        challenge_rect = pygame.draw.rect(window, challenge.color, (challenge.x, challenge.y, challenge.width, challenge.height))
+
+        ## font
+        ## https://www.geeksforgeeks.org/python-display-text-to-pygame-window/#google_vignette
+        black = (0, 0, 0)
+        white = (255, 255, 255)
+        text = font.render(str(level), True, white, None)
+        text_rect = text.get_rect()
+        text_rect.center = (25, 30)
+        window.blit(text, text_rect)
+
         # https://www.youtube.com/watch?v=BHr9jxKithk 
         if player.colliderect(wall_r1): 
             print('wall impact: bottom')

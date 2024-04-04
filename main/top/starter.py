@@ -1,6 +1,7 @@
 import os
 import time
 import json
+import pygame
 
 ## if file function is ever implemented
     # f = open('content_url.txt', 'r')

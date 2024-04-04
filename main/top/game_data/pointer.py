@@ -6,7 +6,7 @@ import time
 import os
 import threading
 
-# https://youtu.be/YbouZ2X8fGk
+# https://youtu.be/YbouZ2X8fGk 
 
 # init
 pygame.init()
@@ -32,7 +32,7 @@ def mouse_collisions():
         window.fill(GREEN)
     
     elif pos[0] > 350 and pos[0] < 400 and pos[1] < 50 and pos[1] > -1:
-        window.fill((BLUE)
+        window.fill(BLUE)
 
     elif pos[0] > 175 and pos[0] < 225 and pos[1] > 175 and pos[1] < 225:
         window.fill(RED)
