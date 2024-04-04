@@ -328,6 +328,16 @@ while True:
         
         if not keys[K_SPACE]:
             space_pressed = False
+
+        # extra jumping code, remove later #################################
+        if keys[K_c] or keys[K_v]:
+            if cube.moving == True:
+                if space_pressed == False:
+                    cube.jumping()
+                    space_pressed = True
+                    
+        if not keys[K_c] or keys[K_v]:
+            space_pressed = False
     
         # checking all mouse presses here
         mouse = pygame.mouse.get_pressed()
