@@ -1,9 +1,16 @@
 # imports
 # installs pygame because quirky (only will run once, otherwise requirements are satisfied)
-rpip = True
-if rpip:
-    import pip
+ypip = True
+npip = False
+import pip
+if ypip:
     pip.main(['install', 'pygame'])
+    print('--------------------------')
+
+if npip:
+    pip.main(['uninstall', 'pygame'])
+    print('--------------------------')
+    exit()
 
 import pygame
 from pygame.locals import *
@@ -14,6 +21,7 @@ import threading
 
 # init
 pygame.init()
+print('--------------------------')
 
 # dimensions of screen
 w, h = pygame.display.Info().current_w, pygame.display.Info().current_h
