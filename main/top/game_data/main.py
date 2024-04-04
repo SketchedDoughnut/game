@@ -221,26 +221,26 @@ level = 0
 
 
 # environment stuff
-class environment:
-    def bounds(self):
-        global running
-        if cube.y >= h:
-            print('out of bounds: down')
-            running = False
+# used to be class
+def bounds():
+    global running
+    if cube.y >= h:
+        print('out of bounds: down')
+        running = False
 
-        elif cube.y <= 0:
-            print('out of bounds: top')
-            running = False
+    elif cube.y <= 0:
+        print('out of bounds: top')
+        running = False
 
-    '''
-    - CUBE
-            - height: {cube.height}
-            - width: {cube.width}
-            - jump: {cube.jump}
-            - grav: {cube.grav}
-            - color: {cube.color}
-            - moving: {cube.moving}
-    '''
+'''
+- CUBE
+        - height: {cube.height}
+        - width: {cube.width}
+        - jump: {cube.jump}
+        - grav: {cube.grav}
+        - color: {cube.color}
+        - moving: {cube.moving}
+'''
 
 
 ###################################################
@@ -364,7 +364,7 @@ while True:
         if cube.moving == True:
             wall_1.move_wall()
             wall_2.move_wall()
-            environment.bounds()
+            bounds()
     
         # draw objects
         window.fill((0, 0, 0)) # black out screen
