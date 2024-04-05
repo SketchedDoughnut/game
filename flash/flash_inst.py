@@ -176,6 +176,7 @@ os.mkdir(path)
 
 ## download in location
 # start time elapsing
+# https://www.programiz.com/python-programming/examples/elapsed-time
 start = timeit.default_timer()
 
 try:
