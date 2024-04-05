@@ -24,10 +24,10 @@ class Install:
 
         # overruling dictionary for global access
         # - for codespace
-        #self.rules = open('main/setup/config.json', 'r')
+        self.rules = open('main/setup/config.json', 'r')
 
         # for run
-        self.rules = open('config.json', 'r')
+        #self.rules = open('config.json', 'r')
 
         # will contain everything from config.json, including environment information
         self.rules = json.load(self.rules)
@@ -64,54 +64,59 @@ class Install:
                 Code is written by Sketched Doughnut with snippets from others.
                    Sources are in: (install location)/gitignore/sources.txt.   
             """)
-            print('---------------')
-            print(f"""Input file directory for install below (or type "delete" to delete").'
+            path_loop = True
+            while path_loop:
+                print('---------------')
+                print(f"""Input file directory for install below (or type "delete" to delete").'
 Note: Must be absolute path. Ex: C:\\folder\\install_location.""") # Enter nothing for default installation path (in Program Files).
-            self.install_path = input('--> ')
+                self.install_path = input('--> ')
 
-            # checking for uninstall, doing uninstall if so
-            if self.install_path == "delete":
-                print('---------------')
-                if input('Are you sure you want to delete?  \nType: "confirm-delete", anything else to cancel \n--> ') == 'confirm-delete':
-
-                    # for run
-                    if self.rules['env'] == 'run':
-                        os.system(f'python delete.py')
-
-                    # - for codespace
-                    else:
-                        os.system(f'python main/setup/delete.py')
-
-                    # final, then finishes
+                # checking for uninstall, doing uninstall if so
+                if self.install_path == "delete":
                     print('---------------')
-                    print('Delete done. This installer will exit in 30 seconds; afterwards, delete the folder it is in. Thank you for using this installer! :3')
-                    time.sleep(15)
-                    for i in range(15, 0, -1):
-                        print(i)
-                        time.sleep(1)
-                    exit()
+                    if input('Are you sure you want to delete?  \nType: "confirm-delete", anything else to cancel \n--> ') == 'confirm-delete':
+
+                        # for run
+                        if self.rules['env'] == 'run':
+                            os.system(f'python delete.py')
+
+                        # - for codespace
+                        else:
+                            os.system(f'python main/setup/delete.py')
+
+                        # final, then finishes
+                        print('---------------')
+                        print('Delete done. This installer will exit in 30 seconds; afterwards, delete the folder it is in. Thank you for using this installer! :3')
+                        time.sleep(15)
+                        for i in range(15, 0, -1):
+                            print(i)
+                            time.sleep(1)
+                            exit()
                 
-                # cancelling uninstall if wrong input
+                    # cancelling uninstall if wrong input
+                    else:
+                        print('Cancelling deletion, cancelling file in 5s...')
+                        for i in range(5, 0, -1):
+                            print(i)
+                            time.sleep(1)
+                        exit()
+
                 else:
-                    print('Cancelling deletion, cancelling file in 5s...')
-                    for i in range(5, 0, -1):
-                        print(i)
-                        time.sleep(1)
-                    exit()
 
-            else:
+                    # formatting file path
+                    try:
+                        self.install_path = self.install_path_format(self.install_path)
+                        path_loop = self.install_path[1]
+                        self.install_path = self.install_path[0]
 
-                # formatting file path
-                try:
-                    self.install_path = self.install_path_format(self.install_path)
-
-                except Exception as e:
+                    except Exception as e:
+                        print('---------------')
+                        print(f'Path formatting error: {e}')
+                        print('Please restart installer and enter the correct path.')
+                        input('Enter anything to exit: ')
+                        exit()
                     print('---------------')
-                    print(f'Path formatting error: {e}')
-                    print('Please restart installer and enter the correct path.')
-                    input('Enter anything to exit: ')
-                    exit()
-                print('---------------')
+                        
 
 
     # format install path
@@ -171,10 +176,17 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location.""") # Enter nothi
         new_string = ''
         for i in path:
             new_string += i
-
         path = new_string
-        path += '/game_name'
-        return path
+
+        if os.path.exists(path):
+            path += '/game_name'
+            return [path, False]
+    
+        else:
+            print('---------------')
+            print('---------------')
+            print('Improper path. Please try again.')
+            return [path, True]
         
 
     # making sure they are sure of their choice
