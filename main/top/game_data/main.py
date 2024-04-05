@@ -306,8 +306,8 @@ while True:
 
         # break running and control if
         if cube.moving == True:
-            #cube.gravity() #####################
-            cube.y = wall_1.y - (wall_1.gap / 2) - (cube.height / 2) #####################
+            cube.gravity() #####################
+            #cube.y = wall_1.y - (wall_1.gap / 2) - (cube.height / 2) #####################
     
         # start env movement
         if keys[K_SPACE]:
