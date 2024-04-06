@@ -208,7 +208,7 @@ class Notes:
                     val = 3
                 elif val == 3:
                     val = 0
-        print('Playback mapping finished.')
+        print('Playback mapping finished')
                 
 #######################################################################################
 
