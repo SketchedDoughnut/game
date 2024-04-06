@@ -41,7 +41,7 @@ while True:
 m = pygame.mixer
 m.init()
 m.music.load('main/top/game_data/rush.mp3') #vscode path
-m.music.set_volume(0.25)
+m.music.set_volume(0.75)
 m.music.play()
 
 while running:
@@ -73,8 +73,8 @@ while running:
 
     if keys[K_SPACE]:
         if space == False:
-            end = round(time.time(), 3)
-            dif = round(end - start, 3)
+            end = (time.time(), 3)
+            dif = (end - start, 3)
             start = end
             time_list.append([end, start, dif])
             space = True

@@ -70,6 +70,7 @@ import time
 import timeit
 import os
 import threading
+import json
 
 ### pygame 
 ## pygame
@@ -142,9 +143,73 @@ class Notes:
             self.cube_x = (i + 1) * self.gap + i * self.cube_width
             self.points.append(self.cube_x)
 
-    def draw(self):
-        for i in self.points:
-            pygame.draw.rect(window, GREEN, (i, 0, 50, 50))
+    def draw(self, trust=False, x_val=0, i=[], toggle=False):
+        global running
+        if trust == False:
+            for i in self.points:
+                pygame.draw.rect(window, GREEN, (i, 0, 50, 50))
+        
+        elif trust == True:
+            loop = True
+            while loop:
+                for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            running = False
+                
+                if toggle == False:
+                    m = pygame.mixer
+                    m.init()
+                    m.music.load('main/top/game_data/rush.mp3') #vscode path
+                    m.music.set_volume(0.75)
+                
+                window.fill(BLACK)
+                pygame.draw.rect(window, YELLOW, (x_val, 0, 50, 50))
+                print(f'sleeping for {i[2]}s,', f'{round(1000 * i[2])}ms')
+                pygame.time.delay(round(1000 * i[2]))
+                pygame.display.update()
+                if toggle == False:
+                    m.music.play()
+                    delay = 1.485
+                    delay_ms = int(1000 * delay)
+                    pygame.time.delay(delay_ms)
+                loop = False
+
+            toggle = True
+            return toggle
+
+    def iter(self):
+        '''notes
+        4: bit delayed, random notes that do not exist
+        3: way more synced, with delay = 1.485
+        2: 
+        '''
+
+        f = open("main\\top\game_data\\audio-out\('vocals', 2).json", 'r')
+        thing = json.load(f)
+        f.close()
+
+        val = 0
+        toggle = False
+        print('--------------------------')
+        for i in thing:
+            if i[0] == 'end':
+                pass
+
+            else:
+                # for i2 in i:
+                #     #print(random.randint(1, 4), i2)
+                #     notes.draw(trust=True, x_val=random.randint(1, 4))
+                toggle = self.draw(trust=True, x_val=self.points[val], i=i, toggle=toggle)
+                if val == 0:
+                    val = 1
+                elif val == 1:
+                    val = 2
+                elif val == 2:
+                    val = 3
+                elif val == 3:
+                    val = 0
+        print('List finished')
+                
 #######################################################################################
 
 ### INITIALIZE VARIABLES
@@ -153,7 +218,7 @@ class Notes:
 ## set up the zone for registering keys
 zone = Zone()
 notes = Notes()
-
+notes.iter()
 
 running = True
 #running = False
@@ -186,7 +251,7 @@ while running:
 
 
     zone.draw()
-    notes.draw()
+    #notes.draw()
     down = pygame.draw.rect(window, BLUE, (0, y, WIDTH, 50))
     y += 2.5
 
