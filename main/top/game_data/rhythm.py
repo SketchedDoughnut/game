@@ -164,8 +164,9 @@ class Notes:
                 
                 window.fill(BLACK)
                 pygame.draw.rect(window, YELLOW, (x_val, 0, 50, 50))
-                print(f'sleeping for {i[2]}s,', f'{round(1000 * i[2])}ms')
-                pygame.time.delay(round(1000 * i[2]))
+                delay_ms = round(1000 * i[2])
+                print(f'sleeping for {i[2]}s,', f'{delay_ms}ms')
+                pygame.time.delay(delay_ms)
                 pygame.display.update()
                 if toggle == False:
                     m.music.play()
@@ -179,12 +180,14 @@ class Notes:
 
     def iter(self):
         '''notes
+        5: honestly my inputs just sucked
         4: bit delayed, random notes that do not exist
         3: way more synced, with delay = 1.485
-        2: 
+        2: basically the same to 3, with delay = 1.485
+        1: similar to 2/3 but more delayed, with delay = 1.485
         '''
 
-        f = open("main\\top\game_data\\audio-out\('vocals', 2).json", 'r')
+        f = open("main\\top\game_data\\audio-out\('vocals', 3).json", 'r')
         thing = json.load(f)
         f.close()
 

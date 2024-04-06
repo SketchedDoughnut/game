@@ -73,8 +73,8 @@ while running:
 
     if keys[K_SPACE]:
         if space == False:
-            end = (time.time(), 3)
-            dif = (end - start, 3)
+            end = (time.time())
+            dif = (end - start)
             start = end
             time_list.append([end, start, dif])
             space = True
