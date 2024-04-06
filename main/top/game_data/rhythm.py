@@ -71,24 +71,18 @@ import timeit
 import os
 import threading
 
-## pygame essentials
+### pygame 
+## pygame
 pygame.init()
-# dimensions of screen
-W, H = pygame.display.Info().current_w, pygame.display.Info().current_h
-
-# establishing window
-window = pygame.display.set_mode((W, H))
-pygame.display.set_caption("thing!")
+# W, H = pygame.display.Info().current_w, pygame.display.Info().current_h
 
 #######################################################################################
 
 ### CONSTANTS
 
 ## screen
-WIDTH = W # width of screen
-HEIGHT = H # height of screen
-ACTIVE_WIDTH = 1920 # width where game will be displayed
-ACTIVE_HEIGHT = 1080 # height where game will be displayed
+WIDTH = 1920 
+HEIGHT = 1080
 
 ## a crapton of colors (thank you ChatGPT)
 BLACK = (0, 0, 0)
@@ -100,21 +94,104 @@ YELLOW = (255, 255, 0)
 
 ## active keys to register
 REGISTER = ['a', 's', 'd', 'f', 'j', 'k', 'l', ';']
+#EXITS = [[K_LCTRL, K_c], [K_LCTRL, K_w], [K_ESCAPE]]
 
 #######################################################################################
 
 ### PRELOADING
 
-## img
-bg_img = ''
-
-## font
-font_1 = ''
-
-## audio file
-file_1 = ''
+# establishing window 
+window = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("thing!")
 
 #######################################################################################
 
-pygame.draw.rect(window, RED, (0,  0, WIDTH, HEIGHT))
-pygame.draw.rect(window, BLUE, (0, 0, ACTIVE_WIDTH, ACTIVE_HEIGHT))
+### classes
+
+class Zone:
+    def __init__(self):
+        #vals to change
+        self.move_up = 150
+        
+        # math (local)
+        extra = HEIGHT - self.move_up
+        gap = HEIGHT - extra
+
+        # pos
+        self.x = 0
+        self.y = HEIGHT - self.move_up
+
+        # size
+        self.width = WIDTH
+        self.height = gap
+    
+    def draw(self):
+        self.zone_rect = pygame.draw.rect(window, RED, (self.x, self.y, self.width, self.height))
+
+class Notes:
+    def __init__(self):
+        self.points = []
+        self.num_cubes = 4
+        self.cube_width = 50  # Adjust this as needed
+
+        # Calculate the gap between each cube
+        self.gap = (WIDTH - (self.num_cubes * self.cube_width)) / (self.num_cubes + 1)
+
+        # Calculate the x-coordinate for each cube
+        for i in range(self.num_cubes):
+            self.cube_x = (i + 1) * self.gap + i * self.cube_width
+            self.points.append(self.cube_x)
+
+    def draw(self):
+        for i in self.points:
+            pygame.draw.rect(window, GREEN, (i, 0, 50, 50))
+#######################################################################################
+
+### INITIALIZE VARIABLES
+
+#######################################################################################
+## set up the zone for registering keys
+zone = Zone()
+notes = Notes()
+
+
+running = True
+#running = False
+y = 0
+
+while running:
+    # delay
+    pygame.time.delay(10)
+
+    # checking for events
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    
+    # gathering input data
+    keys = pygame.key.get_pressed()
+    mouse_pos = pygame.mouse.get_pos()
+
+    # exits if
+    keys = pygame.key.get_pressed()
+    if keys[K_LCTRL]:
+        if keys[K_c]:
+            running = False
+        elif keys[K_w]:
+            running = False
+    if keys[K_ESCAPE]:
+        running = False
+
+    window.fill(BLACK)
+
+
+    zone.draw()
+    notes.draw()
+    down = pygame.draw.rect(window, BLUE, (0, y, WIDTH, 50))
+    y += 2.5
+
+    if zone.zone_rect.colliderect(down):
+        if keys[K_w]:
+            exit()
+
+    pygame.display.update()
