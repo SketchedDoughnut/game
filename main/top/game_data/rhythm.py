@@ -114,7 +114,7 @@ class Profiles:
     def __init__(self):
         self.p1 = pygame.mixer
         self.p1.init()
-        self.p1.music.load('main/top/game_data/rush.mp3') #vscode path
+        self.p1.music.load('main/top/game_data/songs/rush.mp3') #vscode path
         #self.p1.music.set_volume(0.75)
         self.p1.music.set_volume(0.25)
 

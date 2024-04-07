@@ -40,7 +40,7 @@ while True:
 # https://www.geeksforgeeks.org/python-playing-audio-file-in-pygame/
 m = pygame.mixer
 m.init()
-m.music.load('main/top/game_data/rush.mp3') #vscode path
+m.music.load('main/top/game_data/songs/rush.mp3') #vscode path
 m.music.set_volume(0.75)
 m.music.play()
 
