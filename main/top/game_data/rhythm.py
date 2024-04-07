@@ -150,9 +150,9 @@ class Profiles:
                         start_delay = 1.485
                         start_delay_ms = int(1000 * start_delay)
                         pygame.time.delay(start_delay_ms)
+                        toggle = True
                     #loop = False
                     break
-                toggle = True
                 if val == notes.num_cubes - 1:
                     val = 0
                 else:
