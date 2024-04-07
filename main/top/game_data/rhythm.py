@@ -233,10 +233,10 @@ class Profiles:
                 #     val += 1
 
     def Stayed_Gone(self):
-        f = open("main\\top\game_data\maps\('vocals', 7).json", 'r') 
+        f = open("main\\top\game_data\\audio-out\('vocals', 7).json", 'r') 
         vocal_track = json.load(f)
         f.close()
-        f = open("main\\top\game_data\maps\('vocals', 7).json", 'r')
+        f = open("main\\top\game_data\\audio-out\('vocals', 7).json", 'r')
         tracks_pos = json.load(f)
         f.close()
         val = 0
