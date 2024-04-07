@@ -125,16 +125,19 @@ class Data:
         
     def iter(self):
         ## chat gpt
-        ##### new_list = []
-        ##### for cubex in self.active_cubes:
-        #####     #cubex.y = cubex.y + 2.5 * (delta_time)
-        #####     cubex.y = cubex.y + 100 * delta_time
-        #####     if cubex.y < HEIGHT:
-        #####         new_list.append(cubex)  # Keep the cube in the list
-        ##### self.active_cubes = new_list
+        while True:
+            new_list = []
+            for cubex in self.active_cubes:
+                #cubex.y = cubex.y + 2.5 * (delta_time)
+                #cubex.y = cubex.y + 100 * delta_time
+                cubex.y += 0.01
+                if cubex.y < HEIGHT:
+                    new_list.append(cubex)  # Keep the cube in the list
+            self.active_cubes = new_list
+            print(len(self.active_cubes))
+            #time.sleep(1)
         # Remove cubes that have moved off the screen
         #self.active_cubes = [cubex for cubex in self.active_cubes if cubex.y < HEIGHT]
-        return
 
     def add_to_active(self, obj):
         self.active_cubes.append(obj)
@@ -434,6 +437,9 @@ music_thread = threading.Thread(target=lambda:notes.profiles.Stayed_Gone())
 #music_thread = threading.Thread(target=lambda:notes.profiles.Whats_the_Rush())
 music_thread.start()
 
+iter_thread = threading.Thread(target=lambda:notes.profiles.data.iter())
+#iter_thread.start()
+
 delay = 10
 start = time.time()
 
@@ -494,5 +500,5 @@ while running:
     
     delta_time = clock.get_time() / 1000
 
-    notes.profiles.data.iter()
+    #notes.profiles.data.iter()
     pygame.display.update()
