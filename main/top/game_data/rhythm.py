@@ -115,7 +115,8 @@ class Profiles:
         self.p1 = pygame.mixer
         self.p1.init()
         self.p1.music.load('main/top/game_data/rush.mp3') #vscode path
-        self.p1.music.set_volume(0.75)
+        #self.p1.music.set_volume(0.75)
+        self.p1.music.set_volume(0.25)
 
     def rush(self):
         #global running
@@ -157,27 +158,6 @@ class Profiles:
                     val = 0
                 else:
                     val += 1
-
-
-class Zone:
-    def __init__(self):
-        #vals to change
-        self.move_up = 150
-        
-        # math (local)
-        extra = HEIGHT - self.move_up
-        gap = HEIGHT - extra
-
-        # pos
-        self.x = 0
-        self.y = HEIGHT - self.move_up
-
-        # size
-        self.width = WIDTH
-        self.height = gap
-    
-    def draw(self):
-        self.zone_rect = pygame.draw.rect(window, RED, (self.x, self.y, self.width, self.height))
 
 class Notes:
     def __init__(self):
@@ -269,6 +249,25 @@ class Notes:
     #     print('Playback mapping finished')
     #     print('--------------------------')
                 
+class Zone:
+    def __init__(self):
+        #vals to change
+        self.move_up = 150
+        
+        # math (local)
+        extra = HEIGHT - self.move_up
+        gap = HEIGHT - extra
+
+        # pos
+        self.x = 0
+        self.y = HEIGHT - self.move_up
+
+        # size
+        self.width = WIDTH
+        self.height = gap
+    
+    def draw(self):
+        self.zone_rect = pygame.draw.rect(window, RED, (self.x, self.y, self.width, self.height))
 #######################################################################################
 
 ### INITIALIZE VARIABLES
