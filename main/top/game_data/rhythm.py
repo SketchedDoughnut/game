@@ -124,20 +124,16 @@ class Data:
         self.active_cubes = []
         
     def iter(self):
-        # new_list = []
-        # for cubex in self.active_cubes:
-        #     cubex.y = cubex.y + 20 * delta_time
-        #     new_list.append(cubex)
-        # self.active_cubes = new_list
-        # return 
-
-        for cubex in self.active_cubes:
-            #cubex.y = cubex.y + 2.5 * (delta_time)
-            cubex.y = cubex.y + 5
-            
-
+        ## chat gpt
+        ##### new_list = []
+        ##### for cubex in self.active_cubes:
+        #####     #cubex.y = cubex.y + 2.5 * (delta_time)
+        #####     cubex.y = cubex.y + 100 * delta_time
+        #####     if cubex.y < HEIGHT:
+        #####         new_list.append(cubex)  # Keep the cube in the list
+        ##### self.active_cubes = new_list
         # Remove cubes that have moved off the screen
-        self.active_cubes = [cubex for cubex in self.active_cubes if cubex.y < HEIGHT]
+        #self.active_cubes = [cubex for cubex in self.active_cubes if cubex.y < HEIGHT]
         return
 
     def add_to_active(self, obj):
@@ -156,36 +152,37 @@ class Profiles:
         ## load Whats the Rush by Jesse Woods
         self.p1 = pygame.mixer
         self.p1.init()
-        self.p1.music.load('main/top/game_data/songs/rush.mp3') #vscode path
-        self.p1.music.set_volume(0.75)
 
-        # ## load Stayed Gone (Lute and Lillith version)
-        # self.p2 = pygame.mixer
-        # self.p2.init()
+        ## load Stayed Gone (Lute and Lillith version)
+        self.p2 = pygame.mixer
+        self.p2.init()
         # self.p2.music.load('main\\top\\game_data\\songs\\stayed_gone(lute_and_lilith).mp3')
         # self.p2.music.set_volume(0.75)
 
-        # ## load Stayed Gone
-        # self.p3 = pygame.mixer
-        # self.p3.init()
-        # self.p3.music.load('main/top/game_data/songs/stayed_gone.mp3')
-        # self.p3.music.set_volume(0.75)
+        ## load Stayed Gone
+        self.p3 = pygame.mixer
+        self.p3.init()
 
     def Whats_the_Rush(self): # FUNCTION IS OUT OF DATE
         f = open("main\\top\game_data\\audio-out\('vocals', 3).json", 'r') 
         vocal_track = json.load(f)
         f.close()
+        f = open('main\\top\game_data\maps\stayed_gone\\vocal_tracks.json', 'r')
+        tracks_pos = json.load(f)
+        f.close()
+
         val = 0
         toggle = False
         obj = Data_format()
         print('--------------------------')
         print('Profile: "Whats the Rush?" by Jesse Woods')
         print('--------------------------')
-        for times in vocal_track:
+        for times, tracks in zip(vocal_track, tracks_pos):
             if times[0] == 'end':
                 pass
             else:
-                x_val = notes.notes_pos[val]
+                #x_val = notes.notes_pos[val]
+                x_val = notes.notes_pos[tracks]
                 #loop = True
                 #while loop:f
                 for event in pygame.event.get():
@@ -210,8 +207,12 @@ class Profiles:
 
                     pygame.display.update()
                 if toggle == False:
+                    self.p1.music.load('main/top/game_data/songs/rush.mp3') #vscode path
+                    self.p1.music.set_volume(0.75)
                     self.p1.music.play()
-                    start_delay = 20.775 # how long lyrics take to start - how long it takes square to travel down screen
+                    #start_delay = 1.485 # how long lyrics take to start - how long it takes square to travel down screen
+                    error = 0.05
+                    start_delay = 1.85 - error
                     start_delay_ms = int(1000 * start_delay)
                     #pygame.time.delay(start_delay_ms)
                     print(f'start delaying by {start_delay}s, {start_delay_ms}ms')
@@ -226,14 +227,17 @@ class Profiles:
                     toggle = True
 
                 #loop = False
-                if val == notes.num_cubes - 1:
-                    val = 0
-                else:
-                    val += 1
+                # if val == notes.num_cubes - 1:
+                #     val = 0
+                # else:
+                #     val += 1
 
     def Stayed_Gone(self):
-        f = open("main\\top\game_data\\maps\\stayed_gone\\stayed_gone.json", 'r') 
+        f = open("main\\top\game_data\maps\('vocals', 7).json", 'r') 
         vocal_track = json.load(f)
+        f.close()
+        f = open("main\\top\game_data\maps\('vocals', 7).json", 'r')
+        tracks_pos = json.load(f)
         f.close()
         val = 0
         toggle = False
@@ -241,11 +245,12 @@ class Profiles:
         print('--------------------------')
         print('Profile: "Stayed Gone" by Andrew Underberg, Sam Haft, Christian Borle, Amir Talai, and Joel Perez')
         print('--------------------------')
-        for times in vocal_track:
+        for times, tracks in zip(vocal_track, tracks_pos):
             if times[0] == 'end':
                 pass
             else:
                 x_val = notes.notes_pos[val]
+                #x_val = notes.notes_pos[tracks]
                 #loop = True
                 #while loop:f
                 for event in pygame.event.get():
@@ -270,8 +275,11 @@ class Profiles:
 
                     pygame.display.update()
                 if toggle == False:
+                    self.p3.music.load('main/top/game_data/songs/stayed_gone.mp3')
+                    self.p3.music.set_volume(0.50)
                     self.p3.music.play()
-                    start_delay = 20.775 # how long lyrics take to start - how long it takes square to travel down screen
+                    #start_delay = 20.775 # how long lyrics take to start - how long it takes square to travel down screen
+                    start_delay = 20.275
                     start_delay_ms = int(1000 * start_delay)
                     #pygame.time.delay(start_delay_ms)
                     print(f'start delaying by {start_delay}s, {start_delay_ms}ms')
@@ -421,17 +429,19 @@ notes = Notes()
 #notes.profiles.Whats_the_Rush()
 #notes.profiles.Stayed_Gone()
 
-#music_thread = threading.Thread(target=lambda:notes.profiles.Stayed_Gone())
-music_thread = threading.Thread(target=lambda:notes.profiles.Whats_the_Rush())
+music_thread = threading.Thread(target=lambda:notes.profiles.Stayed_Gone())
+#music_thread = threading.Thread(target=lambda:notes.profiles.Whats_the_Rush())
 music_thread.start()
 
 delay = 10
 start = time.time()
 
 prev_time = time.time()
+clock = pygame.time.Clock()
 
 running = True
 while running:
+    clock.tick(60)  # Adjust 60 to your desired FPS
     # delay
     #pygame.time.delay(delay)
 
@@ -480,6 +490,8 @@ while running:
     current_time = time.time()
     delta_time = current_time - prev_time
     prev_time = current_time
-    notes.profiles.data.iter()
     
+    delta_time = clock.get_time() / 1000
+
+    notes.profiles.data.iter()
     pygame.display.update()
