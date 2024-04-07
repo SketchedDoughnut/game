@@ -298,6 +298,7 @@ class Profiles:
                     val = 0
                 else:
                     val += 1
+        print('Playback done.')
 
 class Notes:
     def __init__(self):
