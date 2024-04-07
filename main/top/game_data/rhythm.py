@@ -109,6 +109,56 @@ pygame.display.set_caption("thing!")
 
 ### classes
 
+class Profiles:
+
+    def __init__(self):
+        self.p1 = pygame.mixer
+        self.p1.init()
+        self.p1.music.load('main/top/game_data/rush.mp3') #vscode path
+        self.p1.music.set_volume(0.75)
+
+    def rush(self):
+        #global running
+        f = open("main\\top\game_data\\audio-out\('vocals', 3).json", 'r')
+        vocal_track = json.load(f)
+        f.close()
+        val = 0
+        toggle = False
+        print('--------------------------')
+        print('Profile: "Whats the Rush" by Jesse Woods')
+        print('--------------------------')
+        for i in vocal_track:
+            if i[0] == 'end':
+                pass
+            else:
+                x_val = notes.notes_pos[val]
+                #loop = True
+                #while loop:
+                while True:
+                    for event in pygame.event.get():
+                            if event.type == pygame.QUIT:
+                                #running = False
+                                break
+                    window.fill(BLACK)
+                    pygame.draw.rect(window, YELLOW, (x_val, 0, 50, 50))
+                    delay_ms = round(1000 * i[2])
+                    print(f'sleeping for {i[2]}s,', f'{delay_ms}ms')
+                    pygame.time.delay(delay_ms)
+                    pygame.display.update()
+                    if toggle == False:
+                        self.p1.music.play()
+                        delay = 1.485
+                        delay_ms = int(1000 * delay)
+                        pygame.time.delay(delay_ms)
+                    #loop = False
+                    break
+                toggle = True
+                if val == notes.num_cubes - 1:
+                    val = 0
+                else:
+                    val += 1
+
+
 class Zone:
     def __init__(self):
         #vals to change
@@ -131,8 +181,11 @@ class Zone:
 
 class Notes:
     def __init__(self):
-        self.points = []
-        self.num_cubes = 4
+        # profiles class
+        self.profiles = Profiles()
+
+        self.notes_pos = []
+        self.num_cubes = 6
         self.cube_width = 50  # Adjust this as needed
 
         # Calculate the gap between each cube
@@ -141,80 +194,80 @@ class Notes:
         # Calculate the x-coordinate for each cube
         for i in range(self.num_cubes):
             self.cube_x = (i + 1) * self.gap + i * self.cube_width
-            self.points.append(self.cube_x)
+            self.notes_pos.append(self.cube_x)
 
-    def draw(self, trust=False, x_val=0, i=[], toggle=False):
-        global running
-        if trust == False:
-            for i in self.points:
-                pygame.draw.rect(window, GREEN, (i, 0, 50, 50))
+    # def draw(self, trust=False, x_val=0, i=[], toggle=False):
+    #     global running
+    #     if trust == False:
+    #         for i in self.notes_pos:
+    #             pygame.draw.rect(window, GREEN, (i, 0, 50, 50))
         
-        elif trust == True:
-            loop = True
-            while loop:
-                for event in pygame.event.get():
-                        if event.type == pygame.QUIT:
-                            running = False
+    #     elif trust == True:
+    #         loop = True
+    #         while loop:
+    #             for event in pygame.event.get():
+    #                     if event.type == pygame.QUIT:
+    #                         running = False
                 
-                if toggle == False:
-                    m = pygame.mixer
-                    m.init()
-                    m.music.load('main/top/game_data/rush.mp3') #vscode path
-                    m.music.set_volume(0.75)
+    #             if toggle == False:
+    #                 m = pygame.mixer
+    #                 m.init()
+    #                 m.music.load('main/top/game_data/rush.mp3') #vscode path
+    #                 m.music.set_volume(0.75)
                 
-                window.fill(BLACK)
-                pygame.draw.rect(window, YELLOW, (x_val, 0, 50, 50))
-                delay_ms = round(1000 * i[2])
-                print(f'sleeping for {i[2]}s,', f'{delay_ms}ms')
-                pygame.time.delay(delay_ms)
-                pygame.display.update()
-                if toggle == False:
-                    m.music.play()
-                    delay = 1.485
-                    delay_ms = int(1000 * delay)
-                    pygame.time.delay(delay_ms)
-                loop = False
+    #             window.fill(BLACK)
+    #             pygame.draw.rect(window, YELLOW, (x_val, 0, 50, 50))
+    #             delay_ms = round(1000 * i[2])
+    #             print(f'sleeping for {i[2]}s,', f'{delay_ms}ms')
+    #             pygame.time.delay(delay_ms)
+    #             pygame.display.update()
+    #             if toggle == False:
+    #                 m.music.play()
+    #                 delay = 1.485
+    #                 delay_ms = int(1000 * delay)
+    #                 pygame.time.delay(delay_ms)
+    #             loop = False
 
-            toggle = True
-            return toggle
+    #         toggle = True
+    #         return toggle
 
-    def iter(self):
-        '''notes
-        5: honestly my inputs just sucked
-        4: bit delayed, random notes that do not exist
-        3: way more synced, with delay = 1.485
-        2: basically the same to 3, with delay = 1.485
-        1: similar to 2/3 but more delayed, with delay = 1.485
-        '''
+    # def iter(self):
+    #     '''notes
+    #     5: honestly my inputs just sucked
+    #     4: bit delayed, random notes that do not exist
+    #     3: way more synced, with delay = 1.485
+    #     2: basically the same to 3, with delay = 1.485
+    #     1: similar to 2/3 but more delayed, with delay = 1.485
+    #     '''
 
-        f = open("main\\top\game_data\\audio-out\('vocals', 3).json", 'r')
-        thing = json.load(f)
-        f.close()
+    #     f = open("main\\top\game_data\\audio-out\('vocals', 3).json", 'r')
+    #     thing = json.load(f)
+    #     f.close()
 
-        val = 0
-        toggle = False
-        print('--------------------------')
-        for i in thing:
-            if i[0] == 'end':
-                pass
+    #     val = 0
+    #     toggle = False
+    #     print('--------------------------')
+    #     for i in thing:
+    #         if i[0] == 'end':
+    #             pass
 
-            else:
-                # for i2 in i:
-                #     #print(random.randint(1, 4), i2)
-                #     notes.draw(trust=True, x_val=random.randint(1, 4))
-                toggle = self.draw(trust=True, x_val=self.points[val], i=i, toggle=toggle)
-                if val == 0:
-                    val = 1
-                elif val == 1:
-                    val = 2
-                elif val == 2:
-                    val = 3
-                elif val == 3:
-                    val = 0
+    #         else:
+    #             # for i2 in i:
+    #             #     #print(random.randint(1, 4), i2)
+    #             #     notes.draw(trust=True, x_val=random.randint(1, 4))
+    #             toggle = self.draw(trust=True, x_val=self.notes_pos[val], i=i, toggle=toggle)
+    #             if val == 0:
+    #                 val = 1
+    #             elif val == 1:
+    #                 val = 2
+    #             elif val == 2:
+    #                 val = 3
+    #             elif val == 3:
+    #                 val = 0
 
-        print('--------------------------')
-        print('Playback mapping finished')
-        print('--------------------------')
+    #     print('--------------------------')
+    #     print('Playback mapping finished')
+    #     print('--------------------------')
                 
 #######################################################################################
 
@@ -224,7 +277,8 @@ class Notes:
 ## set up the zone for registering keys
 zone = Zone()
 notes = Notes()
-notes.iter()
+#notes.iter()
+notes.profiles.rush()
 
 running = True
 #running = False
