@@ -81,6 +81,8 @@ pygame.init()
 
 ### CONSTANTS
 
+## file name
+FILE_NAME = 'rhythm.py'
 ## screen
 WIDTH = 1920 
 HEIGHT = 1080
@@ -108,25 +110,76 @@ pygame.display.set_caption("thing!")
 #######################################################################################
 
 ### classes
+class Data_format:
+    def __init__(self):
+        self.window = None
+        self.color =  None
+        self.x = None
+        self.y = None
+        self.width = None
+        self.height = None
+        
+class Data:
+    def __init__(self):
+        self.active_cubes = []
+        
+    def iter(self):
+        # new_list = []
+        # for cubex in self.active_cubes:
+        #     cubex.y = cubex.y + 20 * delta_time
+        #     new_list.append(cubex)
+        # self.active_cubes = new_list
+        # return 
+
+        for cubex in self.active_cubes:
+            #cubex.y = cubex.y + 2.5 * (delta_time)
+            cubex.y = cubex.y + 5
+            
+
+        # Remove cubes that have moved off the screen
+        self.active_cubes = [cubex for cubex in self.active_cubes if cubex.y < HEIGHT]
+        return
+
+    def add_to_active(self, obj):
+        self.active_cubes.append(obj)
 
 class Profiles:
 
     def __init__(self):
+        
+        ## class obj
+        self.data = Data()
+        ## constants
+        self.CUBE_HEIGHT = 10
+        self.CUBE_WIDTH = 100
+
+        ## load Whats the Rush by Jesse Woods
         self.p1 = pygame.mixer
         self.p1.init()
         self.p1.music.load('main/top/game_data/songs/rush.mp3') #vscode path
-        #self.p1.music.set_volume(0.75)
-        self.p1.music.set_volume(0.25)
+        self.p1.music.set_volume(0.75)
 
-    def rush(self):
-        #global running
-        f = open("main\\top\game_data\\audio-out\('vocals', 3).json", 'r')
+        # ## load Stayed Gone (Lute and Lillith version)
+        # self.p2 = pygame.mixer
+        # self.p2.init()
+        # self.p2.music.load('main\\top\\game_data\\songs\\stayed_gone(lute_and_lilith).mp3')
+        # self.p2.music.set_volume(0.75)
+
+        # ## load Stayed Gone
+        # self.p3 = pygame.mixer
+        # self.p3.init()
+        # self.p3.music.load('main/top/game_data/songs/stayed_gone.mp3')
+        # self.p3.music.set_volume(0.75)
+
+    def Whats_the_Rush(self): # FUNCTION IS OUT OF DATE
+        f = open("main\\top\game_data\\audio-out\('vocals', 3).json", 'r') 
         vocal_track = json.load(f)
         f.close()
         val = 0
         toggle = False
+        obj = Data_format()
         print('--------------------------')
-        print('Profile: "Whats the Rush" by Jesse Woods')
+        print('Profile: "Whats the Rush?" by Jesse Woods')
         print('--------------------------')
         for times in vocal_track:
             if times[0] == 'end':
@@ -134,26 +187,105 @@ class Profiles:
             else:
                 x_val = notes.notes_pos[val]
                 #loop = True
-                #while loop:
-                while True:
-                    for event in pygame.event.get():
-                            if event.type == pygame.QUIT:
-                                #running = False
-                                break
-                    window.fill(BLACK)
-                    pygame.draw.rect(window, YELLOW, (x_val, 0, 50, 50))
-                    main_delay_ms = round(1000 * times[2])
-                    print(f'sleeping for {times[2]}s,', f'{main_delay_ms}ms')
+                #while loop:f
+                for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            #running = False
+                            break
+
+                main_delay_ms = int(round(times[2], 3) * 1000)
+                if toggle == True:
+                    print(f'sleeping for {round(times[2], 3)}s,', f'{main_delay_ms}ms')
                     pygame.time.delay(main_delay_ms)
+                    #window.fill(BLACK)
+                    #pygame.draw.rect(window, YELLOW, (x_val, 0, self.CUBE_WIDTH, self.CUBE_HEIGHT))
+                    obj.window = window
+                    obj.color = YELLOW
+                    obj.x = x_val
+                    obj.y = 0
+                    obj.width = self.CUBE_WIDTH
+                    obj.height = self.CUBE_HEIGHT
+                    # obj = [window, YELLOW, x_val, 0, self.CUBE_WIDTH, self.CUBE_HEIGHT]
+                    self.data.add_to_active(obj)
+
                     pygame.display.update()
-                    if toggle == False:
-                        self.p1.music.play()
-                        start_delay = 1.485
-                        start_delay_ms = int(1000 * start_delay)
-                        pygame.time.delay(start_delay_ms)
-                        toggle = True
-                    #loop = False
-                    break
+                if toggle == False:
+                    self.p1.music.play()
+                    start_delay = 20.775 # how long lyrics take to start - how long it takes square to travel down screen
+                    start_delay_ms = int(1000 * start_delay)
+                    #pygame.time.delay(start_delay_ms)
+                    print(f'start delaying by {start_delay}s, {start_delay_ms}ms')
+                    for i in range(1000, start_delay_ms, 1000):
+                       for event in pygame.event.get():
+                           if event.type == pygame.QUIT:
+                               #running = False
+                               break
+                       #window.fill(BLACK)
+                       pygame.time.delay(1000)
+                       pygame.display.update()
+                    toggle = True
+
+                #loop = False
+                if val == notes.num_cubes - 1:
+                    val = 0
+                else:
+                    val += 1
+
+    def Stayed_Gone(self):
+        f = open("main\\top\game_data\\maps\\stayed_gone\\stayed_gone.json", 'r') 
+        vocal_track = json.load(f)
+        f.close()
+        val = 0
+        toggle = False
+        obj = Data_format()
+        print('--------------------------')
+        print('Profile: "Stayed Gone" by Andrew Underberg, Sam Haft, Christian Borle, Amir Talai, and Joel Perez')
+        print('--------------------------')
+        for times in vocal_track:
+            if times[0] == 'end':
+                pass
+            else:
+                x_val = notes.notes_pos[val]
+                #loop = True
+                #while loop:f
+                for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            #running = False
+                            break
+
+                main_delay_ms = int(round(times[2], 3) * 1000)
+                if toggle == True:
+                    print(f'sleeping for {round(times[2], 3)}s,', f'{main_delay_ms}ms')
+                    pygame.time.delay(main_delay_ms)
+                    #window.fill(BLACK)
+                    #pygame.draw.rect(window, YELLOW, (x_val, 0, self.CUBE_WIDTH, self.CUBE_HEIGHT))
+                    obj.window = window
+                    obj.color = YELLOW
+                    obj.x = x_val
+                    obj.y = 0
+                    obj.width = self.CUBE_WIDTH
+                    obj.height = self.CUBE_HEIGHT
+                    # obj = [window, YELLOW, x_val, 0, self.CUBE_WIDTH, self.CUBE_HEIGHT]
+                    self.data.add_to_active(obj)
+
+                    pygame.display.update()
+                if toggle == False:
+                    self.p3.music.play()
+                    start_delay = 20.775 # how long lyrics take to start - how long it takes square to travel down screen
+                    start_delay_ms = int(1000 * start_delay)
+                    #pygame.time.delay(start_delay_ms)
+                    print(f'start delaying by {start_delay}s, {start_delay_ms}ms')
+                    for i in range(1000, start_delay_ms, 1000):
+                       for event in pygame.event.get():
+                           if event.type == pygame.QUIT:
+                               #running = False
+                               break
+                       #window.fill(BLACK)
+                       pygame.time.delay(1000)
+                       pygame.display.update()
+                    toggle = True
+
+                #loop = False
                 if val == notes.num_cubes - 1:
                     val = 0
                 else:
@@ -166,7 +298,7 @@ class Notes:
 
         self.notes_pos = []
         self.num_cubes = 6
-        self.cube_width = 50  # Adjust this as needed
+        self.cube_width = self.profiles.CUBE_WIDTH  # Adjust this as needed
 
         # Calculate the gap between each cube
         self.gap = (WIDTH - (self.num_cubes * self.cube_width)) / (self.num_cubes + 1)
@@ -175,6 +307,7 @@ class Notes:
         for i in range(self.num_cubes):
             self.cube_x = (i + 1) * self.gap + i * self.cube_width
             self.notes_pos.append(self.cube_x)
+
 
     # def draw(self, trust=False, x_val=0, i=[], toggle=False):
     #     global running
@@ -272,20 +405,35 @@ class Zone:
 
 ### INITIALIZE VARIABLES
 
+'''
+- so first we add the new cube as an object with object.data being all drawing data into a list, called active_notes
+- then in the main game loop we will draw each cube in said active list, using object.data
+- then we will run the function that will iterate through that list and change object.data.y by the speed it goes down screen
+- then we will check for the zone and the right keys being pressed, the right key is linked in object.data.key
+- then we will see if it is off the screen, then find index, then remove it from list
+- then we will do point eval
+'''
 #######################################################################################
 ## set up the zone for registering keys
 zone = Zone()
 notes = Notes()
 #notes.iter()
-notes.profiles.rush()
+#notes.profiles.Whats_the_Rush()
+#notes.profiles.Stayed_Gone()
+
+#music_thread = threading.Thread(target=lambda:notes.profiles.Stayed_Gone())
+music_thread = threading.Thread(target=lambda:notes.profiles.Whats_the_Rush())
+music_thread.start()
+
+delay = 10
+start = time.time()
+
+prev_time = time.time()
 
 running = True
-#running = False
-y = 0
-
 while running:
     # delay
-    pygame.time.delay(10)
+    #pygame.time.delay(delay)
 
     # checking for events
     for event in pygame.event.get():
@@ -306,16 +454,32 @@ while running:
     if keys[K_ESCAPE]:
         running = False
 
-    window.fill(BLACK)
-
-
-    zone.draw()
     #notes.draw()
-    down = pygame.draw.rect(window, BLUE, (0, y, WIDTH, 50))
-    y += 2.5
+    # down = pygame.draw.rect(window, BLUE, (0, y, WIDTH, 50))
+    # y += speed
 
-    if zone.zone_rect.colliderect(down):
-        if keys[K_w]:
-            exit()
+    # if zone.zone_rect.colliderect(down):
+    #     if keys[K_w]:
+    #         exit()
+    
+    # if down.y > HEIGHT:
+    #     end = time.time()
+    #     dif = end - start
+    #     print(f'Time to go down screen: {round(dif, 2)}s and {1000 * round(dif, 3)}ms at a speed of {speed}, with delay of {delay}')
+    #     running = False
 
+    # for i in active:
+    #     pygame.draw.rect(i[0], i[1], (i[2], i[3], i[4], i[5]))
+
+    window.fill(BLACK)
+    #zone.draw()
+    for obj in notes.profiles.data.active_cubes:
+        pygame.draw.rect(obj.window, obj.color, (obj.x, obj.y, obj.width, obj.height))
+        #iter_thread = threading.Thread(target=lambda:notes.profiles.data.iter())
+        #iter_thread.start()
+    current_time = time.time()
+    delta_time = current_time - prev_time
+    prev_time = current_time
+    notes.profiles.data.iter()
+    
     pygame.display.update()

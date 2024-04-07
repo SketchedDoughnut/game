@@ -20,7 +20,7 @@ end = 0
 space = False
 time_list = [['end', 'start', 'dif']]
 print('-----------------------------------------')
-goal = input('file name (.json:) '), num
+goal = input('file name (.json): '), num
 print('Proceed, S to start.')
 print('-----------------------------------------')
 
@@ -40,7 +40,16 @@ while True:
 # https://www.geeksforgeeks.org/python-playing-audio-file-in-pygame/
 m = pygame.mixer
 m.init()
-m.music.load('main/top/game_data/songs/rush.mp3') #vscode path
+# https://open.spotify.com/track/75eo472nc6DIqpwlVOA91B?si=77a2e07864e5445a
+#m.music.load('main/top/game_data/songs/rush.mp3') #vscode path
+
+# https://open.spotify.com/track/5rmNtZHtAHHbuzFFQ1c4Nd?si=d2f8eefe411c4b49
+#m.music.load('main\\top\\game_data\\songs\\stayed_gone(lute_and_lilith).mp3') #vscode path
+
+# https://open.spotify.com/track/4Po97bPnn3ISdEkuJBMt2f?si=6a51325cff4a49e2
+m.music.load('main/top/game_data/songs/stayed_gone.mp3') #vscode path
+
+
 m.music.set_volume(0.75)
 m.music.play()
 
