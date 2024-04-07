@@ -127,8 +127,8 @@ class Profiles:
         print('--------------------------')
         print('Profile: "Whats the Rush" by Jesse Woods')
         print('--------------------------')
-        for i in vocal_track:
-            if i[0] == 'end':
+        for times in vocal_track:
+            if times[0] == 'end':
                 pass
             else:
                 x_val = notes.notes_pos[val]
@@ -141,15 +141,15 @@ class Profiles:
                                 break
                     window.fill(BLACK)
                     pygame.draw.rect(window, YELLOW, (x_val, 0, 50, 50))
-                    delay_ms = round(1000 * i[2])
-                    print(f'sleeping for {i[2]}s,', f'{delay_ms}ms')
-                    pygame.time.delay(delay_ms)
+                    main_delay_ms = round(1000 * times[2])
+                    print(f'sleeping for {times[2]}s,', f'{main_delay_ms}ms')
+                    pygame.time.delay(main_delay_ms)
                     pygame.display.update()
                     if toggle == False:
                         self.p1.music.play()
-                        delay = 1.485
-                        delay_ms = int(1000 * delay)
-                        pygame.time.delay(delay_ms)
+                        start_delay = 1.485
+                        start_delay_ms = int(1000 * start_delay)
+                        pygame.time.delay(start_delay_ms)
                     #loop = False
                     break
                 toggle = True
