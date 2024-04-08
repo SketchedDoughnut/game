@@ -166,6 +166,25 @@ class Profiles:
         ## load Stayed Gone
         self.p3 = pygame.mixer
         self.p3.init()
+        
+        ## load files
+        print('--------------------------')
+        print('Loading "Stayed Gone" files...')
+        #f = open("main\\top\game_data\src\\rhythm\setup\\audio-out\('testing2_1-2', 18).json", 'r') # the long ones
+        f = open("main\\top\game_data\src\\rhythm\maps\stayed_gone\('timings_1_0-2', 8).json", 'r')
+        self.times_left_list = json.load(f)
+        f.close()
+        #f = open("main\\top\game_data\src\\rhythm\setup\\audio-out\('testing2_1-2', 18).json", 'r')
+        #self.times_right_list = json.load(f)
+        #f.close()
+        #f = open("main\\top\game_data\src\\rhythm\setup\\nums\gen_left.json", 'r') # the long ones
+        f = open("main\\top\game_data\src\\rhythm\maps\stayed_gone\\tracks_1_0-2.json", 'r')
+        self.track_left_list = json.load(f)
+        f.close()
+        #f = open("main\\top\game_data\src\\rhythm\setup\\nums\gen_right.json", 'r')
+        #self.track_right_list = json.load(f)
+        #f.close()
+
 
     def Whats_the_Rush(self): # still needs to be made
         '''
@@ -176,24 +195,19 @@ class Profiles:
         '''
 
     def Stayed_Gone(self):
-        f = open("main\\top\game_data\src\\rhythm\maps\stayed_gone\\vocal_timings.json", 'r') 
-        vocal_track = json.load(f)
-        f.close()
-        f = open("main\\top\game_data\src\\rhythm\maps\stayed_gone\\vocal_tracks.json", 'r')
-        vocal_track_pos = json.load(f)
-        f.close()
         val = 0
         toggle = False
         obj = Data_format()
         print('--------------------------')
         print('Profile: "Stayed Gone" by Andrew Underberg, Sam Haft, Christian Borle, Amir Talai, and Joel Perez')
         print('--------------------------')
-        for times, tracks in zip(vocal_track, vocal_track_pos):
-            if times[0] == 'end':
+        # loading all the files (god help me)
+        #for times_left, times_right, track_left, track_right in zip(self.times_left_list, self.times_right_list, self.track_left_list, self.track_right_list):
+        for times_left, track_left in zip(self.times_left_list, self.track_left_list):
+            if times_left[0] == 'end':
                 pass
             else:
                 #x_val = notes.notes_pos[val]
-                x_val = notes.notes_pos[tracks]
                 #loop = True
                 #while loop:f
                 # for event in pygame.event.get():
@@ -201,7 +215,7 @@ class Profiles:
                 #             #running = False
                 #             break
 
-                main_delay = round(times[2], 3)
+                main_delay = round(times_left[0], 3)
                 main_delay_ms = int(main_delay * 1000)
                 if toggle == True:
                     #print(f'sleeping for {round(times[2], 3)}s,', f'{main_delay_ms}ms') #####################################################
@@ -209,6 +223,8 @@ class Profiles:
                     time.sleep(main_delay)
                     #window.fill(BLACK)
                     #pygame.draw.rect(window, YELLOW, (x_val, 0, self.CUBE_WIDTH, self.CUBE_HEIGHT))
+                    #if times_left[1]:
+                    x_val = notes.notes_pos[track_left]
                     obj = Data_format()
                     obj.window = window
                     obj.color = BLUE
@@ -218,6 +234,17 @@ class Profiles:
                     obj.height = self.CUBE_HEIGHT
                     # obj = [window, YELLOW, x_val, 0, self.CUBE_WIDTH, self.CUBE_HEIGHT]
                     self.data.add_to_active(obj)
+                    # if times_right[1]:
+                    #     x_val = notes.notes_pos[track_right]
+                    #     obj = Data_format()
+                    #     obj.window = window
+                    #     obj.color = BLUE
+                    #     obj.x = x_val
+                    #     obj.y = 0
+                    #     obj.width = self.CUBE_WIDTH
+                    #     obj.height = self.CUBE_HEIGHT
+                    #     # obj = [window, YELLOW, x_val, 0, self.CUBE_WIDTH, self.CUBE_HEIGHT]
+                    #     self.data.add_to_active(obj)
 
                     #pygame.display.update()
                 if toggle == False:
@@ -227,7 +254,9 @@ class Profiles:
                     self.p3.music.play()
                     #start_delay = 20.775 # how long lyrics take to start - how long it takes square to travel down screen
                     # 20.275 - travel time
-                    start_delay = 20.275 - 2.75
+                    #start_delay = 20.275 - 2.75 # delay for timings_0-2.json
+                    #start_delay = 20.275 - 2.25 # delay for ('vox vocals 1', 8).json
+                    start_delay = 20.275 - 2.70 # delay for ('vox vocals 1', 8).json
                     start_delay_ms = int(1000 * start_delay)
                     #pygame.time.delay(start_delay_ms)
                     print('Starting playback.')

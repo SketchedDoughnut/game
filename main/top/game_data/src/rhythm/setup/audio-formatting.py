@@ -21,6 +21,14 @@ space = False
 time_list = [['end', 'start', 'dif']]
 print('-----------------------------------------')
 goal = input('file name (.json): '), num
+if goal[0] == 'length':
+    path =input('-> ')
+    f = open(path, 'r')
+    length = len(f.read())
+    f.close()
+    print(length)
+    exit()
+
 print('Proceed, S to start.')
 print('-----------------------------------------')
 
@@ -53,9 +61,26 @@ m.music.load('main\\top\game_data\src\\rhythm\songs\stayed_gone.mp3')
 m.music.set_volume(0.75)
 m.music.play()
 
+def dump():
+    global running
+    global num
+    print('dumping...')
+    f = open(f'main/top/game_data/src/rhythm/setup/audio-out/{goal}.json', 'w')
+    json.dump(time_list, f)
+    f.close()
+
+    print(f'iterating num... ({num} -> {num + 1})')
+    num += 1
+    f = open(f'main\\top\game_data\src\\rhythm\setup\count\count.json', 'w')
+    json.dump(num, f)
+    f.close()
+    
+    print('Done. Exiting')
+    running = False
+
 while running:
     # delay
-    pygame.time.delay(1)
+    pygame.time.delay(int(0.001 * 1000))
 
     # checking for events
     for event in pygame.event.get():
@@ -66,16 +91,7 @@ while running:
     keys = pygame.key.get_pressed()
 
     if keys[K_x]:
-        print('dumping...')
-        f = open(f'main/top/game_data/src/rhythm/setup/audio-out/{goal}.json', 'w')
-        json.dump(time_list, f)
-        f.close()
-
-        print('iterating num...')
-        num += 1
-        f = open(f'main\\top\game_data\src\\rhythm\setup\count\count.json', 'w')
-        json.dump(num, f)
-        f.close()
+        dump()
         
         print('Done. Exiting')
         running = False
@@ -85,15 +101,18 @@ while running:
             end = (time.time())
             dif = (end - start)
             start = end
-            time_list.append([end, start, dif])
+            #time_list.append([end, start, dif])
+            time_list.append([dif, True])
             space = True
             print(f"""
 start: {start}
 end: {end}
 dif: {dif}""")
-    
+            
     elif not keys[K_SPACE]:
         space = False
+        # time_list.append([0.001, False])
+        # print('added default')
 
     # exits
     if keys[K_LCTRL]:
@@ -103,5 +122,8 @@ dif: {dif}""")
             running = False
     if keys[K_ESCAPE]:
         running = False
+
+    if m.music.get_busy() == False:
+        dump()
         
     pygame.display.update()
