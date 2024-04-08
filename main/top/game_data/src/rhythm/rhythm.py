@@ -129,7 +129,7 @@ class Data:
     def iter(self):
         new_list = []
         for cubex in self.active_cubes:
-            cubex.y += 10
+            cubex.y += 1
 
             if cubex.y < HEIGHT:
                 new_list.append(cubex)
@@ -167,81 +167,20 @@ class Profiles:
         self.p3 = pygame.mixer
         self.p3.init()
 
-    def Whats_the_Rush(self): # FUNCTION IS OUT OF DATE
-        f = open("main\\top\game_data\\audio-out\('vocals', 3).json", 'r') 
-        vocal_track = json.load(f)
-        f.close()
-        f = open('main\\top\game_data\maps\stayed_gone\\vocal_tracks.json', 'r')
-        tracks_pos = json.load(f)
-        f.close()
-
-        val = 0
-        toggle = False
-        obj = Data_format()
+    def Whats_the_Rush(self): # still needs to be made
+        '''
         print('--------------------------')
         print('Profile: "Whats the Rush?" by Jesse Woods')
         print('--------------------------')
-        for times, tracks in zip(vocal_track, tracks_pos):
-            if times[0] == 'end':
-                pass
-            else:
-                #x_val = notes.notes_pos[val]
-                x_val = notes.notes_pos[tracks]
-                #loop = True
-                #while loop:f
-                for event in pygame.event.get():
-                        if event.type == pygame.QUIT:
-                            #running = False
-                            break
-
-                main_delay_ms = int(round(times[2], 3) * 1000)
-                if toggle == True:
-                    print(f'sleeping for {round(times[2], 3)}s,', f'{main_delay_ms}ms')
-                    pygame.time.delay(main_delay_ms)
-                    #window.fill(BLACK)
-                    #pygame.draw.rect(window, YELLOW, (x_val, 0, self.CUBE_WIDTH, self.CUBE_HEIGHT))
-                    obj.window = window
-                    obj.color = YELLOW
-                    obj.x = x_val
-                    obj.y = 0
-                    obj.width = self.CUBE_WIDTH
-                    obj.height = self.CUBE_HEIGHT
-                    # obj = [window, YELLOW, x_val, 0, self.CUBE_WIDTH, self.CUBE_HEIGHT]
-                    self.data.add_to_active(obj)
-
-                    pygame.display.update()
-                if toggle == False:
-                    self.p1.music.load('main/top/game_data/songs/rush.mp3') #vscode path
-                    self.p1.music.set_volume(0.75)
-                    self.p1.music.play()
-                    #start_delay = 1.485 # how long lyrics take to start - how long it takes square to travel down screen
-                    error = 0.05
-                    start_delay = 1.85 - error
-                    start_delay_ms = int(1000 * start_delay)
-                    #pygame.time.delay(start_delay_ms)
-                    print(f'start delaying by {start_delay}s, {start_delay_ms}ms')
-                    for i in range(1000, start_delay_ms, 1000):
-                       for event in pygame.event.get():
-                           if event.type == pygame.QUIT:
-                               #running = False
-                               break
-                       #window.fill(BLACK)
-                       pygame.time.delay(1000)
-                       pygame.display.update()
-                    toggle = True
-
-                #loop = False
-                # if val == notes.num_cubes - 1:
-                #     val = 0
-                # else:
-                #     val += 1
+        delay: 1.85
+        '''
 
     def Stayed_Gone(self):
-        f = open("main\\top\game_data\maps\stayed_gone\\vocal_timings.json", 'r') 
+        f = open("main\\top\game_data\src\\rhythm\maps\stayed_gone\\vocal_timings.json", 'r') 
         vocal_track = json.load(f)
         f.close()
-        f = open("main\\top\game_data\maps\stayed_gone\\vocal_tracks.json", 'r')
-        tracks_pos = json.load(f)
+        f = open("main\\top\game_data\src\\rhythm\maps\stayed_gone\\vocal_tracks.json", 'r')
+        vocal_track_pos = json.load(f)
         f.close()
         val = 0
         toggle = False
@@ -249,7 +188,7 @@ class Profiles:
         print('--------------------------')
         print('Profile: "Stayed Gone" by Andrew Underberg, Sam Haft, Christian Borle, Amir Talai, and Joel Perez')
         print('--------------------------')
-        for times, tracks in zip(vocal_track, tracks_pos):
+        for times, tracks in zip(vocal_track, vocal_track_pos):
             if times[0] == 'end':
                 pass
             else:
@@ -265,7 +204,7 @@ class Profiles:
                 main_delay = round(times[2], 3)
                 main_delay_ms = int(main_delay * 1000)
                 if toggle == True:
-                    print(f'sleeping for {round(times[2], 3)}s,', f'{main_delay_ms}ms')
+                    #print(f'sleeping for {round(times[2], 3)}s,', f'{main_delay_ms}ms') #####################################################
                     #pygame.time.delay(main_delay_ms)
                     time.sleep(main_delay)
                     #window.fill(BLACK)
@@ -282,16 +221,17 @@ class Profiles:
 
                     #pygame.display.update()
                 if toggle == False:
-                    self.p3.music.load('main/top/game_data/songs/stayed_gone.mp3')
+                    self.p3.music.load('main\\top\game_data\src\\rhythm\songs\stayed_gone.mp3')
                     self.p3.music.set_volume(0.50)
                     #self.p3.music.set_volume(0.00)
                     self.p3.music.play()
                     #start_delay = 20.775 # how long lyrics take to start - how long it takes square to travel down screen
                     # 20.275 - travel time
-                    start_delay = 20.275 - 1.25
+                    start_delay = 20.275 - 2.75
                     start_delay_ms = int(1000 * start_delay)
                     #pygame.time.delay(start_delay_ms)
-                    print(f'start delaying by {start_delay}s, {start_delay_ms}ms')
+                    print('Starting playback.')
+                    print(f'- start delaying by {start_delay}s, {start_delay_ms}ms')
                     time.sleep(start_delay)
                     # for i in range(1000, start_delay_ms, 1000):
                     #    for event in pygame.event.get():
@@ -395,9 +335,9 @@ clock = pygame.time.Clock()
 running = True
 while running:
     # set fps to 60
-    clock.tick(60)
+    #clock.tick(60)
     # delay
-    pygame.time.delay(10)
+    pygame.time.delay(1)
 
     # checking for events
     for event in pygame.event.get():
@@ -444,13 +384,13 @@ while running:
         if active_note.colliderect(zone.zone_rect):
             # checks if the right key is pressed, if so remove note from list and increase points by 1
             if keys[active_key]:
-                if pressed1 == False:
-                    notes.profiles.data.active_cubes.remove(obj)
-                    points.point_up()
-                    pressed1 = True
+                #if pressed1 == False: #############
+                notes.profiles.data.active_cubes.remove(obj)
+                points.point_up()
+                    #pressed1 = True ################
                 
-            elif not keys[active_key]:
-                pressed1 = False
+            #elif not keys[active_key]: ###########
+                #pressed1 = False ############
 
         # system for preventing spam inputs & deducting points for false inputs, currently not plausible until future development
         # else:
