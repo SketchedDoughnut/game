@@ -148,6 +148,7 @@ class Profiles:
         
         ## class obj
         self.data = Data()
+
         ## constants
         self.CUBE_HEIGHT = 10
         self.CUBE_WIDTH = 100
