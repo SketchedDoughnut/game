@@ -306,6 +306,12 @@ class Zone:
     
     def draw(self):
         self.zone_rect = pygame.draw.rect(window, RED, (self.x, self.y, self.width, self.height))
+
+
+class Draw:
+    def __init__(self):
+        for obj in notes.profiles.data.active_cubes:
+            pygame.draw.rect(obj.window, obj.color, (obj.x, obj.y, obj.width, obj.height))
 #######################################################################################
 
 ### INITIALIZE VARIABLES
@@ -368,6 +374,9 @@ while running:
     # iterates through list of notes
     for obj in notes.profiles.data.active_cubes:
         active_note = pygame.draw.rect(obj.window, obj.color, (obj.x, obj.y, obj.width, obj.height))
+        #https://stackoverflow.com/questions/49954039/how-do-you-create-rect-variables-in-pygame-without-drawing-them
+        #pygame.Rect(obj.x, obj.y, obj.width, obj.height)
+
         # gets collumn of notes
         index = notes.notes_pos.index(obj.x)
         for i in REGISTER:
