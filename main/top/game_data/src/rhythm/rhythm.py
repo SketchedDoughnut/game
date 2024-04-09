@@ -210,6 +210,7 @@ class Profiles:
         ## preload files
         # paths
         # get path to working directory
+        # https://stackoverflow.com/questions/21957131/python-not-finding-file-in-the-same-directory
         wDir = os.path.dirname(os.path.abspath(__file__))
         if ENV:
             left_timing_path = os.path.join(wDir, "maps\\stayed_gone\\timings_3_0-2.json")
