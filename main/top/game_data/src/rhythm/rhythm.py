@@ -206,6 +206,9 @@ class Profiles:
         print('Main music thread started.')
         ## preload files
         # paths
+        # get path to working directory
+        #import pathlib
+        #print(pathlib.Path("rhythm.py").parent.absolute())
         if ENV == False:
             left_timing_path = "main\\top\\game_data\src\\rhythm\\maps\\stayed_gone\\('timings_1_0-2', 8).json"
             left_track_path = "main\\top\game_data\\src\\rhythm\\maps\\stayed_gone\\tracks_1_0-2.json"
