@@ -96,7 +96,7 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 
 ## environment, vscode (False), run (True)
-ENV = True
+ENV = False
 
 ## active keys to register
 #REGISTER = ['a', 's', 'd', 'f', 'j', 'k', 'l', ';']
@@ -210,9 +210,9 @@ class Profiles:
         #import pathlib
         #print(pathlib.Path("rhythm.py").parent.absolute())
         if ENV == False:
-            left_timing_path = "main\\top\\game_data\src\\rhythm\\maps\\stayed_gone\\('timings_1_0-2', 8).json"
-            left_track_path = "main\\top\game_data\\src\\rhythm\\maps\\stayed_gone\\tracks_1_0-2.json"
-            right_timing_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\('timings_1_3-5', 10).json"
+            left_timing_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\timings_1_0-2.json"
+            left_track_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\tracks_1_0-2.json"
+            right_timing_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\timings_1_3-5.json"
             right_track_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\tracks_1_3-5.json"
             music_path = "main\\top\\game_data\\src\\rhythm\\songs\\stayed_gone.mp3"
         elif ENV:
