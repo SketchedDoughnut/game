@@ -177,16 +177,20 @@ class Profiles:
                 main_delay = round(times_right[0], 3)
                 main_delay_ms = int(main_delay * 1000)
                 if starting_toggle == True:
-                    time.sleep(main_delay)
-                    x_val = notes.notes_pos[track_right]
-                    obj = Data_format()
-                    obj.window = window
-                    obj.color = RED
-                    obj.x = x_val
-                    obj.y = 0
-                    obj.width = self.CUBE_WIDTH
-                    obj.height = self.CUBE_HEIGHT
-                    self.data.add_to_active(obj)
+                    if paused == True:
+                        while paused == True:
+                            pass
+                    elif paused == False:
+                        time.sleep(main_delay)
+                        x_val = notes.notes_pos[track_right]
+                        obj = Data_format()
+                        obj.window = window
+                        obj.color = RED
+                        obj.x = x_val
+                        obj.y = 0
+                        obj.width = self.CUBE_WIDTH
+                        obj.height = self.CUBE_HEIGHT
+                        self.data.add_to_active(obj)
                 if starting_toggle == False:
                     start_delay = 20.275 - 2.50 # secondary delay for ('timings_1_3-5')
                     start_delay_ms = int(1000 * start_delay)
@@ -260,17 +264,20 @@ class Profiles:
                 main_delay = round(times_left[0], 3)
                 main_delay_ms = int(main_delay * 1000)
                 if starting_toggle == True:
-                    time.sleep(main_delay)
-                    x_val = notes.notes_pos[track_left]
-                    obj = Data_format()
-                    obj.window = window
-                    obj.color = BLUE
-                    obj.x = x_val
-                    obj.y = 0
-                    obj.width = self.CUBE_WIDTH
-                    obj.height = self.CUBE_HEIGHT
-                    self.data.add_to_active(obj)
-
+                    if paused == True:
+                        while paused == True:
+                            pass
+                    elif paused == False:
+                        time.sleep(main_delay)
+                        x_val = notes.notes_pos[track_left]
+                        obj = Data_format()
+                        obj.window = window
+                        obj.color = BLUE
+                        obj.x = x_val
+                        obj.y = 0
+                        obj.width = self.CUBE_WIDTH
+                        obj.height = self.CUBE_HEIGHT
+                        self.data.add_to_active(obj)
                 if starting_toggle == False:
                     self.player.music.load(music_path)
                     self.player.music.set_volume(0.50)
@@ -394,15 +401,17 @@ while running:
         running = False
     
     # pause if
-    if keys[K_SPACE]:
-        if space_pressed == False:
-            if paused == False:
-                paused = True
-            if paused == True:
-                paused = False
-            space_pressed = True
-    if not keys[K_SPACE]:
-        space_pressed = False
+    # if keys[K_SPACE]:
+    #     if space_pressed == False:
+    #         if paused == False:
+    #             paused = True
+    #             notes.profiles.player.music.pause()
+    #         elif paused == True:
+    #             paused = False
+    #             notes.profiles.player.music.unpause()
+    #         space_pressed = True
+    # if not keys[K_SPACE]:
+    #     space_pressed = False
 
     ## draws
     window.fill(BLACK)

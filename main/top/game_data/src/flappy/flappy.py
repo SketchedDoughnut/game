@@ -103,7 +103,7 @@ class Walls:
         self.b_pos = h / 2
         self.b_pos = self.b_pos / 2
         #self.y = random.randint(self.b_pos + self.b_pos / 2, h)
-        self.y = random.randint(self.b_pos, h + 10)
+        self.y = random.randint(int(self.b_pos), h + 10)
         
 
     def t_vertical(self, top_y):
@@ -127,7 +127,7 @@ class Walls:
         # random ranging from 0 to wall_1.y - gap - height
         #print(-1 * (self.height), ',', top_y - self.height - self.gap)
         # self.t_pos -= random.randint(-1 * (self.height), top_y - self.height - self.gap)
-        self.t_pos -= random.randint(0, h / 4)
+        self.t_pos -= random.randint(0, int(h / 4))
 
         #print(f'rand: {self.t_pos}')
         self.y = self.t_pos
