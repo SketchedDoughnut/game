@@ -24,10 +24,10 @@ class Install:
 
         # overruling dictionary for global access
         # - for codespace
-        self.rules = open('main/setup/config.json', 'r')
+        #self.rules = open('main/setup/config.json', 'r')
 
         # for run
-        #self.rules = open('config.json', 'r')
+        self.rules = open('config.json', 'r')
 
         # will contain everything from config.json, including environment information
         self.rules = json.load(self.rules)

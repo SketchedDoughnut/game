@@ -96,7 +96,7 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 
 ## environment, vscode (False), run (True)
-ENV = False
+ENV = True
 
 ## active keys to register
 #REGISTER = ['a', 's', 'd', 'f', 'j', 'k', 'l', ';']
@@ -112,6 +112,7 @@ window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("thing!")
 
 #######################################################################################
+
 
 ### classes
 
@@ -167,7 +168,8 @@ class Profiles:
         ## vars
         # toggle when first starting, starts music and built-in delay
         starting_toggle = False
-
+        
+        # main iter loop
         for times_right, track_right in zip(right_time_track_list, right_track_list):
             if times_right[0] == 'end':
                 pass
@@ -204,23 +206,23 @@ class Profiles:
     def Stayed_Gone(self):
         print('--------------------------')
         print('Main music thread started.')
+        #filename = os.path.join(wDir, 'setup/analyze.py')
         ## preload files
         # paths
         # get path to working directory
-        #import pathlib
-        #print(pathlib.Path("rhythm.py").parent.absolute())
-        if ENV == False:
-            left_timing_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\timings_1_0-2.json"
-            left_track_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\tracks_1_0-2.json"
+        wDir = os.path.dirname(os.path.abspath(__file__))
+        if ENV:
+            left_timing_path = os.path.join(wDir, "maps\\stayed_gone\\timings_1_0-2.json")
+            left_track_path = os.path.join(wDir, "maps\\stayed_gone\\tracks_1_0-2.json")
+            right_timing_path = os.path.join(wDir, "maps\\stayed_gone\\timings_1_3-5.json")
+            right_track_path = os.path.join(wDir, "maps\\stayed_gone\\tracks_1_3-5.json")
+            music_path = os.path.join(wDir, "songs\\stayed_gone.mp3")
+        elif not ENV:
+            left_timing_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\timings_2_0-2.json"
+            left_track_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\tracks_2_0-2.json"
             right_timing_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\timings_1_3-5.json"
             right_track_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\tracks_1_3-5.json"
             music_path = "main\\top\\game_data\\src\\rhythm\\songs\\stayed_gone.mp3"
-        elif ENV:
-            left_timing_path = "maps/stayed_gone/timings_1_0-2.json"
-            left_track_path = "maps/stayed_gone/tracks_1_0-2.json"
-            right_timing_path = "maps/stayed_gone/timings_1_3-5.json"
-            right_track_path = "maps/stayed_gone/tracks_1_3-5.json"
-            music_path = "songs/stayed_gone.mp3"
         # load left time track
         print('Loading left timing track...')
         f = open(left_timing_path, 'r')
@@ -249,7 +251,7 @@ class Profiles:
         print('--------------------------')
         print('Profile: "Stayed Gone" by Andrew Underberg, Sam Haft, Christian Borle, Amir Talai, and Joel Perez')
         print('--------------------------')
-        # loading all the files (god help me)
+        # main iter loop
         for times_left, track_left in zip(left_time_track_list, left_track_list):
             if times_left[0] == 'end':
                 pass
@@ -277,7 +279,8 @@ class Profiles:
                     # 20.275 - travel time
                     #start_delay = 20.275 - 2.75 # delay for timings_0-2.json
                     #start_delay = 20.275 - 2.25 # delay for ('vox vocals 1', 8).json
-                    start_delay = 20.275 - 2.70 # delay for ('vox vocals 1', 8).json
+                    #start_delay = 20.275 - 2.70 # delay for ('vox vocals 1', 8).json
+                    start_delay = 20.275 - 2.70 # delay for timings_2_0-2
                     start_delay_ms = int(1000 * start_delay)
                     print('Starting playback.')
                     print(f'- start delaying by {start_delay}s, {start_delay_ms}ms')
