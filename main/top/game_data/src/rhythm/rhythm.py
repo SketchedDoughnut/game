@@ -95,6 +95,9 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 
+## environment, vscode (False), run (True)
+ENV = True
+
 ## active keys to register
 #REGISTER = ['a', 's', 'd', 'f', 'j', 'k', 'l', ';']
 REGISTER = [[0, K_s], [1, K_d], [2, K_f], [3, K_j], [4, K_k], [5, K_l]]
@@ -153,37 +156,41 @@ class Profiles:
         self.CUBE_HEIGHT = 10
         self.CUBE_WIDTH = 100
 
-        ## load Whats the Rush by Jesse Woods
-        self.p1 = pygame.mixer
-        self.p1.init()
+        ## set up music player
+        self.player = pygame.mixer
+        self.player.init()
 
-        ## load Stayed Gone (Lute and Lillith version)
-        self.p2 = pygame.mixer
-        self.p2.init()
-        # self.p2.music.load('main\\top\\game_data\\songs\\stayed_gone(lute_and_lilith).mp3')
-        # self.p2.music.set_volume(0.75)
-
-        ## load Stayed Gone
-        self.p3 = pygame.mixer
-        self.p3.init()
+    def secondary(self, right_time_track_list, right_track_list):
+        print('Secondary music thread started.')
+        #print('--------------------------')
         
-        ## load files
-        print('--------------------------')
-        print('Loading "Stayed Gone" files...')
-        #f = open("main\\top\game_data\src\\rhythm\setup\\audio-out\('testing2_1-2', 18).json", 'r') # the long ones
-        f = open("main\\top\game_data\src\\rhythm\maps\stayed_gone\('timings_1_0-2', 8).json", 'r')
-        self.times_left_list = json.load(f)
-        f.close()
-        #f = open("main\\top\game_data\src\\rhythm\setup\\audio-out\('testing2_1-2', 18).json", 'r')
-        #self.times_right_list = json.load(f)
-        #f.close()
-        #f = open("main\\top\game_data\src\\rhythm\setup\\nums\gen_left.json", 'r') # the long ones
-        f = open("main\\top\game_data\src\\rhythm\maps\stayed_gone\\tracks_1_0-2.json", 'r')
-        self.track_left_list = json.load(f)
-        f.close()
-        #f = open("main\\top\game_data\src\\rhythm\setup\\nums\gen_right.json", 'r')
-        #self.track_right_list = json.load(f)
-        #f.close()
+        ## vars
+        # toggle when first starting, starts music and built-in delay
+        starting_toggle = False
+
+        for times_right, track_right in zip(right_time_track_list, right_track_list):
+            if times_right[0] == 'end':
+                pass
+            else:
+                main_delay = round(times_right[0], 3)
+                main_delay_ms = int(main_delay * 1000)
+                if starting_toggle == True:
+                    time.sleep(main_delay)
+                    x_val = notes.notes_pos[track_right]
+                    obj = Data_format()
+                    obj.window = window
+                    obj.color = RED
+                    obj.x = x_val
+                    obj.y = 0
+                    obj.width = self.CUBE_WIDTH
+                    obj.height = self.CUBE_HEIGHT
+                    self.data.add_to_active(obj)
+                if starting_toggle == False:
+                    start_delay = 20.275 - 2.50 # secondary delay for ('timings_1_3-5')
+                    start_delay_ms = int(1000 * start_delay)
+                    time.sleep(start_delay)
+                    starting_toggle = True
+        print('Second playback done.')
 
 
     def Whats_the_Rush(self): # still needs to be made
@@ -195,35 +202,59 @@ class Profiles:
         '''
 
     def Stayed_Gone(self):
-        val = 0
-        toggle = False
-        obj = Data_format()
+        print('--------------------------')
+        print('Main music thread started.')
+        ## preload files
+        # paths
+        if ENV == False:
+            left_timing_path = "main\\top\\game_data\src\\rhythm\\maps\\stayed_gone\\('timings_1_0-2', 8).json"
+            left_track_path = "main\\top\game_data\\src\\rhythm\\maps\\stayed_gone\\tracks_1_0-2.json"
+            right_timing_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\('timings_1_3-5', 10).json"
+            right_track_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\tracks_1_3-5.json"
+            music_path = "main\\top\\game_data\\src\\rhythm\\songs\\stayed_gone.mp3"
+        if ENV == True:
+            left_timing_path = "maps/stayed_gone/timings_1_0-2.json"
+            left_track_path = "maps/stayed_gone/tracks_1_0-2.json"
+            right_timing_path = "maps/stayed_gone/timings_1_3-5.json"
+            right_track_path = "maps/stayed_gone/tracks_1_3-5.json"
+            music_path = "songs/stayed_gone.mp3"
+        # load left time track
+        print('Loading left timing track...')
+        f = open(left_timing_path, 'r')
+        left_time_track_list = json.load(f)
+        f.close()
+        # load left position track
+        print('Loading left position track...')
+        f = open(left_track_path, 'r')
+        left_track_list = json.load(f)
+        f.close()
+        print('Loading right timing track...')
+        f = open(right_timing_path, 'r')
+        right_time_track_list = json.load(f)
+        f.close()
+        print('Loading right posiition track...')
+        f = open(right_track_path, 'r')
+        right_track_list = json.load(f)
+        f.close()
+        #thread object
+        secondary_thread = threading.Thread(target=lambda:self.secondary(right_time_track_list, right_track_list))
+        secondary_thread.start()
+        
+        ## vars
+        # toggle when first starting, starts music and built-in delay
+        starting_toggle = False
         print('--------------------------')
         print('Profile: "Stayed Gone" by Andrew Underberg, Sam Haft, Christian Borle, Amir Talai, and Joel Perez')
         print('--------------------------')
         # loading all the files (god help me)
-        #for times_left, times_right, track_left, track_right in zip(self.times_left_list, self.times_right_list, self.track_left_list, self.track_right_list):
-        for times_left, track_left in zip(self.times_left_list, self.track_left_list):
+        for times_left, track_left in zip(left_time_track_list, left_track_list):
             if times_left[0] == 'end':
                 pass
             else:
-                #x_val = notes.notes_pos[val]
-                #loop = True
-                #while loop:f
-                # for event in pygame.event.get():
-                #         if event.type == pygame.QUIT:
-                #             #running = False
-                #             break
-
                 main_delay = round(times_left[0], 3)
                 main_delay_ms = int(main_delay * 1000)
-                if toggle == True:
-                    #print(f'sleeping for {round(times[2], 3)}s,', f'{main_delay_ms}ms') #####################################################
-                    #pygame.time.delay(main_delay_ms)
+                if starting_toggle == True:
                     time.sleep(main_delay)
-                    #window.fill(BLACK)
-                    #pygame.draw.rect(window, YELLOW, (x_val, 0, self.CUBE_WIDTH, self.CUBE_HEIGHT))
-                    #if times_left[1]:
                     x_val = notes.notes_pos[track_left]
                     obj = Data_format()
                     obj.window = window
@@ -232,53 +263,24 @@ class Profiles:
                     obj.y = 0
                     obj.width = self.CUBE_WIDTH
                     obj.height = self.CUBE_HEIGHT
-                    # obj = [window, YELLOW, x_val, 0, self.CUBE_WIDTH, self.CUBE_HEIGHT]
                     self.data.add_to_active(obj)
-                    # if times_right[1]:
-                    #     x_val = notes.notes_pos[track_right]
-                    #     obj = Data_format()
-                    #     obj.window = window
-                    #     obj.color = BLUE
-                    #     obj.x = x_val
-                    #     obj.y = 0
-                    #     obj.width = self.CUBE_WIDTH
-                    #     obj.height = self.CUBE_HEIGHT
-                    #     # obj = [window, YELLOW, x_val, 0, self.CUBE_WIDTH, self.CUBE_HEIGHT]
-                    #     self.data.add_to_active(obj)
 
-                    #pygame.display.update()
-                if toggle == False:
-                    self.p3.music.load('main\\top\game_data\src\\rhythm\songs\stayed_gone.mp3')
-                    self.p3.music.set_volume(0.50)
-                    #self.p3.music.set_volume(0.00)
-                    self.p3.music.play()
+                if starting_toggle == False:
+                    self.player.music.load(music_path)
+                    self.player.music.set_volume(0.50)
+                    #self.player.music.set_volume(0.00)
+                    self.player.music.play()
                     #start_delay = 20.775 # how long lyrics take to start - how long it takes square to travel down screen
                     # 20.275 - travel time
                     #start_delay = 20.275 - 2.75 # delay for timings_0-2.json
                     #start_delay = 20.275 - 2.25 # delay for ('vox vocals 1', 8).json
                     start_delay = 20.275 - 2.70 # delay for ('vox vocals 1', 8).json
                     start_delay_ms = int(1000 * start_delay)
-                    #pygame.time.delay(start_delay_ms)
                     print('Starting playback.')
                     print(f'- start delaying by {start_delay}s, {start_delay_ms}ms')
                     time.sleep(start_delay)
-                    # for i in range(1000, start_delay_ms, 1000):
-                    #    for event in pygame.event.get():
-                    #        if event.type == pygame.QUIT:
-                    #            #running = False
-                    #            break
-                    #    #window.fill(BLACK)
-                    #    #pygame.time.delay(1000)
-                    #    #time.sleep(1)
-                    #    pygame.display.update()
-                    toggle = True
-
-                #loop = False
-                # if val == notes.num_cubes - 1:
-                #     val = 0
-                # else:
-                #     val += 1
-        print('Playback done.')
+                    starting_toggle = True
+        print('Main playback done.')
 
 
 class Notes:
@@ -314,7 +316,6 @@ class Points:
     def point_down(self):
         self.total_points -= 1
 
-
                 
 class Zone:
     def __init__(self):
@@ -334,25 +335,9 @@ class Zone:
         self.height = gap
     
     def draw(self):
-        self.zone_rect = pygame.draw.rect(window, RED, (self.x, self.y, self.width, self.height))
+        self.zone_rect = pygame.draw.rect(window, YELLOW, (self.x, self.y, self.width, self.height))
 
 
-class Draw:
-    def __init__(self):
-        for obj in notes.profiles.data.active_cubes:
-            pygame.draw.rect(obj.window, obj.color, (obj.x, obj.y, obj.width, obj.height))
-#######################################################################################
-
-### INITIALIZE VARIABLES
-
-'''
-- so first we add the new cube as an object with object.data being all drawing data into a list, called active_notes
-- then in the main game loop we will draw each cube in said active list, using object.data
-- then we will run the function that will iterate through that list and change object.data.y by the speed it goes down screen
-- then we will check for the zone and the right keys being pressed, the right key is linked in object.data.key
-- then we will see if it is off the screen, then find index, then remove it from list
-- then we will do point eval
-'''
 #######################################################################################
 ## set up class objects
 zone = Zone()
@@ -361,16 +346,20 @@ points = Points()
 
 # start music thread with chosen profile
 music_thread = threading.Thread(target=lambda:notes.profiles.Stayed_Gone(), daemon=True)
-#music_thread = threading.Thread(target=lambda:notes.profiles.Whats_the_Rush())
 music_thread.start()
 
+# set up clock (not used)
+clock = pygame.time.Clock()
+
+# load booleans
 pressed1 = False
 pressed2 = False
-clock = pygame.time.Clock()
+space_pressed = False
+paused = False
 running = True
 while running:
     # set fps to 60
-    #clock.tick(60)
+    # clock.tick(60)
     # delay
     pygame.time.delay(1)
 
@@ -395,6 +384,17 @@ while running:
     if keys[K_ESCAPE]:
         #music_thread.join()
         running = False
+    
+    # pause if
+    if keys[K_SPACE]:
+        if space_pressed == False:
+            if paused == False:
+                paused = True
+            if paused == True:
+                paused = False
+            space_pressed = True
+    if not keys[K_SPACE]:
+        space_pressed = False
 
     ## draws
     window.fill(BLACK)
@@ -405,54 +405,56 @@ while running:
         active_note = pygame.draw.rect(obj.window, obj.color, (obj.x, obj.y, obj.width, obj.height))
         #https://stackoverflow.com/questions/49954039/how-do-you-create-rect-variables-in-pygame-without-drawing-them
         #pygame.Rect(obj.x, obj.y, obj.width, obj.height)
-
-        # gets collumn of notes
-        index = notes.notes_pos.index(obj.x)
-        for i in REGISTER:
-            active_num1 = REGISTER.index(i)
-            if index == REGISTER[active_num1][0]:
-                active_key = REGISTER[active_num1][1]
-                break
         
-        # check if note is outside of screen, reset streak and delete if it is - NOT WORKING
-        if active_note.y > HEIGHT:
-            points.reset_streak()
-
-        # checks if note is within zone
-        if active_note.colliderect(zone.zone_rect):
-            # checks if the right key is pressed, if so remove note from list and increase points by 1
-            if keys[active_key]:
-                #if pressed1 == False: #############
-                notes.profiles.data.active_cubes.remove(obj)
-                points.point_up()
-                    #pressed1 = True ################
+        # only do if not paused
+        if paused == False:
+            # gets collumn of notes
+            index = notes.notes_pos.index(obj.x)
+            for i in REGISTER:
+                active_num1 = REGISTER.index(i)
+                if index == REGISTER[active_num1][0]:
+                    active_key = REGISTER[active_num1][1]
+                    break
                 
-            #elif not keys[active_key]: ###########
-                #pressed1 = False ############
+            # check if note is outside of screen, reset streak and delete if it is - NOT WORKING
+            if active_note.y > HEIGHT:
+                points.reset_streak()
 
-        # system for preventing spam inputs & deducting points for false inputs, currently not plausible until future development
-        # else:
-        #     for i in REGISTER:
-        #         active_num2 = REGISTER.index(i)
-        #         if keys[REGISTER[active_num2][1]]:
-        #             if pressed2 == False:
-        #                 points.point_down()
-        #                 pressed2 = True
+            # checks if note is within zone
+            if active_note.colliderect(zone.zone_rect):
+                # checks if the right key is pressed, if so remove note from list and increase points by 1
+                if keys[active_key]:
+                    #if pressed1 == False: #############
+                    notes.profiles.data.active_cubes.remove(obj)
+                    points.point_up()
+                        #pressed1 = True ################
 
-        #         elif not keys[REGISTER[active_num2][1]]:
-        #             pressed2 = False
-            
-    # moves notes down
-    notes.profiles.data.iter()
-    #print('total points:', points.total_points, 'total streak:', points.streak)
+                #elif not keys[active_key]: ###########
+                    #pressed1 = False ############
+
+            # system for preventing spam inputs & deducting points for false inputs, currently not plausible until future development
+            # else:
+            #     for i in REGISTER:
+            #         active_num2 = REGISTER.index(i)
+            #         if keys[REGISTER[active_num2][1]]:
+            #             if pressed2 == False:
+            #                 points.point_down()
+            #                 pressed2 = True
+
+            #         elif not keys[REGISTER[active_num2][1]]:
+            #             pressed2 = False
+
+    if paused == False:
+        # moves notes down
+        notes.profiles.data.iter()
     pygame.display.update()
 
-print('''
+'''
 text = font.render(str(level), True, white, None) # text, some bool(?), text color, bg color
 text_rect = text.get_rect()
 text_rect.center = (25, 30) # some positioning
 window.blit(text, text_rect)
-''')
+'''
 
 pygame.quit()
 music_thread.join(timeout=0)

@@ -7,7 +7,7 @@ import json
 f = open("main\\top\game_data\src\\rhythm\setup\count\count.json", 'r')
 num = json.load(f)
 f.close()
-
+ 
 pygame.init()
 WIDTH = 1000
 HEIGHT = 1000
