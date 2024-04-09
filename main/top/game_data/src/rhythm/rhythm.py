@@ -212,7 +212,7 @@ class Profiles:
             right_timing_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\('timings_1_3-5', 10).json"
             right_track_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\tracks_1_3-5.json"
             music_path = "main\\top\\game_data\\src\\rhythm\\songs\\stayed_gone.mp3"
-        if ENV == True:
+        elif ENV:
             left_timing_path = "maps/stayed_gone/timings_1_0-2.json"
             left_track_path = "maps/stayed_gone/tracks_1_0-2.json"
             right_timing_path = "maps/stayed_gone/timings_1_3-5.json"
