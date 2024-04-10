@@ -140,7 +140,7 @@ class Data:
 
         self.active_cubes = new_list
 
-        # Remove cubes that have moved off the screen
+        # Remove cubes that have moved off the screen 
         #self.active_cubes = [cubex for cubex in self.active_cubes if cubex.y < HEIGHT]
 
     def add_to_active(self, obj):
