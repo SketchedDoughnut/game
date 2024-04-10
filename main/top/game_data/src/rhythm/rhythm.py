@@ -137,7 +137,7 @@ class Data:
 
             if cubex.y < HEIGHT:
                 new_list.append(cubex)
-                
+
         self.active_cubes = new_list
 
         # Remove cubes that have moved off the screen
