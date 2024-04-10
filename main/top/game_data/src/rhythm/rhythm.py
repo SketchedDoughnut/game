@@ -137,6 +137,7 @@ class Data:
 
             if cubex.y < HEIGHT:
                 new_list.append(cubex)
+                
         self.active_cubes = new_list
 
         # Remove cubes that have moved off the screen
@@ -331,9 +332,51 @@ class Points:
     def point_down(self):
         self.total_points -= 1
 
-                
+
+class Draw:
+    def __init__(self):
+        self.draw_list = []
+
+    def draw(self):
+        for obj in self.draw_list:
+            pygame.draw.rect(obj.window, obj.color, (obj.x, obj.y, obj.width, obj.height))
+
+
+class Div:
+    def __init__(self):
+        # class object
+        self.draw = Draw()
+        self.divs_pos = []
+        self.num_divs = 5
+        self.div_width = 10  # Adjust this as needed
+
+        # Calculate the gap between each cube
+        self.gap = (WIDTH - (self.num_divs * self.div_width)) / (self.num_divs + 1)
+
+    def append(self):
+        for i in range(self.num_divs):
+            self.move_up = 150
+
+            self.cube_x = (i + 1) * self.gap + i * self.div_width
+            
+            self.height = HEIGHT - (HEIGHT - self.move_up)
+
+            self.obj = Data_format()
+            self.obj.window = window
+            self.obj.color = BLACK
+            self.obj.x = self.cube_x
+            self.obj.y = HEIGHT - self.move_up
+            self.obj.width = self.div_width
+            self.obj.height = self.height
+            #print('Adding dividers to background draw list...')
+            self.draw.draw_list.append(self.obj)
+
+
 class Zone:
     def __init__(self):
+        # class objects
+        self.div = Div()
+
         #vals to change
         self.move_up = 150
         
@@ -348,14 +391,34 @@ class Zone:
         # size
         self.width = WIDTH
         self.height = gap
+
+    def append(self):
+        # set up draw object
+        self.obj = Data_format()
+        self.obj.window = window
+        self.obj.color = YELLOW
+        self.obj.x = self.x
+        self.obj.y = self.y
+        self.obj.width = self.width
+        self.obj.height = self.height
+        #print('Adding zone to bg draw list...')
+        self.div.draw.draw_list.append(self.obj)
     
     def draw(self):
-        self.zone_rect = pygame.draw.rect(window, YELLOW, (self.x, self.y, self.width, self.height))
+        #self.div.draw.draw_list.append(self.obj)
+        #self.zone_rect = pygame.draw.rect(window, YELLOW, (self.x, self.y, self.width, self.height))
+        self.zone_rect = pygame.Rect(self.x, self.y, self.width, self.height)
+    
+    def handler(self):
+        self.append()
+        self.draw()
+        self.div.append()
 
 
 #######################################################################################
 ## set up class objects
 zone = Zone()
+zone.handler()
 notes = Notes()
 points = Points()
 
@@ -416,7 +479,8 @@ while running:
     ## draws
     window.fill(BLACK)
     # draws the input zone at bottom
-    zone.draw()
+    #zone.draw()
+    zone.div.draw.draw()
     # iterates through list of notes
     for obj in notes.profiles.data.active_cubes:
         active_note = pygame.draw.rect(obj.window, obj.color, (obj.x, obj.y, obj.width, obj.height))
