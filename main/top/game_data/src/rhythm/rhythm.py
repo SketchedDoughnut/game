@@ -199,7 +199,7 @@ class Profiles:
         print('Second playback done.')
 
 
-    def Whats_the_Rush(self): # still needs to be made
+    def Whats_the_Rush(self): # still needs to be made --> also try and add boggle your mind song yknow the one
         '''
         print('--------------------------')
         print('Profile: "Whats the Rush?" by Jesse Woods')
