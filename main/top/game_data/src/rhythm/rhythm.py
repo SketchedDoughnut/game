@@ -148,7 +148,12 @@ class Data:
 
 
 class Profiles:
-
+    '''
+    SONGS
+    - Boggle by Mega Mango
+    - Loser, Baby (as per request) from Hazbin Hotel
+    '''
+    
     def __init__(self):
         
         ## class obj
@@ -207,7 +212,7 @@ class Profiles:
         print('Second playback done.')
 
 
-    def Whats_the_Rush(self): # still needs to be made --> also try and add boggle your mind song yknow the one
+    def Whats_the_Rush(self):
         print('--------------------------')
         print('Main music thread started.')
         ## preload files
