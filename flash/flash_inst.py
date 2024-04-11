@@ -162,7 +162,11 @@ if os.path.exists(path):
     if input('Previous installation found. Delete? (y/n) ').lower() == 'y':
         shutil.rmtree(path)
         print('-----------------------------------')
-        time.sleep(1)
+        if input('Enter y to continue, or n to quit: ').lower() == 'n':
+            exit()
+        else:
+            print('-----------------------------------')
+            time.sleep(1)
         
     else:
         print('-----------------------------------')
