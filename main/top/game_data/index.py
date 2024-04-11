@@ -1,37 +1,42 @@
 # the coding gods have screwed me over and I need to redesign this program
 
 # imports
-import pygame
-from pygame.locals import *
+#import pygame
+#from pygame.locals import *
+import pip
 import timeit
 import time
 import os
 
-pygame.init()
-
-WIDTH = 1920
-HEIGHT = 1080
-
-window = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("thing!")
+print('Index redirecting to rhythm game...')
+print('-----------------------------')
 
 wDir = os.path.dirname(os.path.abspath(__file__))
-path_list = []
-path_list.append(os.path.join(wDir, 'src/flappy/flappy.py'))
-path_list.append(os.path.join(wDir, 'src/rhythm/rhythm.py'))
+path = os.path.join(wDir, 'src/rhythm/rhythm.py')
 
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
+os.system(f'python {path}')
 
-class Format:
-  def __init__(self):
-    self.x = None
-    self.y = None
-    self.width = None
-    self.height = None
+while False:
+  pygame.init()
 
-draw_var = Format()
+  WIDTH = 1920
+  HEIGHT = 1080
 
-running = True
-while running: 
+  window = pygame.display.set_mode((WIDTH, HEIGHT))
+  pygame.display.set_caption("thing!")
+
+  wDir = os.path.dirname(os.path.abspath(__file__))
+  path_list = []
+  path_list.append(os.path.join(wDir, 'src/flappy/flappy.py'))
+  path_list.append(os.path.join(wDir, 'src/rhythm/rhythm.py'))
+
+  RED = (255, 0, 0)
+  GREEN = (0, 255, 0)
+  BLUE = (0, 0, 255)
+
+  class Format:
+    def __init__(self):
+      self.x = None
+      self.y = None
+      self.width = None
+      self.height = None
