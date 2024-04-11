@@ -49,13 +49,13 @@ while True:
 m = pygame.mixer
 m.init()
 # https://open.spotify.com/track/75eo472nc6DIqpwlVOA91B?si=77a2e07864e5445a
-#m.music.load('main\\top\game_data\src\\rhythm\songs\rush.mp3')
+m.music.load('main\\top\game_data\src\\rhythm\songs\\rush.mp3')
 
 # https://open.spotify.com/track/5rmNtZHtAHHbuzFFQ1c4Nd?si=d2f8eefe411c4b49
 #m.music.load('main\\top\game_data\src\\rhythm\songs\stayed_gone(lute_and_lilith).mp3')
 
 # https://open.spotify.com/track/4Po97bPnn3ISdEkuJBMt2f?si=6a51325cff4a49e2
-m.music.load('main\\top\game_data\src\\rhythm\songs\stayed_gone.mp3')
+#m.music.load('main\\top\game_data\src\\rhythm\songs\stayed_gone.mp3')
 
 
 m.music.set_volume(0.75)

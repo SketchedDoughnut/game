@@ -162,6 +162,13 @@ class Profiles:
         self.player = pygame.mixer
         self.player.init()
 
+    def music_delay(self, time_amount, path):
+        time.sleep(time_amount)
+        self.player.music.load(path)
+        self.player.music.set_volume(0.50)
+        #self.player.music.set_volume(0.00)
+        self.player.music.play()
+
     def secondary(self, right_time_track_list, right_track_list, color):
         print('Secondary music thread started.')
         #print('--------------------------')
@@ -201,12 +208,74 @@ class Profiles:
 
 
     def Whats_the_Rush(self): # still needs to be made --> also try and add boggle your mind song yknow the one
-        '''
+        print('--------------------------')
+        print('Main music thread started.')
+        ## preload files
+        # get path to working directory
+        # https://stackoverflow.com/questions/21957131/python-not-finding-file-in-the-same-directory
+        wDir = os.path.dirname(os.path.abspath(__file__))
+        if ENV:
+            left_timing_path = os.path.join(wDir, "maps\\rush\\timings_1_0-5.json")
+            left_track_path = os.path.join(wDir, "maps\\rush\\tracks_1_0-5.json")
+            music_path = os.path.join(wDir, "songs\\rush.mp3")
+        elif not ENV:
+            left_timing_path = "main\\top\\game_data\\src\\rhythm\\maps\\rush\\timings_1_0-5.json"
+            left_track_path = "main\\top\\game_data\\src\\rhythm\\maps\\rush\\tracks_1_0-5.json"
+            music_path = "main\\top\\game_data\\src\\rhythm\\songs\\rush.mp3"
+        # load left time track
+        print('Loading left timing track...')
+        f = open(left_timing_path, 'r')
+        left_time_track_list = json.load(f)
+        f.close()
+        # load left position track
+        print('Loading left position track...')
+        f = open(left_track_path, 'r')
+        left_track_list = json.load(f)
+        f.close()
+        
+        ## vars
+        # toggle when first starting, starts music and built-in delay
+        starting_toggle = False
+        second_toggle = False
         print('--------------------------')
         print('Profile: "Whats the Rush?" by Jesse Woods')
         print('--------------------------')
-        delay: 1.85
-        '''
+        # main iter loop
+        for times_left, track_left in zip(left_time_track_list, left_track_list):
+            if times_left[0] == 'end':
+                pass
+            else:
+                main_delay = round(times_left[0], 3)
+                main_delay_ms = int(main_delay * 1000)
+                if starting_toggle == True:
+                    if paused == True:
+                        while paused == True:
+                            pass
+                    elif paused == False:
+                        if second_toggle == False:
+                            print('- music delay thread started.')
+                            threading.Thread(target=lambda:self.music_delay(0.95, music_path)).start()
+                            second_toggle = True
+                        time.sleep(main_delay)
+                        x_val = notes.notes_pos[track_left]
+                        obj = Data_format()
+                        obj.window = window
+                        obj.color = BLUE
+                        obj.x = x_val
+                        obj.y = 0
+                        obj.width = self.CUBE_WIDTH
+                        obj.height = self.CUBE_HEIGHT
+                        self.data.add_to_active(obj)
+                if starting_toggle == False:
+                    # how long lyrics take to start - how long it takes square to travel down screen
+                    #start_delay = 1.85 - 2.65 # delay for timings 1_0-5
+                    start_delay = 0
+                    start_delay_ms = int(1000 * start_delay)
+                    print('Starting playback.')
+                    print(f'- start delaying by {start_delay}s, {start_delay_ms}ms')
+                    time.sleep(start_delay)
+                    starting_toggle = True
+        print('Main playback done.')
 
     def Stayed_Gone(self):
         print('--------------------------')
@@ -423,7 +492,8 @@ notes = Notes()
 points = Points()
 
 # start music thread with chosen profile
-music_thread = threading.Thread(target=lambda:notes.profiles.Stayed_Gone(), daemon=True)
+music_thread = threading.Thread(target=lambda:notes.profiles.Whats_the_Rush(), daemon=True)
+#music_thread = threading.Thread(target=lambda:notes.profiles.Stayed_Gone(), daemon=True)
 music_thread.start()
 
 # set up clock (not used)
