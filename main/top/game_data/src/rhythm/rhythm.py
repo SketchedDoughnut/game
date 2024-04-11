@@ -281,8 +281,8 @@ class Profiles:
                         self.data.add_to_active(obj)
                 if starting_toggle == False:
                     self.player.music.load(music_path)
-                    #self.player.music.set_volume(0.50)
-                    self.player.music.set_volume(0.00)
+                    self.player.music.set_volume(0.50)
+                    #self.player.music.set_volume(0.00)
                     self.player.music.play()
                     #start_delay = 20.775 # how long lyrics take to start - how long it takes square to travel down screen
                     # 20.275 - travel time
