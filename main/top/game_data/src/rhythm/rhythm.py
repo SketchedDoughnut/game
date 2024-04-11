@@ -162,7 +162,7 @@ class Profiles:
         self.player = pygame.mixer
         self.player.init()
 
-    def secondary(self, right_time_track_list, right_track_list):
+    def secondary(self, right_time_track_list, right_track_list, color):
         print('Secondary music thread started.')
         #print('--------------------------')
         
@@ -186,7 +186,7 @@ class Profiles:
                         x_val = notes.notes_pos[track_right]
                         obj = Data_format()
                         obj.window = window
-                        obj.color = RED
+                        obj.color = color
                         obj.x = x_val
                         obj.y = 0
                         obj.width = self.CUBE_WIDTH
@@ -248,7 +248,7 @@ class Profiles:
         right_track_list = json.load(f)
         f.close()
         #thread object
-        secondary_thread = threading.Thread(target=lambda:self.secondary(right_time_track_list, right_track_list))
+        secondary_thread = threading.Thread(target=lambda:self.secondary(right_time_track_list, right_track_list, RED))
         secondary_thread.start()
         
         ## vars
@@ -281,8 +281,8 @@ class Profiles:
                         self.data.add_to_active(obj)
                 if starting_toggle == False:
                     self.player.music.load(music_path)
-                    self.player.music.set_volume(0.50)
-                    #self.player.music.set_volume(0.00)
+                    #self.player.music.set_volume(0.50)
+                    self.player.music.set_volume(0.00)
                     self.player.music.play()
                     #start_delay = 20.775 # how long lyrics take to start - how long it takes square to travel down screen
                     # 20.275 - travel time
@@ -369,7 +369,7 @@ class Div:
             self.obj.width = self.div_width
             self.obj.height = self.height
             #print('Adding dividers to background draw list...')
-            self.draw.draw_list.append(self.obj)
+            #self.draw.draw_list.append(self.obj)
 
 
 class Zone:
