@@ -12,6 +12,9 @@ pygame.init()
 WIDTH = 1920
 HEIGHT = 1080
 
+window = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("thing!")
+
 wDir = os.path.dirname(os.path.abspath(__file__))
 path_list = []
 path_list.append(os.path.join(wDir, 'src/flappy/flappy.py'))
