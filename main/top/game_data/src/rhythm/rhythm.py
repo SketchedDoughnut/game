@@ -96,7 +96,7 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 
 ## environment, vscode (False), run (True)
-ENV = False
+ENV = True
 
 ## active keys to register
 #REGISTER = ['a', 's', 'd', 'f', 'j', 'k', 'l', ';']
