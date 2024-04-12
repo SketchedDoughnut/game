@@ -65,7 +65,6 @@ class Format:
 
 
 
-
 setup = Format()
 setup.handler()
 
@@ -101,13 +100,10 @@ while True:
   # exits if
   if keys[K_LCTRL]:
         if keys[K_c]:
-            #music_thread.join()
             break
         elif keys[K_w]:
-            #music_thread.join()
             break
   if keys[K_ESCAPE]:
-      #music_thread.join()
       break
   
   for i, i2 in zip(setup.draw_queue, color_list):
@@ -135,14 +131,10 @@ while True:
   if start_1 or start_2:
     pygame.quit()
     if start_1:
-      # while mouse_pressed[0]:
-      #    pass
       print('Redirecting into flappy bird...')
       os.system(f'python {path_list[0]}')
       setup_bool = False
     elif start_2:
-      # while mouse_pressed[0]:
-      #    pass
       print('Redirecting into rhythm game...')
       os.system(f'python {path_list[1]}')
       setup_bool = False
