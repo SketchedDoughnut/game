@@ -79,6 +79,7 @@ while True:
     color_list = []
     for i in setup.draw_queue:
       color_list.append((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
+      print('----------------------------')
     print('Colors:', color_list)
 
     mouse_pressed = False
@@ -131,10 +132,15 @@ while True:
   if start_1 or start_2:
     pygame.quit()
     if start_1:
+      print('----------------------------')
       print('Redirecting into flappy bird...')
       os.system(f'python {path_list[0]}')
       setup_bool = False
     elif start_2:
+      print('----------------------------')
       print('Redirecting into rhythm game...')
       os.system(f'python {path_list[1]}')
       setup_bool = False
+
+print('----------------------------')
+print('Exiting...')

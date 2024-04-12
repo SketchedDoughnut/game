@@ -2,8 +2,9 @@
 
 import os
 
-wDir = os.path.dirname(os.path.abspath(__file__))
+wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 path = os.path.join(wDir, 'game_data/index.py')
+print(path)
 
 print('Starter redirecting to index file...')
 print('----------------------------')
