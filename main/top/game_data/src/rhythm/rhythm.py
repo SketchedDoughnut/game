@@ -526,7 +526,6 @@ while running:
     mouse_pos = pygame.mouse.get_pos()
 
     # exits if
-    keys = pygame.key.get_pressed()
     if keys[K_LCTRL]:
         if keys[K_c]:
             #music_thread.join()
