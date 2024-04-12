@@ -225,6 +225,12 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location.""") # Enter nothi
 
             # removing install tree
             try:
+                print(f'Deleting from: {self.install_path}')
+                if input('Continue? (y/n) ').lower() == 'n':
+                    print('Cancelling...')
+                    time.sleep(5)
+                    exit()
+                    
                 shutil.rmtree(self.install_path)
                 print(f'! install cleaned')
             except:
@@ -626,17 +632,16 @@ class Downloader:
         # Start Downloading
 
         for i in self.files[start:]:
-        # try:
-            if recursive or i[0].split(target_folder)[1].count('/') \
-                    <= 1:
-                self.__mkdirs(destination + '/' + os.path.dirname(i[0]))
-                urllib.request.urlretrieve(i[1], destination + '/' + i[0])
+            try:
+                if recursive or i[0].split(target_folder)[1].count('/') \
+                        <= 1:
+                    self.__mkdirs(destination + '/' + os.path.dirname(i[0]))
+                    urllib.request.urlretrieve(i[1], destination + '/' + i[0])
 
-                # modified segment by me
-                print(f'- Installing file: /{i}')
-
-        # except Exception as e:
-        #     print(f'File download error: {e}')
+                    # modified segment by me
+                    print(f'- Installing file: /{i}')
+            except Exception as e:
+                print(f'File download error: {e}')
 
 
 ########################################################################

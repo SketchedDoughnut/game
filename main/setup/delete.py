@@ -27,6 +27,11 @@ delete_path = delete_path["remove_path"]
 temp.close()
 print('---------------')
 print(f'Delete: Un-installing game from the following directory: {delete_path}')
+if input('Continue? (y/n) ').lower() == 'n':
+    print('Cancelling...')
+    time.sleep(5)
+    exit()
+
 time.sleep(0.025)
 
 # get path from delete.json
