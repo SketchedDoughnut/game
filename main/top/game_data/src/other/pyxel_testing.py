@@ -1,5 +1,5 @@
-import pip
-pip.main(['install', 'pyxel'])
+#import pip
+#pip.main(['install', 'pyxel'])
 print('------------------------')
 import pyxel
 
