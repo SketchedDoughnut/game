@@ -80,7 +80,7 @@ while True:
     color_list = []
     for i in setup.draw_queue:
       color_list.append((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
-      print('----------------------------')
+    print('----------------------------')
     print('Colors:', color_list)
 
     mouse_pressed = False
