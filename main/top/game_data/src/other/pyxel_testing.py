@@ -22,3 +22,6 @@ class App:
 App()
 
 # https://kitao.github.io/pyxel/wasm/launcher/?run=SketchedDoughnut.Development.main.top.game_data.src.other.pyxel_testing
+# https://github.com/kitao/pyxel/wiki/How-To-Use-Pyxel-Web
+# import pyxel
+# pyxel on PyPi
