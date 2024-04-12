@@ -4,6 +4,7 @@
 import pygame
 from pygame.locals import *
 import pip
+pip.main(['install', 'pygame'])
 import timeit
 import time
 import os
