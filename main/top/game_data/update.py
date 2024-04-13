@@ -22,6 +22,7 @@ IDEAS
 - create urgency indicators that will demand an update
 - make a seperate branch / release tag for game_data and make it wipe and re-install it, KEEP IT SEPERATE FROM ACTUAL DATA (only re-install games)
 - check installer version and warn if its out of date
+- add a choices function that gets choices with two buttons, you can input: x, y, width, height
 '''
 # pygame
 pygame.init()
