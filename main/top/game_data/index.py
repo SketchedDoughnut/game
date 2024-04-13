@@ -8,6 +8,7 @@ from pygame.locals import *
 import timeit
 import time
 import os
+import json
 
 wDir = os.path.dirname(os.path.abspath(__file__))
 path_list = []
@@ -89,11 +90,15 @@ while True:
       color_list.append((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
     print('----------------------------')
     print('Colors:', color_list)
+    print('S to export colors (ignore/colors.json)')
 
     mouse_pressed = False
+    key_pressed = False
+
     pygame.init()
     window = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("thing!")
+
     setup_bool = True
 
   pygame.time.delay(1)
@@ -114,6 +119,21 @@ while True:
             break
   if keys[K_ESCAPE]:
       break
+  
+  if keys[K_s]:
+     if key_pressed == False:
+      f = open(os.path.join(wDir, 'ignore/colors.json'), 'r')
+      color_load = list(json.load(f))
+      f.close()
+      color_load.append(color_list)
+      f = open(os.path.join(wDir, 'ignore/colors.json'), 'w')
+      json.dump(color_load, f)
+      f.close()
+      print('- dumped colors into ignore/colors.json')
+      key_pressed = True
+  elif not keys[K_s]:
+     key_pressed = False
+
   
   for i, i2 in zip(setup.draw_queue, color_list):
     bound = pygame.draw.rect(window, i2, (i.x, i.y, i.width, i.height))
