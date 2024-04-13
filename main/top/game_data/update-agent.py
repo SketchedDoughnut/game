@@ -81,7 +81,6 @@ def cancel(mode=0):
 
 
 
-
 print('----------------------------')
 print('NOTE: THIS UPDATE AGENT IS CURRENTLY DEPRECIATED. WHY? I AM LAZY.')
 check = threading.Thread(target=lambda:check_version(), daemon=True)
