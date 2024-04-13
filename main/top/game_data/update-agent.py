@@ -6,8 +6,13 @@ import requests
 import time
 import threading
 
-# overruling exit var
+'''
+POSSIBLE SOURCES
 
+https://stackoverflow.com/questions/60716016/how-to-get-the-latest-release-version-in-github-only-use-python-requests
+https://gist.github.com/pdashford/2e4bcd4fc2343e2fd03efe4da17f577d
+https://gist.github.com/jwodder/c0ad1a5a0b6fda18c15dbdb405e1e549
+'''
 # pygame
 pygame.init()
 WIDTH = 1920
