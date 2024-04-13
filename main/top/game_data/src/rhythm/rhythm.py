@@ -529,12 +529,15 @@ while running:
     if keys[K_LCTRL]:
         if keys[K_c]:
             #music_thread.join()
+            print('ctrl + c')
             running = False
         elif keys[K_w]:
             #music_thread.join()
+            print('ctrl + w')
             running = False
     if keys[K_ESCAPE]:
         #music_thread.join()
+        print('escape')
         running = False
     
     # pause if
