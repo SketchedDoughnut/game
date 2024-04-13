@@ -3,6 +3,7 @@
 # imports
 import pip
 pip.main(['install', 'pygame'])
+print('----------------------------')
 import pygame
 from pygame.locals import *
 import timeit
@@ -91,9 +92,11 @@ while True:
     print('----------------------------')
     print('Colors:', color_list)
     print('S to export colors (ignore/colors.json)')
+    print('R to refresh colors.')
 
     mouse_pressed = False
-    key_pressed = False
+    s_pressed = False
+    r_pressed = False
 
     pygame.init()
     window = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -121,7 +124,7 @@ while True:
       break
   
   if keys[K_s]:
-     if key_pressed == False:
+     if s_pressed == False:
       f = open(os.path.join(wDir, 'ignore/colors.json'), 'r')
       color_load = list(json.load(f))
       f.close()
@@ -130,9 +133,20 @@ while True:
       json.dump(color_load, f)
       f.close()
       print('- dumped colors into ignore/colors.json')
-      key_pressed = True
+      s_pressed = True
   elif not keys[K_s]:
-     key_pressed = False
+     s_pressed = False
+
+  if keys[K_r]:
+     if r_pressed == False:
+        import random
+        color_list = []
+        for i in setup.draw_queue:
+          color_list.append((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
+        r_pressed = True
+  elif not keys[K_r]:
+     r_pressed = False
+     
 
   
   for i, i2 in zip(setup.draw_queue, color_list):
