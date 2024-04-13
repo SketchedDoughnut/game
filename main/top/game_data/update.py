@@ -13,6 +13,16 @@ https://stackoverflow.com/questions/60716016/how-to-get-the-latest-release-versi
 https://gist.github.com/pdashford/2e4bcd4fc2343e2fd03efe4da17f577d
 https://gist.github.com/jwodder/c0ad1a5a0b6fda18c15dbdb405e1e549
 '''
+
+'''
+IDEAS
+
+- make a way to create releases that are announcements that can be displayed in game
+    - the name "!announce" will trigger it(?)
+- create urgency indicators that will demand an update
+- make a seperate branch / release tag for game_data and make it wipe and re-install it, KEEP IT SEPERATE FROM ACTUAL DATA (only re-install games)
+- check installer version and warn if its out of date
+'''
 # pygame
 pygame.init()
 WIDTH = 1920
