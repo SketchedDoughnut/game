@@ -1,3 +1,4 @@
+print('----------------------------')
 import pygame
 from pygame.locals import *
 import json
@@ -26,8 +27,10 @@ IDEAS
 '''
 # pygame
 pygame.init()
-WIDTH = 1920
-HEIGHT = 1080
+# WIDTH = 1920
+# HEIGHT = 1080
+WIDTH = 500
+HEIGHT = 500
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
@@ -122,7 +125,7 @@ while not exit:
         cancel(0)
 
     window.fill(BLACK)
-    font = pygame.font.Font('freesansbold.ttf', round(36 * 1.5))
+    font = pygame.font.Font('freesansbold.ttf', round(24))
     text = font.render(text_msg, True, WHITE, None) # text, some bool(?), text color, bg color
     text_rect = text.get_rect(center=(WIDTH / 2, HEIGHT / 2))
     window.blit(text, text_rect)
