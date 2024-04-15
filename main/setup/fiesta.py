@@ -11,7 +11,10 @@ import urllib.request
 '''
 {
     "remove_path": "", 
-    "abs_shortcut": ""
+    "abs_shortcut": "", 
+    "shortcut": false, 
+    "update": false, 
+    "bounds": "x"
 }
 '''
 ########################################################################
@@ -24,10 +27,10 @@ class Install:
 
         # overruling dictionary for global access
         # - for codespace
-        #self.rules = open('main/setup/config.json', 'r')
+        self.rules = open('main/setup/config.json', 'r')
 
         # for run
-        self.rules = open('config.json', 'r')
+        #self.rules = open('config.json', 'r')
 
         # will contain everything from config.json, including environment information
         self.rules = json.load(self.rules)
@@ -58,6 +61,17 @@ class Install:
                     exit()
             
             # printing start statement, format, prompting
+
+            # check the rule for shortcut, ignore everything below if so
+            main_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            data_wDir = os.path.dirname(os.path.abspath(__file__))
+            f = open(f'{data_wDir}/data.json', 'r')
+            data_dict = json.load(f)
+            f.close()
+            if data_dict['shortcut'] == True:
+                print('Installer redirecting to starter file...')
+                os.system(f'python {main_wDir}/top/starter.py')
+                exit()
 
             print("""
             Welcome to the open-source installer created by Sketched Doughnut! 
@@ -499,6 +513,21 @@ Otherwise, enter 'y' to continue.""")
         # ensure an exit happens
         exit()
 
+    # more of an assurance honestly, but eh
+    def edit_data(self):
+        print('---------------')
+        print('Updating installed data.json...')
+        f = open(f'{self.install_path}/main/setup/data.json', 'r')
+        content = json.load(f)
+        f.close()
+        content['shortcut'] = True
+        content['update'] =  False
+        content['bounds'] = 'x'
+        f = open(f'{self.install_path}/main/setup/data.json', 'w')
+        json.dump(content, f)
+        f.close()
+        print('Installed data.json updated')
+
 
     # runs all the functions in order, by config rules (can be changed in config.json)
     def run(self):
@@ -509,6 +538,7 @@ Otherwise, enter 'y' to continue.""")
         if self.rules['create']: self.create()
         if self.rules['download']: self.download()
         if self.rules['post_clean']: self.post_clean()
+        self.edit_data()
         if self.rules['quit_install']: self.quit_install()
 
 

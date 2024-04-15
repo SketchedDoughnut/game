@@ -13,7 +13,7 @@
       the INSTALLED installer to "shortcut: True, "update": False", "bounds": None
       - change main shortcut into installer 
         - when "shortcut": True, don't run installer as normal and redirect to starter.py (branches from there)
-
+ 
       - WHEN AN UPDATE IS NEEDED, DO THE FOLLOWING:
         - read an included file (update_info.txt?), see if the text "EMO" is in it
           - if EMO:
