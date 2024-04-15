@@ -2,4 +2,6 @@
   - https://www.pygame.org/project/1316
   - https://stackoverflow.com/questions/64788656/exe-file-made-with-pyinstaller-being-reported-as-a-virus-threat-by-windows-defen
   
-- refine program into a standalone installer
+- MAIN TODO
+  - make this stupid updating functionality work please
+    - add the update functionality to installer (god help me)

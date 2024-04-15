@@ -2,6 +2,7 @@
 
 - make sure file directories are adapted for intent (codespace/VSCode, or normal pc)
     - lookup:
+        - NOTE: NEWER DEVELOPED PROGRAMS USE A WORKING DIRECTORY SYSTEM AND DO NOT NEED THIS SYSTEM
         - # - for codespace
         - # for run
 
