@@ -31,7 +31,7 @@ class Install:
 
         # for run
         self.loading_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        self.rules = open(f'{self.loading_wDir}setup//config.json', 'r')
+        self.rules = open(f'{self.loading_wDir}/setup/config.json', 'r')
 
         # will contain everything from config.json, including environment information
         self.rules = json.load(self.rules)
@@ -66,12 +66,12 @@ class Install:
             # check the rule for shortcut, ignore everything below if so
             main_wDir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
             data_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            f = open(f'{data_wDir}/data.json', 'r')
+            f = open(f'{data_wDir}/setup/data.json', 'r')
             data_dict = json.load(f)
             f.close()
             if data_dict['shortcut'] == True:
                 print('Installer redirecting to starter file...')
-                os.system(f'python {main_wDir}/top/starter.py')
+                os.system(f'python {data_wDir}/top/starter.py')
                 exit()
 
             print("""
@@ -93,7 +93,7 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location.""") # Enter nothi
 
                         # for run
                         if self.rules['env'] == 'run':
-                            os.system(f'python delete.py')
+                            os.system(f'python {self.loading_wDir}/setup/delete.py')
 
                         # - for codespace
                         else:
@@ -340,7 +340,7 @@ Otherwise, enter 'y' to continue.""")
         print('Dumping delete path...')
         # for run
         if self.rules['env'] == 'run':
-            data = open(f'{self.loading_wDir}/data.json', 'r')
+            data = open(f'{self.loading_wDir}/setup/data.json', 'r')
         
         # - for codespace
         else:
@@ -352,7 +352,7 @@ Otherwise, enter 'y' to continue.""")
 
         # for run
         if self.rules['env'] == 'run':
-            data = open('data.json', 'w')
+            data = open(f'{self.loading_wDir}/setup/data.json', 'w')
 
         # - for codespace
         else:
