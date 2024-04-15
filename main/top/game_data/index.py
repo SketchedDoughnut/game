@@ -1,8 +1,13 @@
 # the coding gods have screwed me over and I need to redesign this program
 
 # imports
-import pip
-pip.main(['install', 'pygame'])
+def imports():
+   print('----------------------------')
+   print(f'Running {path_list[0][1]}...')
+   os.system(f'python {path_list[0][0]}')
+   
+imports()
+
 print('----------------------------')
 import pygame
 from pygame.locals import *
@@ -26,11 +31,6 @@ WHITE = (255, 255, 255)
 
 WIDTH = 1920
 HEIGHT = 1080
-
-def imports():
-   print('----------------------------')
-   print(f'Running {path_list[0][1]}...')
-   os.system(f'python {path_list[0][0]}')
 
 def update():
    print('----------------------------')
@@ -78,7 +78,6 @@ class Format:
 
 
 
-imports()
 update()
 
 setup = Format()
