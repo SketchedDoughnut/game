@@ -58,7 +58,7 @@ top_wDir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.
 # runs as a thread, checks version while pygame cheeks drawing
 def check_version():
     # globals
-    global do_exit, text_msg
+    global do_exit, text_msg, confirm
 
     # release destination, working directory, loading version
     dest = 'https://api.github.com/repos/SketchedDoughnut/development/releases/latest' # link format: https://api.github.com/repos/{owner}/{repo}/releases/latest
@@ -103,7 +103,7 @@ def buttons(yes_list, no_list):
     return [[GREEN, yes_zone], [RED, no_zone]]
 
 def exit_handler():
-    global do_exit
+    global do_exit, confirm
     time.sleep(3)
     do_exit = True
     confirm = True
@@ -137,7 +137,7 @@ while True:
     window = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("thing!")
 
-    while not exit:
+    while not do_exit:
         pygame.time.delay(1)
 
         # if close window, prompt for exit
