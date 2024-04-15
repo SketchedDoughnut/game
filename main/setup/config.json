@@ -13,5 +13,7 @@
 
     "quit_install": true,
 
-    "env": "run"
+    "env": "run",
+
+    "state": "update"
 }
