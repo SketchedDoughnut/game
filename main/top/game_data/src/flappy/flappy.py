@@ -1,16 +1,16 @@
 # imports
 # installs pygame because quirky (only will run once, otherwise requirements are satisfied)
-ypip = True
-npip = False
-import pip
-if ypip:
-    pip.main(['install', 'pygame'])
-    print('--------------------------')
+# ypip = True
+# npip = False
+# import pip
+# if ypip:
+#     pip.main(['install', 'pygame'])
+#     print('--------------------------')
 
-if npip:
-    pip.main(['uninstall', 'pygame'])
-    print('--------------------------')
-    exit()
+# if npip:
+#     pip.main(['uninstall', 'pygame'])
+#     print('--------------------------')
+#     exit()
 
 import pygame
 from pygame.locals import *

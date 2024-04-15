@@ -58,9 +58,9 @@ Goal:
 '''
 
 # pip import for libraries
-import pip
-pip.main(['install', 'pygame'])
-print('--------------------------')
+# import pip
+# pip.main(['install', 'pygame'])
+# print('--------------------------')
 
 # other imports
 import pygame

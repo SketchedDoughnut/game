@@ -1,9 +1,9 @@
 # imports
 # installs pygame because quirky (only will run once, otherwise requirements are satisfied)
-rpip = True
-if rpip:
-    import pip
-    pip.main(['install', 'pygame'])
+# rpip = True
+# if rpip:
+#     import pip
+#     pip.main(['install', 'pygame'])
 
 import pygame
 from pygame.locals import *

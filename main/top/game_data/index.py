@@ -13,6 +13,7 @@ import json
 
 wDir = os.path.dirname(os.path.abspath(__file__))
 path_list = []
+path_list.append([os.path.join(wDir, 'imports.py'), 'Import agent'])
 path_list.append([os.path.join(wDir, 'update.py'), 'Update agent'])
 path_list.append([os.path.join(wDir, 'src/flappy/flappy.py'), 'Flappy bird'])
 path_list.append([os.path.join(wDir, 'src/rhythm/rhythm.py'), 'Rhythm'])
@@ -26,10 +27,15 @@ WHITE = (255, 255, 255)
 WIDTH = 1920
 HEIGHT = 1080
 
+def imports():
+   print('----------------------------')
+   print(f'Running {path_list[0][1]}...')
+   os.system(f'python {path_list[0][0]}')
+
 def update():
    print('----------------------------')
-   print('Running update agent...')
-   os.system(f'python {path_list[0][0]}')
+   print(f'Running {path_list[1][1]}...')
+   os.system(f'python {path_list[1][0]}')
 
 class Format:
   def __init__(self):
@@ -72,7 +78,7 @@ class Format:
 
 
 
-
+imports()
 update()
 
 setup = Format()
@@ -163,9 +169,9 @@ while True:
           start_2 = False
 
   font = pygame.font.Font('freesansbold.ttf', round(36 * 1.5))
-  text1 = font.render(path_list[1][1], True, WHITE, None) # text, some bool(?), text color, bg color
+  text1 = font.render(path_list[2][1], True, WHITE, None) # text, some bool(?), text color, bg color
   text1_rect = text1.get_rect(center=(WIDTH / 2, HEIGHT / 4))
-  text2 = font.render(path_list[2][1], True, WHITE, None) # text, some bool(?), text color, bg color
+  text2 = font.render(path_list[3][1], True, WHITE, None) # text, some bool(?), text color, bg color
   text2_rect = text1.get_rect(center=(WIDTH / 2, (3 * (HEIGHT / 4))))
   window.blit(text1, text1_rect)
   window.blit(text2, text2_rect)
@@ -176,12 +182,12 @@ while True:
     if start_1:
       print('----------------------------')
       print('Redirecting into flappy bird...')
-      os.system(f'python {path_list[1][0]}')
+      os.system(f'python {path_list[2][0]}')
       setup_bool = False
     elif start_2:
       print('----------------------------')
       print('Redirecting into rhythm game...')
-      os.system(f'python {path_list[2][0]}')
+      os.system(f'python {path_list[3][0]}')
       setup_bool = False
 
 print('----------------------------')
