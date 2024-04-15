@@ -31,7 +31,7 @@ class Install:
 
         # for run
         self.loading_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        self.rules = open(f'{self.loading_wDir}/config.json', 'r')
+        self.rules = open(f'{self.loading_wDir}setup//config.json', 'r')
 
         # will contain everything from config.json, including environment information
         self.rules = json.load(self.rules)
