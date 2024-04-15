@@ -49,15 +49,16 @@ GREEN  = (0, 255, 0)
 text_msg = 'Checking for updates...'
 
 _cancel = False
-exit = False
+do_exit = False
 confirm = False
 
+top_wDir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'setup/data.json')
 ################################################################################################
 
 # runs as a thread, checks version while pygame cheeks drawing
 def check_version():
     # globals
-    global exit, text_msg
+    global do_exit, text_msg
 
     # release destination, working directory, loading version
     dest = 'https://api.github.com/repos/SketchedDoughnut/development/releases/latest' # link format: https://api.github.com/repos/{owner}/{repo}/releases/latest
@@ -82,17 +83,17 @@ def check_version():
             print('Name decrepancy: Prompting for update...')
             global WIDTH
             global HEIGHT
-            exit = True
+            do_exit = True
             confirm = False
             WIDTH = pygame.display.Info().current_w
             HEIGHT = pygame.display.Info().current_y
 
 
         elif str(version) == response.json()["name"]:
-            print('No decrepancy: Exiting...')
+            print('No decrepancy: exiting...')
             text_msg = 'No updates found.'
             time.sleep(0.5)
-            exit = True
+            do_exit = True
             confirm = True
 
 # the buttons it draws (yes or no)
@@ -102,9 +103,9 @@ def buttons(yes_list, no_list):
     return [[GREEN, yes_zone], [RED, no_zone]]
 
 def exit_handler():
-    global exit
+    global do_exit
     time.sleep(3)
-    exit = True
+    do_exit = True
     confirm = True
 ################################################################################################
 
@@ -131,7 +132,7 @@ exit_thread = threading.Thread(target=lambda:exit_handler())
 check.start()
 
 while True:
-    exit = False
+    do_exit = False
     confirm = False
     window = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("thing!")
