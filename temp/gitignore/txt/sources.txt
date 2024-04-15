@@ -1,9 +1,0 @@
-To create a shortcut on desktop:
-    - https://www.blog.pythonlibrary.org/2010/01/23/using-python-to-create-shortcuts/
-
-To download files from a github repository:
-    - https://github.com/fbunaren/GitHubFolderDownloader
-
-
-3D renderer system
-    - https://www.youtube.com/watch?v=1p6aPS_WavY

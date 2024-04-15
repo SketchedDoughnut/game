@@ -100,7 +100,7 @@ while True:
       color_list.append((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
     print('----------------------------')
     print('Colors:', color_list)
-    print('S to export colors (ignore/colors.json)')
+    print('S to export colors (game_data/ignore/colors.json)')
     print('R to refresh colors.')
 
     mouse_pressed = False
@@ -134,14 +134,14 @@ while True:
   
   if keys[K_s]:
      if s_pressed == False:
-      f = open(os.path.join(wDir, 'ignore/colors.json'), 'r')
+      f = open(os.path.join(wDir, 'game_data/ignore/colors.json'), 'r')
       color_load = list(json.load(f))
       f.close()
       color_load.append(color_list)
-      f = open(os.path.join(wDir, 'ignore/colors.json'), 'w')
+      f = open(os.path.join(wDir, 'game_data/ignore/colors.json'), 'w')
       json.dump(color_load, f)
       f.close()
-      print('- dumped colors into ignore/colors.json')
+      print('- dumped colors into game_data/ignore/colors.json')
       s_pressed = True
   elif not keys[K_s]:
      s_pressed = False

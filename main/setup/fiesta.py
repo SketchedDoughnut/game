@@ -27,10 +27,11 @@ class Install:
 
         # overruling dictionary for global access
         # - for codespace
-        self.rules = open('main/setup/config.json', 'r')
+        #self.rules = open('main/setup/config.json', 'r')
 
         # for run
-        #self.rules = open('config.json', 'r')
+        self.loading_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        self.rules = open(f'{self.loading_wDir}/config.json', 'r')
 
         # will contain everything from config.json, including environment information
         self.rules = json.load(self.rules)
@@ -63,8 +64,8 @@ class Install:
             # printing start statement, format, prompting
 
             # check the rule for shortcut, ignore everything below if so
-            main_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            data_wDir = os.path.dirname(os.path.abspath(__file__))
+            main_wDir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+            data_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
             f = open(f'{data_wDir}/data.json', 'r')
             data_dict = json.load(f)
             f.close()
@@ -339,7 +340,7 @@ Otherwise, enter 'y' to continue.""")
         print('Dumping delete path...')
         # for run
         if self.rules['env'] == 'run':
-            data = open('data.json', 'r')
+            data = open(f'{self.loading_wDir}/data.json', 'r')
         
         # - for codespace
         else:
@@ -426,9 +427,11 @@ Otherwise, enter 'y' to continue.""")
                         
                         path = os.path.join(desktop, "game_name.lnk") # CHANGE game_name TO NAME
                         self.abs_shortcut = path
-                        target = f"{self.install_path}/main/top/starter.exe" # CHANGE TO EXE
+                        #target = f"{self.install_path}/main/top/starter.exe" # CHANGE TO EXE
+                        target = f"{self.install_path}/main/setup/fiesta.exe" # CHANGE TO EXE
                         wDir = f"{self.install_path}/main/top"
-                        icon = f"{self.install_path}/main/top/starter.exe" # CHANGE TO EXE
+                        #icon = f"{self.install_path}/main/top/starter.exe" # CHANGE TO EXE
+                        icon = f"{self.install_path}/main/setup/fiesta.exe" # CHANGE TO EXE
 
                         # calls on function here with data from above
                         self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)
@@ -436,7 +439,7 @@ Otherwise, enter 'y' to continue.""")
 
                         # run
                         if self.rules['env'] == 'run':
-                            f = open('data.json', 'r')
+                            f = open(f'{self.loading_wDir}/data.json', 'r')
 
                         # - for codespace
                         else:
@@ -448,7 +451,7 @@ Otherwise, enter 'y' to continue.""")
 
                         # run
                         if self.rules['env'] == 'run':
-                            f = open('data.json', 'w')
+                            f = open(f'{self.loading_wDir}/data.json', 'w')
 
                         # - for codespace
                         else:
