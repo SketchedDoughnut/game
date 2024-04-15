@@ -1,0 +1,35 @@
+- consider:
+  - https://www.pygame.org/project/1316
+  - https://stackoverflow.com/questions/64788656/exe-file-made-with-pyinstaller-being-reported-as-a-virus-threat-by-windows-defen
+  
+- MAIN TODO
+  - make this stupid updating functionality work please
+    - add the update functionality to installer (god help me)
+
+
+    - FIND OUT HOW TO UNZIP FILES AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    - OH MY GOD I HAVE HAD ENLIGHTENMENT
+      - OK OK so when the installer installs the files, have it change data.json for
+      the INSTALLED installer to "shortcut: True, "update": False", "bounds": None
+      - change main shortcut into installer 
+        - when "shortcut": True, don't run installer as normal and redirect to starter.py (branches from there)
+ 
+      - WHEN AN UPDATE IS NEEDED, DO THE FOLLOWING:
+        - read an included file (update_info.txt?), see if the text "EMO" is in it
+          - if EMO:
+            - print('A complete re-install is urgently needed. Please re-install the installer.')
+
+        - if a normal game_data re-install:
+          - update.py does to data.json of setup: "shortcut": False, "update": True, "bounds": "game_data"
+          - exits, direct them to run the normal shortcut 
+          - installer is ran, creates a backup of game_data if wanted
+          - installer deletes and re-installs game_data
+          - changes data.json: "shortcut": True, "update": False, "bounds": None
+
+        if a full re-install (top and below):
+          - update.py does to data.json of setup: "shortcut": False, "update": True, "bounds": "full"
+          - exits, direct them to run the normal shortcut 
+          - installer is ran, creates a backup of all files (top and below) if wanted
+          - installer deletes and re-installs top
+          - changes data.json: "shortcut": True, "update": False, "bounds": None
+
