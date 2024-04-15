@@ -1,11 +1,23 @@
 # the coding gods have screwed me over and I need to redesign this program
 
+# import for initial
+import os
+
+# vars
+wDir = os.path.dirname(os.path.abspath(__file__))
+path_list = []
+path_list.append([os.path.join(wDir, 'imports.py'), 'Import agent'])
+path_list.append([os.path.join(wDir, 'update.py'), 'Update agent'])
+path_list.append([os.path.join(wDir, 'src/flappy/flappy.py'), 'Flappy bird'])
+path_list.append([os.path.join(wDir, 'src/rhythm/rhythm.py'), 'Rhythm'])
+
 # imports
 def imports():
-   print('----------------------------')
+   #print('----------------------------')
    print(f'Running {path_list[0][1]}...')
+   print('----------------------------')
    os.system(f'python {path_list[0][0]}')
-   
+
 imports()
 
 print('----------------------------')
@@ -13,15 +25,7 @@ import pygame
 from pygame.locals import *
 import timeit
 import time
-import os
 import json
-
-wDir = os.path.dirname(os.path.abspath(__file__))
-path_list = []
-path_list.append([os.path.join(wDir, 'imports.py'), 'Import agent'])
-path_list.append([os.path.join(wDir, 'update.py'), 'Update agent'])
-path_list.append([os.path.join(wDir, 'src/flappy/flappy.py'), 'Flappy bird'])
-path_list.append([os.path.join(wDir, 'src/rhythm/rhythm.py'), 'Rhythm'])
 
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
@@ -148,6 +152,7 @@ while True:
         color_list = []
         for i in setup.draw_queue:
           color_list.append((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
+          print('- refreshed colors')
         r_pressed = True
   elif not keys[K_r]:
      r_pressed = False
