@@ -50,9 +50,7 @@ text_msg = 'Checking for updates...'
 
 _cancel = False
 exit = False
-
-window = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("thing!")
+confirm = False
 
 ################################################################################################
 
@@ -82,12 +80,20 @@ def check_version():
         # seeing if there is a difference
         if str(version) != response.json()["name"]:
             print('Name decrepancy: Prompting for update...')
+            global WIDTH
+            global HEIGHT
+            exit = True
+            confirm = False
+            WIDTH = pygame.display.Info().current_w
+            HEIGHT = pygame.display.Info().current_y
+
 
         elif str(version) == response.json()["name"]:
             print('No decrepancy: Exiting...')
             text_msg = 'No updates found.'
             time.sleep(0.5)
             exit = True
+            confirm = True
 
 # the buttons it draws (yes or no)
 def buttons(yes_list, no_list):
@@ -99,6 +105,7 @@ def exit_handler():
     global exit
     time.sleep(3)
     exit = True
+    confirm = True
 ################################################################################################
 
 print('----------------------------')
@@ -123,29 +130,36 @@ exit_thread = threading.Thread(target=lambda:exit_handler())
 # start threads
 check.start()
 
-# main loops
-while not exit:
-    pygame.time.delay(1)
+while True:
+    exit = False
+    confirm = False
+    window = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("thing!")
 
-    # if close window, prompt for exit
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            text_msg = 'Exiting...'
-            exit_thread.start()
+    while not exit:
+        pygame.time.delay(1)
 
-    keys = pygame.key.get_pressed()
-    mouse_pos = pygame.mouse.get_pos()
+        # if close window, prompt for exit
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                text_msg = 'Exiting...'
+                exit_thread.start()
 
-    window.fill(BLACK)
-    font = pygame.font.Font('freesansbold.ttf', round(24))
-    text = font.render(text_msg, True, WHITE, None) # text, some bool(?), text color, bg color
-    text_rect = text.get_rect(center=(WIDTH / 2, HEIGHT / 2))
-    window.blit(text, text_rect)
+        keys = pygame.key.get_pressed()
+        mouse_pos = pygame.mouse.get_pos()
 
-    if _cancel:
-        yes = pygame.draw.rect(window, objects[0][0], (yes_zone))
-        no = pygame.draw.rect(window, objects[1][0], (no_zone))
+        window.fill(BLACK)
+        font = pygame.font.Font('freesansbold.ttf', round(24))
+        text = font.render(text_msg, True, WHITE, None) # text, some bool(?), text color, bg color
+        text_rect = text.get_rect(center=(WIDTH / 2, HEIGHT / 2))
+        window.blit(text, text_rect)
 
-    pygame.display.update()
-    
-pygame.quit()
+        if _cancel:
+            yes = pygame.draw.rect(window, objects[0][0], (yes_zone))
+            no = pygame.draw.rect(window, objects[1][0], (no_zone))
+
+        pygame.display.update()
+
+    pygame.quit()
+    if confirm:
+        break
