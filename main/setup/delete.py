@@ -8,15 +8,17 @@ import pip
 #################################################################
 # - for codespace
 #rules = open('main/setup/config.json', 'r')
+main_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+setup_wDir = os.path.join(main_wDir, 'setup')
 
 # for run 
-rules = open('config.json', 'r')
+rules = open(os.path.join(setup_wDir, 'config.json'), 'r')
 
 rules = json.load(rules)
 
 # for run
 if rules['env'] == 'run':
-    temp = open('data.json', 'r')
+    temp = open(os.path.join(setup_wDir, 'data.json'), 'r')
 
 # - for codespace
 else:
@@ -40,7 +42,7 @@ time.sleep(0.025)
 
 # for run
 if rules['env'] == 'run':
-    read_file = open('data.json', 'r')
+    read_file = open(f'{setup_wDir}/data.json', 'r')
 
 # - for codespace
 else:
@@ -98,7 +100,7 @@ time.sleep(0.025)
 
 # for run
 if rules['env'] == 'run':
-    write_file = open('data.json', 'w')
+    write_file = open(f'{setup_wDir}/data.json', 'w')
 
 # - for codespace
 else:
