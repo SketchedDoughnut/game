@@ -25,29 +25,41 @@ IDEAS
 - check installer version and warn if its out of date
 - add a choices function that gets choices with two buttons, you can input: x, y, width, height
 '''
+
+'''
+OUTLINE
+
+- setup
+- starts check for update as a thread
+- pygame puts text (from global variable text_msg)
+- if X on window, ctrl c, escape, ctrl w: run function as thread (w/ daemon) that loops, setting text_msg to: "Are you sure you want to cancel?", and set _cancel to true
+    - if no, set _cancel to False, and join the above function thread
+    - if yes, set exit to True, join all threads, have exit code outside of the loop
+'''
 # pygame
 pygame.init()
-# WIDTH = 1920
-# HEIGHT = 1080
-WIDTH = 500
-HEIGHT = 500
+
+WIDTH = 300
+HEIGHT = 300
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 GREEN  = (0, 255, 0)
+
 text_msg = 'Checking for updates...'
+
 _cancel = False
 exit = False
+
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("thing!")
 
+################################################################################################
 
-
+# runs as a thread, checks version while pygame cheeks drawing
 def check_version():
     # globals
-    global exit
-    global text_msg
-    text_msg = 'Checking for updates...'
+    global exit, text_msg
 
     # release destination, working directory, loading version
     dest = 'https://api.github.com/repos/SketchedDoughnut/development/releases/latest' # link format: https://api.github.com/repos/{owner}/{repo}/releases/latest
@@ -74,67 +86,66 @@ def check_version():
         elif str(version) == response.json()["name"]:
             print('No decrepancy: Exiting...')
             text_msg = 'No updates found.'
-            time.sleep(2)
-            #exit = True
+            time.sleep(3)
+            exit = True
 
+# the buttons it draws (yes or no)
 def buttons(yes_list, no_list):
     yes_zone = pygame.Rect(yes_list[0], yes_list[1], yes_list[2], yes_list[3])
     no_zone = pygame.Rect(no_list[0], no_list[1], no_list[2], no_list[3])
     return [[GREEN, yes_zone], [RED, no_zone]]
 
-##########################################################################################
+def exit_handler():
+    global exit
+    time.sleep(3)
+    exit = True
+################################################################################################
 
 print('----------------------------')
 print('NOTE: THIS UPDATE AGENT IS CURRENTLY DEPRECIATED. WHY? I AM LAZY.')
+
+# button data
+width = (250)
+height = (HEIGHT / 15)
+x = (WIDTH / 2) - (width / 2)
+y = 2 * (HEIGHT / 4)
+yes = [x, y, width, height] # green
+y = 3 * (HEIGHT / 4)
+no = [x, y, width, height] # red
+objects = buttons(yes, no)
+yes_zone = objects[0][1]
+no_zone = objects[1][1]
+
+# thread objects
 check = threading.Thread(target=lambda:check_version(), daemon=True)
+exit_thread = threading.Thread(target=lambda:exit_handler())
+
+# start threads
 check.start()
 
+# main loops
 while not exit:
     pygame.time.delay(1)
 
+    # if close window, prompt for exit
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            exit = True
+            text_msg = 'Exiting...'
+            exit_thread.start()
 
     keys = pygame.key.get_pressed()
     mouse_pos = pygame.mouse.get_pos()
 
-    # exits if
-    # if keys[K_LCTRL]:
-    #         if keys[K_c]:
-    #             cancel(0)
-    #         elif keys[K_w]:
-    #             cancel(0)
-    # if keys[K_ESCAPE]:
-    #     cancel(0)
-
     window.fill(BLACK)
     font = pygame.font.Font('freesansbold.ttf', round(24))
     text = font.render(text_msg, True, WHITE, None) # text, some bool(?), text color, bg color
-    text_rect = text.get_rect(center=(WIDTH / 2, HEIGHT / 4))
+    text_rect = text.get_rect(center=(WIDTH / 2, HEIGHT / 2))
     window.blit(text, text_rect)
 
     if _cancel:
-        width = (250)
-        height = (HEIGHT / 15)
-        x = (WIDTH / 2) - (width / 2)
-        y = 2 * (HEIGHT / 4)
-        yes = [x, y, width, height] # green
-        y = 3 * (HEIGHT / 4)
-        no = [x, y, width, height] # red
-        objects = buttons(yes, no)
-        yes_zone = objects[0][1]
-        no_zone = objects[1][1]
-        pygame.draw.rect(window, objects[0][0], (yes_zone))
-        pygame.draw.rect(window, objects[1][0], (no_zone))
-
-        # if yes_zone.collidepoint(mouse_pos):
-        #     if pygame.mouse.get_pressed()[0]:
-        #         text_msg = 'Exiting...'
-        #         idk = threading.Thread(target=lambda:cancel(1), daemon=True)
-        #         idk.start()
-        # if no_zone.collidepoint(mouse_pos):
-        #     if pygame.mouse.get_pressed()[0]: 
-        #         cancel(2)
+        yes = pygame.draw.rect(window, objects[0][0], (yes_zone))
+        no = pygame.draw.rect(window, objects[1][0], (no_zone))
 
     pygame.display.update()
+    
+pygame.quit()
