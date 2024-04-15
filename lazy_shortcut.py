@@ -1,4 +1,9 @@
 import os
 wDir = os.path.dirname(os.path.abspath(__file__))
-path = os.path.join(wDir, 'main/top/starter.py')
+
+# py path
+#path = os.path.join(wDir, 'main/top/starter.py')
+
+# exe path
+path = os.path.join(wDir, 'main/top/starter.exe')
 os.system(f'python {path}')
