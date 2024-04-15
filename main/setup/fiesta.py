@@ -35,7 +35,7 @@ class Install:
         self.setup_wDir = os.path.join(self.main_wDir, 'setup')
         self.top_wDir = os.path.join(self.main_wDir, 'top')
 
-        self.rules = open(f'{self.setup_wDir}/config.json', 'r')
+        self.rules = open(f'{self.main_wDir}/config.json', 'r')
 
         # will contain everything from config.json, including environment information
         self.rules = json.load(self.rules)
@@ -68,7 +68,7 @@ class Install:
             # printing start statement, format, prompting
 
             # check the rule for shortcut, ignore everything below if so
-            f = open(f'{self.setup_wDir}/data.json', 'r')
+            f = open(f'{self.main_wDir}/data.json', 'r')
             data_dict = json.load(f)
             f.close()
             if data_dict['shortcut'] == True:
@@ -95,7 +95,7 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location.""") # Enter nothi
 
                         # for run
                         if self.rules['env'] == 'run':
-                            os.system(f'python {self.setup_wDir}/delete.py')
+                            os.system(f'python {self.main_wDir}/delete.py')
 
                         # - for codespace
                         else:
@@ -342,7 +342,7 @@ Otherwise, enter 'y' to continue.""")
         print('Dumping delete path...')
         # for run
         if self.rules['env'] == 'run':
-            data = open(f'{self.setup_wDir}/data.json', 'r')
+            data = open(f'{self.main_wDir}/data.json', 'r')
         
         # - for codespace
         else:
@@ -354,7 +354,7 @@ Otherwise, enter 'y' to continue.""")
 
         # for run
         if self.rules['env'] == 'run':
-            data = open(f'{self.setup_wDir}/data.json', 'w')
+            data = open(f'{self.main_wDir}/data.json', 'w')
 
         # - for codespace
         else:
