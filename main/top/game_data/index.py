@@ -6,7 +6,7 @@ import os
 # vars
 wDir = os.path.dirname(os.path.abspath(__file__))
 path_list = []
-path_list.append([os.path.join(wDir, 'imports.py'), 'Import agent'])
+path_list.append([os.path.join(wDir, 'imports.py'), 'Imports agent'])
 path_list.append([os.path.join(wDir, 'update.py'), 'Update agent'])
 path_list.append([os.path.join(wDir, 'src/flappy/flappy.py'), 'Flappy bird'])
 path_list.append([os.path.join(wDir, 'src/rhythm/rhythm.py'), 'Rhythm'])
