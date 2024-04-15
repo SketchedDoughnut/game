@@ -152,7 +152,7 @@ while True:
         color_list = []
         for i in setup.draw_queue:
           color_list.append((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
-          print('- refreshed colors')
+        print('- refreshed colors')
         r_pressed = True
   elif not keys[K_r]:
      r_pressed = False
