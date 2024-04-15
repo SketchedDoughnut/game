@@ -86,7 +86,7 @@ def check_version():
         elif str(version) == response.json()["name"]:
             print('No decrepancy: Exiting...')
             text_msg = 'No updates found.'
-            time.sleep(1)
+            time.sleep(0.5)
             exit = True
 
 # the buttons it draws (yes or no)
