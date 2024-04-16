@@ -40,7 +40,7 @@ class Install:
             self.main_wDir = temp_main_wDir
         
         elif not in_folder:
-            print('It appears this file is not within a setup folder. Defauting to those paths.')
+            print('It appears this file is not within a setup folder. Defaulting to those paths.')
             self.main_wDir = temp_main_wDir
             self.setup_wDir = self.main_wDir
 
