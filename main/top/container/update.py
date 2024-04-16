@@ -53,6 +53,7 @@ do_exit = False
 confirm = False
 
 top_wDir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'setup/data.json')
+wDir = os.path.dirname(os.path.abspath(__file__))
 ################################################################################################
 
 # runs as a thread, checks version while pygame cheeks drawing
@@ -62,7 +63,6 @@ def check_version():
 
     # release destination, working directory, loading version
     dest = 'https://api.github.com/repos/SketchedDoughnut/development/releases/latest' # link format: https://api.github.com/repos/{owner}/{repo}/releases/latest
-    wDir = os.path.dirname(os.path.abspath(__file__))
     response = requests.get(dest)
     # print(response.json()["name"])
 

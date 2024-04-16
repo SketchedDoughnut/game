@@ -81,13 +81,61 @@ class Install:
             f = open(f'{self.setup_wDir}/data.json', 'r')
             data_dict = json.load(f)
             f.close()
-            if data_dict['shortcut'] == True:
-                print('---------------')
-                print('Installer redirecting to starter file...')
-                self.top_wDir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-                self.top_wDir = os.path.join(self.top_wDir, 'top')
-                os.system(f'python {self.top_wDir}/starter.py')
-                exit()
+            if data_dict['shortcut']:
+
+
+
+
+
+
+
+
+
+                if data_dict['update']:
+                    print('---------------')
+                    print('Installer is in update mode.')
+                    if data_dict['bounds'] == 'game_data':
+                        print('Update: installing game_data')
+                        print('Update: Cleaning tmp...')
+                        try:
+                            shutil.rmtree(f'{self.setup_wDir}/tmp')
+                        except:
+                            print('Update: No prior tmp')
+                        print('Update: Making tmp...')
+                        os.mkdir(f'{self.setup_wDir}/tmp')
+                        print('Update: Downloading .zip...')
+                        import update.download as update_agent
+                        repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+                        zip_download_path = f"{self.setup_wDir}/tmp/latest_release.zip"  # Change the path if needed
+                        update_agent.download_latest_release(repo_url, zip_download_path)
+                        ext_download_path = f"{self.setup_wDir}/tmp"
+                        print('Update: Extracting files...')
+
+                        # # https://www.geeksforgeeks.org/unzipping-files-in-python/
+                        import update.extract as extract_agent
+                        extract_agent.extract(zip_download_path, ext_download_path)
+                        print('Update: Files extracted')
+                        exit()
+
+
+
+
+
+
+
+
+
+
+
+
+
+                else:
+                    print('---------------')
+                    print('Installer redirecting to starter file...')
+                    self.top_wDir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+                    self.top_wDir = os.path.join(self.top_wDir, 'top')
+                    os.system(f'python {self.top_wDir}/starter.py')
+                    exit()
 
             print('---------------')
             print("""
