@@ -18,22 +18,31 @@ import urllib.request
 }
 '''
 ########################################################################
-
+in_folder = False
 
 class Install:
 
     # init
     def __init__(self, mode=0):
-
-        # overruling dictionary for global access
-        # - for codespace
-        #self.rules = open('main/setup/config.json', 'r')
+        global in_folder
 
         # for run
         # setting up all directories
-        self.main_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        self.setup_wDir = os.path.join(self.main_wDir, 'setup')
-        self.top_wDir = os.path.join(self.main_wDir, 'top')
+        temp_main_wDir = os.path.dirname(os.path.abspath(__file__))
+        temp_setup_wDir = os.path.join(temp_main_wDir, 'setup')
+        if os.path.exists(temp_setup_wDir):
+            in_folder = True
+
+        if in_folder:
+            print('It appears this file is in a setup folder. Defaulting to those paths.')
+            self.setup_wDir = temp_setup_wDir
+            self.main_wDir = temp_main_wDir
+        
+        elif not in_folder:
+            print('It appears this file is not within a setup folder. Defauting to those paths.')
+            self.main_wDir = temp_main_wDir
+            self.setup_wDir = self.main_wDir
+
 
         self.rules = open(f'{self.main_wDir}/config.json', 'r')
 

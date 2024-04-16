@@ -4,25 +4,33 @@ import json
 import time
 import pip
 
-
+in_folder = False
 #################################################################
-# - for codespace
-#rules = open('main/setup/config.json', 'r')
-main_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-setup_wDir = os.path.join(main_wDir, 'setup')
+
+temp_main_wDir = os.path.dirname(os.path.abspath(__file__))
+temp_setup_wDir = os.path.join(temp_main_wDir, 'setup')
+if os.path.exists(temp_setup_wDir):
+    in_folder = True
+
+if in_folder:
+    print('It appears this file is in a setup folder. Defaulting to those paths.')
+    setup_wDir = temp_setup_wDir
+    main_wDir = temp_main_wDir
+
+elif not in_folder:
+    print('It appears this file is not within a setup folder. Defauting to those paths.')
+    main_wDir = temp_main_wDir
+    setup_wDir = main_wDir
+
 
 # for run 
-rules = open(os.path.join(setup_wDir, 'config.json'), 'r')
+rules = open(os.path.join(main_wDir, 'config.json'), 'r')
 
 rules = json.load(rules)
 
 # for run
 if rules['env'] == 'run':
     temp = open(os.path.join(setup_wDir, 'data.json'), 'r')
-
-# - for codespace
-else:
-    temp = open('main/setup/data.json', 'r')
 
 delete_path = json.load(temp)
 delete_path = delete_path["remove_path"]
@@ -43,10 +51,6 @@ time.sleep(0.025)
 # for run
 if rules['env'] == 'run':
     read_file = open(f'{setup_wDir}/data.json', 'r')
-
-# - for codespace
-else:
-    read_file = open('main/setup/data.json', 'r')
 
 path = json.load(read_file)
 del_path = path["remove_path"]
@@ -84,27 +88,12 @@ try:
 except Exception as e:
     print(f'Delete: Shortcut error: {e}')
 
-# print('Delete: Deleting pygame...')
-# time.sleep(0.025)
-
-# try:
-#     pip.main('uninstall', 'pygame')
-#     print('Delete: pygame gone.')
-#     time.sleep(0.025)
-
-# except Exception as e:
-#     print(f'Delete: pygame error: {e}')
-
 print('Delete: Clearing data...')
 time.sleep(0.025)
 
 # for run
 if rules['env'] == 'run':
     write_file = open(f'{setup_wDir}/data.json', 'w')
-
-# - for codespace
-else:
-    write_file = open('main/setup/data.json', 'w')
 
 path["remove_path"] = ""
 path["abs_shortcut"] = ""
