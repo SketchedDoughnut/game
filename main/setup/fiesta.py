@@ -527,7 +527,7 @@ Otherwise, enter 'y' to continue.""")
     # quits install file (to make sure it goes right)
     def quit_install(self):
         print('---------------')
-        input(f'Install complete! Time: {round(self.end - self.start, 2)} \nEnter anything to exit: ')
+        input(f'Install complete! Time: {round(self.end - self.start, 2)}s \nEnter anything to exit: ')
         #print('Install complete. Exit in:')
         #for i in range(3, 0, -1):
         #    print(f'{i}')
