@@ -121,7 +121,7 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location.""") # Enter nothi
                         for i in range(15, 0, -1):
                             print(i)
                             time.sleep(1)
-                            exit()
+                        exit()
                 
                     # cancelling uninstall if wrong input
                     else:
