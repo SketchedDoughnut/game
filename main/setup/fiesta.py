@@ -192,10 +192,9 @@ class Install:
                         exit()
                 
 
-                elif data_dict['update']:
-                    print('---------------')
-                    print('Installer is in full mode.')
                     if data_dict['bounds'] == 'top':
+                        print('---------------')
+                        print('Installer is in full mode.')
 
                         '''
                         flow for game data re-install
