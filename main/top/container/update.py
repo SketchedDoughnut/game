@@ -109,6 +109,17 @@ def exit_handler():
     time.sleep(3)
     do_exit = True
     confirm = True
+
+def yes_confirm():
+    # objective is to reach back up to data.json and change update and bounds
+    pass
+
+def no_confirm():
+    global _cancel, do_exit, confirm
+    cancel = False
+    time.sleep(2)
+    do_exit = True
+    confirm = True
 ################################################################################################
 
 print('----------------------------')
@@ -160,6 +171,22 @@ while True:
         if _cancel:
             yes = pygame.draw.rect(window, objects[0][0], (yes_zone))
             no = pygame.draw.rect(window, objects[1][0], (no_zone))
+            if yes.collidepoint(mouse_pos):
+                if pygame.mouse.get_pressed()[0]:
+                    try:
+                        run_no.join()
+                    except:
+                        pass
+                    run_yes = threading.Thread(target=lambda:yes_confirm(), daemon=True)
+                    run_yes.start()
+            if no.collidepoint(mouse_pos):
+                if pygame.mouse.get_pressed()[0]:
+                    try:
+                        run_yes.join()
+                    except:
+                        pass
+                    run_no = threading.Thread(target=lambda:no_confirm(), daemon=True)
+                    run_no.start()
 
         pygame.display.update()
 
