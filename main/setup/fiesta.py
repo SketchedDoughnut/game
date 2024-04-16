@@ -105,6 +105,9 @@ class Install:
                             - downloads .zip
                             - extracts all of .zip
                             - copies "game_data" from the extracted version into proper directory
+                            - gets rid of "tmp"
+                            - resets "data.json"
+                            - done!
                         '''
                         
                         print('Update: installing game_data')
