@@ -2,6 +2,7 @@
 import os
 import time
 import shutil
+import timeit
 
 # downloader imports(?)
 import json
@@ -116,11 +117,13 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location.""") # Enter nothi
 
                         # final, then finishes
                         print('---------------')
-                        print('Delete done. This installer will exit in 30 seconds; afterwards, delete the folder it is in. Thank you for using this installer! :3')
-                        time.sleep(15)
-                        for i in range(15, 0, -1):
-                            print(i)
-                            time.sleep(1)
+                        # print('Delete done. This installer will exit in 30 seconds; afterwards, delete the folder it is in. Thank you for using this installer! :3')
+                        # time.sleep(15)
+                        # for i in range(15, 0, -1):
+                        #     print(i)
+                        #     time.sleep(1)
+                        print('Delete done. You can now get rid of any installer files. Thank you for using this installer! :3')
+                        input('Enter anything to exit: ')
                         exit()
                 
                     # cancelling uninstall if wrong input
@@ -413,6 +416,7 @@ Otherwise, enter 'y' to continue.""")
 
             # downloading
             try:
+                self.start = timeit.default_timer
                 downloader.download(self.install_path)
 
                 # writing run path to text file (not used, not up to date)
@@ -492,7 +496,8 @@ Otherwise, enter 'y' to continue.""")
             #print('Consider re-entering branch name / github url')
             #print('Cleaning up then exiting...')
             #self.pre_clean('error')
-            #exit()         
+            #exit()    
+        self.end = timeit.default_timer()     
 
 
     # doing file cleanup
@@ -522,7 +527,7 @@ Otherwise, enter 'y' to continue.""")
     # quits install file (to make sure it goes right)
     def quit_install(self):
         print('---------------')
-        input('Install complete! Enter anything to exit: ')
+        input(f'Install complete! Time: {self.end - self.start} \nEnter anything to exit: ')
         #print('Install complete. Exit in:')
         #for i in range(3, 0, -1):
         #    print(f'{i}')
