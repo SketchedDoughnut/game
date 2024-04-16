@@ -132,7 +132,8 @@ class Install:
                         import update.extract as extract_agent
                         extract_agent.extract(zip_download_path, ext_download_path)
 
-                        copy_source = f"{ext_download_path}/SketchedDoughnut-development-ca22599/main/top/container/game_data"
+                        release_version = ((requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest").json()['body']))
+                        copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/main/top/container/game_data"
                         copy_location = f'{self.main_wDir}/top/container/game_data'
                         print(f'Update: Copying files to {copy_location}')
 
