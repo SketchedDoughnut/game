@@ -82,6 +82,8 @@ class Install:
             f.close()
             if data_dict['shortcut'] == True:
                 print('Installer redirecting to starter file...')
+                self.top_wDir = os.path.dirname(self.main_wDir)
+                self.top_wDir = os.path.join(self.main_wDir, 'top')
                 os.system(f'python {self.top_wDir}/starter.py')
                 exit()
 
@@ -282,7 +284,7 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location.""") # Enter nothi
                      Before we proceed, you need to have an installation of python installed.
               If you already have one, type "y" to proceed. If you don't, do the following instructions:
               - go to Microsoft Store
-              - search "Python 3.9"
+              - search "Python 3.11"
               - Install
               - You're done!
                         Once done doing these instructions, type 'y' (anything else to cancel).
