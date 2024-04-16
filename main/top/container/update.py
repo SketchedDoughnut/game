@@ -88,6 +88,7 @@ def check_version():
             WIDTH = pygame.display.Info().current_w
             HEIGHT = pygame.display.Info().current_y
             text_msg = 'Do you want to update?'
+            _cancel = True
 
 
         elif str(version) == response.json()["name"]:
