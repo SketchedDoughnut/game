@@ -192,6 +192,7 @@ class Install:
                         exit()
                 
 
+
                     if data_dict['bounds'] == 'top':
                         print('---------------')
                         print('Installer is in full mode.')
@@ -255,7 +256,7 @@ class Install:
                         extract_agent.extract(zip_download_path, ext_download_path)
 
                         release_version = ((requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest").json()['body']))
-                        copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/main/top/container/game_data"
+                        copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/main/top"
                         copy_location = f'{self.main_wDir}/top'
                         print(f'Update: Copying files to {copy_location}')
 
