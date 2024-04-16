@@ -160,6 +160,7 @@ class Install:
                         import update.extract as extract_agent
                         extract_agent.extract(zip_download_path, ext_download_path)
 
+                        print('Update: Getting commit label...')
                         release_version = ((requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest").json()['body']))
                         copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/main/top/container/game_data"
                         copy_location = f'{self.main_wDir}/top/container/game_data'
@@ -191,6 +192,14 @@ class Install:
                         input('Enter anything to exit: ')
                         exit()
                 
+
+
+
+
+
+
+
+
 
 
                     if data_dict['bounds'] == 'top':
@@ -255,6 +264,7 @@ class Install:
                         import update.extract as extract_agent
                         extract_agent.extract(zip_download_path, ext_download_path)
 
+                        print('Update: Getting commit label...')
                         release_version = ((requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest").json()['body']))
                         copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/main/top"
                         copy_location = f'{self.main_wDir}/top'
