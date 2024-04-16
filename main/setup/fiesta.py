@@ -91,6 +91,12 @@ class Install:
 
 
 
+
+
+
+
+
+
                 if data_dict['update']:
                     print('---------------')
                     print('Installer is in update mode.')
@@ -111,6 +117,25 @@ class Install:
                         '''
                         
                         print('Update: installing game_data')
+                        print('If you want to backup your game_data, copy the directory now.')
+                        print(f'The directory is: {self.main_wDir}/top/container/game_data')
+                        if input('Continue? (y/n) ').lower() == 'n':
+                            print('---------------')
+                            print('Cancelling...')
+                            print('Update: Resetting data.json...')
+                            f = open(f'{self.setup_wDir}/data.json', 'r')
+                            td = json.load(f)
+                            f.close()
+                            td['bounds'] = 'x'
+                            td['update'] = False
+                            td['shortcut'] = True
+                            f = open(f'{self.setup_wDir}/data.json', 'w')
+                            json.dump(td, f)
+                            f.close()
+                            input('Enter anything to exit: ')
+                            exit()
+
+                        print('---------------')
                         print('Update: Cleaning tmp...')
                         try:
                             shutil.rmtree(f'{self.setup_wDir}/tmp')
@@ -161,8 +186,12 @@ class Install:
                         json.dump(td, f)
                         f.close()
                         
-                        print('Update: Game data update complete')
+                        print('Update: Game data update complete!')
+                        print('---------------')
+                        input('Enter anything to exit: ')
                         exit()
+
+
 
 
 
