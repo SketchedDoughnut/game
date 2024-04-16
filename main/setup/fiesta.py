@@ -115,8 +115,15 @@ class Install:
                         import update.extract as extract_agent
                         extract_agent.extract(zip_download_path, ext_download_path)
 
-                        copy_source = f"{ext_download_path}/SketchedDoughnut-development-06b8c58/main/top/container/game_data"
-                        copy_location = f'{self.setup_wDir}/idk/game_data'
+                        print('Update: deleting previous game_data installation...')
+                        try:
+                            shutil.rmtree(f"{self.main_wDir}/top/container/game_data")
+                        except:
+                            print('Update: No prior game_data')
+
+
+                        copy_source = f"{ext_download_path}/SketchedDoughnut-development-ca22599/main/top/container/game_data"
+                        copy_location = f'{self.main_wDir}/top/container'
                         print(f'Update: Copying files to {copy_location}')
 
                         # https://pynative.com/python-copy-files-and-directories/
