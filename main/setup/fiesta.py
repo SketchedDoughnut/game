@@ -152,7 +152,7 @@ class Install:
                         f.close()
                         td['bounds'] = 'x'
                         td['update'] = False
-                        td['shorcut'] = True
+                        td['shortcut'] = True
                         f = open(f'{self.setup_wDir}/data.json', 'w')
                         json.dump(td, f)
                         f.close()
