@@ -79,7 +79,7 @@ def check_version():
         f.close()
 
         # seeing if there is a difference
-        if str(version) != response.json()["name"]:
+        if str(version) != response.json()["body"]:
             print('Name decrepancy: Prompting for update...')
             global WIDTH
             global HEIGHT
@@ -89,7 +89,7 @@ def check_version():
             HEIGHT = pygame.display.Info().current_y
 
 
-        elif str(version) == response.json()["name"]:
+        elif str(version) == response.json()["body"]:
             print('No decrepancy: exiting...')
             text_msg = 'No updates found.'
             time.sleep(0.5)

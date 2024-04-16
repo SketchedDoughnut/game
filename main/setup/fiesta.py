@@ -278,7 +278,8 @@ class Install:
                         release_version = ((requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest").json()['body']))
                         copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/main/top"
                         copy_location = f'{self.main_wDir}/top'
-                        print(f'Update: Copying files to {copy_location}')
+                        print(f'Update: Copying files to {copy_location}...')
+                        #print(f'Update: Copying files...')
 
                         # https://pynative.com/python-copy-files-and-directories/
                         import update.copy as copy_agent
@@ -301,7 +302,8 @@ class Install:
                         json.dump(td, f)
                         f.close()
 
-                        print('Update: Reaching to version.json, dumping version...')
+                        print('Update: Reaching to version.json...')
+                        print('Update: Dumping version...')
                         f = open(f'{self.main_wDir}/top/container/version.json', 'w')
                         json.dump(release_version, f)
                         f.close()

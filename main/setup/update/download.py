@@ -24,6 +24,7 @@ def download_file(url, download_path):
         f.write(response.content)
     #print(f"Downloaded the latest release to {download_path}")
     print(f"Update: Downloaded the latest release to {download_path}")
+    #print(f'Update: Downloaded the latest release')
 
 # if __name__ == "__main__":
     # repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
