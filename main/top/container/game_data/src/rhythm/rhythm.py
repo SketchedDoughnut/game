@@ -497,8 +497,8 @@ notes = Notes()
 points = Points()
 
 # start music thread with chosen profile
-music_thread = threading.Thread(target=lambda:notes.profiles.Whats_the_Rush(), daemon=True)
-#music_thread = threading.Thread(target=lambda:notes.profiles.Stayed_Gone(), daemon=True)
+#music_thread = threading.Thread(target=lambda:notes.profiles.Whats_the_Rush(), daemon=True)
+music_thread = threading.Thread(target=lambda:notes.profiles.Stayed_Gone(), daemon=True)
 music_thread.start()
 
 # set up clock (not used)
