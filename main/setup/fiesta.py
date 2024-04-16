@@ -105,6 +105,7 @@ class Install:
                 if data_dict['update']:
                     print('---------------')
                     print('Installer is in update mode.')
+
                     if data_dict['bounds'] == 'game_data':
 
                         '''

@@ -59,7 +59,7 @@ wDir = os.path.dirname(os.path.abspath(__file__))
 # runs as a thread, checks version while pygame cheeks drawing
 def check_version():
     # globals
-    global do_exit, text_msg, confirm
+    global do_exit, text_msg, confirm, _cancel
 
     # release destination, working directory, loading version
     dest = 'https://api.github.com/repos/SketchedDoughnut/development/releases/latest' # link format: https://api.github.com/repos/{owner}/{repo}/releases/latest
@@ -79,7 +79,7 @@ def check_version():
         f.close()
 
         # seeing if there is a difference
-        if str(version) != response.json()["body"]:
+        if str(version) != response.json()["name"]:
             print('Name decrepancy: Prompting for update...')
             global WIDTH
             global HEIGHT
@@ -87,9 +87,10 @@ def check_version():
             confirm = False
             WIDTH = pygame.display.Info().current_w
             HEIGHT = pygame.display.Info().current_y
+            text_msg = 'Do you want to update?'
 
 
-        elif str(version) == response.json()["body"]:
+        elif str(version) == response.json()["name"]:
             print('No decrepancy: exiting...')
             text_msg = 'No updates found.'
             time.sleep(0.5)
