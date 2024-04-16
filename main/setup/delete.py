@@ -13,11 +13,13 @@ if os.path.exists(temp_setup_wDir):
     in_folder = True
 
 if in_folder:
+    print('---------------')
     print('It appears this file is in a setup folder. Defaulting to those paths.')
     setup_wDir = temp_setup_wDir
     main_wDir = temp_main_wDir
 
 elif not in_folder:
+    print('---------------')
     print('It appears this file is not within a setup folder. Defauting to those paths.')
     main_wDir = temp_main_wDir
     setup_wDir = main_wDir

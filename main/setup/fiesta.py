@@ -28,7 +28,7 @@ class Install:
 
         # for run
         # setting up all directories
-        temp_main_wDir = os.path.dirname(os.path.abspath(__file__))
+        temp_main_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         temp_setup_wDir = os.path.join(temp_main_wDir, 'setup')
         if os.path.exists(temp_setup_wDir):
             in_folder = True
@@ -85,6 +85,7 @@ class Install:
                 os.system(f'python {self.top_wDir}/starter.py')
                 exit()
 
+            print('---------------')
             print("""
             Welcome to the open-source installer created by Sketched Doughnut! 
                 Code is written by Sketched Doughnut with snippets from others.
