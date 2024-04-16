@@ -20,7 +20,7 @@ if in_folder:
 
 elif not in_folder:
     print('---------------')
-    print('It appears this file is not within a setup folder. Defauting to those paths.')
+    print('It appears this file is not within a setup folder. Defaulting to those paths.')
     main_wDir = temp_main_wDir
     setup_wDir = main_wDir
 
