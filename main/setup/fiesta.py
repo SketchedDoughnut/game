@@ -95,6 +95,18 @@ class Install:
                     print('---------------')
                     print('Installer is in update mode.')
                     if data_dict['bounds'] == 'game_data':
+
+                        '''
+                        flow for game data re-install
+
+                            - deletes previous "tmp" folder in setup
+                            - creates new "tmp folder"
+                            - deletes previous "game_data"
+                            - downloads .zip
+                            - extracts all of .zip
+                            - copies "game_data" from the extracted version into proper directory
+                        '''
+                        
                         print('Update: installing game_data')
                         print('Update: Cleaning tmp...')
                         try:
@@ -103,6 +115,11 @@ class Install:
                             print('Update: No prior tmp')
                         print('Update: Making tmp...')
                         os.mkdir(f'{self.setup_wDir}/tmp')
+                        print('Update: deleting previous game_data...')
+                        try:
+                            shutil.rmtree(f"{self.main_wDir}/top/container/game_data")
+                        except:
+                            print('Update: No prior game_data')
                         print('Update: Downloading .zip...')
                         import update.download as update_agent
                         repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
@@ -115,20 +132,32 @@ class Install:
                         import update.extract as extract_agent
                         extract_agent.extract(zip_download_path, ext_download_path)
 
-                        print('Update: deleting previous game_data installation...')
-                        try:
-                            shutil.rmtree(f"{self.main_wDir}/top/container/game_data")
-                        except:
-                            print('Update: No prior game_data')
-
-
                         copy_source = f"{ext_download_path}/SketchedDoughnut-development-ca22599/main/top/container/game_data"
-                        copy_location = f'{self.main_wDir}/top/container'
+                        copy_location = f'{self.main_wDir}/top/container/game_data'
                         print(f'Update: Copying files to {copy_location}')
 
                         # https://pynative.com/python-copy-files-and-directories/
                         import update.copy as copy_agent
                         copy_agent.copy(copy_source, copy_location)
+
+                        print('Update: Cleaning up tmp...')
+                        try:
+                            shutil.rmtree(f'{self.setup_wDir}/tmp')
+                        except:
+                            print('Update: No tmp')
+                        
+                        print('Update: Resetting data.json...')
+                        f = open(f'{self.setup_wDir}/data.json', 'r')
+                        td = json.load(f)
+                        f.close()
+                        td['bounds'] = 'x'
+                        td['update'] = False
+                        td['shorcut'] = True
+                        f = open(f'{self.setup_wDir}/data.json', 'w')
+                        json.dump(td, f)
+                        f.close()
+                        
+                        print('Update: Game data update complete')
                         exit()
 
 
