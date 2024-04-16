@@ -111,10 +111,17 @@ class Install:
                         ext_download_path = f"{self.setup_wDir}/tmp"
                         print('Update: Extracting files...')
 
-                        # # https://www.geeksforgeeks.org/unzipping-files-in-python/
+                        # https://www.geeksforgeeks.org/unzipping-files-in-python/
                         import update.extract as extract_agent
                         extract_agent.extract(zip_download_path, ext_download_path)
-                        print('Update: Files extracted')
+
+                        copy_source = f"{ext_download_path}/SketchedDoughnut-development-06b8c58/main/top/container/game_data"
+                        copy_location = f'{self.setup_wDir}/idk/game_data'
+                        print(f'Update: Copying files to {copy_location}')
+
+                        # https://pynative.com/python-copy-files-and-directories/
+                        import update.copy as copy_agent
+                        copy_agent.copy(copy_source, copy_location)
                         exit()
 
 
