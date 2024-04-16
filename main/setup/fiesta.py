@@ -416,7 +416,7 @@ Otherwise, enter 'y' to continue.""")
 
             # downloading
             try:
-                self.start = timeit.default_timer
+                self.start = timeit.default_timer()
                 downloader.download(self.install_path)
 
                 # writing run path to text file (not used, not up to date)
@@ -527,7 +527,7 @@ Otherwise, enter 'y' to continue.""")
     # quits install file (to make sure it goes right)
     def quit_install(self):
         print('---------------')
-        input(f'Install complete! Time: {self.end - self.start} \nEnter anything to exit: ')
+        input(f'Install complete! Time: {round(self.end - self.start, 2)} \nEnter anything to exit: ')
         #print('Install complete. Exit in:')
         #for i in range(3, 0, -1):
         #    print(f'{i}')
