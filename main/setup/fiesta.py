@@ -190,6 +190,101 @@ class Install:
                         print('---------------')
                         input('Enter anything to exit: ')
                         exit()
+                
+
+                elif data_dict['update']:
+                    print('---------------')
+                    print('Installer is in full mode.')
+                    if data_dict['bounds'] == 'top':
+
+                        '''
+                        flow for game data re-install
+
+                            - deletes previous "tmp" folder in setup
+                            - creates new "tmp folder"
+                            - deletes previous "top"
+                            - downloads .zip
+                            - extracts all of .zip
+                            - copies "top" from the extracted version into proper directory
+                            - gets rid of "tmp"
+                            - resets "data.json"
+                            - done!
+                        '''
+                        
+                        print('Update: installing top')
+                        print('If you want to backup your top, copy the directory now.')
+                        print(f'The directory is: {self.main_wDir}/top')
+                        if input('Continue? (y/n) ').lower() == 'n':
+                            print('---------------')
+                            print('Cancelling...')
+                            print('Update: Resetting data.json...')
+                            f = open(f'{self.setup_wDir}/data.json', 'r')
+                            td = json.load(f)
+                            f.close()
+                            td['bounds'] = 'x'
+                            td['update'] = False
+                            td['shortcut'] = True
+                            f = open(f'{self.setup_wDir}/data.json', 'w')
+                            json.dump(td, f)
+                            f.close()
+                            input('Enter anything to exit: ')
+                            exit()
+
+                        print('---------------')
+                        print('Update: Cleaning tmp...')
+                        try:
+                            shutil.rmtree(f'{self.setup_wDir}/tmp')
+                        except:
+                            print('Update: No prior tmp')
+                        print('Update: Making tmp...')
+                        os.mkdir(f'{self.setup_wDir}/tmp')
+                        print('Update: deleting previous top...')
+                        try:
+                            shutil.rmtree(f"{self.main_wDir}/top")
+                        except:
+                            print('Update: No prior top')
+                        print('Update: Downloading .zip...')
+                        import update.download as update_agent
+                        repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+                        zip_download_path = f"{self.setup_wDir}/tmp/latest_release.zip"  # Change the path if needed
+                        update_agent.download_latest_release(repo_url, zip_download_path)
+                        ext_download_path = f"{self.setup_wDir}/tmp"
+                        print('Update: Extracting files...')
+
+                        # https://www.geeksforgeeks.org/unzipping-files-in-python/
+                        import update.extract as extract_agent
+                        extract_agent.extract(zip_download_path, ext_download_path)
+
+                        release_version = ((requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest").json()['body']))
+                        copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/main/top/container/game_data"
+                        copy_location = f'{self.main_wDir}/top'
+                        print(f'Update: Copying files to {copy_location}')
+
+                        # https://pynative.com/python-copy-files-and-directories/
+                        import update.copy as copy_agent
+                        copy_agent.copy(copy_source, copy_location)
+
+                        print('Update: Cleaning up tmp...')
+                        try:
+                            shutil.rmtree(f'{self.setup_wDir}/tmp')
+                        except:
+                            print('Update: No tmp')
+                        
+                        print('Update: Resetting data.json...')
+                        f = open(f'{self.setup_wDir}/data.json', 'r')
+                        td = json.load(f)
+                        f.close()
+                        td['bounds'] = 'x'
+                        td['update'] = False
+                        td['shortcut'] = True
+                        f = open(f'{self.setup_wDir}/data.json', 'w')
+                        json.dump(td, f)
+                        f.close()
+                        
+                        print('Update: top update complete!')
+                        print('---------------')
+                        input('Enter anything to exit: ')
+                        exit()
 
 
 
