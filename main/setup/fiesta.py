@@ -44,7 +44,7 @@ class Install:
             self.setup_wDir = self.main_wDir
 
 
-        self.rules = open(f'{self.main_wDir}/config.json', 'r')
+        self.rules = open(f'{self.setup_wDir}/config.json', 'r')
 
         # will contain everything from config.json, including environment information
         self.rules = json.load(self.rules)
@@ -77,12 +77,12 @@ class Install:
             # printing start statement, format, prompting
 
             # check the rule for shortcut, ignore everything below if so
-            f = open(f'{self.main_wDir}/data.json', 'r')
+            f = open(f'{self.setup_wDir}/data.json', 'r')
             data_dict = json.load(f)
             f.close()
             if data_dict['shortcut'] == True:
                 print('Installer redirecting to starter file...')
-                self.top_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                self.top_wDir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
                 self.top_wDir = os.path.join(self.main_wDir, 'top')
                 os.system(f'python {self.top_wDir}/starter.py')
                 exit()
@@ -96,7 +96,7 @@ class Install:
             path_loop = True
             while path_loop:
                 print('---------------')
-                print(f"""Input file directory for install below (or type "delete" to delete").'
+                print(f"""Input file directory for install below (or type "delete" to delete).'
 Note: Must be absolute path. Ex: C:\\folder\\install_location.""") # Enter nothing for default installation path (in Program Files).
                 self.install_path = input('--> ')
 
