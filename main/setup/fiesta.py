@@ -97,6 +97,11 @@ class Install:
 
 
 
+
+
+
+
+
                 if data_dict['update']:
                     print('---------------')
                     print('Installer is in update mode.')
@@ -185,6 +190,11 @@ class Install:
                         td['shortcut'] = True
                         f = open(f'{self.setup_wDir}/data.json', 'w')
                         json.dump(td, f)
+                        f.close()
+
+                        print('Update: Reaching to version.json, dumping version...')
+                        f = open(f'{self.main_wDir}/top/container/version.json', 'w')
+                        json.dump(release_version, f)
                         f.close()
                         
                         print('Update: Game data update complete!')
@@ -290,11 +300,21 @@ class Install:
                         f = open(f'{self.setup_wDir}/data.json', 'w')
                         json.dump(td, f)
                         f.close()
+
+                        print('Update: Reaching to version.json, dumping version...')
+                        f = open(f'{self.main_wDir}/top/container/version.json', 'w')
+                        json.dump(release_version, f)
+                        f.close()
                         
                         print('Update: top update complete!')
                         print('---------------')
                         input('Enter anything to exit: ')
                         exit()
+
+
+
+
+
 
 
 
