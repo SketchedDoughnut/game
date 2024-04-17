@@ -32,14 +32,37 @@ flow
 
 print('Update: Setting up variables...')
 
-# FOR COMPILE
-wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#############################################################################
+#############################################################################
+#############################################################################
 
 # FOR PYTHON
-#wDir = os.path.dirname(os.path.abspath(__file__))
+wDir = os.path.dirname(os.path.abspath(__file__))
 
+# FOR COMPILE
+#wDir = os.path.dirname(wDir)
+
+# commit label, the random crap (in this case we ignore the bounds since we know we are installing full)
 commit_label = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
 commit_label = commit_label.json()
 commit_label = str(commit_label['body'])
 commit_label = commit_label.split()
 commit_label = commit_label[0]
+
+# url for install
+repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+
+# tmp directory
+tmp_path = f'{wDir}/tmp'
+
+# zip directory for install
+zip_path = f'{tmp_path}/latest-release.zip'
+
+# extract path for install
+extract_path = tmp_path
+
+# copy path (source, destination) for install
+copy_source = 
+#############################################################################
+#############################################################################
+#############################################################################

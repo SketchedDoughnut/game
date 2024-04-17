@@ -109,7 +109,13 @@ class Install:
                             done!
                         '''
 
-                        ut2_wDir = os.path.dirname(os.path.dirname(self.setup_wDir))
+                        # FOR PYTHON
+                        ut2_wDir = os.path.dirname(os.path.dirname(os.path.dirname(self.setup_wDir)))
+                        print(ut2_wDir)
+
+                        # FOR COMPILE
+                        #os.path.dirname(ut2_wDir)
+
                         print('Update: installing full')
                         print('- This is a update that requires a re-installation of all game files.')
                         print('  Nothing will be saved.')
