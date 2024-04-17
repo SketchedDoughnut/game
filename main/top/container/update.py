@@ -147,9 +147,9 @@ def yes_confirm():
     time.sleep(0.25)
     # god long file path
     main_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    print(main_path) ##################
+    #print(main_path) ##################
     data_path = os.path.join(main_path, 'setup/data.json')
-    print(data_path) ##################################
+    #print(data_path) ##################################
     f = open(data_path, 'r')
     temp_dict = json.load(f)
     f.close()
