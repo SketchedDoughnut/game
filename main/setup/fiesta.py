@@ -327,9 +327,11 @@ class Install:
                         f = open(f'{self.main_wDir}/top/container/version.json', 'w')
                         json.dump(release_version, f)
                         f.close()
+                        
                         print('Update: Reaching to state.json...')
-                        f = open(f'{self.main_wDir}/top/container/state.json', 'r')
+                        f = open(f'{self.main_wDir}/top/container/state.json', 'w')
                         tmp = json.load(f)
+                        f.close()
                         f = open(f'{self.main_wDir}/top/container/state.json', 'w')
                         tmp = False
                         json.dump(tmp, f)
