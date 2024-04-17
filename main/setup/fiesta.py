@@ -36,7 +36,7 @@ class Install:
 
         # FOR COMPILE 
         temp_main_wDir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        temp_setup_wDir = os.path.join(temp_main_wDir, 'setup')
+        temp_setup_wDir = os.path.join(temp_main_wDir, 'main/setup')
         if os.path.exists(temp_setup_wDir):
             in_folder = True
 
@@ -89,32 +89,6 @@ class Install:
             f.close()
             if data_dict['shortcut']:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 if data_dict['update']:
                     print('---------------')
                     print('Installer is in update mode.')
@@ -134,6 +108,132 @@ class Install:
                             - provide further instructions on what to do
                             done!
                         '''
+
+                        ut2_wDir = os.path.dirname(os.path.dirname(self.setup_wDir))
+                        print('Update: installing full')
+                        print('- This is a update that requires a re-installation of all game files.')
+                        print('  Nothing will be saved.')
+                        print('If you want to backup your files, copy the ENTIRE directory now.')
+                        print(f'The directory is: {ut2_wDir}')
+                        if input('Continue? (y/n) ').lower() == 'n':
+                            print('---------------')
+                            print('Cancelling...')
+                            print('Update: Resetting data.json...')
+                            f = open(f'{self.setup_wDir}/data.json', 'r')
+                            td = json.load(f)
+                            f.close()
+                            td['bounds'] = 'x'
+                            td['update'] = False
+                            td['shortcut'] = True
+                            f = open(f'{self.setup_wDir}/data.json', 'w')
+                            json.dump(td, f)
+                            f.close()
+                            input('Enter anything to exit: ')
+                            exit()
+
+                        print('---------------')
+                        print('Update: Cleaning tmp...')
+                        try:
+                            shutil.rmtree(f'{self.setup_wDir}/tmp')
+                        except:
+                            print('Update: No prior tmp')
+                        print('Update: Making tmp...')
+                        os.mkdir(f'{self.setup_wDir}/tmp')
+                        print('Update: deleting all files...')
+                        file_remove = ['LICENSE.md', 'Pipfile', 'Pipfile.lock', 'README.md', 'requirements.txt']
+                        folder_remove = ['main', 'gitignore', 'full-redo', 'flash']
+                        for i in folder_remove:
+                            try:
+                                shutil.rmtree(f"{ut2_wDir}/main")
+                            except Exception as e:
+                                print(f'Update: Folder delete error: {e}')
+                        
+                        for i in file_remove:
+                            try:
+                                os.rmdir(i)
+                            except Exception as e:
+                                print(f'Update: File delete error: {e}')
+                        
+                        exit()
+                        
+                        print('Update: Downloading .zip...')
+                        import update.download as update_agent
+                        repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+                        zip_download_path = f"{self.setup_wDir}/tmp/latest_release.zip"  # Change the path if needed
+                        update_agent.download_latest_release(repo_url, zip_download_path)
+                        ext_download_path = f"{self.setup_wDir}/tmp"
+                        print('Update: Extracting files...')
+
+                        # https://www.geeksforgeeks.org/unzipping-files-in-python/
+                        import update.extract as extract_agent
+                        extract_agent.extract(zip_download_path, ext_download_path)
+
+                        print('Update: Getting commit label...')
+                        #release_version = ((requests.get(("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")).json()['body']))
+                        release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
+                        release_version = release_version.json()
+                        release_version = str(release_version['body'])
+                        release_version = release_version.split()
+                        release_version = release_version[0]
+                        copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/main/top/container/game_data"
+                        copy_location = f'{(self.main_wDir)}/top/container/game_data'
+                        print(f'Update: Copying files to {copy_location}')
+
+                        # https://pynative.com/python-copy-files-and-directories/
+                        import update.copy as copy_agent
+                        copy_agent.copy(copy_source, copy_location)
+
+                        print('Update: Cleaning up tmp...')
+                        try:
+                            shutil.rmtree(f'{self.setup_wDir}/tmp')
+                        except:
+                            print('Update: No tmp')
+                        
+                        print('Update: Checking install path...')
+                        if os.path.exists(f'{self.main_wDir}/top/container/game_data'):
+                            pass
+                        else:
+                            print('!!! UPDATE ERROR: The installed directory does not exist. Cancelling.')
+                            input('Enter anything to exit: ')
+                            exit()
+                        
+                        print('Update: Resetting data.json...')
+                        f = open(f'{self.setup_wDir}/data.json', 'r')
+                        td = json.load(f)
+                        f.close()
+                        td['bounds'] = 'x'
+                        td['update'] = False
+                        td['shortcut'] = True
+                        f = open(f'{self.setup_wDir}/data.json', 'w')
+                        json.dump(td, f)
+                        f.close()
+
+                        print('Update: Reaching to version.json...')
+                        print(f'Update: Path: {self.main_wDir}/top/container/version.json')
+                        #print(release_version)
+                        print('Update: Dumping version...')
+                        f = open(f'{self.main_wDir}/top/container/version.json', 'w')
+                        #print(release_version)
+                        json.dump(release_version, f)
+                        f.close()
+
+                        print('Update: Reaching to state.json...')
+                        print(f'Update: Path: {self.main_wDir}/top/container/state.json')
+                        f = open(f'{self.main_wDir}/top/container/state.json', 'r')
+                        tmp = json.load(f)
+                        f.close()
+                        f = open(f'{self.main_wDir}/top/container/state.json', 'w')
+                        tmp = False
+                        json.dump(tmp, f)
+                        f.close()
+                        
+                        print('Update: Game data update complete!')
+                        print('---------------')
+                        input('Enter anything to exit: ')
+                        exit()
+
+
+
 
 
 
