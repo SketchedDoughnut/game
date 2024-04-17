@@ -51,6 +51,7 @@ text_msg = 'Checking for updates...'
 _cancel = False
 do_exit = False
 confirm = False
+update_exit = False
 
 directory = 'x'
 
@@ -120,7 +121,7 @@ def exit_handler():
     confirm = True
 
 def yes_confirm():
-    global do_exit, confirm, text_msg, text_height, _cancel
+    global do_exit, confirm, text_msg, text_height, _cancel, update_exit
     # objective is to reach back up to data.json and change update and bounds
     _cancel = False
     text_msg = 'Reaching...'
@@ -141,13 +142,12 @@ def yes_confirm():
     f.close()
     text_msg = 'Pushed to data.json'
     time.sleep(0.25)
-    text_msg = 'Check console window'
+    text_msg = 'Check console window.'
     print('----------------------------')
     print('----------------------------')
     print('----------------------------')
     print('Please relaunch the game.')
-    pygame.quit()
-    input('Enter anything to exit: ')
+    update_exit = True
     exit_handler()
 
     pass
@@ -237,3 +237,6 @@ while True:
     pygame.quit()
     if confirm:
         break
+
+if update_exit:
+    input('Enter anything to exit: ')
