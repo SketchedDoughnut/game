@@ -198,9 +198,18 @@ class Install:
                         json.dump(td, f)
                         f.close()
 
-                        print('Update: Reaching to version.json, dumping version...')
+                        print('Update: Reaching to version.json...')
+                        print('Update: Dumping version...')
                         f = open(f'{self.main_wDir}/top/container/version.json', 'w')
                         json.dump(release_version, f)
+                        f.close()
+
+                        print('Update: Reaching to state.json...')
+                        f = open(f'{self.main_wDir}/top/container/state.json', 'r')
+                        tmp = json.load(f)
+                        f = open(f'{self.main_wDir}/top/container/state.json', 'w')
+                        tmp = False
+                        json.dump(tmp, f)
                         f.close()
                         
                         print('Update: Game data update complete!')
@@ -318,7 +327,7 @@ class Install:
                         json.dump(release_version, f)
                         f.close()
                         print('Update: Reaching to state.json...')
-                        f = open(f'{self.main_wDir}/top/contianer/state.json', 'r')
+                        f = open(f'{self.main_wDir}/top/container/state.json', 'r')
                         tmp = json.load(f)
                         f = open(f'{self.main_wDir}/top/container/state.json', 'w')
                         tmp = False
