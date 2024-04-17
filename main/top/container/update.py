@@ -141,7 +141,13 @@ def yes_confirm():
     f.close()
     text_msg = 'Pushed to data.json'
     time.sleep(0.25)
-    text_msg = 'Exiting...'
+    text_msg = 'Check console window'
+    print('----------------------------')
+    print('----------------------------')
+    print('----------------------------')
+    print('Please relaunch the game.')
+    pygame.quit()
+    input('Enter anything to exit: ')
     exit_handler()
 
     pass
