@@ -205,7 +205,7 @@ class Install:
                         f.close()
 
                         print('Update: Reaching to state.json...')
-                        f = open(f'{self.main_wDir}/top/container/state.json', 'r')
+                        f = open(f'{self.main_wDir}/top/container/state.json', 'w')
                         tmp = json.load(f)
                         f.close()
                         f = open(f'{self.main_wDir}/top/container/state.json', 'w')
