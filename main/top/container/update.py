@@ -129,16 +129,6 @@ def exit_handler(mode=False):
         time.sleep(3)
         do_exit = True
         confirm = True
-    if mode:
-        f = open(f'{wDir}/state.json', 'w')
-        json.dump(True, f)
-        f.close()
-        _cancel = False
-        no_confirm()
-        text_height = (HEIGHT / 2)
-        time.sleep(3)
-        do_exit = True
-        confirm = True
 
 def yes_confirm():
     global do_exit, confirm, text_msg, text_height, _cancel, update_exit
@@ -203,7 +193,6 @@ text_height = (HEIGHT / 2)
 # thread objects
 check = threading.Thread(target=lambda:check_version(), daemon=True)
 exit_thread = threading.Thread(target=lambda:exit_handler())
-exit_thread_true = threading.Thread(target=lambda:exit_handler(True))
 
 # start threads
 check.start()
