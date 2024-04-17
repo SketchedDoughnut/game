@@ -362,8 +362,12 @@ class Install:
                 else:
                     print('---------------')
                     print('Installer redirecting to starter file...')
-                    #self.top_wDir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-                    self.top_wDir = (os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+                    # FOR COMPILE
+                    self.top_wDir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+                    # FOR PYTHON
+                    #self.top_wDir = (os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
                     self.top_wDir = os.path.join(self.top_wDir, 'top')
                     os.system(f'python {self.top_wDir}/starter.py')
                     exit()
