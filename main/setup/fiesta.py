@@ -167,7 +167,12 @@ class Install:
                         extract_agent.extract(zip_download_path, ext_download_path)
 
                         print('Update: Getting commit label...')
-                        release_version = ((requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest").json()['body']))
+                        #release_version = ((requests.get(("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")).json()['body']))
+                        release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
+                        release_version = release_version.json()
+                        release_version = str(release_version['body'])
+                        release_version = release_version.split()
+                        release_version = release_version[0]
                         copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/main/top/container/game_data"
                         copy_location = f'{self.main_wDir}/top/container/game_data'
                         print(f'Update: Copying files to {copy_location}')
@@ -276,7 +281,11 @@ class Install:
                         extract_agent.extract(zip_download_path, ext_download_path)
 
                         print('Update: Getting commit label...')
-                        release_version = ((requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest").json()['body']))
+                        release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
+                        release_version = release_version.json()
+                        release_version = str(release_version['body'])
+                        release_version = release_version.split()
+                        release_version = release_version[0]
                         copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/main/top"
                         copy_location = f'{self.main_wDir}/top'
                         print(f'Update: Copying files to {copy_location}...')
@@ -307,6 +316,13 @@ class Install:
                         print('Update: Dumping version...')
                         f = open(f'{self.main_wDir}/top/container/version.json', 'w')
                         json.dump(release_version, f)
+                        f.close()
+                        print('Update: Reaching to state.json...')
+                        f = open(f'{self.main_wDir}/top/contianer/state.json', 'r')
+                        tmp = json.load(f)
+                        f = open(f'{self.main_wDir}/top/container/state.json', 'w')
+                        tmp = False
+                        json.dump(tmp, f)
                         f.close()
                         
                         print('Update: top update complete!')

@@ -83,6 +83,9 @@ class Format:
 
 
 update()
+f = open(f'{wDir}/state.json', 'r')
+if json.load(f) == True:
+   exit()
 
 setup = Format()
 setup.handler()

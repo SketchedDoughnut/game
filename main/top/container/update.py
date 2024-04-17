@@ -104,6 +104,9 @@ def check_version():
         elif str(current_version) == new_version:
             print('No decrepancy: exiting...')
             text_msg = 'No updates found.'
+            f = open(f'{wDir}/state.json', 'w')
+            json.dump(False, f)
+            f.close()
             time.sleep(0.5)
             do_exit = True
             confirm = True
@@ -142,6 +145,11 @@ def yes_confirm():
     f.close()
     text_msg = 'Pushed to data.json'
     time.sleep(0.25)
+    text_msg = 'Updating state...'
+    time.sleep(0.25)
+    f = open(f'{wDir}/state.json', 'w')
+    json.dump(True, f)
+    f.close()
     text_msg = 'Check console window.'
     print('----------------------------')
     print('----------------------------')
