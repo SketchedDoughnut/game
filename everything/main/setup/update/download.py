@@ -10,15 +10,15 @@ def download_latest_release(url, download_path):
             return
         if 'assets' not in data or len(data['assets']) == 0:
             download_url = data['zipball_url']  # Download the source code as a zipball
-            download_file(download_url, download_path)
+            _download_file(download_url, download_path)
         else:
             assets = data['assets']
             download_url = assets[0]['browser_download_url']
-            download_file(download_url, download_path)
+            _download_file(download_url, download_path)
     except Exception as e:
         print(f"Error: {e}")
 
-def download_file(url, download_path):
+def _download_file(url, download_path):
     response = requests.get(url)
     with open(download_path, 'wb') as f:
         f.write(response.content)
