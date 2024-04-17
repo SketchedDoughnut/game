@@ -52,6 +52,8 @@ _cancel = False
 do_exit = False
 confirm = False
 
+directory = 'x'
+
 top_wDir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'setup/data.json')
 wDir = os.path.dirname(os.path.abspath(__file__))
 ################################################################################################
@@ -59,7 +61,7 @@ wDir = os.path.dirname(os.path.abspath(__file__))
 # runs as a thread, checks version while pygame cheeks drawing
 def check_version():
     # globals
-    global do_exit, text_msg, confirm, _cancel
+    global do_exit, text_msg, confirm, _cancel, text_height, directory
 
     # release destination, working directory, loading version
     dest = 'https://api.github.com/repos/SketchedDoughnut/development/releases/latest' # link format: https://api.github.com/repos/{owner}/{repo}/releases/latest
@@ -73,25 +75,32 @@ def check_version():
     if os.path.exists(os.path.join(wDir, 'version.json')):
         print('File found: Comparing versions...')
 
+        temp = str(response.json()["body"])
+        temp_list = temp.split()
+        new_version = temp_list[0]
+        directory = temp_list[1]
+
         # loads version
         f = open(f'{wDir}/version.json', 'r')
-        version = json.load(f)
+        current_version = json.load(f)
         f.close()
 
         # seeing if there is a difference
-        if str(version) != response.json()["name"]:
+        if str(current_version) != new_version:
             print('Name decrepancy: Prompting for update...')
             global WIDTH
             global HEIGHT
             do_exit = True
             confirm = False
+            #pygame.init()
             WIDTH = pygame.display.Info().current_w
-            HEIGHT = pygame.display.Info().current_y
+            HEIGHT = pygame.display.Info().current_h
             text_msg = 'Do you want to update?'
+            text_height = (HEIGHT / 4)
             _cancel = True
 
 
-        elif str(version) == response.json()["name"]:
+        elif str(current_version) == new_version:
             print('No decrepancy: exiting...')
             text_msg = 'No updates found.'
             time.sleep(0.5)
@@ -111,12 +120,37 @@ def exit_handler():
     confirm = True
 
 def yes_confirm():
+    global do_exit, confirm, text_msg, text_height, _cancel
     # objective is to reach back up to data.json and change update and bounds
+    _cancel = False
+    text_msg = 'Reaching...'
+    text_height = (HEIGHT / 2)
+    time.sleep(0.25)
+    # god long file path
+    main_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    print(main_path) ##################
+    data_path = os.path.join(main_path, 'setup/data.json')
+    print(data_path) ##################################
+    f = open(data_path, 'r')
+    temp_dict = json.load(f)
+    f.close()
+    temp_dict['update'] = True
+    temp_dict['bounds'] = directory
+    f = open(data_path, 'w')
+    json.dump(temp_dict, f)
+    f.close()
+    text_msg = 'Pushed to data.json'
+    time.sleep(0.25)
+    text_msg = 'Exiting...'
+    exit_handler()
+
     pass
 
 def no_confirm():
-    global _cancel, do_exit, confirm
-    cancel = False
+    global _cancel, do_exit, confirm, text_msg, text_height
+    _cancel = False
+    text_msg = 'Cancelling...'
+    text_height = (HEIGHT / 2)
     time.sleep(2)
     do_exit = True
     confirm = True
@@ -137,6 +171,8 @@ objects = buttons(yes, no)
 yes_zone = objects[0][1]
 no_zone = objects[1][1]
 
+#text
+text_height = (HEIGHT / 2)
 # thread objects
 check = threading.Thread(target=lambda:check_version(), daemon=True)
 exit_thread = threading.Thread(target=lambda:exit_handler())
@@ -147,6 +183,7 @@ check.start()
 while True:
     do_exit = False
     confirm = False
+    pygame.init()
     window = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("thing!")
 
@@ -157,7 +194,8 @@ while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 text_msg = 'Exiting...'
-                exit_thread.start()
+                if not exit_thread.is_alive:
+                    exit_thread.start()
 
         keys = pygame.key.get_pressed()
         mouse_pos = pygame.mouse.get_pos()
@@ -165,7 +203,7 @@ while True:
         window.fill(BLACK)
         font = pygame.font.Font('freesansbold.ttf', round(24))
         text = font.render(text_msg, True, WHITE, None) # text, some bool(?), text color, bg color
-        text_rect = text.get_rect(center=(WIDTH / 2, HEIGHT / 2))
+        text_rect = text.get_rect(center=(WIDTH / 2, text_height))
         window.blit(text, text_rect)
 
         if _cancel:
