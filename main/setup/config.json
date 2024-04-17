@@ -11,6 +11,8 @@
     
     "post_clean": false, 
 
+    "edit_data": true,
+
     "quit_install": true,
 
     "env": "run" 

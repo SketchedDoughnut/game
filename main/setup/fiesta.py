@@ -108,9 +108,41 @@ class Install:
 
 
 
+
+
+
+
+
+
+
                 if data_dict['update']:
                     print('---------------')
                     print('Installer is in update mode.')
+
+                    if data_dict['bounds'] == 'full':
+                        '''
+                        flow for full re-install
+                        
+                            - deletes previous tmp folder in setup
+                            - creates new tmp folder
+                            - alerts that this installation requires user interaction
+                            - download .zip
+                            - extract .zip
+                            - copy "full-redo" into the directory ABOVE of main
+                            - get rid of tmp
+                            - reset data.json
+                            - provide further instructions on what to do
+                            done!
+                        '''
+
+
+
+
+
+
+
+
+
 
                     if data_dict['bounds'] == 'game_data':
 
@@ -235,8 +267,6 @@ class Install:
                         print('---------------')
                         input('Enter anything to exit: ')
                         exit()
-                
-
 
 
 
@@ -889,7 +919,7 @@ Otherwise, enter 'y' to continue.""")
         if self.rules['create']: self.create()
         if self.rules['download']: self.download()
         if self.rules['post_clean']: self.post_clean()
-        self.edit_data()
+        if self.rules['edit_data']: self.edit_data()
         if self.rules['quit_install']: self.quit_install()
 
 
