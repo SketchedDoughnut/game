@@ -201,6 +201,7 @@ text_height = (HEIGHT / 2)
 # thread objects
 check = threading.Thread(target=lambda:check_version(), daemon=True)
 exit_thread = threading.Thread(target=lambda:exit_handler())
+exit_thread_true = threading.Thread(target=lambda:exit_handler(True))
 
 # start threads
 check.start()
@@ -220,7 +221,7 @@ while True:
             if event.type == pygame.QUIT:
                 text_msg = 'Exiting...'
                 if not exit_thread.is_alive:
-                    exit_thread.start()
+                    exit_thread_true.start()
 
         keys = pygame.key.get_pressed()
         mouse_pos = pygame.mouse.get_pos()
