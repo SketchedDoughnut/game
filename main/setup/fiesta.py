@@ -324,8 +324,8 @@ class Install:
 
                         time.sleep(1)
                         print('Update: Reaching to version.json...')
-                        print('Update: Dumping version...')
                         f = open(f'{self.main_wDir}/top/container/version.json', 'w')
+                        print('Update: Dumping version...')
                         json.dump(release_version, f)
                         f.close()
                         
@@ -336,6 +336,7 @@ class Install:
                         f.close()
                         f = open(f'{self.main_wDir}/top/container/state.json', 'w')
                         tmp = False
+                        print('Update: Dumping state...')
                         json.dump(tmp, f)
                         f.close()
                         
