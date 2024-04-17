@@ -139,23 +139,7 @@ class Install:
                             print('Update: No prior tmp')
                         print('Update: Making tmp...')
                         os.mkdir(f'{self.setup_wDir}/tmp')
-                        print('Update: deleting all files...')
-                        file_remove = ['LICENSE.md', 'Pipfile', 'Pipfile.lock', 'README.md', 'requirements.txt']
-                        folder_remove = ['main', 'gitignore', 'full-redo', 'flash']
-                        for i in folder_remove:
-                            try:
-                                shutil.rmtree(f"{ut2_wDir}/main")
-                            except Exception as e:
-                                print(f'Update: Folder delete error: {e}')
-                        
-                        for i in file_remove:
-                            try:
-                                os.rmdir(i)
-                            except Exception as e:
-                                print(f'Update: File delete error: {e}')
-                        
-                        exit()
-                        
+
                         print('Update: Downloading .zip...')
                         import update.download as update_agent
                         repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
@@ -167,28 +151,33 @@ class Install:
                         # https://www.geeksforgeeks.org/unzipping-files-in-python/
                         import update.extract as extract_agent
                         extract_agent.extract(zip_download_path, ext_download_path)
-
+                        
                         print('Update: Getting commit label...')
-                        #release_version = ((requests.get(("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")).json()['body']))
                         release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
                         release_version = release_version.json()
                         release_version = str(release_version['body'])
                         release_version = release_version.split()
                         release_version = release_version[0]
-                        copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/main/top/container/game_data"
-                        copy_location = f'{(self.main_wDir)}/top/container/game_data'
-                        print(f'Update: Copying files to {copy_location}')
+
+                        # copy full-redo folder ABOVE current installation main, so it is:
+                        # root: main, full-redo (in same dir)
+                        print('Update: Copying control folder...')
+                        copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/full-redo"
+                        dump_location = ut2_wDir
+                        print(f'Update: Copying files to {dump_location}')
 
                         # https://pynative.com/python-copy-files-and-directories/
                         import update.copy as copy_agent
-                        copy_agent.copy(copy_source, copy_location)
+                        copy_agent.copy(copy_source, dump_location)
 
+                        # clean up tmp
                         print('Update: Cleaning up tmp...')
                         try:
                             shutil.rmtree(f'{self.setup_wDir}/tmp')
                         except:
                             print('Update: No tmp')
-                        
+
+                        # check install path
                         print('Update: Checking install path...')
                         if os.path.exists(f'{self.main_wDir}/top/container/game_data'):
                             pass
@@ -196,41 +185,17 @@ class Install:
                             print('!!! UPDATE ERROR: The installed directory does not exist. Cancelling.')
                             input('Enter anything to exit: ')
                             exit()
-                        
-                        print('Update: Resetting data.json...')
-                        f = open(f'{self.setup_wDir}/data.json', 'r')
-                        td = json.load(f)
-                        f.close()
-                        td['bounds'] = 'x'
-                        td['update'] = False
-                        td['shortcut'] = True
-                        f = open(f'{self.setup_wDir}/data.json', 'w')
-                        json.dump(td, f)
-                        f.close()
 
-                        print('Update: Reaching to version.json...')
-                        print(f'Update: Path: {self.main_wDir}/top/container/version.json')
-                        #print(release_version)
-                        print('Update: Dumping version...')
-                        f = open(f'{self.main_wDir}/top/container/version.json', 'w')
-                        #print(release_version)
-                        json.dump(release_version, f)
-                        f.close()
-
-                        print('Update: Reaching to state.json...')
-                        print(f'Update: Path: {self.main_wDir}/top/container/state.json')
-                        f = open(f'{self.main_wDir}/top/container/state.json', 'r')
-                        tmp = json.load(f)
-                        f.close()
-                        f = open(f'{self.main_wDir}/top/container/state.json', 'w')
-                        tmp = False
-                        json.dump(tmp, f)
-                        f.close()
-                        
-                        print('Update: Game data update complete!')
-                        print('---------------')
+                        print(f"""Update: Part 1/2 of update is done.
+This installer is incapable of finishing this update, as it will require deleting itself. 
+In order to finish this install, please go to --
+- {ut2_wDir}/full-redo
+-- and run the file named "full-redo.exe". It will run you through the process to finish this update.
+                        """)
                         input('Enter anything to exit: ')
                         exit()
+
+                        
 
 
 
