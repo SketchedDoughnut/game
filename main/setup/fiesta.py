@@ -322,12 +322,14 @@ class Install:
                         json.dump(td, f)
                         f.close()
 
+                        time.sleep(1)
                         print('Update: Reaching to version.json...')
                         print('Update: Dumping version...')
                         f = open(f'{self.main_wDir}/top/container/version.json', 'w')
                         json.dump(release_version, f)
                         f.close()
                         
+                        time.sleep(0.25)
                         print('Update: Reaching to state.json...')
                         f = open(f'{self.main_wDir}/top/container/state.json', 'r')
                         tmp = json.load(f)
