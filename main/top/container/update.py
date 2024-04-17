@@ -88,7 +88,7 @@ def check_version():
 
         # seeing if there is a difference
         if str(current_version) != new_version:
-            print('Name decrepancy: Prompting for update...')
+            print(f'Name decrepancy: {current_version} != {new_version} \nAffected areas: {directory} \nPrompting for update...')
             global WIDTH
             global HEIGHT
             do_exit = True
