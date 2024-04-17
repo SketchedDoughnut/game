@@ -120,7 +120,7 @@ class Install:
                         print('- This is a update that requires a re-installation of all game files.')
                         print('  Nothing will be saved.')
                         print('If you want to backup your files, copy the ENTIRE directory now.')
-                        print(f'The directory is: {ut2_wDir}')
+                        print(f'The directory is: {ut2_wDir}/everything')
                         if input('Continue? (y/n) ').lower() == 'n':
                             print('---------------')
                             print('Cancelling...')
