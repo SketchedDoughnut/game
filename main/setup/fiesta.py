@@ -29,7 +29,13 @@ class Install:
 
         # for run
         # setting up all directories
-        temp_main_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+        # FOR PYTHON
+        #temp_main_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        #temp_setup_wDir = os.path.join(temp_main_wDir, 'setup')
+
+        # FOR COMPILE 
+        temp_main_wDir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
         temp_setup_wDir = os.path.join(temp_main_wDir, 'setup')
         if os.path.exists(temp_setup_wDir):
             in_folder = True
@@ -174,7 +180,7 @@ class Install:
                         release_version = release_version.split()
                         release_version = release_version[0]
                         copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/main/top/container/game_data"
-                        copy_location = f'{self.main_wDir}/top/container/game_data'
+                        copy_location = f'{(self.main_wDir)}/top/container/game_data'
                         print(f'Update: Copying files to {copy_location}')
 
                         # https://pynative.com/python-copy-files-and-directories/
@@ -186,6 +192,14 @@ class Install:
                             shutil.rmtree(f'{self.setup_wDir}/tmp')
                         except:
                             print('Update: No tmp')
+                        
+                        print('Update: Checking install path...')
+                        if os.path.exists(f'{self.main_wDir}/top/container/game_data'):
+                            pass
+                        else:
+                            print('!!! UPDATE ERROR: The installed directory does not exist. Cancelling.')
+                            input('Enter anything to exit: ')
+                            exit()
                         
                         print('Update: Resetting data.json...')
                         f = open(f'{self.setup_wDir}/data.json', 'r')
@@ -199,12 +213,16 @@ class Install:
                         f.close()
 
                         print('Update: Reaching to version.json...')
+                        print(f'Update: Path: {self.main_wDir}/top/container/version.json')
+                        #print(release_version)
                         print('Update: Dumping version...')
                         f = open(f'{self.main_wDir}/top/container/version.json', 'w')
+                        #print(release_version)
                         json.dump(release_version, f)
                         f.close()
 
                         print('Update: Reaching to state.json...')
+                        print(f'Update: Path: {self.main_wDir}/top/container/state.json')
                         f = open(f'{self.main_wDir}/top/container/state.json', 'r')
                         tmp = json.load(f)
                         f.close()
@@ -311,6 +329,14 @@ class Install:
                         except:
                             print('Update: No tmp')
                         
+                        print('Update: Checking install path...')
+                        if os.path.exists(f'{self.main_wDir}/top/container/game_data'):
+                            pass
+                        else:
+                            print('!!! UPDATE ERROR: The installed directory does not exist. Cancelling.')
+                            input('Enter anything to exit: ')
+                            exit()
+                            
                         print('Update: Resetting data.json...')
                         f = open(f'{self.setup_wDir}/data.json', 'r')
                         td = json.load(f)
