@@ -160,6 +160,7 @@ class Install:
                         update_agent.download_latest_release(repo_url, zip_download_path)
                         ext_download_path = f"{self.setup_wDir}/tmp"
                         print('Update: Extracting files...')
+                        time.sleep(1)
 
                         # https://www.geeksforgeeks.org/unzipping-files-in-python/
                         import update.extract as extract_agent
@@ -512,7 +513,7 @@ In order to finish this install, please go to --
                     # FOR PYTHON
                     #self.top_wDir = (os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-                    self.top_wDir = os.path.join(self.top_wDir, 'main/top')
+                    self.top_wDir = os.path.join(self.top_wDir, 'top')
                     os.system(f'python {self.top_wDir}/starter.py')
                     exit() 
 
