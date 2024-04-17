@@ -31,12 +31,12 @@ class Install:
         # setting up all directories
 
         # FOR PYTHON
-        #temp_main_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        #temp_setup_wDir = os.path.join(temp_main_wDir, 'setup')
+        temp_main_wDir = os.path.dirname(os.path.abspath(__file__))
+        temp_setup_wDir = os.path.join(temp_main_wDir, 'setup')
 
         # FOR COMPILE 
-        temp_main_wDir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        temp_setup_wDir = os.path.join(temp_main_wDir, 'main/setup')
+        #temp_main_wDir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        #temp_setup_wDir = os.path.join(temp_main_wDir, 'main/setup')
         if os.path.exists(temp_setup_wDir):
             in_folder = True
 
@@ -512,7 +512,7 @@ In order to finish this install, please go to --
                     # FOR PYTHON
                     #self.top_wDir = (os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-                    self.top_wDir = os.path.join(self.top_wDir, 'top')
+                    self.top_wDir = os.path.join(self.top_wDir, 'main/top')
                     os.system(f'python {self.top_wDir}/starter.py')
                     exit() 
 
