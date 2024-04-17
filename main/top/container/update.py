@@ -57,6 +57,11 @@ directory = 'x'
 
 top_wDir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'setup/data.json')
 wDir = os.path.dirname(os.path.abspath(__file__))
+
+# resetting state
+f = open(f'{wDir}/state.json', 'w')
+json.dump(False, f)
+f.close()
 ################################################################################################
 
 # runs as a thread, checks version while pygame cheeks drawing
@@ -117,11 +122,21 @@ def buttons(yes_list, no_list):
     no_zone = pygame.Rect(no_list[0], no_list[1], no_list[2], no_list[3])
     return [[GREEN, yes_zone], [RED, no_zone]]
 
-def exit_handler():
-    global do_exit, confirm
-    time.sleep(3)
-    do_exit = True
-    confirm = True
+def exit_handler(mode=False):
+    global do_exit, confirm, _cancel, text_height
+    if not mode:
+        time.sleep(3)
+        do_exit = True
+        confirm = True
+    if mode:
+        f = open(f'{wDir}/state.json', 'w')
+            json.dump(False, f)
+            f.close()
+        _cancel = False
+        text_height = (HEIGHT / 2)
+        time.sleep(3)
+        do_exit = True
+        confirm = True
 
 def yes_confirm():
     global do_exit, confirm, text_msg, text_height, _cancel, update_exit
