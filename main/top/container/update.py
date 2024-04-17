@@ -124,15 +124,17 @@ def buttons(yes_list, no_list):
 
 def exit_handler(mode=False):
     global do_exit, confirm, _cancel, text_height
+    text_msg = 'Exiting...'
     if not mode:
         time.sleep(3)
         do_exit = True
         confirm = True
     if mode:
         f = open(f'{wDir}/state.json', 'w')
-            json.dump(False, f)
-            f.close()
+        json.dump(True, f)
+        f.close()
         _cancel = False
+        no_confirm()
         text_height = (HEIGHT / 2)
         time.sleep(3)
         do_exit = True
@@ -219,7 +221,6 @@ while True:
         # if close window, prompt for exit
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                text_msg = 'Exiting...'
                 if not exit_thread.is_alive:
                     exit_thread_true.start()
 
