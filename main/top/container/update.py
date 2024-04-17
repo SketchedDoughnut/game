@@ -150,12 +150,8 @@ def yes_confirm():
     f = open(f'{wDir}/state.json', 'w')
     json.dump(True, f)
     f.close()
-    text_msg = 'Check console window.'
-    print('----------------------------')
-    print('----------------------------')
-    print('----------------------------')
-    print('Please relaunch the game.')
-    update_exit = True
+    text_msg = 'Please relaunch.'
+    time.sleep(1.5)
     exit_handler()
 
     pass
@@ -245,6 +241,3 @@ while True:
     pygame.quit()
     if confirm:
         break
-
-if update_exit:
-    input('Enter anything to exit: ')
