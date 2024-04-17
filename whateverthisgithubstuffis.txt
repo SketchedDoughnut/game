@@ -5,6 +5,8 @@ Dependencies stuff:
         - https://pipenv.pypa.io/en/latest/pipfile.html
             - pipenv install -r path/to/requirements.txt
             - to start virtual environment, pipenv shell
+        - https://www.activestate.com/resources/quick-reads/how-to-update-all-python-packages/
+            - pip install -r requirements.txt --upgrade
 
     - OTHERS:
         - https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/about-the-dependency-graph#supported-package-ecosystems
