@@ -293,7 +293,7 @@ In order to finish this install, please go to --
                         release_version = str(release_version['body'])
                         release_version = release_version.split()
                         release_version = release_version[0]
-                        copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/main/top/container/game_data"
+                        copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/main/top/container/game_data"
                         copy_location = f'{(self.main_wDir)}/top/container/game_data'
                         print(f'Update: Copying files to {copy_location}')
 
