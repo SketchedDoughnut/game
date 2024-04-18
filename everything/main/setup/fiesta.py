@@ -360,7 +360,7 @@ In order to finish this install, please go to --
 
                     if data_dict['bounds'] == 'top':
                         print('---------------')
-                        print('Installer is in full mode.')
+                        print('Installer is in top mode.')
 
                         '''
                         flow for game data re-install
@@ -426,7 +426,7 @@ In order to finish this install, please go to --
                         release_version = str(release_version['body'])
                         release_version = release_version.split()
                         release_version = release_version[0]
-                        copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/main/top"
+                        copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/main/top"
                         copy_location = f'{self.main_wDir}/top'
                         print(f'Update: Copying files to {copy_location}...')
                         #print(f'Update: Copying files...')
