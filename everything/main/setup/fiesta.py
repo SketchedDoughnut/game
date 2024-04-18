@@ -31,7 +31,7 @@ class Install:
         # setting up all directories
 
         # FOR PYTHON
-        temp_main_wDir = os.path.dirname(os.path.abspath(__file__))
+        temp_main_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         temp_setup_wDir = os.path.join(temp_main_wDir, 'setup')
 
         # FOR COMPILE 
@@ -49,6 +49,7 @@ class Install:
             print('It appears this file is not within a setup folder. Defaulting to those paths.')
             self.main_wDir = temp_main_wDir
             self.setup_wDir = self.main_wDir
+            #self.setup_wDir = temp_setup_wDir
 
 
         self.rules = open(f'{self.setup_wDir}/config.json', 'r')
@@ -176,7 +177,7 @@ class Install:
                         # copy full-redo folder ABOVE current installation main, so it is:
                         # root: main, full-redo (in same dir)
                         print('Update: Copying control folder...')
-                        copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/full-redo"
+                        copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/full-redo"
                         dump_location = f'{ut2_wDir}/full-redo'
                         print(f'Update: Copying files to {dump_location}')
 
