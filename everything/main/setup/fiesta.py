@@ -29,14 +29,47 @@ class Install:
 
         # for run
         # setting up all directories
+        '''
+        path behaviors (why do I have to do this UGH)
+        
+        - when in a setup folder: FAIL
+            - file paths will not go back enough. Instead, main will go back into setup, making it main/setup.
+            - setup will add one more setup, making it main/setup/setup.
+            - these will not pass the folder requirement and will FALSELY claim that it is not in a folder.
 
-        # FOR PYTHON
+        - when not in a setup folder: WORK
+            - file paths do go back enough, making main into main/ (with desktop example, it makes it into desktop).
+            - setup (using desktop example), becomes desktop/setup (not used, however, if it is detected properly).
+
+        - so what we want to do:
+            - get main path first
+            - check for setup in main path (if __ in __)
+                - if yes, check if that path exists
+                    - if yes, set that path to setup path
+                    - rollback one more for main path
+            
+                - if no, we know it is not in a setup folder
+                    - make sure path exists
+                        - if yes, set that to main AND setup 
+            '''
+        
+        ####### NEW SYSTEM
+        # establish main directory
         temp_main_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        # print('initial main', temp_main_wDir)
 
-        # FOR COMPILE 
-        #temp_main_wDir = os.path.dirname(temp_main_wDir)
+        # check for setup in main path
+        if 'setup' in temp_main_wDir:
+            if os.path.exists(temp_main_wDir):
+                temp_setup_wDir = temp_main_wDir
+                temp_main_wDir = os.path.dirname(temp_main_wDir)
 
-        temp_setup_wDir = os.path.join(temp_main_wDir, 'setup')
+        else:
+            if os.path.exists(temp_main_wDir):
+                temp_setup_wDir = temp_main_wDir
+
+        # print('new main', temp_main_wDir)
+        # print('setup', temp_setup_wDir)
 
         if os.path.exists(temp_setup_wDir):
             in_folder = True
@@ -45,13 +78,17 @@ class Install:
             print('It appears this file is in a setup folder. Defaulting to those paths.')
             self.setup_wDir = temp_setup_wDir
             self.main_wDir = temp_main_wDir
+            print(self.main_wDir)
+            print(self.setup_wDir)
         
         elif not in_folder:
             print('It appears this file is not within a setup folder. Defaulting to those paths.')
+            #temp_main_wDir = os.path.dirname(temp_main_wDir)
             self.main_wDir = temp_main_wDir
-            #self.setup_wDir = self.main_wDir
-            self.setup_wDir = temp_setup_wDir
-
+            self.setup_wDir = temp_main_wDir
+            print(self.main_wDir)
+            print(self.setup_wDir)
+            #self.setup_wDir = temp_setup_wDir
 
         self.rules = open(f'{self.setup_wDir}/config.json', 'r')
 
@@ -799,7 +836,7 @@ Otherwise, enter 'y' to continue.""")
         print('Dumping delete path...')
         # for run
         if self.rules['env'] == 'run':
-            data = open(f'{self.main_wDir}/data.json', 'r')
+            data = open(f'{self.setup_wDir}/data.json', 'r')
         
         # - for codespace
         else:
@@ -811,7 +848,7 @@ Otherwise, enter 'y' to continue.""")
 
         # for run
         if self.rules['env'] == 'run':
-            data = open(f'{self.main_wDir}/data.json', 'w')
+            data = open(f'{self.setup_wDir}/data.json', 'w')
 
         # - for codespace
         else:
@@ -880,6 +917,8 @@ Otherwise, enter 'y' to continue.""")
                             os.remove(path)
                         except:
                             print('No prior shortcut.')
+                        
+                        time.sleep(0.25)
                             
                         import winshell
                         print('Creating shortcut...')
@@ -899,7 +938,7 @@ Otherwise, enter 'y' to continue.""")
 
                         # run
                         if self.rules['env'] == 'run':
-                            f = open(f'{self.main_wDir}/data.json', 'r')
+                            f = open(f'{self.setup_wDir}/data.json', 'r')
 
                         # - for codespace
                         else:
@@ -911,7 +950,7 @@ Otherwise, enter 'y' to continue.""")
 
                         # run
                         if self.rules['env'] == 'run':
-                            f = open(f'{self.main_wDir}/data.json', 'w')
+                            f = open(f'{self.setup_wDir}/data.json', 'w')
 
                         # - for codespace
                         else:
@@ -1133,7 +1172,7 @@ class Downloader:
                     urllib.request.urlretrieve(i[1], destination + '/' + i[0])
 
                     # modified segment by me
-                    print(f'- Installing file: /{i}')
+                    print(f'- Installing file: /{i[0]}')
             except Exception as e:
                 print(f'File download error: {e}')
 
