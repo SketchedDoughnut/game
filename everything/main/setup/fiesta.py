@@ -36,7 +36,8 @@ class Install:
         # FOR COMPILE 
         #temp_main_wDir = os.path.dirname(temp_main_wDir)
 
-        temp_setup_wDir = os.path.join(temp_main_wDir, 'main/setup')
+        temp_setup_wDir = os.path.join(temp_main_wDir, 'setup')
+
         if os.path.exists(temp_setup_wDir):
             in_folder = True
 
@@ -48,8 +49,8 @@ class Install:
         elif not in_folder:
             print('It appears this file is not within a setup folder. Defaulting to those paths.')
             self.main_wDir = temp_main_wDir
-            self.setup_wDir = self.main_wDir
-            #self.setup_wDir = temp_setup_wDir
+            #self.setup_wDir = self.main_wDir
+            self.setup_wDir = temp_setup_wDir
 
 
         self.rules = open(f'{self.setup_wDir}/config.json', 'r')
@@ -512,7 +513,7 @@ In order to finish this install, please go to --
                     self.top_wDir = (os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
                     # FOR COMPILE
-                    #self.top_wDir = os.path.dirname(self.top_wDir)
+                    self.top_wDir = os.path.dirname(self.top_wDir)
 
                     self.top_wDir = os.path.join(self.top_wDir, 'main/top')
                     os.system(f'python {self.top_wDir}/starter.py')
