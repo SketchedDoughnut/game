@@ -61,7 +61,7 @@ commit_label = commit_label[0]
 repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
 
 # tmp directory
-tmp_path = f'{wDir}/tmp'
+tmp_path = f'{high_wDir}/tmp' # changed from wDir to high_wDir
 
 # zip directory for install
 zip_path = f'{tmp_path}/latest-release.zip'
@@ -80,6 +80,7 @@ copy_destination = everything_path
 # variable to edit the data.json of the installed installer to: "shortcut": true
 # edit setup installer file
 esif = f'{everything_path}/setup/data.json'
+vsif = f'{everything_path}/top/container/version.json'
 #############################################################################
 #############################################################################
 #############################################################################
@@ -114,5 +115,9 @@ print('Update: Dumping into data.json...')
 f = open(esif, 'w')
 json.dump(td, f)
 f.close()
+print('Update: Reaching into version.json...')
+print('Update: Dumping into version.json...')
+f = open(vsif, 'w')
+json.dump(str(commit_label))
 print('Update: Cleaning up tmp...')
 shutil.rmtree(tmp_path)
