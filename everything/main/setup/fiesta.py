@@ -442,8 +442,8 @@ In order to finish this install, please go to --
                         print('Update: deleting previous top...')
                         try:
                             shutil.rmtree(f"{self.main_wDir}/top")
-                        except:
-                            print('Update: No prior top')
+                        except Exception as e:
+                            print('Update: No prior top:', e)
                         print('Update: Downloading .zip...')
                         import update.download as update_agent
                         repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
