@@ -552,7 +552,7 @@ In order to finish this install, please go to --
                     # FOR COMPILE
                     self.top_wDir = os.path.dirname(self.top_wDir)
 
-                    self.top_wDir = os.path.join(self.top_wDir, 'main/top')
+                    self.top_wDir = os.path.join(self.top_wDir, 'top')
                     os.system(f'python {self.top_wDir}/starter.py')
                     exit() 
 
