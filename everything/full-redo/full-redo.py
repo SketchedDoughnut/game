@@ -43,12 +43,13 @@ print('Update: Setting up variables...')
 # FOR PYTHON
 # wDir, folder above this (full-redo)
 wDir = os.path.dirname(os.path.abspath(__file__))
-high_wDir = os.path.dirname(wDir) # a directory above full-redo
+ # a directory above full-redo
+high_wDir = os.path.dirname(wDir)
 
 # FOR COMPILE
 # wDir, folder above this (full-redo)
-#wDir = os.path.dirname(wDir)
-#high_wDir = os.path.dirname(wDir)
+wDir = os.path.dirname(wDir)
+high_wDir = os.path.dirname(high_wDir) # changed from wDir to high_wDir
 
 # commit label, the random crap (in this case we ignore the bounds since we know we are installing full)
 commit_label = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
@@ -61,7 +62,7 @@ commit_label = commit_label[0]
 repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
 
 # tmp directory
-tmp_path = f'{high_wDir}/tmp' # changed from wDir to high_wDir
+tmp_path = f'{wDir}/tmp' # changed from wDir to high_wDir
 
 # zip directory for install
 zip_path = f'{tmp_path}/latest-release.zip'
@@ -79,8 +80,22 @@ copy_destination = everything_path
 # edit path
 # variable to edit the data.json of the installed installer to: "shortcut": true
 # edit setup installer file
-esif = f'{everything_path}/setup/data.json'
-vsif = f'{everything_path}/top/container/version.json'
+
+esif = f'{everything_path}/main/setup/data.json' # added main
+vsif = f'{everything_path}/main/top/container/version.json' # added main
+
+print(wDir)
+print(high_wDir)
+print(commit_label)
+print(repo_url)
+print(tmp_path)
+print(zip_path)
+print(extract_path)
+print(everything_path)
+print(copy_source)
+print(copy_destination)
+print(esif)
+print(vsif)
 #############################################################################
 #############################################################################
 #############################################################################
