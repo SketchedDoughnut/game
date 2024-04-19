@@ -34,7 +34,7 @@ class Install:
         temp_main_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
         # FOR COMPILE 
-        temp_main_wDir = os.path.dirname(temp_main_wDir)
+        #temp_main_wDir = os.path.dirname(temp_main_wDir)
 
         temp_setup_wDir = os.path.join(temp_main_wDir, 'main/setup')
         if os.path.exists(temp_setup_wDir):
