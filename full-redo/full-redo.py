@@ -19,8 +19,16 @@ import update.download as f_download
 import update.copy as f_copy
 import update.extract as f_extract
 
+# commit label, the random crap (in this case we ignore the bounds since we know we are installing full)
+commit_label = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
+commit_label = commit_label.json()
+commit_label = str(commit_label['body'])
+commit_label = commit_label.split()
+commit_label = commit_label[0]
+
 print('Welcome to part 2/2 of the update.')
 print('The update will continue when you authorize it.')
+print(f'Installing version: {commit_label}')
 input('Enter anything to continue: ')
 print('---------------')
 '''
@@ -49,13 +57,6 @@ high_wDir = os.path.dirname(wDir) # a directory above full-redo
 # wDir, folder above this (full-redo)
 wDir = os.path.dirname(wDir)
 high_wDir = os.path.dirname(wDir)
-
-# commit label, the random crap (in this case we ignore the bounds since we know we are installing full)
-commit_label = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
-commit_label = commit_label.json()
-commit_label = str(commit_label['body'])
-commit_label = commit_label.split()
-commit_label = commit_label[0]
 
 # url for install
 repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
