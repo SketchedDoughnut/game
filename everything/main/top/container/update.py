@@ -173,8 +173,9 @@ def no_confirm():
     confirm = True
 ################################################################################################
 
-print('----------------------------')
-print('NOTE: THIS UPDATE AGENT IS CURRENTLY DEPRECIATED. WHY? I AM LAZY.')
+# not depreciated anymore :D
+# print('----------------------------')
+# print('NOTE: THIS UPDATE AGENT IS CURRENTLY DEPRECIATED. WHY? I AM LAZY.')
 
 # button data
 width = (250)
