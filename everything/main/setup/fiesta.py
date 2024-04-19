@@ -83,12 +83,10 @@ class Install:
         
         elif not in_folder:
             print('It appears this file is not within a setup folder. Defaulting to those paths.')
-            #temp_main_wDir = os.path.dirname(temp_main_wDir)
             self.main_wDir = temp_main_wDir
             self.setup_wDir = temp_main_wDir
             print(self.main_wDir)
             print(self.setup_wDir)
-            #self.setup_wDir = temp_setup_wDir
 
         self.rules = open(f'{self.setup_wDir}/config.json', 'r')
 

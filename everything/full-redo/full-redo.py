@@ -99,7 +99,7 @@ except:
     print('Update: No prior everything')
 print('Update: Creating new tmp...')
 os.mkdir(tmp_path)
-print('Update:  Downloading .zip...')
+print('Update: Downloading .zip...')
 f_download.download_latest_release(repo_url, tmp_path)
 print('Update: Extracting files...')
 f_extract.extract(zip_path, tmp_path)
