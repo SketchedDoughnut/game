@@ -74,6 +74,8 @@ import json
 
 ### pygame 
 ## pygame
+# https://stackoverflow.com/questions/5814125/how-to-designate-where-pygame-creates-the-game-window
+os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
 # W, H = pygame.display.Info().current_w, pygame.display.Info().current_h
 
@@ -152,6 +154,7 @@ class Profiles:
     SONGS
     - Boggle by Mega Mango
     - Loser, Baby (as per request) from Hazbin Hotel
+    - Everybody Wants to Rule the World (tears for fears)
     '''
     
     def __init__(self):
@@ -166,6 +169,7 @@ class Profiles:
         ## set up music player
         self.player = pygame.mixer
         self.player.init()
+
 
     def music_delay(self, time_amount, path):
         time.sleep(time_amount)
@@ -372,6 +376,15 @@ class Profiles:
                     starting_toggle = True
         print('Main playback done.')
 
+    # def prof_setup(self):
+    #     # song lists
+    #     sg_thread = threading.Thread(target=lambda:self.Stayed_Gone(), daemon=True) # stayed gone
+    #     wtr_thread = threading.Thread(target=lambda:self.Whats_the_Rush(), daemon=True) # whats the rush
+    #     self.song_dict = {
+    #         "Stayed Gone": sg_thread,
+    #         "Whats the Rush?": wtr_thread
+    #     }
+
 
 class Notes:
     def __init__(self):
@@ -496,10 +509,34 @@ zone.handler()
 notes = Notes()
 points = Points()
 
+## NEW ADDITION - setting up song dict
+#notes.profiles.prof_setup()
+
+## NEW ADDITION - before loading song profile, allow them to select
+import song_select
+chosen_song = song_select.display_loop()
+
+# restart
+os.environ['SDL_VIDEO_CENTERED'] = '1'
+pygame.init()
+window = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("thing!")
+
+# establish dict?
+sg_thread = threading.Thread(target=lambda:notes.profiles.Stayed_Gone(), daemon=True) # stayed gone
+wtr_thread = threading.Thread(target=lambda:notes.profiles.Whats_the_Rush(), daemon=True) # whats the rush
+song_dict = {
+    "Stayed Gone": sg_thread,
+    "Whats the Rush?": wtr_thread
+}
+
+chosen_song_thread = song_dict[chosen_song]
+chosen_song_thread.start()
+
 # start music thread with chosen profile
 #music_thread = threading.Thread(target=lambda:notes.profiles.Whats_the_Rush(), daemon=True)
-music_thread = threading.Thread(target=lambda:notes.profiles.Stayed_Gone(), daemon=True)
-music_thread.start()
+#music_thread = threading.Thread(target=lambda:notes.profiles.Stayed_Gone(), daemon=True)
+#music_thread.start()
 
 # set up clock (not used)
 clock = pygame.time.Clock()
@@ -618,4 +655,4 @@ window.blit(text, text_rect)
 '''
 
 pygame.quit()
-music_thread.join(timeout=0)
+chosen_song_thread.join(timeout=0)
