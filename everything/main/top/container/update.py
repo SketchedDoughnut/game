@@ -168,7 +168,7 @@ def no_confirm():
     _cancel = False
     text_msg = 'Cancelling...'
     text_height = (HEIGHT / 2)
-    time.sleep(2)
+    time.sleep(0.75)
     do_exit = True
     confirm = True
 ################################################################################################
