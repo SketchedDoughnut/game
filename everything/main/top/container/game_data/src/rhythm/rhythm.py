@@ -517,7 +517,6 @@ import song_select
 chosen_song = song_select.display_loop()
 
 # restart
-os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("thing!")
