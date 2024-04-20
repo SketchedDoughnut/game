@@ -211,8 +211,8 @@ while True:
         # if close window, prompt for exit
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                if not exit_thread_true.is_alive:
-                    exit_thread_true.start()
+                if not exit_thread.is_alive:
+                    exit_thread.start()
 
         keys = pygame.key.get_pressed()
         mouse_pos = pygame.mouse.get_pos()
