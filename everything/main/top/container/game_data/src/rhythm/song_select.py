@@ -72,6 +72,8 @@ class Select:
 
 
     def add_to_queue(self):
+        print('--------------------------')
+        print('Colors selected: ') #
         for y in self.profiles_y:
             obj = Format()
             self.colors = Colors()
@@ -84,6 +86,7 @@ class Select:
                 obj.color = self.colors.rand1
             elif tmp_num == 2:
                 obj.color = self.colors.rand2
+            print('-', obj.color) #
             self.draw_queue.append(obj)
     
 
@@ -107,6 +110,7 @@ class Select:
         global running
         for i in self.profiles:
             if i[1]:
+                print('--------------------------')
                 print(f'Returning selected song: {i[0]}')
                 running = False
                 return i[0]

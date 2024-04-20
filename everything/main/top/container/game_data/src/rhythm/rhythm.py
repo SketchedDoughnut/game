@@ -376,14 +376,14 @@ class Profiles:
                     starting_toggle = True
         print('Main playback done.')
 
-    # def prof_setup(self):
-    #     # song lists
-    #     sg_thread = threading.Thread(target=lambda:self.Stayed_Gone(), daemon=True) # stayed gone
-    #     wtr_thread = threading.Thread(target=lambda:self.Whats_the_Rush(), daemon=True) # whats the rush
-    #     self.song_dict = {
-    #         "Stayed Gone": sg_thread,
-    #         "Whats the Rush?": wtr_thread
-    #     }
+    def prof_setup(self):
+        # song lists
+        sg_thread = threading.Thread(target=lambda:self.Stayed_Gone(), daemon=True) # stayed gone
+        wtr_thread = threading.Thread(target=lambda:self.Whats_the_Rush(), daemon=True) # whats the rush
+        self.song_dict = {
+            "Stayed Gone": sg_thread,
+            "Whats the Rush?": wtr_thread
+        }
 
 
 class Notes:
@@ -509,29 +509,22 @@ zone.handler()
 notes = Notes()
 points = Points()
 
-## NEW ADDITION - setting up song dict
-#notes.profiles.prof_setup()
-
 ## NEW ADDITION - before loading song profile, allow them to select
+# run display menu
 import song_select
 chosen_song = song_select.display_loop()
 
-# restart
+# restart vars
 pygame.init()
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("thing!")
 
-# establish dict?
-sg_thread = threading.Thread(target=lambda:notes.profiles.Stayed_Gone(), daemon=True) # stayed gone
-wtr_thread = threading.Thread(target=lambda:notes.profiles.Whats_the_Rush(), daemon=True) # whats the rush
-song_dict = {
-    "Stayed Gone": sg_thread,
-    "Whats the Rush?": wtr_thread
-}
+# get dict entry
+notes.profiles.prof_setup()
+ct = notes.profiles.song_dict[chosen_song] # ct = chosen thread
+ct.start()
 
-chosen_song_thread = song_dict[chosen_song]
-chosen_song_thread.start()
-
+## OLD SYSTEM
 # start music thread with chosen profile
 #music_thread = threading.Thread(target=lambda:notes.profiles.Whats_the_Rush(), daemon=True)
 #music_thread = threading.Thread(target=lambda:notes.profiles.Stayed_Gone(), daemon=True)
