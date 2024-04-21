@@ -48,8 +48,9 @@ class Select:
     def __init__(self):
 
         # sets up profile info
-        self.profile_count = 3
+        # self.profile_count = 3
         self.profiles = [['Stayed Gone', False], ['Whats the Rush?', False], ['Everybody Wants To Rule The World', False]]
+        self.profile_count = len(self.profiles)
         self.profiles_y = []
 
         # height of boxes 
