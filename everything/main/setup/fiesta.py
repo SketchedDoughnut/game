@@ -88,10 +88,12 @@ class Install:
             print(self.main_wDir)
             print(self.setup_wDir)
 
-        self.rules = open(f'{self.setup_wDir}/config.json', 'r')
+        self.rules1 = open(f'{self.setup_wDir}/config.json', 'r') # self.rules > self.rules1
 
         # will contain everything from config.json, including environment information
-        self.rules = json.load(self.rules)
+        self.rules = json.load(self.rules1)
+
+        self.rules1.close() # self.rules > self.rules1, didn't close before
 
         # always runs, mode is not used
         if mode == 0: 
