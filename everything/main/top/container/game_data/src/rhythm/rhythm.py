@@ -378,11 +378,9 @@ class Profiles:
 
     def prof_setup(self):
         # song lists
-        sg_thread = threading.Thread(target=lambda:self.Stayed_Gone(), daemon=True) # stayed gone
-        wtr_thread = threading.Thread(target=lambda:self.Whats_the_Rush(), daemon=True) # whats the rush
         self.song_dict = {
-            "Stayed Gone": sg_thread,
-            "Whats the Rush?": wtr_thread
+            "Stayed Gone": threading.Thread(target=lambda:self.Stayed_Gone(), daemon=True), # Stayed Gone
+            "Whats the Rush?": threading.Thread(target=lambda:self.Whats_the_Rush(), daemon=True) # Whats the Rush
         }
 
 
