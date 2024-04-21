@@ -103,6 +103,7 @@ ENV = True
 ## active keys to register
 #REGISTER = ['a', 's', 'd', 'f', 'j', 'k', 'l', ';']
 REGISTER = [[0, K_s], [1, K_d], [2, K_f], [3, K_j], [4, K_k], [5, K_l]]
+DISPLAY_REGISTER = [[0, 'S'], [1, 'D'], [2, 'F'], [3, 'J'], [4, 'K'], [5, 'L']]
 #EXITS = [[K_LCTRL, K_c], [K_LCTRL, K_w], [K_ESCAPE]]
 
 #######################################################################################
@@ -421,16 +422,53 @@ class Points:
 class Draw:
     def __init__(self):
         self.draw_list = []
+        self.text_list = []
 
     def draw(self):
         for obj in self.draw_list:
             pygame.draw.rect(obj.window, obj.color, (obj.x, obj.y, obj.width, obj.height))
+        for obj in self.text_list:
+            window.blit(obj[0], obj[1])
+
+
+# class Text: #########################################################################################################
+#     def __init__(self):
+#         self.num_divs = 6
+#         self.div_width = WIDTH / self.num_divs # for the new letter gen system
+#         self.divs_pos = []
+
+#         # Calculate the gap between each cube
+#         self.gap = (WIDTH - (self.num_divs * self.div_width)) / (self.num_divs + 1)
+    
+#     def append(self):
+#         list_out = []
+#         self.move_up = 100
+#         font = pygame.font.Font('freesansbold.ttf', round(36 * 1.5))
+#         for i in range(self.num_divs):
+#             active_letter = DISPLAY_REGISTER[i][1]
+#             text = font.render(str(active_letter), True, BLACK, None) # text, some bool(?), text color, bg color
+#             self.cube_x = (i + 1) * self.gap + i * self.div_width
+#             self.height = HEIGHT - (HEIGHT - self.move_up)
+
+#             # obj format
+#             self.obj = Data_format()
+#             #self.obj.window = window
+#             #self.obj.color = BLACK
+#             self.obj.x = self.cube_x + 200
+#             self.obj.y = HEIGHT - self.move_up
+#             self.obj.width = self.div_width
+#             self.obj.height = self.height
+#             self.obj = pygame.Rect(self.obj.x, self.obj.y, self.obj.width, self.obj.height)
+#             list_out.append([text, self.obj])
+            
+#         return list_out
 
 
 class Div:
     def __init__(self):
         # class object
         self.draw = Draw()
+        #self.text = Text() #########################################################################################################
         self.divs_pos = []
         self.num_divs = 5
         self.div_width = 10  # Adjust this as needed
@@ -455,6 +493,10 @@ class Div:
             self.obj.height = self.height
             #print('Adding dividers to background draw list...')
             #self.draw.draw_list.append(self.obj)
+
+    def dump_text(self, list_in):
+        self.draw.text_list = list_in
+        
 
 
 class Zone:
@@ -498,6 +540,7 @@ class Zone:
         self.append()
         self.draw()
         self.div.append()
+        #self.div.dump_text(self.div.text.append()) #########################################################################################################
 
 
 #######################################################################################
@@ -645,4 +688,4 @@ window.blit(text, text_rect)
 '''
 
 pygame.quit()
-chosen_song_thread.join(timeout=0)
+ct.join(timeout=0)
