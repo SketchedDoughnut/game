@@ -757,7 +757,7 @@ while running:
 
     if paused == False:
         # moves notes down
-        print('iter')
+        #print('iter')
         notes.profiles.data.iter()
     pygame.display.update()
 
