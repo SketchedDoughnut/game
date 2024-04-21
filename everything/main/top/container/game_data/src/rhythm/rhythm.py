@@ -377,11 +377,81 @@ class Profiles:
                     starting_toggle = True
         print('Main playback done.')
 
+    def Rule_The_World(self):
+        print('--------------------------')
+        print('Main music thread started.')
+        #filename = os.path.join(wDir, 'setup/analyze.py')
+        ## preload files
+        # paths
+        # get path to working directory
+        # https://stackoverflow.com/questions/21957131/python-not-finding-file-in-the-same-directory
+        wDir = os.path.dirname(os.path.abspath(__file__))
+        if ENV:
+            left_timing_path = os.path.join(wDir, "maps\\rule_the_world\\timings_1_0-5.json")
+            left_track_path = os.path.join(wDir, "maps\\rule_the_world\\tracks_1_0-5.json")
+            music_path = os.path.join(wDir, "songs\\rule_the_world.mp3")
+        elif not ENV:
+            left_timing_path = "main\\top\\game_data\\src\\rhythm\\maps\\rule_the_world\\timings_1_0-5.json"
+            left_track_path = "main\\top\\game_data\\src\\rhythm\\maps\\rule_the_world\\tracks_1_0-5.json"
+            music_path = "main\\top\\game_data\\src\\rhythm\\songs\\rule_the_world.mp3"
+        # load left time track
+        print('Loading left timing track...')
+        f = open(left_timing_path, 'r')
+        left_time_track_list = json.load(f)
+        f.close()
+        # load left position track
+        print('Loading left position track...')
+        f = open(left_track_path, 'r')
+        left_track_list = json.load(f)
+        f.close()
+        
+        ## vars
+        # toggle when first starting, starts music and built-in delay
+        starting_toggle = False
+        print('--------------------------')
+        print('Profile: "Everybody Wants To Rule The World" by Tears for Fears')
+        print('--------------------------')
+        # main iter loop
+        for times_left, track_left in zip(left_time_track_list, left_track_list):
+            if times_left[0] == 'end':
+                pass
+            else:
+                main_delay = round(times_left[0], 3)
+                main_delay_ms = int(main_delay * 1000)
+                if starting_toggle == True:
+                    if paused == True:
+                        while paused == True:
+                            pass
+                    elif paused == False:
+                        time.sleep(main_delay)
+                        x_val = notes.notes_pos[track_left]
+                        obj = Data_format()
+                        obj.window = window
+                        obj.color = BLUE
+                        obj.x = x_val
+                        obj.y = 0
+                        obj.width = self.CUBE_WIDTH
+                        obj.height = self.CUBE_HEIGHT
+                        self.data.add_to_active(obj)
+                if starting_toggle == False:
+                    self.player.music.load(music_path)
+                    self.player.music.set_volume(0.50)
+                    #self.player.music.set_volume(0.00)
+                    self.player.music.play()
+                    start_delay = 63.5 - 2.65 # delay for timings_1_0-5
+                    start_delay_ms = int(1000 * start_delay)
+                    print('Starting playback.')
+                    print(f'- start delaying by {start_delay}s, {start_delay_ms}ms')
+                    time.sleep(start_delay)
+                    starting_toggle = True
+        print('Main playback done.')
+
     def prof_setup(self):
         # song lists
         self.song_dict = {
             "Stayed Gone": threading.Thread(target=lambda:self.Stayed_Gone(), daemon=True), # Stayed Gone
-            "Whats the Rush?": threading.Thread(target=lambda:self.Whats_the_Rush(), daemon=True) # Whats the Rush
+            "Whats the Rush?": threading.Thread(target=lambda:self.Whats_the_Rush(), daemon=True), # Whats the Rush
+            "Everybody Wants To Rule The World": threading.Thread(target=lambda:self.Rule_The_World(), daemon=True) # Everybody Wants to Rule the World
         }
 
 

@@ -16,7 +16,7 @@ from pygame.locals import *
 pygame.init()
 # WIDTH = pygame.display.Info().current_w
 # HEIGHT = pygame.display.Info().current_h
-WIDTH = 500
+WIDTH = 1000 # changed to 1000
 HEIGHT = 500
 
 # essentials
@@ -48,8 +48,8 @@ class Select:
     def __init__(self):
 
         # sets up profile info
-        self.profile_count = 2
-        self.profiles = [['Stayed Gone', False], ['Whats the Rush?', False]]
+        self.profile_count = 3
+        self.profiles = [['Stayed Gone', False], ['Whats the Rush?', False], ['Everybody Wants To Rule The World', False]]
         self.profiles_y = []
 
         # height of boxes 
