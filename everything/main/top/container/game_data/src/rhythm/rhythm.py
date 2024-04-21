@@ -116,6 +116,14 @@ pygame.display.set_caption("thing!")
 
 #######################################################################################
 
+### functions
+
+## func var
+paused = False
+# pausing?
+def pause_game():
+    while paused:
+        pass
 
 ### classes
 
@@ -258,24 +266,26 @@ class Profiles:
                 main_delay = round(times_left[0], 3)
                 main_delay_ms = int(main_delay * 1000)
                 if starting_toggle == True:
-                    if paused == True:
-                        while paused == True:
-                            pass
-                    elif paused == False:
-                        if second_toggle == False:
-                            print('- music delay thread started.')
-                            threading.Thread(target=lambda:self.music_delay(0.95, music_path)).start()
-                            second_toggle = True
-                        time.sleep(main_delay)
-                        x_val = notes.notes_pos[track_left]
-                        obj = Data_format()
-                        obj.window = window
-                        obj.color = BLUE
-                        obj.x = x_val
-                        obj.y = 0
-                        obj.width = self.CUBE_WIDTH
-                        obj.height = self.CUBE_HEIGHT
-                        self.data.add_to_active(obj)
+                    
+                    if paused:
+                        while paused:
+                            print('player paused')
+
+                    if second_toggle == False:
+                        print('- music delay thread started.')
+                        threading.Thread(target=lambda:self.music_delay(0.95, music_path)).start()
+                        second_toggle = True
+
+                    time.sleep(main_delay)
+                    x_val = notes.notes_pos[track_left]
+                    obj = Data_format()
+                    obj.window = window
+                    obj.color = BLUE
+                    obj.x = x_val
+                    obj.y = 0
+                    obj.width = self.CUBE_WIDTH
+                    obj.height = self.CUBE_HEIGHT
+                    self.data.add_to_active(obj)
                 if starting_toggle == False:
                     # how long lyrics take to start - how long it takes square to travel down screen
                     #start_delay = 1.85 - 2.65 # delay for timings 1_0-5
@@ -648,7 +658,6 @@ clock = pygame.time.Clock()
 pressed1 = False
 pressed2 = False
 space_pressed = False
-paused = False
 running = True
 while running:
     # set fps to 60
@@ -688,6 +697,7 @@ while running:
     #     if space_pressed == False:
     #         if paused == False:
     #             paused = True
+    #             print('music paused')
     #             notes.profiles.player.music.pause()
     #         elif paused == True:
     #             paused = False
@@ -747,6 +757,7 @@ while running:
 
     if paused == False:
         # moves notes down
+        print('iter')
         notes.profiles.data.iter()
     pygame.display.update()
 
