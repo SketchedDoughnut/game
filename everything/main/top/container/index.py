@@ -35,8 +35,10 @@ BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
-WIDTH = 1920
-HEIGHT = 1080
+#WIDTH = 1920
+#HEIGHT = 1080
+WIDTH = pygame.display.Info().current_w
+HEIGHT = pygame.display.Info().current_h
 
 def update():
    print('----------------------------')
