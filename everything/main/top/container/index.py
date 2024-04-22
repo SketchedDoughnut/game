@@ -209,12 +209,12 @@ while True:
     if start_1:
       print('----------------------------')
       print('Redirecting into flappy bird...')
-      os.system(f'python {path_list[2][0]}')
+      os.system(f'python {path_list[0][0]}')
       setup_bool = False
     elif start_2:
       print('----------------------------')
       print('Redirecting into rhythm game...')
-      os.system(f'python {path_list[3][0]}')
+      os.system(f'python {path_list[1][0]}')
       setup_bool = False
 
 print('----------------------------')
