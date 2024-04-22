@@ -89,6 +89,12 @@ FILE_NAME = 'rhythm.py'
 WIDTH = 1920 
 HEIGHT = 1080
 
+'''
+Everything that is dependent on screen dimensions:
+- bottom zone
+- notes width (height?)
+- time delay to handle how much to delay songs / notes for travel from top to bottom of screen
+'''
 ## a crapton of colors (thank you ChatGPT)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -702,10 +708,11 @@ points = Points()
 
 ## NEW ADDITION - before loading song profile, allow them to select
 # run display menu
-import song_select
-chosen_song = song_select.display_loop()
+import tools.song_select as ss
+chosen_song = ss.display_loop()
 
 # restart vars
+os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("thing!")
