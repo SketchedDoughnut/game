@@ -1005,10 +1005,10 @@ Otherwise, enter 'y' to continue.""")
                         path = os.path.join(desktop, "game_name.lnk") # CHANGE game_name TO NAME
                         self.abs_shortcut = path
                         #target = f"{self.install_path}/main/top/starter.exe" # CHANGE TO EXE
-                        target = f"{self.install_path}/everything/main/setup/fiesta-modern.exe" # CHANGE TO EXE
+                        target = f"{self.install_path}/everything/main/setup/fiesta.exe" # CHANGE TO EXE
                         wDir = f"{self.install_path}/everything/main/setup"
                         #icon = f"{self.install_path}/main/top/starter.exe" # CHANGE TO EXE
-                        icon = f"{self.install_path}/everything/main/setup/fiesta-modern.exe" # CHANGE TO EXE
+                        icon = f"{self.install_path}/everything/main/setup/fiesta.exe" # CHANGE TO EXE
 
                         # calls on function here with data from above
                         self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)
