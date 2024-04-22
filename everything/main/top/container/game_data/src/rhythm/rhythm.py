@@ -86,8 +86,10 @@ pygame.init()
 ## file name
 FILE_NAME = 'rhythm.py'
 ## screen
-WIDTH = 1920 
-HEIGHT = 1080
+# WIDTH = 1920 
+# HEIGHT = 1080
+WIDTH = pygame.display.Info().current_w
+HEIGHT = pygame.display.Info().current_h
 
 '''
 Everything that is dependent on screen dimensions:
@@ -178,8 +180,8 @@ class Profiles:
         self.data = Data()
 
         ## constants
-        self.CUBE_HEIGHT = 10
-        self.CUBE_WIDTH = 100
+        self.CUBE_HEIGHT = (10 / 1080) * HEIGHT
+        self.CUBE_WIDTH = (100 / 1920) * WIDTH
 
         ## set up music player
         self.player = pygame.mixer
@@ -673,7 +675,7 @@ class Zone:
 
         # size
         self.width = WIDTH
-        self.height = gap
+        self.height = (gap / 1080) * HEIGHT
 
     def append(self):
         # set up draw object
