@@ -912,19 +912,19 @@ Otherwise, enter 'y' to continue.""")
                 print('---------------')
                 print('Update: Cleaning tmp...')
                 try:
-                    shutil.rmtree(f'{self.setup_wDir}/tmp')
+                    shutil.rmtree(f'{self.install_path}/tmp')
                 except:
                     print('Update: No prior tmp')
                 print('Update: Making tmp...')
-                os.mkdir(f'{self.setup_wDir}/tmp')
+                os.mkdir(f'{self.install_path}/tmp')
 
                 # downloading .zip
                 repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
-                zip_download_path = f"{self.setup_wDir}/tmp/latest_release.zip"  # Change the path if needed
+                zip_download_path = f"{self.install_path}/tmp/latest_release.zip"  # Change the path if needed
                 d.download_latest_release(repo_url, zip_download_path)
 
                 print('Update: Extracting files...')
-                ext_download_path = f"{self.setup_wDir}/tmp"
+                ext_download_path = f"{self.install_path}/tmp"
                 e.extract(zip_download_path, ext_download_path)
 
                 print('Update: Getting commit label...')
@@ -934,19 +934,19 @@ Otherwise, enter 'y' to continue.""")
                 release_version = release_version.split()
                 self.release_version = release_version[0]
 
+                copy_location = f'{(self.install_path)}'
                 print(f'Update: Copying files to {copy_location}')
-                copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/main/top/container/game_data"
-                copy_location = f'{(self.main_wDir)}/top/container/game_data'
+                copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/"
                 c.copy(copy_source, copy_location)
 
                 print('Update: Cleaning up tmp...')
                 try:
-                    shutil.rmtree(f'{self.setup_wDir}/tmp')
+                    shutil.rmtree(f'{self.install_path}/tmp')
                 except:
                     print('Update: No tmp')
 
                 print('Update: Checking install path...')
-                if os.path.exists(f'{self.main_wDir}/top/container/game_data'):
+                if os.path.exists(f'{self.install_path}/everything'):
                     pass
                 else:
                     print('!!! UPDATE ERROR: The installed directory does not exist. Cancelling.')
