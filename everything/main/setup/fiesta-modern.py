@@ -77,6 +77,7 @@ class Install:
         if in_folder:
             print('It appears this file is in a setup folder. Defaulting to those paths.')
             #self.setup_wDir = os.path.join(temp_setup_wDir, 'setup') # dont think we need this?
+            self.setup_wDir = temp_setup_wDir
             self.main_wDir = temp_main_wDir
             print(self.main_wDir)
             print(self.setup_wDir)
@@ -1004,10 +1005,10 @@ Otherwise, enter 'y' to continue.""")
                         path = os.path.join(desktop, "game_name.lnk") # CHANGE game_name TO NAME
                         self.abs_shortcut = path
                         #target = f"{self.install_path}/main/top/starter.exe" # CHANGE TO EXE
-                        target = f"{self.install_path}/everything/main/setup/fiesta.exe" # CHANGE TO EXE
+                        target = f"{self.install_path}/everything/main/setup/fiesta-modern.exe" # CHANGE TO EXE
                         wDir = f"{self.install_path}/everything/main/top"
                         #icon = f"{self.install_path}/main/top/starter.exe" # CHANGE TO EXE
-                        icon = f"{self.install_path}/everything/main/setup/fiesta.exe" # CHANGE TO EXE
+                        icon = f"{self.install_path}/everything/main/setup/fiesta-modern.exe" # CHANGE TO EXE
 
                         # calls on function here with data from above
                         self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)
