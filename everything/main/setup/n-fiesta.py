@@ -934,9 +934,9 @@ Otherwise, enter 'y' to continue.""")
                 release_version = release_version.split()
                 self.release_version = release_version[0]
 
-                copy_location = f'{(self.install_path)}'
+                copy_location = f'{(self.install_path)}/everything'
                 print(f'Update: Copying files to {copy_location}')
-                copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/"
+                copy_source = f"{ext_download_path}/SketchedDoughnut-development-{self.release_version}/everything/"
                 c.copy(copy_source, copy_location)
 
                 print('Update: Cleaning up tmp...')
@@ -976,29 +976,29 @@ Otherwise, enter 'y' to continue.""")
 
                 # writing run path to text file (not used, not up to date)
                 try:
-                    print('Assembling text file...')
+                    print('Update: Assembling text file...')
                     url_path = f'{self.install_path}/everything/main/top/content_url.txt'
                     f = open(url_path, 'w')
                     f.write(f'{self.install_path}/everything/main/top/game_data/main.py')
                     f.close()
 
                 except Exception as e:
-                    print(f'Error with text file: {e}')
+                    print(f'!!! Error with text file: {e}')
 
                 # formats info and runs shortcut making function
                 try:
                     if self.desktop_shortcut == True:
                         #print('---------------')
-                        print('Deleting previous shortcut...')
+                        print('Update: Deleting previous shortcut...')
                         try:
                             os.remove(path)
                         except:
-                            print('No prior shortcut.')
+                            print('Update: No prior shortcut.')
                         
                         time.sleep(0.25)
                             
                         import winshell
-                        print('Creating shortcut...')
+                        print('Update: Creating shortcut...')
                         desktop = winshell.desktop()
                         
                         path = os.path.join(desktop, "game_name.lnk") # CHANGE game_name TO NAME
@@ -1011,7 +1011,7 @@ Otherwise, enter 'y' to continue.""")
 
                         # calls on function here with data from above
                         self.createShortcut(target=target, path=path, wDir=wDir, icon=icon)
-                        print('Dumping shortcut path...')
+                        print('Update: Dumping shortcut path...')
 
                         # run
                         if self.rules['env'] == 'run':
@@ -1040,7 +1040,7 @@ Otherwise, enter 'y' to continue.""")
                         pass
 
                 except Exception as e:
-                    print(f'Error creating shortcut: {e}')
+                    print(f'!!! Error creating shortcut: {e}')
 
             except Exception as e:
                 print(f'!!! Error while downloading: {e}')
@@ -1096,7 +1096,7 @@ Otherwise, enter 'y' to continue.""")
     # more of an assurance honestly, but eh
     def edit_data(self):
         print('---------------')
-        print('Updating installed data.json...')
+        print('Update: Updating installed data.json...')
         f = open(f'{self.install_path}/everything/main/setup/data.json', 'r')
         content = json.load(f)
         f.close()
@@ -1106,19 +1106,19 @@ Otherwise, enter 'y' to continue.""")
         f = open(f'{self.install_path}/everything/main/setup/data.json', 'w')
         json.dump(content, f)
         f.close()
-        print('Installed data.json updated.')
+        print('Update: Installed data.json updated.')
 
-        print('Updating installed state.json...')
-        f = open(f'{self.install_path}/everything/main/setup/data.json', 'w')
+        print('Update: Updating installed state.json...')
+        f = open(f'{self.install_path}/everything/main/setup/state.json', 'w')
         json.dump(False, f)
         f.close()
-        print('Installed state.json updated.')
+        print('Update: Installed state.json updated.')
 
-        print('Updating installed version.json...')
+        print('Update: Updating installed version.json...')
         f = open(f'{self.install_path}/everything/main/top/container/version.json', 'w')
         json.dump(self.release_version, f)
         f.close()
-        print('Installed version.json updated.')
+        print('Update: Installed version.json updated.')
 
 
 
