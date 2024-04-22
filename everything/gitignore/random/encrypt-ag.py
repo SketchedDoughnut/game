@@ -10,6 +10,7 @@ files = os.listdir(road)
 def iter(road, mode):
     contains = False
     if mode == 'encrypt':
+        # https://www.geeksforgeeks.org/how-to-iterate-over-files-in-directory-using-python/
         for filename in os.listdir(road):
             f = os.path.join(road, filename)
             if os.path.isdir(f):
