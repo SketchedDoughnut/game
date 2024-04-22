@@ -37,6 +37,7 @@ WHITE = (255, 255, 255)
 
 #WIDTH = 1920
 #HEIGHT = 1080
+pygame.init()
 WIDTH = pygame.display.Info().current_w
 HEIGHT = pygame.display.Info().current_h
 
