@@ -133,6 +133,7 @@ def exit_handler(mode=False):
 
 def yes_confirm():
     global do_exit, confirm, text_msg, text_height, _cancel, update_exit
+    print('Update comfirmed. Initializing...')
     # objective is to reach back up to data.json and change update and bounds
     _cancel = False
     text_msg = 'Reaching...'
@@ -159,6 +160,7 @@ def yes_confirm():
     json.dump(True, f)
     f.close()
     text_msg = 'Please relaunch.'
+    print('Update setup finished')
     time.sleep(1.5)
     exit_handler()
 
