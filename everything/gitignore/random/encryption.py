@@ -17,6 +17,8 @@ import time
 
 # attempt to open a file, and encrypt its contents. Use a previous established key
 path = 'everything/main/top/starter.py'
+key = b'5VsQ04U13bSDhhbv8Uk9nFbPfPY1VGoVhkA87JDyYdA='
+f = Fernet(key)
 print('Reading...')
 file = open(path, 'rb')
 #file_content = bytes(file.read(), 'utf-8')
@@ -24,8 +26,6 @@ file_content = file.read()
 file.close()
 
 print('Encrypting...')
-key = b'5VsQ04U13bSDhhbv8Uk9nFbPfPY1VGoVhkA87JDyYdA='
-f = Fernet(key)
 encrypted = f.encrypt(file_content)
 
 print('Writing...')
