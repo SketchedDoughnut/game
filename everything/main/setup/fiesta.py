@@ -929,7 +929,7 @@ Otherwise, enter 'y' to continue.""")
                         self.abs_shortcut = path
                         #target = f"{self.install_path}/main/top/starter.exe" # CHANGE TO EXE
                         target = f"{self.install_path}/everything/main/setup/fiesta.exe" # CHANGE TO EXE
-                        wDir = f"{self.install_path}/everything/main/top"
+                        wDir = f"{self.install_path}/everything/main/setup"
                         #icon = f"{self.install_path}/main/top/starter.exe" # CHANGE TO EXE
                         icon = f"{self.install_path}/everything/main/setup/fiesta.exe" # CHANGE TO EXE
 
