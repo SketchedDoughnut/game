@@ -5,18 +5,20 @@ import os
 
 # vars
 wDir = os.path.dirname(os.path.abspath(__file__))
+setup_path_list = []
+setup_path_list.append([os.path.join(wDir, 'imports.py'), 'Imports agent'])
+setup_path_list.append([os.path.join(wDir, 'update.py'), 'Update agent'])
+
 path_list = []
-path_list.append([os.path.join(wDir, 'imports.py'), 'Imports agent'])
-path_list.append([os.path.join(wDir, 'update.py'), 'Update agent'])
 path_list.append([os.path.join(wDir, 'game_data/src/flappy/flappy.py'), 'Flappy bird'])
 path_list.append([os.path.join(wDir, 'game_data/src/rhythm/rhythm.py'), 'Rhythm'])
 
 # imports
 def imports():
    #print('----------------------------')
-   print(f'Running {path_list[0][1]}...')
+   print(f'Running {setup_path_list[0][1]}...')
    print('----------------------------')
-   os.system(f'python {path_list[0][0]}')
+   os.system(f'python {setup_path_list[0][0]}')
 
 imports()
 
@@ -38,8 +40,8 @@ HEIGHT = 1080
 
 def update():
    print('----------------------------')
-   print(f'Running {path_list[1][1]}...')
-   os.system(f'python {path_list[1][0]}')
+   print(f'Running {setup_path_list[1][1]}...')
+   os.system(f'python {setup_path_list[1][0]}')
 
 class Format:
   def __init__(self):
@@ -50,7 +52,8 @@ class Format:
 
   def div(self):
     self.notes_pos = []
-    self.num_cubes = 2
+    # self.num_cubes = 2
+    self.num_cubes = len(path_list)
     cube_width = HEIGHT / self.num_cubes  # Adjust this as needed
     gap = (HEIGHT - (self.num_cubes * cube_width)) / (self.num_cubes + 1) # Calculate the gap between each cube
     for i in range(self.num_cubes): # Calculate the x-coordinate for each cube
@@ -62,6 +65,18 @@ class Format:
     for i in self.notes_pos:
       assembly = pygame.Rect(0, i, WIDTH, round(HEIGHT / self.num_cubes))
       self.builds.append(assembly)
+
+  def assemble_text(self):
+    self.text_draw_queue = []
+    pygame.init()
+    font = pygame.font.Font('freesansbold.ttf', round(36 * 1.5))
+    for title in path_list:
+        #if path_list.index(title) > 1:
+          text = font.render(str(title[1]), True, WHITE, None) # text, some bool(?), text color, bg color
+          horizontal = WIDTH / 2
+          vertical = (path_list.index(title) + 0.5) * (HEIGHT / self.num_cubes)
+          text_rect = text.get_rect(center=(horizontal, vertical))
+          self.text_draw_queue.append([text, text_rect])
      
   def assemble(self):
     self.draw_queue = []
@@ -76,6 +91,7 @@ class Format:
   def handler(self):
     self.div()
     self.assemble()
+    self.assemble_text()
     self.build_rect()
 
 
@@ -166,6 +182,8 @@ while True:
   
   for i, i2 in zip(setup.draw_queue, color_list):
     bound = pygame.draw.rect(window, i2, (i.x, i.y, i.width, i.height))
+    for text in setup.text_draw_queue:
+       window.blit(text[0], text[1])
     mouse_pressed = pygame.mouse.get_pressed()
     if bound.collidepoint(mouse_pos):
       if mouse_pressed[0]:
@@ -177,13 +195,13 @@ while True:
           start_1 = False
           start_2 = False
 
-  font = pygame.font.Font('freesansbold.ttf', round(36 * 1.5))
-  text1 = font.render(path_list[2][1], True, WHITE, None) # text, some bool(?), text color, bg color
-  text1_rect = text1.get_rect(center=(WIDTH / 2, HEIGHT / 4))
-  text2 = font.render(path_list[3][1], True, WHITE, None) # text, some bool(?), text color, bg color
-  text2_rect = text1.get_rect(center=(WIDTH / 2, (3 * (HEIGHT / 4))))
-  window.blit(text1, text1_rect)
-  window.blit(text2, text2_rect)
+  # font = pygame.font.Font('freesansbold.ttf', round(36 * 1.5))
+  # text1 = font.render(path_list[2][1], True, WHITE, None) # text, some bool(?), text color, bg color
+  # text1_rect = text1.get_rect(center=(WIDTH / 2, HEIGHT / 4))
+  # text2 = font.render(path_list[3][1], True, WHITE, None) # text, some bool(?), text color, bg color
+  # text2_rect = text1.get_rect(center=(WIDTH / 2, (3 * (HEIGHT / 4))))
+  # window.blit(text1, text1_rect)
+  # window.blit(text2, text2_rect)
 
   pygame.display.update()
   if start_1 or start_2:
