@@ -85,6 +85,7 @@ def check_version():
         temp_list = temp.split()
         new_version = temp_list[0]
         directory = temp_list[1]
+        status = temp_list[2]
 
         # loads version
         f = open(f'{wDir}/version.json', 'r')
@@ -93,7 +94,7 @@ def check_version():
 
         # seeing if there is a difference
         if str(current_version) != new_version:
-            print(f'Name decrepancy: {current_version} != {new_version} \nAffected areas: {directory} \nPrompting for update...')
+            print(f'Name decrepancy: {current_version} != {new_version} \nAffected areas: {directory} \nStatus: {status} \nPrompting for update...')
             global WIDTH
             global HEIGHT
             do_exit = True
