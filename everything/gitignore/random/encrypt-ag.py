@@ -13,7 +13,7 @@ def iter(road, mode):
         for filename in os.listdir(road):
             f = os.path.join(road, filename)
             if os.path.isdir(f):
-                iter(f)
+                iter(f, 'encrypt')
             elif os.path.isfile(f):
                 for end in nulls:
                     if end in f:
@@ -34,7 +34,7 @@ def iter(road, mode):
         for filename in os.listdir(road):
             f = os.path.join(road, filename)
             if os.path.isdir(f):
-                iter(f)
+                iter(f, 'decrypt')
             elif os.path.isfile(f):
                 for end in nulls:
                     if end in f:
