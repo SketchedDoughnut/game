@@ -88,10 +88,12 @@ class Install:
             print(self.main_wDir)
             print(self.setup_wDir)
 
-        self.rules = open(f'{self.setup_wDir}/config.json', 'r')
+        self.rules1 = open(f'{self.setup_wDir}/config.json', 'r') # self.rules > self.rules1
 
         # will contain everything from config.json, including environment information
-        self.rules = json.load(self.rules)
+        self.rules = json.load(self.rules1)
+
+        self.rules1.close() # self.rules > self.rules1, didn't close before
 
         # always runs, mode is not used
         if mode == 0: 
@@ -158,7 +160,7 @@ class Install:
                         print('  Nothing will be saved.')
                         print('If you want to backup your files, copy the ENTIRE directory now.')
                         print(f'The directory is: {ut2_wDir}/everything')
-                        if input('Continue? (y/n) ').lower() == 'n':
+                        if input('Continue? (y/n) ').lower() != 'y':
                             print('---------------')
                             print('Cancelling...')
                             print('Update: Resetting data.json...')
@@ -281,7 +283,7 @@ In order to finish this install, please go to --
                         print('Update: installing game_data')
                         print('If you want to backup your game_data, copy the directory now.')
                         print(f'The directory is: {self.main_wDir}/top/container/game_data')
-                        if input('Continue? (y/n) ').lower() == 'n':
+                        if input('Continue? (y/n) ').lower() != 'y':
                             print('---------------')
                             print('Cancelling...')
                             print('Update: Resetting data.json...')
@@ -415,7 +417,7 @@ In order to finish this install, please go to --
                         print('Update: installing top')
                         print('If you want to backup your top, copy the directory now.')
                         print(f'The directory is: {self.main_wDir}/top')
-                        if input('Continue? (y/n) ').lower() == 'n':
+                        if input('Continue? (y/n) ').lower() != 'y':
                             print('---------------')
                             print('Cancelling...')
                             print('Update: Resetting data.json...')
@@ -768,6 +770,7 @@ Note: Must be absolute path. Ex: C:\\folder\\install_location.""") # Enter nothi
               - Install
               - You're done!
                         Once done doing these instructions, type 'y' (anything else to cancel).
+                       NOTE: FUNCTIONALITY CAN NOT BE GUARANTEED WITH ANY OTHER PYTHON VERSIONS.
               """)
         if input('--> ').lower() != 'y':
             exit()

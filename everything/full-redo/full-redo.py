@@ -68,7 +68,7 @@ tmp_path = f'{wDir}/tmp' # changed from wDir to high_wDir
 zip_path = f'{tmp_path}/latest-release.zip'
 
 # extract path for install
-extract_path = f"{tmp_path}/SketchedDoughnut-development-{commit_label}"
+extract_path = f"{tmp_path}/SketchedDoughnut-development-{commit_label}/everything"
 
 # everything path
 everything_path = f'{high_wDir}/everything'
@@ -84,18 +84,21 @@ copy_destination = everything_path
 esif = f'{everything_path}/main/setup/data.json' # added main
 vsif = f'{everything_path}/main/top/container/version.json' # added main
 
-print(wDir)
-print(high_wDir)
-print(commit_label)
-print(repo_url)
-print(tmp_path)
-print(zip_path)
-print(extract_path)
-print(everything_path)
-print(copy_source)
-print(copy_destination)
-print(esif)
-print(vsif)
+print(f"""---------------
+Variables:
+    - wDir: {wDir}
+    - high_wDir: {high_wDir}
+    - commit_label: {commit_label}
+    - repo url: None
+    - tmp_path: {tmp_path}
+    - zip_path: {zip_path}
+    - extract_path: {extract_path}
+    - everything_path: {everything_path}
+    - copy_source: {copy_source}
+    - copy_destination: {copy_destination}
+    - esif: {esif}
+    - vsif: {vsif}
+---------------""")
 #############################################################################
 #############################################################################
 #############################################################################
@@ -111,7 +114,7 @@ except:
 print('Update: Creating new tmp...')
 os.mkdir(tmp_path)
 print('Update: Downloading .zip...')
-f_download.download_latest_release(repo_url, tmp_path)
+f_download.download_latest_release(repo_url, zip_path) # changed tmp_path to zip_path
 print('Update: Extracting files...')
 f_extract.extract(zip_path, tmp_path)
 print('Update: Deleting previous everything...')
@@ -133,6 +136,10 @@ f.close()
 print('Update: Reaching into version.json...')
 print('Update: Dumping into version.json...')
 f = open(vsif, 'w')
-json.dump(str(commit_label))
+json.dump(commit_label, f)
 print('Update: Cleaning up tmp...')
 shutil.rmtree(tmp_path)
+print('Update: Full re-install done!')
+print('---------------')
+input('Enter anything to exit: ')
+exit()

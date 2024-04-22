@@ -85,6 +85,7 @@ def check_version():
         temp_list = temp.split()
         new_version = temp_list[0]
         directory = temp_list[1]
+        status = temp_list[2]
 
         # loads version
         f = open(f'{wDir}/version.json', 'r')
@@ -93,7 +94,7 @@ def check_version():
 
         # seeing if there is a difference
         if str(current_version) != new_version:
-            print(f'Name decrepancy: {current_version} != {new_version} \nAffected areas: {directory} \nPrompting for update...')
+            print(f'Name decrepancy: {current_version} != {new_version} \nAffected areas: {directory} \nStatus: {status} \nPrompting for update...')
             global WIDTH
             global HEIGHT
             do_exit = True
@@ -168,7 +169,7 @@ def no_confirm():
     _cancel = False
     text_msg = 'Cancelling...'
     text_height = (HEIGHT / 2)
-    time.sleep(2)
+    time.sleep(0.75)
     do_exit = True
     confirm = True
 ################################################################################################
@@ -211,8 +212,8 @@ while True:
         # if close window, prompt for exit
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                if not exit_thread_true.is_alive:
-                    exit_thread_true.start()
+                if not exit_thread.is_alive:
+                    exit_thread.start()
 
         keys = pygame.key.get_pressed()
         mouse_pos = pygame.mouse.get_pos()

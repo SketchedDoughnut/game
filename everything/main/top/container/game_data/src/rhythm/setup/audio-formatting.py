@@ -4,7 +4,7 @@ import pygame
 from pygame.locals import *
 import json
 
-f = open("main\\top\game_data\src\\rhythm\setup\count\count.json", 'r')
+f = open("everything\\main\\top\\container\\game_data\\src\\rhythm\\setup\\count\\count.json", 'r')
 num = json.load(f)
 f.close()
  
@@ -48,11 +48,15 @@ while True:
 # https://www.geeksforgeeks.org/python-playing-audio-file-in-pygame/
 m = pygame.mixer
 m.init()
-# https://open.spotify.com/track/75eo472nc6DIqpwlVOA91B?si=77a2e07864e5445a
-m.music.load('main\\top\game_data\src\\rhythm\songs\\rush.mp3')
 
-# https://open.spotify.com/track/5rmNtZHtAHHbuzFFQ1c4Nd?si=d2f8eefe411c4b49
-#m.music.load('main\\top\game_data\src\\rhythm\songs\stayed_gone(lute_and_lilith).mp3')
+# https://open.spotify.com/track/6FEisGZPcJyGwSpuhH1fMx?si=f23f1eb11c6349dd
+m.music.load('everything/main/top/container/game_data/src/rhythm/songs/boggle.mp3')
+
+# https://open.spotify.com/track/4RvWPyQ5RL0ao9LPZeSouE?si=37529cd0288c4cf8
+#m.music.load('everything/main/top/container/game_data/src/rhythm/songs/rule_the_world.mp3')
+
+# https://open.spotify.com/track/75eo472nc6DIqpwlVOA91B?si=77a2e07864e5445a
+#m.music.load('main\\top\game_data\src\\rhythm\songs\\rush.mp3')
 
 # https://open.spotify.com/track/4Po97bPnn3ISdEkuJBMt2f?si=6a51325cff4a49e2
 #m.music.load('main\\top\game_data\src\\rhythm\songs\stayed_gone.mp3')
@@ -65,13 +69,13 @@ def dump():
     global running
     global num
     print('dumping...')
-    f = open(f'main/top/game_data/src/rhythm/setup/audio-out/{goal}.json', 'w')
+    f = open(f'everything/main/top/container/game_data/src/rhythm/setup/audio-out/{goal}.json', 'w')
     json.dump(time_list, f)
     f.close()
 
     print(f'iterating num... ({num} -> {num + 1})')
     num += 1
-    f = open(f'main\\top\game_data\src\\rhythm\setup\count\count.json', 'w')
+    f = open(f'everything\\main\\top\container\game_data\src\\rhythm\setup\count\count.json', 'w')
     json.dump(num, f)
     f.close()
     

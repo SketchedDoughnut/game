@@ -74,6 +74,8 @@ import json
 
 ### pygame 
 ## pygame
+# https://stackoverflow.com/questions/5814125/how-to-designate-where-pygame-creates-the-game-window
+os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
 # W, H = pygame.display.Info().current_w, pygame.display.Info().current_h
 
@@ -101,6 +103,7 @@ ENV = True
 ## active keys to register
 #REGISTER = ['a', 's', 'd', 'f', 'j', 'k', 'l', ';']
 REGISTER = [[0, K_s], [1, K_d], [2, K_f], [3, K_j], [4, K_k], [5, K_l]]
+DISPLAY_REGISTER = [[0, 'S'], [1, 'D'], [2, 'F'], [3, 'J'], [4, 'K'], [5, 'L']]
 #EXITS = [[K_LCTRL, K_c], [K_LCTRL, K_w], [K_ESCAPE]]
 
 #######################################################################################
@@ -113,6 +116,14 @@ pygame.display.set_caption("thing!")
 
 #######################################################################################
 
+### functions
+
+## func var
+paused = False
+# pausing?
+def pause_game():
+    while paused:
+        pass
 
 ### classes
 
@@ -152,6 +163,7 @@ class Profiles:
     SONGS
     - Boggle by Mega Mango
     - Loser, Baby (as per request) from Hazbin Hotel
+    - Everybody Wants to Rule the World (tears for fears)
     '''
     
     def __init__(self):
@@ -166,6 +178,7 @@ class Profiles:
         ## set up music player
         self.player = pygame.mixer
         self.player.init()
+
 
     def music_delay(self, time_amount, path):
         time.sleep(time_amount)
@@ -253,24 +266,26 @@ class Profiles:
                 main_delay = round(times_left[0], 3)
                 main_delay_ms = int(main_delay * 1000)
                 if starting_toggle == True:
-                    if paused == True:
-                        while paused == True:
-                            pass
-                    elif paused == False:
-                        if second_toggle == False:
-                            print('- music delay thread started.')
-                            threading.Thread(target=lambda:self.music_delay(0.95, music_path)).start()
-                            second_toggle = True
-                        time.sleep(main_delay)
-                        x_val = notes.notes_pos[track_left]
-                        obj = Data_format()
-                        obj.window = window
-                        obj.color = BLUE
-                        obj.x = x_val
-                        obj.y = 0
-                        obj.width = self.CUBE_WIDTH
-                        obj.height = self.CUBE_HEIGHT
-                        self.data.add_to_active(obj)
+                    
+                    if paused:
+                        while paused:
+                            print('player paused')
+
+                    if second_toggle == False:
+                        print('- music delay thread started.')
+                        threading.Thread(target=lambda:self.music_delay(0.95, music_path)).start()
+                        second_toggle = True
+
+                    time.sleep(main_delay)
+                    x_val = notes.notes_pos[track_left]
+                    obj = Data_format()
+                    obj.window = window
+                    obj.color = BLUE
+                    obj.x = x_val
+                    obj.y = 0
+                    obj.width = self.CUBE_WIDTH
+                    obj.height = self.CUBE_HEIGHT
+                    self.data.add_to_active(obj)
                 if starting_toggle == False:
                     # how long lyrics take to start - how long it takes square to travel down screen
                     #start_delay = 1.85 - 2.65 # delay for timings 1_0-5
@@ -372,6 +387,153 @@ class Profiles:
                     starting_toggle = True
         print('Main playback done.')
 
+    def Rule_The_World(self):
+        print('--------------------------')
+        print('Main music thread started.')
+        #filename = os.path.join(wDir, 'setup/analyze.py')
+        ## preload files
+        # paths
+        # get path to working directory
+        # https://stackoverflow.com/questions/21957131/python-not-finding-file-in-the-same-directory
+        wDir = os.path.dirname(os.path.abspath(__file__))
+        if ENV:
+            left_timing_path = os.path.join(wDir, "maps\\rule_the_world\\timings_1_0-5.json")
+            left_track_path = os.path.join(wDir, "maps\\rule_the_world\\tracks_1_0-5.json")
+            music_path = os.path.join(wDir, "songs\\rule_the_world.mp3")
+        elif not ENV:
+            left_timing_path = "main\\top\\game_data\\src\\rhythm\\maps\\rule_the_world\\timings_1_0-5.json"
+            left_track_path = "main\\top\\game_data\\src\\rhythm\\maps\\rule_the_world\\tracks_1_0-5.json"
+            music_path = "main\\top\\game_data\\src\\rhythm\\songs\\rule_the_world.mp3"
+        # load left time track
+        print('Loading left timing track...')
+        f = open(left_timing_path, 'r')
+        left_time_track_list = json.load(f)
+        f.close()
+        # load left position track
+        print('Loading left position track...')
+        f = open(left_track_path, 'r')
+        left_track_list = json.load(f)
+        f.close()
+        
+        ## vars
+        # toggle when first starting, starts music and built-in delay
+        starting_toggle = False
+        print('--------------------------')
+        print('Profile: "Everybody Wants To Rule The World" by Tears for Fears')
+        print('--------------------------')
+        # main iter loop
+        for times_left, track_left in zip(left_time_track_list, left_track_list):
+            if times_left[0] == 'end':
+                pass
+            else:
+                main_delay = round(times_left[0], 3)
+                main_delay_ms = int(main_delay * 1000)
+                if starting_toggle == True:
+                    if paused == True:
+                        while paused == True:
+                            pass
+                    elif paused == False:
+                        time.sleep(main_delay)
+                        x_val = notes.notes_pos[track_left]
+                        obj = Data_format()
+                        obj.window = window
+                        obj.color = BLUE
+                        obj.x = x_val
+                        obj.y = 0
+                        obj.width = self.CUBE_WIDTH
+                        obj.height = self.CUBE_HEIGHT
+                        self.data.add_to_active(obj)
+                if starting_toggle == False:
+                    self.player.music.load(music_path)
+                    self.player.music.set_volume(0.50)
+                    #self.player.music.set_volume(0.00)
+                    self.player.music.play()
+                    start_delay = 63.5 - 2.65 # delay for timings_1_0-5
+                    start_delay_ms = int(1000 * start_delay)
+                    print('Starting playback.')
+                    print(f'- start delaying by {start_delay}s, {start_delay_ms}ms')
+                    time.sleep(start_delay)
+                    starting_toggle = True
+        print('Main playback done.')
+
+    def Boggle(self):
+        print('--------------------------')
+        print('Main music thread started.')
+        #filename = os.path.join(wDir, 'setup/analyze.py')
+        ## preload files
+        # paths
+        # get path to working directory
+        # https://stackoverflow.com/questions/21957131/python-not-finding-file-in-the-same-directory
+        wDir = os.path.dirname(os.path.abspath(__file__))
+        if ENV:
+            left_timing_path = os.path.join(wDir, "maps\\boggle\\timings_1_0-5.json")
+            left_track_path = os.path.join(wDir, "maps\\boggle\\tracks_1_0-5.json")
+            music_path = os.path.join(wDir, "songs\\boggle.mp3")
+        elif not ENV:
+            left_timing_path = "main\\top\\game_data\\src\\rhythm\\maps\\boggle\\timings_1_0-5.json"
+            left_track_path = "main\\top\\game_data\\src\\rhythm\\maps\\boggle\\tracks_1_0-5.json"
+            music_path = "main\\top\\game_data\\src\\rhythm\\songs\\boggle.mp3"
+        # load left time track
+        print('Loading left timing track...')
+        f = open(left_timing_path, 'r')
+        left_time_track_list = json.load(f)
+        f.close()
+        # load left position track
+        print('Loading left position track...')
+        f = open(left_track_path, 'r')
+        left_track_list = json.load(f)
+        f.close()
+        
+        ## vars
+        # toggle when first starting, starts music and built-in delay
+        starting_toggle = False
+        print('--------------------------')
+        print('Profile: "Boggle" by Mega Mango')
+        print('--------------------------')
+        # main iter loop
+        for times_left, track_left in zip(left_time_track_list, left_track_list):
+            if times_left[0] == 'end':
+                pass
+            else:
+                main_delay = round(times_left[0], 3)
+                main_delay_ms = int(main_delay * 1000)
+                if starting_toggle == True:
+                    if paused == True:
+                        while paused == True:
+                            pass
+                    elif paused == False:
+                        time.sleep(main_delay)
+                        x_val = notes.notes_pos[track_left]
+                        obj = Data_format()
+                        obj.window = window
+                        obj.color = BLUE
+                        obj.x = x_val
+                        obj.y = 0
+                        obj.width = self.CUBE_WIDTH
+                        obj.height = self.CUBE_HEIGHT
+                        self.data.add_to_active(obj)
+                if starting_toggle == False:
+                    self.player.music.load(music_path)
+                    self.player.music.set_volume(0.50)
+                    #self.player.music.set_volume(0.00)
+                    self.player.music.play()
+                    start_delay = 29 - 2.65 # delay for timings_1_0-5 ################################################
+                    start_delay_ms = int(1000 * start_delay)
+                    print('Starting playback.')
+                    print(f'- start delaying by {start_delay}s, {start_delay_ms}ms')
+                    time.sleep(start_delay)
+                    starting_toggle = True
+        print('Main playback done.')
+
+    def prof_setup(self):
+        # song lists
+        self.song_dict = {
+            "Stayed Gone": threading.Thread(target=lambda:self.Stayed_Gone(), daemon=True), # Stayed Gone
+            "Whats the Rush?": threading.Thread(target=lambda:self.Whats_the_Rush(), daemon=True), # Whats the Rush
+            "Everybody Wants To Rule The World": threading.Thread(target=lambda:self.Rule_The_World(), daemon=True), # Everybody Wants to Rule the World
+            "Boggle": threading.Thread(target=lambda:self.Boggle(), daemon=True) # Boggle
+        }
+
 
 class Notes:
     def __init__(self):
@@ -410,16 +572,53 @@ class Points:
 class Draw:
     def __init__(self):
         self.draw_list = []
+        self.text_list = []
 
     def draw(self):
         for obj in self.draw_list:
             pygame.draw.rect(obj.window, obj.color, (obj.x, obj.y, obj.width, obj.height))
+        for obj in self.text_list:
+            window.blit(obj[0], obj[1])
+
+
+# class Text: #########################################################################################################
+#     def __init__(self):
+#         self.num_divs = 6
+#         self.div_width = WIDTH / self.num_divs # for the new letter gen system
+#         self.divs_pos = []
+
+#         # Calculate the gap between each cube
+#         self.gap = (WIDTH - (self.num_divs * self.div_width)) / (self.num_divs + 1)
+    
+#     def append(self):
+#         list_out = []
+#         self.move_up = 100
+#         font = pygame.font.Font('freesansbold.ttf', round(36 * 1.5))
+#         for i in range(self.num_divs):
+#             active_letter = DISPLAY_REGISTER[i][1]
+#             text = font.render(str(active_letter), True, BLACK, None) # text, some bool(?), text color, bg color
+#             self.cube_x = (i + 1) * self.gap + i * self.div_width
+#             self.height = HEIGHT - (HEIGHT - self.move_up)
+
+#             # obj format
+#             self.obj = Data_format()
+#             #self.obj.window = window
+#             #self.obj.color = BLACK
+#             self.obj.x = self.cube_x + 200
+#             self.obj.y = HEIGHT - self.move_up
+#             self.obj.width = self.div_width
+#             self.obj.height = self.height
+#             self.obj = pygame.Rect(self.obj.x, self.obj.y, self.obj.width, self.obj.height)
+#             list_out.append([text, self.obj])
+            
+#         return list_out
 
 
 class Div:
     def __init__(self):
         # class object
         self.draw = Draw()
+        #self.text = Text() #########################################################################################################
         self.divs_pos = []
         self.num_divs = 5
         self.div_width = 10  # Adjust this as needed
@@ -444,6 +643,10 @@ class Div:
             self.obj.height = self.height
             #print('Adding dividers to background draw list...')
             #self.draw.draw_list.append(self.obj)
+
+    def dump_text(self, list_in):
+        self.draw.text_list = list_in
+        
 
 
 class Zone:
@@ -487,6 +690,7 @@ class Zone:
         self.append()
         self.draw()
         self.div.append()
+        #self.div.dump_text(self.div.text.append()) #########################################################################################################
 
 
 #######################################################################################
@@ -496,10 +700,26 @@ zone.handler()
 notes = Notes()
 points = Points()
 
+## NEW ADDITION - before loading song profile, allow them to select
+# run display menu
+import song_select
+chosen_song = song_select.display_loop()
+
+# restart vars
+pygame.init()
+window = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("thing!")
+
+# get dict entry
+notes.profiles.prof_setup()
+ct = notes.profiles.song_dict[chosen_song] # ct = chosen thread
+ct.start()
+
+## OLD SYSTEM
 # start music thread with chosen profile
 #music_thread = threading.Thread(target=lambda:notes.profiles.Whats_the_Rush(), daemon=True)
-music_thread = threading.Thread(target=lambda:notes.profiles.Stayed_Gone(), daemon=True)
-music_thread.start()
+#music_thread = threading.Thread(target=lambda:notes.profiles.Stayed_Gone(), daemon=True)
+#music_thread.start()
 
 # set up clock (not used)
 clock = pygame.time.Clock()
@@ -508,7 +728,6 @@ clock = pygame.time.Clock()
 pressed1 = False
 pressed2 = False
 space_pressed = False
-paused = False
 running = True
 while running:
     # set fps to 60
@@ -548,6 +767,7 @@ while running:
     #     if space_pressed == False:
     #         if paused == False:
     #             paused = True
+    #             print('music paused')
     #             notes.profiles.player.music.pause()
     #         elif paused == True:
     #             paused = False
@@ -607,6 +827,7 @@ while running:
 
     if paused == False:
         # moves notes down
+        #print('iter')
         notes.profiles.data.iter()
     pygame.display.update()
 
@@ -618,4 +839,4 @@ window.blit(text, text_rect)
 '''
 
 pygame.quit()
-music_thread.join(timeout=0)
+ct.join(timeout=0)
