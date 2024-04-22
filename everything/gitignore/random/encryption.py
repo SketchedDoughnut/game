@@ -1,4 +1,5 @@
 from cryptography.fernet import Fernet
+import time
 
 # working decryption example
 # key = Fernet.generate_key()
@@ -15,14 +16,40 @@ from cryptography.fernet import Fernet
 # - {decrypted}""")
 
 # attempt to open a file, and encrypt its contents. Use a previous established key
-file = open('everything/gitignore/random/extract.py', 'r')
+path = 'everything/main/top/starter.py'
+print('Reading...')
+file = open(path, 'rb')
+#file_content = bytes(file.read(), 'utf-8')
 file_content = file.read()
 file.close()
 
+print('Encrypting...')
 key = b'5VsQ04U13bSDhhbv8Uk9nFbPfPY1VGoVhkA87JDyYdA='
 f = Fernet(key)
-encrypted = f.encrypt(b'{file_content}')
+encrypted = f.encrypt(file_content)
 
-file = open('everything/gitignore/random/extract.py', 'w')
+print('Writing...')
+file = open(path, 'wb')
 file.write(encrypted)
 file.close()
+
+input('Enter anything to proceed to decryption: ')
+
+print('Reading...')
+file = open(path, 'rb')
+#file_content = bytes(file.read(), 'utf-8')
+file_content = file.read()
+file.close()
+
+print('Decrypting...')
+key = b'5VsQ04U13bSDhhbv8Uk9nFbPfPY1VGoVhkA87JDyYdA='
+f = Fernet(key)
+decrypted = f.decrypt(file_content)
+
+# print('Writing...')
+# file = open(path, 'wb')
+# file.write(encrypted)
+# file.close()
+
+# print('Running...')
+# exec(decrypted)
