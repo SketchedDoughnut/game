@@ -76,7 +76,9 @@ class Install:
 
         if in_folder:
             print('It appears this file is in a setup folder. Defaulting to those paths.')
-            self.setup_wDir = temp_setup_wDir
+            # for testing as .py
+            self.setup_wDir = os.path.join(temp_setup_wDir, 'setup')
+            #self.setup_wDir = temp_setup_wDir
             self.main_wDir = temp_main_wDir
             print(self.main_wDir)
             print(self.setup_wDir)
@@ -415,7 +417,7 @@ In order to finish this install, please go to --
                         '''
                         
                         print('Update: installing top')
-                        print('If you want to backup your top, copy the directory now.')
+                        print('If you want to backup the top directory,, copy the directory now.')
                         print(f'The directory is: {self.main_wDir}/top')
                         if input('Continue? (y/n) ').lower() != 'y':
                             print('---------------')
@@ -444,8 +446,8 @@ In order to finish this install, please go to --
                         print('Update: deleting previous top...')
                         try:
                             shutil.rmtree(f"{self.main_wDir}/top")
-                        except Exception as e:
-                            print('Update: No prior top:', e)
+                        except:
+                            print('Update: No prior top')
                         print('Update: Downloading .zip...')
                         import update.download as update_agent
                         repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
@@ -459,15 +461,15 @@ In order to finish this install, please go to --
                         extract_agent.extract(zip_download_path, ext_download_path)
 
                         print('Update: Getting commit label...')
+                        #release_version = ((requests.get(("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")).json()['body']))
                         release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
                         release_version = release_version.json()
                         release_version = str(release_version['body'])
                         release_version = release_version.split()
                         release_version = release_version[0]
                         copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/main/top"
-                        copy_location = f'{self.main_wDir}/top'
-                        print(f'Update: Copying files to {copy_location}...')
-                        #print(f'Update: Copying files...')
+                        copy_location = f'{(self.main_wDir)}/top'
+                        print(f'Update: Copying files to {copy_location}')
 
                         # https://pynative.com/python-copy-files-and-directories/
                         import update.copy as copy_agent
@@ -486,7 +488,7 @@ In order to finish this install, please go to --
                             print('!!! UPDATE ERROR: The installed directory does not exist. Cancelling.')
                             input('Enter anything to exit: ')
                             exit()
-                            
+                        
                         print('Update: Resetting data.json...')
                         f = open(f'{self.setup_wDir}/data.json', 'r')
                         td = json.load(f)
@@ -498,23 +500,22 @@ In order to finish this install, please go to --
                         json.dump(td, f)
                         f.close()
 
-                        time.sleep(1)
                         print('Update: Reaching to version.json...')
                         print(f'Update: Path: {self.main_wDir}/top/container/version.json')
-                        f = open(f'{self.main_wDir}/top/container/version.json', 'w')
+                        #print(release_version)
                         print('Update: Dumping version...')
+                        f = open(f'{self.main_wDir}/top/container/version.json', 'w')
+                        #print(release_version)
                         json.dump(release_version, f)
                         f.close()
-                        
-                        time.sleep(0.25)
+
                         print('Update: Reaching to state.json...')
-                        print(f'Update: Path: {self.main_wDir}/top/container/version.json')
+                        print(f'Update: Path: {self.main_wDir}/top/container/state.json')
                         f = open(f'{self.main_wDir}/top/container/state.json', 'r')
                         tmp = json.load(f)
                         f.close()
                         f = open(f'{self.main_wDir}/top/container/state.json', 'w')
                         tmp = False
-                        print('Update: Dumping state...')
                         json.dump(tmp, f)
                         f.close()
                         
