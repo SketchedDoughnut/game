@@ -20,7 +20,8 @@ WIDTH = 1000 # changed to 1000
 HEIGHT = 500
 
 # essentials
-window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+# window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+window = pygame.display.set_mode((WIDTH, HEIGHT))
 #pygame.display.set_caption("thing!")
 
 class Colors:
