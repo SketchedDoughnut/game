@@ -77,8 +77,8 @@ class Install:
         if in_folder:
             print('It appears this file is in a setup folder. Defaulting to those paths.')
             # for testing as .py
-            self.setup_wDir = os.path.join(temp_setup_wDir, 'setup')
-            #self.setup_wDir = temp_setup_wDir
+            #self.setup_wDir = os.path.join(temp_setup_wDir, 'setup')
+            self.setup_wDir = temp_setup_wDir
             self.main_wDir = temp_main_wDir
             print(self.main_wDir)
             print(self.setup_wDir)
