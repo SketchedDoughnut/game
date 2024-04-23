@@ -145,6 +145,7 @@ def display_loop():
                 print('window exit')
                 running = False
 
+            # https://stackoverflow.com/questions/11603222/allowing-resizing-window-pygame
             # if event.type == pygame.VIDEORESIZE:
             #     # There's some code to add back window content here.
             #     window = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
