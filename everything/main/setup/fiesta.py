@@ -482,7 +482,7 @@ In order to finish this install, please go to --
                             print('Update: No tmp')
                         
                         print('Update: Checking install path...')
-                        if os.path.exists(f'{self.main_wDir}/top/container/game_data'):
+                        if os.path.exists(f'{self.main_wDir}/top'):
                             pass
                         else:
                             print('!!! UPDATE ERROR: The installed directory does not exist. Cancelling.')
