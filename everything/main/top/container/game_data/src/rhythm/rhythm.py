@@ -192,7 +192,7 @@ class Profiles:
 
     def music_delay(self, time_amount, path):
         time.sleep(time_amount)
-        print('Music delay over, starting song.')
+        print('- music delay over, starting song.')
         self.player.music.load(path)
         self.player.music.set_volume(0.50)
         #self.player.music.set_volume(0.00)
@@ -219,7 +219,7 @@ class Profiles:
                             pass
                     elif paused == False:
                         time.sleep(main_delay)
-                        print('Secondary sleep over, starting notes.')
+                        print('- secondary sleep over, starting notes.')
                         x_val = notes.notes_pos[track_right]
                         obj = Data_format()
                         obj.window = window
@@ -306,7 +306,7 @@ class Profiles:
                     print('Starting playback.')
                     print(f'- start delaying by {start_delay}s, {start_delay_ms}ms')
                     time.sleep(start_delay)
-                    print('Main start delay over, starting notes')
+                    print('- main start delay over, starting notes')
                     starting_toggle = True
         print('Main playback done.')
 
@@ -397,6 +397,7 @@ class Profiles:
                     print('Starting playback.')
                     print(f'- start delaying by {start_delay}s, {start_delay_ms}ms')
                     time.sleep(start_delay)
+                    print('- main start delay over, starting notes')
                     starting_toggle = True
         print('Main playback done.')
 
@@ -466,7 +467,7 @@ class Profiles:
                     print('Starting playback.')
                     print(f'- start delaying by {start_delay}s, {start_delay_ms}ms')
                     time.sleep(start_delay)
-                    print('Main start delay over, starting notes')
+                    print('- main start delay over, starting notes')
                     starting_toggle = True
         print('Main playback done.')
 
@@ -536,7 +537,7 @@ class Profiles:
                     print('Starting playback.')
                     print(f'- start delaying by {start_delay}s, {start_delay_ms}ms')
                     time.sleep(start_delay)
-                    print('Main start delay over, starting notes')
+                    print('- main start delay over, starting notes')
                     starting_toggle = True
         print('Main playback done.')
 
