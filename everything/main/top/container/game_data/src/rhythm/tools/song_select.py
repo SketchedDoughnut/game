@@ -20,7 +20,7 @@ WIDTH = 1000 # changed to 1000
 HEIGHT = 500
 
 # essentials
-window = pygame.display.set_mode((WIDTH, HEIGHT))
+window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
 #pygame.display.set_caption("thing!")
 
 class Colors:
@@ -127,7 +127,8 @@ class Select:
 
 running = True
 def display_loop():
-    global running
+    global running, window
+    global HEIGHT, WIDTH
 
     # funcs
     select = Select()
@@ -143,6 +144,15 @@ def display_loop():
             if event.type == pygame.QUIT:
                 print('window exit')
                 running = False
+
+            # if event.type == pygame.VIDEORESIZE:
+            #     # There's some code to add back window content here.
+            #     window = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
+            #     WIDTH = pygame.display.get_window_size()[0]
+            #     HEIGHT = pygame.display.get_window_size()[1]
+            #     print(WIDTH, HEIGHT)
+            #     s2 = Select()
+            #     s2.handler()
 
         # gathering input data
         keys = pygame.key.get_pressed()

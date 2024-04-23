@@ -120,7 +120,8 @@ DISPLAY_REGISTER = [[0, 'S'], [1, 'D'], [2, 'F'], [3, 'J'], [4, 'K'], [5, 'L']]
 ### PRELOADING
 
 # establishing window 
-window = pygame.display.set_mode((WIDTH, HEIGHT))
+window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+
 pygame.display.set_caption("thing!")
 
 #######################################################################################
@@ -696,7 +697,7 @@ class Zone:
         self.zone_rect = pygame.Rect(self.x, self.y, self.width, self.height)
     
     def handler(self):
-        self.append()
+        self.append()   
         self.draw()
         self.div.append()
         #self.div.dump_text(self.div.text.append()) #########################################################################################################
@@ -717,7 +718,7 @@ chosen_song = ss.display_loop()
 # restart vars
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
-window = pygame.display.set_mode((WIDTH, HEIGHT))
+window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
 pygame.display.set_caption("thing!")
 
 # get dict entry
