@@ -21,9 +21,10 @@ def decide(
         print('To choose to ignore, type "ignore".')
         choice = input('-> ')
 
-        data_json_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-        data_json_path = os.path.dirname(data_json_path)
+        data_json_path = os.path.abspath(__file__)
+        for _ in range(4):
+            data_json_path = os.path.dirname(data_json_path)
+            print(data_json_path)
         
         data_json_path = os.path.join(data_json_path, 'data.json')
 
@@ -75,3 +76,5 @@ guaranteed until action is taken to fix this issue.""")
             print('------------------------------------')
             input('Enter anything to exit: ')
             exit()
+
+decide(False)
