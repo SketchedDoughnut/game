@@ -44,7 +44,7 @@ high_wDir = os.path.dirname(wDir)
 # FOR COMPILE
 # wDir, folder above this (full-redo)
 # wDir = os.path.dirname(wDir) ############### darn vscode
-high_wDir = os.path.dirname(high_wDir) # changed from wDir to high_wDir
+# high_wDir = os.path.dirname(high_wDir) # changed from wDir to high_wDir ############### darn vscode
 
 # commit label, the random crap (in this case we ignore the bounds since we know we are installing full)
 commit_label = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
