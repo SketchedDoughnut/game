@@ -152,16 +152,15 @@ class Install:
 
 
                 if data_dict['update']:
-                    print('tre')
                     """
                     NOTE
                         - THIS FILE IS NOT CAPABLE OF THE NEW UPDATE CAPABILITIES. IT IS IN BETA AND WILL NOT BE FUNCTIONING UNTIL FIXED.
                           DO NOT ACCESS THIS FILE IN THE BETA FOLDER FOR ANY REASON, AS IT WILL LIKELY NOT WORK.
                     """
 
-                    import update.fr_controller as frc
-                    import update.t_controller as tc
-                    import update.gd_controller as gdc
+                    from update import fr_controller as frc
+                    from update import t_controller as tc
+                    from update import gd_controller as gdc
                     
                     print('---------------')
                     print('Installer is in update mode.')
