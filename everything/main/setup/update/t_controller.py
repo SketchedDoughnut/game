@@ -18,6 +18,14 @@ from .tools import verify as v
 def update_handler(main_wDir, setup_wDir):
 
     # setup the vars provided here
+    # commit label
+    release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
+    release_version = release_version.json()
+    release_version = str(release_version['body'])
+    release_version = release_version.split()
+    release_version = release_version[0]
+
+    # other vars
     mode = 'top',
     zip_download_path = f"{setup_wDir}/tmp/latest_release.zip",
     ext_download_path = f"{setup_wDir}/tmp",
@@ -28,14 +36,7 @@ def update_handler(main_wDir, setup_wDir):
     copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/main/top"
     state = False
 
-    # commit label
-    release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
-    release_version = release_version.json()
-    release_version = str(release_version['body'])
-    release_version = release_version.split()
-    release_version = release_version[0]
 
-    
 
     if mode == 'top':
         print('Update: installing top')
