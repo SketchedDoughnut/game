@@ -105,9 +105,12 @@ def update_handler(
         
         print('Update: Checking install path...')
         if os.path.exists(copy_location):
+            print(copy_location)
             print(os.path.exists(copy_location))
             print('Update: Path exists')
         else:
+            print(copy_location)
+            print(os.path.exists(copy_location))
             print('!!! UPDATE ERROR: The installed directory does not exist. Reverting update to backup.')
             print(f'!!! UPDATE ERROR: Path: {copy_location}')
             input('Enter anything to exit: ')
