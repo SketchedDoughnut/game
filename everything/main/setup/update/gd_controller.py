@@ -104,11 +104,11 @@ def update_handler(
             print('Update: No tmp')
         
         print('Update: Checking install path...')
-        if os.path.exists(f'{setup_wDir}/top/container/game_data'):
+        if os.path.exists(f'{main_wDir}/top/container/game_data'):
             pass
         else:
-            print('!!! UPDATE ERROR: The installed directory does not exist. Cancelling.')
-            print(f'!!! UPDATE ERROR: Path: {setup_wDir}/top/container/game_data')
+            print('!!! UPDATE ERROR: The installed directory does not exist. Reverting update to backup.')
+            print(f'!!! UPDATE ERROR: Path: {main_wDir}/top/container/game_data')
             input('Enter anything to exit: ')
             exit()
 
