@@ -81,8 +81,6 @@ def update_handler(
         print('Update: Making tmp...')
         os.mkdir(f'{setup_wDir}/tmp')
 
-
-
         b.backup_handler(
             main_wDir = main_wDir,
             setup_wDir = setup_wDir,
@@ -90,24 +88,22 @@ def update_handler(
             target = 'game_data'
         )
 
-        
-        
         print('Update: deleting previous game_data...')
         try:
             shutil.rmtree(f"{main_wDir}/top/container/game_data")
         except:
             print('Update: No prior game_data')
+
         print('Update: Downloading .zip...')
         d.download_latest_release(repo_url, zip_download_path)
-        print('Update: Extracting files...')
 
+        print('Update: Extracting files...')
         # https://www.geeksforgeeks.org/unzipping-files-in-python/
         ee.extract(zip_download_path, ext_download_path)
 
         print('Update: Getting commit label...')
-        #release_version = ((requests.get(("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")).json()['body']))
-        print(f'Update: Copying files to {copy_location}...')
 
+        print(f'Update: Copying files to {copy_location}...')
         # https://pynative.com/python-copy-files-and-directories/
         c.copy(copy_source, copy_location)
 
@@ -126,22 +122,23 @@ def update_handler(
             input('Enter anything to exit: ')
             exit()
 
-
-
         print('Update: Checking file integrity...')
         results = v.verify_files(json_path, everything_path)
-        
         if results:
-            r.decide(False)
-            
             b.backup_handler(
                 main_wDir = main_wDir, 
                 setup_wDir = setup_wDir,
                 backOrLoad = 'load',
                 target = 'game_data'
             )
+            r.decide(False)
 
-
+        print('Update: Cleaning up tmp...')
+        try:
+            shutil.rmtree(f'{setup_wDir}/tmp')
+        except:
+            print('Update: No tmp')
+        
         print('Update: Resetting data.json...')
         f = open(f'{setup_wDir}/data.json', 'r')
         td = json.load(f)

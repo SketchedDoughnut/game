@@ -36,12 +36,13 @@ def update_handler_install(
             print('Update: No prior tmp')
         print('Update: Creating new tmp...')
         os.mkdir(tmp_path)
+
         print('Update: Downloading .zip...')
         d.download_latest_release(repo_url, zip_path) # changed tmp_path to zip_path
+
         print('Update: Extracting files...')
         ee.extract(zip_path, tmp_path)
 
-        
         main_wDir = f'{everything_path}/main'
         setup_wDir = f'{everything_path}/main/setup'
         b.backup_handler(
@@ -51,18 +52,14 @@ def update_handler_install(
             target = 'full-redo'
         )
 
-
-
-        
-
         print('Update: Deleting previous everything...')
         try:
             shutil.rmtree(everything_path)
         except:
             print('Update: No prior everything')
+
         print('Update: Copying files...')
         c.copy(extract_path, everything_path)
-
 
         print('Update: Checking file integrity...')
         json_path = f'{everything_path}/main/setup/file_list.json'
@@ -72,17 +69,13 @@ def update_handler_install(
         )
 
         if results:
-            r.decide(
-                if_full_redo = True
-            )
-            
             b.backup_handler(
                 main_wDir = main_wDir,
                 setup_wDir = setup_wDir,
                 backOrLoad = 'load',
                 target = 'full-redo'
             )
-
+            r.decide(True)
 
         print('Update: Reaching into data.json...')
         f = open(esif, 'r')

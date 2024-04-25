@@ -68,8 +68,6 @@ def update_handler(main_wDir, setup_wDir):
         print('Update: Making tmp...')
         os.mkdir(f'{setup_wDir}/tmp')
 
-
-
         b.backup_handler(
             main_wDir = main_wDir,
             setup_wDir = setup_wDir,
@@ -77,31 +75,24 @@ def update_handler(main_wDir, setup_wDir):
             target = 'top'
         )
         
-
-        
         print('Update: deleting previous top...')
         try:
             shutil.rmtree(f"{main_wDir}/top")
         except Exception as e:
             print('Update: No prior top:', e)
+        
         print('Update: Downloading .zip...')
         d.download_latest_release(repo_url, zip_download_path)
-        print('Update: Extracting files...')
 
+        print('Update: Extracting files...')
         # https://www.geeksforgeeks.org/unzipping-files-in-python/
         ee.extract(zip_download_path, ext_download_path)
 
         print('Update: Getting commit label...')
-        print(f'Update: Copying files to {copy_location}...')
 
+        print(f'Update: Copying files to {copy_location}...')
         # https://pynative.com/python-copy-files-and-directories/
         c.copy(copy_source, copy_location)
-
-        print('Update: Cleaning up tmp...')
-        try:
-            shutil.rmtree(f'{setup_wDir}/tmp')
-        except:
-            print('Update: No tmp')
 
         print('Update: Checking install path...')
         if os.path.exists(copy_location):
@@ -112,22 +103,23 @@ def update_handler(main_wDir, setup_wDir):
             input('Enter anything to exit: ')
             exit()
 
-
-
         print('Update: Checking file integrity...')
         results = v.verify_files(json_path, everything_path)
-        
         if results:
-            r.decide(False)
-
             b.backup_handler(
                 main_wDir = main_wDir,
                 setup_wDir = setup_wDir,
                 backOrLoad = 'load',
                 target = 'top'
             )
+            r.decide(False)
 
-
+        print('Update: Cleaning up tmp...')
+        try:
+            shutil.rmtree(f'{setup_wDir}/tmp')
+        except:
+            print('Update: No tmp')
+        
         print('Update: Resetting data.json...')
         print('Update: Path:', f'{setup_wDir}/data.json')
         f = open(f'{setup_wDir}/data.json', 'r')
