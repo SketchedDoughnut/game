@@ -105,50 +105,15 @@ Variables:
 #############################################################################
 #############################################################################
 
-def delay():
-    time.sleep(0.25)
-
-print('Update: Deleting previous tmp...')
-try:
-    shutil.rmtree(tmp_path)
-except:
-    print('Update: No prior tmp')
-print('Update: Creating new tmp...')
-os.mkdir(tmp_path)
-print('Update: Downloading .zip...')
-f_download.download_latest_release(repo_url, zip_path) # changed tmp_path to zip_path
-print('Update: Extracting files...')
-f_extract.extract(zip_path, tmp_path)
-print('Update: Deleting previous everything...')
-try:
-    shutil.rmtree(everything_path)
-except:
-    print('Update: No prior everything')
-print('Update: Copying files...')
-f_copy.copy(extract_path, everything_path)
-print('Update: Checking file integrity...')
-
-# experimental verification system
-#import update.verify as verify_agent
-#json_path = os.path.join(wDir, 'file_list.json')
-#verify_agent.verify_files(json_path, eb1)
-
-print('Update: Reaching into data.json...')
-f = open(esif, 'r')
-td = json.load(f)
-f.close()
-td['shortcut'] = True
-print('Update: Dumping into data.json...')
-f = open(esif, 'w')
-json.dump(td, f)
-f.close()
-print('Update: Reaching into version.json...')
-print('Update: Dumping into version.json...')
-f = open(vsif, 'w')
-json.dump(commit_label, f)
-print('Update: Cleaning up tmp...')
-shutil.rmtree(tmp_path)
-print('Update: Full re-install done!')
-print('---------------')
-input('Enter anything to exit: ')
-exit()
+import update.fr_controller as frc
+frc.update_handler_install(
+    mode = 'full-install',
+    tmp_path = tmp_path,
+    zip_path = zip_path,
+    everything_path = everything_path,
+    extract_path = extract_path,
+    repo_url = repo_url,
+    commit_label = commit_label,
+    esif = esif,
+    vsif = vsif
+)

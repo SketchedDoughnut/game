@@ -168,8 +168,10 @@ class Install:
                     if data_dict['bounds'] == 'full':
                         print('---------------')
                         print('Installer is in full mode.')
-                        frc.update_handler(
-                            setup_wDir = self.setup_wDir
+                        frc.update_handler_setup(
+                            setup_wDir = self.setup_wDir,
+                            mode = 'full-setup',
+                            everything_path = os.path.dirname(self.main_wDir)
                         )
                         
 
