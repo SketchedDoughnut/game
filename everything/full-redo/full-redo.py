@@ -72,6 +72,7 @@ extract_path = f"{tmp_path}/SketchedDoughnut-development-{commit_label}/everythi
 
 # everything path
 everything_path = f'{high_wDir}/everything'
+eb1 = os.path.dirname(everything_path)
 
 # copy paths (source, destination) for install
 copy_source = zip_path
@@ -94,6 +95,7 @@ Variables:
     - zip_path: {zip_path}
     - extract_path: {extract_path}
     - everything_path: {everything_path}
+    - eb1: {eb1}
     - copy_source: {copy_source}
     - copy_destination: {copy_destination}
     - esif: {esif}
@@ -126,11 +128,10 @@ print('Update: Copying files...')
 f_copy.copy(extract_path, everything_path)
 print('Update: Checking file integrity...')
 
-## experimental verification system
-# import update.verify as verify_agent
-# json_path = os.path.join(wDir, 'file_list.json')
-# everything_path = os.path.dirname(everything_path)
-# verify_agent.verify_files(json_path, everything_path)
+# experimental verification system
+#import update.verify as verify_agent
+#json_path = os.path.join(wDir, 'file_list.json')
+#verify_agent.verify_files(json_path, eb1)
 
 print('Update: Reaching into data.json...')
 f = open(esif, 'r')
