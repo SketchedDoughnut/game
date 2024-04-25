@@ -92,7 +92,7 @@ def update_handler(
 
         print('Update: Getting commit label...')
         #release_version = ((requests.get(("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")).json()['body']))
-        print(f'Update: Copying files to {copy_location}')
+        print(f'Update: Copying files to {copy_location}...')
 
         # https://pynative.com/python-copy-files-and-directories/
         c.copy(copy_source, copy_location)
@@ -104,11 +104,12 @@ def update_handler(
             print('Update: No tmp')
         
         print('Update: Checking install path...')
-        if os.path.exists(f'{main_wDir}/top/container/game_data'):
-            pass
+        if os.path.exists(copy_location):
+            print(os.path.exists(copy_location))
+            print('Update: Path exists')
         else:
             print('!!! UPDATE ERROR: The installed directory does not exist. Reverting update to backup.')
-            print(f'!!! UPDATE ERROR: Path: {main_wDir}/top/container/game_data')
+            print(f'!!! UPDATE ERROR: Path: {copy_location}')
             input('Enter anything to exit: ')
             exit()
 
