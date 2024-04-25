@@ -63,6 +63,9 @@ guaranteed until action is taken to fix this issue.""")
             # for vscode
             data_json_path = os.path.dirname(data_json_path)
             
+            
+            data_json_path = os.path.join(data_json_path, 'data.json')
+            
             f = open(data_json_path, 'r')
             dict = json.load(f)
             f.close()

@@ -10,4 +10,5 @@ Test systems
 
 Resets 
     - line 98 of fiesta
+    - line 64 of rollback.py in main/setup/update/tools
     - data.json
