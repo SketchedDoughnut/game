@@ -164,7 +164,7 @@ class Install:
                           DO NOT ACCESS THIS FILE IN THE BETA FOLDER FOR ANY REASON, AS IT WILL LIKELY NOT WORK.
                     """
 
-                    from update import fr_controller as frc
+                    from update import fr_controller_setup as frc
                     from update import t_controller as tc
                     from update import gd_controller as gdc
                     

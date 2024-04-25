@@ -47,7 +47,7 @@ def update_handler_setup(
 
     # other vars
     ut2_wDir = os.path.dirname(os.path.dirname(os.path.dirname(setup_wDir)))
-    zip_download_path = f"{setup_wDir}/tmp/latest_release.zip",
+    zip_download_path = f"{setup_wDir}/tmp/latest_release.zip"
     ext_download_path = f"{setup_wDir}/tmp"
     copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/full-redo"
     repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
