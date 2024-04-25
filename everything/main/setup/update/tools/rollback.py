@@ -21,7 +21,7 @@ def decide(
         print('To choose to ignore, type "ignore".')
         choice = input('-> ')
 
-        data_json_path = os.path.dirname(os.path.dirname(__file__))
+        data_json_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
         data_json_path = os.path.dirname(data_json_path)
         
