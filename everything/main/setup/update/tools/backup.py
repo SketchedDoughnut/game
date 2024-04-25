@@ -34,9 +34,12 @@ def backup_handler(
         copy_destination = f'{setup_wDir}/update/tools/backup/game_data'
 
         if backOrLoad == 'back':
-            print('Update: Backing up top...')
+            print('Update: Deleting previous backup...')
             print('- source:', copy_source)
             print('- destination:', copy_destination)
+            input('Enter anything to authorize deletion: ')
+            shutil.rmtree(copy_destination)
+            print('Update: Backing up top...')
             shutil.copytree(copy_source, copy_destination)
             print('Update: Files are backed up')
         
@@ -53,9 +56,11 @@ def backup_handler(
         copy_destination = f'{setup_wDir}/update/tools/backup/top'
 
         if backOrLoad == 'back':
-            print('Update: Backing up top...')
+            print('Update: Deleting previous backup...')
             print('- source:', copy_source)
             print('- destination:', copy_destination)
+            input('Enter anything to authorize deletion: ')
+            print('Update: Backing up top...')
             shutil.copytree(copy_source, copy_destination)
             print('Update: Files are backed up')
 
@@ -72,9 +77,11 @@ def backup_handler(
         copy_destination = f'{setup_wDir}/update/tools/backup/everything'
 
         if backOrLoad == 'back':
-            print('Update: Backing up everything...')
+            print('Update: Deleting previous backup...')
             print('- source:', copy_source)
             print('- destination:', copy_destination)
+            input('Enter anything to authorize deletion: ')
+            print('Update: Backing up everything...')
             shutil.copytree(copy_source, copy_destination)
             print('Update: Files are backed up')
 
