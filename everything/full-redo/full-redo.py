@@ -13,11 +13,6 @@ import json
 import requests
 
 # SHIT WE DONT HAVE THE OTHER FILES RAHHHHHHH
-# nvm I copied them
-# import files
-import update.download as f_download
-import update.copy as f_copy
-import update.extract as f_extract
 
 print('Welcome to part 2/2 of the update.')
 print('The update will continue when you authorize it.')
