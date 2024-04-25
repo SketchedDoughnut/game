@@ -27,10 +27,10 @@ def update_handler(main_wDir, setup_wDir):
 
     # other vars
     mode = 'top'
-    zip_download_path = f"{setup_wDir}/tmp/latest_release.zip",
-    ext_download_path = f"{setup_wDir}/tmp",
-    copy_location = f'{main_wDir}/top',
-    json_path = os.path.join(setup_wDir, 'file_list.json'),
+    zip_download_path = f"{setup_wDir}/tmp/latest_release.zip"
+    ext_download_path = f"{setup_wDir}/tmp"
+    copy_location = f'{main_wDir}/top'
+    json_path = os.path.join(setup_wDir, 'file_list.json')
     everything_path = os.path.dirname(main_wDir)
     repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
     copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/main/top"
