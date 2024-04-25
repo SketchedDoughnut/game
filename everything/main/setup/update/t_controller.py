@@ -7,6 +7,7 @@ import time
 import requests
  
 # file imports
+from .tools import backup as b
 from .tools import download as d
 from .tools import extract as ee
 from .tools import copy as c
@@ -64,6 +65,12 @@ def update_handler(main_wDir, setup_wDir):
             print('Update: No prior tmp')
         print('Update: Making tmp...')
         os.mkdir(f'{setup_wDir}/tmp')
+
+        b.backup_handler(
+            main_wDir = main_wDir,
+            setup_wDir = setup_wDir
+        )
+        
         print('Update: deleting previous top...')
         try:
             shutil.rmtree(f"{main_wDir}/top")
@@ -89,10 +96,11 @@ def update_handler(main_wDir, setup_wDir):
             print('Update: No tmp')
 
         print('Update: Checking install path...')
-        if os.path.exists(f'{main_wDir}/top/container/game_data'):
-            pass
+        if os.path.exists(copy_location):
+            print('Update: Path exists')
         else:
-            print('!!! UPDATE ERROR: The installed directory does not exist. Cancelling.')
+            print('!!! UPDATE ERROR: The installed directory does not exist. Reverting update to backup.')
+            print(f'!!! UPDATE ERROR: Path: {copy_location}')
             input('Enter anything to exit: ')
             exit()
 
