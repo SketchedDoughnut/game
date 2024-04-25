@@ -8,6 +8,7 @@ import requests
  
 # file imports 
 from .tools import backup as b
+from .tools import rollback as r
 from .tools import download as d
 from .tools import extract as ee
 from .tools import copy as c
@@ -131,6 +132,8 @@ def update_handler(
         results = v.verify_files(json_path, everything_path)
         
         if results:
+            r.decide(False)
+            
             b.backup_handler(
                 main_wDir = main_wDir, 
                 setup_wDir = setup_wDir,
