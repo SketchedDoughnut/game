@@ -7,19 +7,11 @@ import time
 import requests
  
 # file imports 
-# from .tools import download as d
-# import update.tools.extract as ee
-# import update.tools.copy as c
-# import update.tools.verify as v
+from .tools import *
 
 def update_handler(
         main_wDir,
         setup_wDir,
-        d,
-        ee,
-        c,
-        v,
-        release_version
     ):
 
     '''
@@ -37,6 +29,14 @@ def update_handler(
     '''
 
     ## setup the vars provided here
+    # commit label
+    release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
+    release_version = release_version.json()
+    release_version = str(release_version['body'])
+    release_version = release_version.split()
+    release_version = release_version[0]
+    
+    # other vars
     mode = 'game_data'
     state = False
     repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"

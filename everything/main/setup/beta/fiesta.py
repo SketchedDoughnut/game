@@ -154,55 +154,40 @@ class Install:
                         - THIS FILE IS NOT CAPABLE OF THE NEW UPDATE CAPABILITIES. IT IS IN BETA AND WILL NOT BE FUNCTIONING UNTIL FIXED.
                           DO NOT ACCESS THIS FILE IN THE BETA FOLDER FOR ANY REASON, AS IT WILL LIKELY NOT WORK.
                     """
-                    # import update.tools.download as d
-                    # import update.tools.extract as e
-                    # import update.tools.copy as c
-                    # import update.tools.verify as v
 
-                    # import update.fr_controller as frc
-                    # import update.t_controller as tc
-                    # import update.gd_controller as gdc
+                    import update.fr_controller as frc
+                    import update.t_controller as tc
+                    import update.gd_controller as gdc
                     
-                    # release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
-                    # release_version = release_version.json()
-                    # release_version = str(release_version['body'])
-                    # release_version = release_version.split()
-                    # release_version = release_version[0]
-                    
-                    # print('---------------')
-                    # print('Installer is in update mode.')
+                    print('---------------')
+                    print('Installer is in update mode.')
 
-                    # if data_dict['bounds'] == 'full':
-                    #     print('---------------')
-                    #     print('Installer is in full mode.')
-                    #     frc.update_handler(
-                    #         setup_wDir = self.setup_wDir
-                    #     )
+                    if data_dict['bounds'] == 'full':
+                        print('---------------')
+                        print('Installer is in full mode.')
+                        frc.update_handler(
+                            setup_wDir = self.setup_wDir
+                        )
                         
 
                         
-                    # if data_dict['bounds'] == 'top':
-                    #     print('---------------')
-                    #     print('Installer is in top mode.')
-                    #     tc.update_handler(
-                    #         main_wDir = self.main_wDir,
-                    #         setup_wDir = self.setup_wDir
-                    #     )
+                    if data_dict['bounds'] == 'top':
+                        print('---------------')
+                        print('Installer is in top mode.')
+                        tc.update_handler(
+                            main_wDir = self.main_wDir,
+                            setup_wDir = self.setup_wDir
+                        )
 
 
 
-                    # if data_dict['bounds'] == 'game_data':
-                    #     print('---------------')
-                    #     print('Installer is in game_data mode.')
-                    #     gdc.update_handler(
-                    #         setup_wDir = self.main_wDir, 
-                    #         main_wDir = self.setup_wDir,
-                    #         d = d,
-                    #         ee = e,
-                    #         c = c,
-                    #         v = v,
-                    #         release_version = release_version
-                    #     )
+                    if data_dict['bounds'] == 'game_data':
+                        print('---------------')
+                        print('Installer is in game_data mode.')
+                        gdc.update_handler(
+                            setup_wDir = self.main_wDir, 
+                            main_wDir = self.setup_wDir,
+                        )
 
 
 
