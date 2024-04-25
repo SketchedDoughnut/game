@@ -93,7 +93,11 @@ class Install:
             print(self.main_wDir)
             print(self.setup_wDir)
 
-        self.rules1 = open(f'{self.setup_wDir}/config.json', 'r') # self.rules > self.rules1
+        # darn vscode
+        self.rules1 = open(f'{self.setup_wDir}/setup/config.json', 'r')
+
+        # normal one to use
+        #self.rules1 = open(f'{self.setup_wDir}/config.json', 'r') # self.rules > self.rules1
 
         # will contain everything from config.json, including environment information
         self.rules = json.load(self.rules1)
@@ -127,8 +131,11 @@ class Install:
             
             # printing start statement, format, prompting
 
+            # darn vscode
+            f = open(f'{self.setup_wDir}/setup/data.json', 'r')
+
             # check the rule for shortcut, ignore everything below if so
-            f = open(f'{self.setup_wDir}/data.json', 'r')
+            #f = open(f'{self.setup_wDir}/data.json', 'r')
             data_dict = json.load(f)
             f.close()
             if data_dict['shortcut']:

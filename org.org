@@ -7,3 +7,7 @@ Test systems
     - full-redo execution: STATUS: UNKNOWN
     - backing up systems (edit file_list.json to test for nonexistents): STATUS: UNKNOWN
     - make sure nothing else broke
+
+Resets 
+    - line 97-99 of fiesta
+    - line 134-138 of fiesta
