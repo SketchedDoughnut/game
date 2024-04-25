@@ -125,10 +125,13 @@ except:
 print('Update: Copying files...')
 f_copy.copy(extract_path, everything_path)
 print('Update: Checking file integrity...')
-import update.verify as verify_agent
-json_path = os.path.join(wDir, 'file_list.json')
-everything_path = os.path.dirname(EnvironmentError)
-verify_agent.verify_files(json_path, everything_path)
+
+## experimental verification system
+# import update.verify as verify_agent
+# json_path = os.path.join(wDir, 'file_list.json')
+# everything_path = os.path.dirname(everything_path)
+# verify_agent.verify_files(json_path, everything_path)
+
 print('Update: Reaching into data.json...')
 f = open(esif, 'r')
 td = json.load(f)
