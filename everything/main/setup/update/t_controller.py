@@ -26,7 +26,7 @@ def update_handler(main_wDir, setup_wDir):
     release_version = release_version[0]
 
     # other vars
-    mode = 'top',
+    mode = 'top'
     zip_download_path = f"{setup_wDir}/tmp/latest_release.zip",
     ext_download_path = f"{setup_wDir}/tmp",
     copy_location = f'{main_wDir}/top',
