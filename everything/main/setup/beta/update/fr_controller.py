@@ -8,9 +8,11 @@ import time
 import requests
 
 # file imports
-import update.tools.download as d
-import update.tools.extract as ee
-import update.tools.copy as c
+# file imports 
+from .tools import download as d
+from .tools import extract as ee
+from .tools import copy as c
+
 
 
 def update_handler(
