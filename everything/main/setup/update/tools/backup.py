@@ -40,6 +40,7 @@ def backup_handler(
             input('Enter anything to authorize deletion: ')
             try:
                 shutil.rmtree(copy_destination)
+                print('Update: Previous backup deleted')
             except:
                 print('No prior backup')
             print('Update: Backing up top...')
@@ -65,6 +66,7 @@ def backup_handler(
             input('Enter anything to authorize deletion: ')
             try:
                 shutil.rmtree(copy_destination)
+                print('Update: Previous backup deleted')
             except:
                 print('No prior backup')
             print('Update: Backing up top...')
@@ -90,6 +92,7 @@ def backup_handler(
             input('Enter anything to authorize deletion: ')
             try:
                 shutil.rmtree(copy_destination)
+                print('Update: Previous backup deleted')
             except:
                 print('No prior backup')
             print('Update: Backing up everything...')
