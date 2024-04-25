@@ -2,6 +2,8 @@
 print('Installing pip files...')
 print('----------------------------')
 import pip
+
+# also consider cryptography, pywin32 
 pip.main(['install', 'pygame', 'requests'])
 
 # test every other import. Why? God knows why, man.

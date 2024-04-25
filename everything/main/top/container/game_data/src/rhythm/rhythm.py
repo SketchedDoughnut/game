@@ -8,8 +8,8 @@ Goal:
     Squares will be drawn into one of these 8 positions. When they reach the bottom rectangle,
     you have to press the appropriate key.
         - keys can be (normal home typing pos): 
-            - left: A, S, D, F
-            - right: J, K, L, :
+            - left: S, D, F
+            - right: J, K, L
     Once you do, the cube will change color indicating it has been activated. 
     Once the cube is off of the screen, if it is activated, it will add to your score.
     It will also increase a streak. If it is not activated, it will reset your streak 

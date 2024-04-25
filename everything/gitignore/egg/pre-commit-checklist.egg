@@ -7,5 +7,7 @@
         - # for run
 
 - clear any specific files of their directories (ie. delete.json)
+- reset data.json in setup/
+- clean up pyinstaller.exe before release-based commit
 
 - make sure all .exe are compiled and organized right
