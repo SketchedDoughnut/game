@@ -6,8 +6,8 @@ Test systems
     - new updates:
         - game_data: STATUS: WORKING
         - top: STATUS: WORKING
-    - full-redo update formatting: STATUS: FAIL
-    - full-redo execution: STATUS: UNKNOWN
+    - full-redo update setup: STATUS: WORKING
+    - full-redo execution: STATUS: FAIL
     - backing up systems (edit file_list.json to test for nonexistents): STATUS: UNKNOWN
     - make sure nothing else broke
 
