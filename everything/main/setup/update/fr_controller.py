@@ -53,9 +53,6 @@ def update_handler_setup(
     repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
     dump_location = f'{ut2_wDir}/full-redo'
 
-    json_path = os.path.join(setup_wDir, 'file_list.json')
-    v.verify_files(json_path, everything_path)
-
     
     if mode == 'full-setup':
         # FOR PYTHON
