@@ -59,6 +59,10 @@ guaranteed until action is taken to fix this issue.""")
             print('------------------------------------')
             print('Update: Changing data.json...')
             data_json_path = os.path.dirname(os.path.dirname(__file__))
+
+            # for vscode
+            data_json_path = os.path.dirname(data_json_path)
+            
             f = open(data_json_path, 'r')
             dict = json.load(f)
             f.close()
