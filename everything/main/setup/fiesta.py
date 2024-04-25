@@ -95,7 +95,7 @@ class Install:
 
 
 
-        self.setup_wDir = os.path.join(self.setup_wDir, 'setup')
+        #self.setup_wDir = os.path.join(self.setup_wDir, 'setup')
 
 
         # normal one to use
