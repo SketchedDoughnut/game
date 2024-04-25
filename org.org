@@ -3,7 +3,9 @@ tododododo
 Sync all update folders (BESIDES FR_CONTROLLER, ROLLBACK)
 Have backup.py delete previous backup
 Test systems
-    - new updates (game_data, top): STATUS: UNKNOWN
+    - new updates:
+        - game_data: STATUS: WORKING
+        - top: STATUS: UNKNOWN
     - full-redo update formatting: STATUS: FAIL
     - full-redo execution: STATUS: UNKNOWN
     - backing up systems (edit file_list.json to test for nonexistents): STATUS: UNKNOWN
