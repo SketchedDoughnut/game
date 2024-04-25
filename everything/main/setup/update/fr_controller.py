@@ -46,12 +46,12 @@ def update_handler_setup(
     release_version = release_version[0]
 
     # other vars
+    ut2_wDir = os.path.dirname(os.path.dirname(os.path.dirname(setup_wDir)))
     zip_download_path = f"{setup_wDir}/tmp/latest_release.zip",
     ext_download_path = f"{setup_wDir}/tmp"
     copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/full-redo"
     repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
     dump_location = f'{ut2_wDir}/full-redo'
-    ut2_wDir = os.path.dirname(os.path.dirname(os.path.dirname(setup_wDir)))
 
     json_path = os.path.join(setup_wDir, 'file_list.json')
     v.verify_files(json_path, everything_path)
