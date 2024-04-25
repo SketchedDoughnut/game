@@ -7,10 +7,10 @@ import time
 import requests
  
 # file imports 
-import tools.download as d
-import tools.extract as ee
-import tools.copy as c
-import tools.verify as v
+import update.tools.download as d
+import update.tools.extract as ee
+import update.tools.copy as c
+import update.tools.verify as v
 
 def update_handler(
         main_wDir,
