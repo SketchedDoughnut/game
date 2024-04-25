@@ -76,5 +76,3 @@ guaranteed until action is taken to fix this issue.""")
             print('------------------------------------')
             input('Enter anything to exit: ')
             exit()
-
-decide(False)
