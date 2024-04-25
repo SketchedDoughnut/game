@@ -188,8 +188,8 @@ class Install:
                         print('---------------')
                         print('Installer is in game_data mode.')
                         gdc.update_handler(
-                            setup_wDir = self.main_wDir, 
-                            main_wDir = self.setup_wDir,
+                            setup_wDir = self.setup_wDir,
+                            main_wDir = self.main_wDir
                         )
 
 
