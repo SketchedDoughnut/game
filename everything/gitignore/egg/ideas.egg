@@ -8,7 +8,7 @@ So, I had an idea about a new design for full-redo. Currently, what it does is f
 run full-redo/full-redo.exe. This then deletes and re-installs everything/, at which point it tells you to relaunch. The shortcut works as normal. fiesta.exe does not
 try and clean it up.
 
-THE PROPOSED idea
+THE PROPOSED IDEA
 So, new plan, then. For one, add a boolean to data.json that tells it to try and clean the full-redo folder, just for organization. But anyways, the functionality parts of 
 full-redo.exe. My idea is to have it rewrite the shortcut (currently game_name.lnk (2/24/2024)) and re-route it to full-redo.exe. When full-redo.exe is done, it will re-route it
 back into fiesta.exe and all should be fine. We can use the code to find the desktop directory that is in fiesta.exe (I think?) to do this. I also had the idea to have it 
