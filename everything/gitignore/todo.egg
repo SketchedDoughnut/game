@@ -1,8 +1,0 @@
-- consider:
-  - https://www.pygame.org/project/1316
-  - https://stackoverflow.com/questions/64788656/exe-file-made-with-pyinstaller-being-reported-as-a-virus-threat-by-windows-defen
-  
-- MAIN TODO
-  - Clean up RELEASES
-  - Find out how the tag system works
-  - Consider using the remote tunnel for VScode, run at home?
