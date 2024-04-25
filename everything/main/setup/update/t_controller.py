@@ -129,6 +129,7 @@ def update_handler(main_wDir, setup_wDir):
 
 
         print('Update: Resetting data.json...')
+        print('Update: Path:', f'{setup_wDir}/data.json')
         f = open(f'{setup_wDir}/data.json', 'r')
         td = json.load(f)
         f.close()
