@@ -1,11 +1,11 @@
 tododododo
 
 Sync all update folders (BESIDES FR_CONTROLLER, ROLLBACK)
-Have backup.py delete previous backup
+
 Test systems
     - new updates:
         - game_data: STATUS: WORKING
-        - top: STATUS: UNKNOWN
+        - top: STATUS: WORKING
     - full-redo update formatting: STATUS: FAIL
     - full-redo execution: STATUS: UNKNOWN
     - backing up systems (edit file_list.json to test for nonexistents): STATUS: UNKNOWN
@@ -15,3 +15,4 @@ Resets
     - line 98 of fiesta
     - line 64 of rollback.py in main/setup/update/tools
     - data.json
+    - file_list.json
