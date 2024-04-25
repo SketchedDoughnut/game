@@ -128,6 +128,7 @@ class Install:
             f = open(f'{self.setup_wDir}/data.json', 'r')
             data_dict = json.load(f)
             f.close()
+            print(data_dict)
             if data_dict['shortcut']:
 
 
@@ -149,6 +150,7 @@ class Install:
 
 
                 if data_dict['update']:
+                    print('tre')
                     """
                     NOTE
                         - THIS FILE IS NOT CAPABLE OF THE NEW UPDATE CAPABILITIES. IT IS IN BETA AND WILL NOT BE FUNCTIONING UNTIL FIXED.
