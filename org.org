@@ -9,6 +9,5 @@ Test systems
     - make sure nothing else broke
 
 Resets 
-    - line 97-99 of fiesta
-    - line 134-138 of fiesta
+    - line 98 of fiesta
     - data.json
