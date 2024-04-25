@@ -144,42 +144,47 @@ class Install:
 
 
 
+                """
+                NOTE
+                    - THERE IS CURRENTLY NO WORKING UPDATE AGENT IN FIESTA-MODERN.PY / EXE.
+                      UPDATING CODE HAS BEEN ROLLED BACK TO THE OLD FIESTA.PY / EXE FOR THE MEANWHILE, UNTIL THIS NEW FEATURE IS FINISHED.
+                      DO NOT DIRECT ANYTHING INTO THIS FILE UNLESS FOR INSTALLATION PURPOSES.
+                """
 
+                # if data_dict['update']:
 
-                if data_dict['update']:
+                #     print('---------------')
+                #     print('Installer is in update mode.')
 
-                    print('---------------')
-                    print('Installer is in update mode.')
-
-                    if data_dict['bounds'] == 'full':
-                        print('---------------')
-                        print('Installer is in full mode.')
-                        import update.fr_controller as frc
-                        frc.update_handler(
-                            setup_wDir = self.setup_wDir
-                        )
+                #     if data_dict['bounds'] == 'full':
+                #         print('---------------')
+                #         print('Installer is in full mode.')
+                #         import update.fr_controller as frc
+                #         frc.update_handler(
+                #             setup_wDir = self.setup_wDir
+                #         )
                         
 
                         
-                    if data_dict['bounds'] == 'top':
-                        print('---------------')
-                        print('Installer is in top mode.')
-                        import update.t_controller as tc
-                        tc.update_handler(
-                            main_wDir = self.main_wDir,
-                            setup_wDir = self.setup_wDir
-                        )
+                #     if data_dict['bounds'] == 'top':
+                #         print('---------------')
+                #         print('Installer is in top mode.')
+                #         import update.t_controller as tc
+                #         tc.update_handler(
+                #             main_wDir = self.main_wDir,
+                #             setup_wDir = self.setup_wDir
+                #         )
 
 
 
-                    if data_dict['bounds'] == 'game_data':
-                        print('---------------')
-                        print('Installer is in game_data mode.')
-                        import update.gd_controller as gdc
-                        gdc.update_handler(
-                            setup_wDir = self.main_wDir, 
-                            main_wDir = self.setup_wDir
-                        )
+                #     if data_dict['bounds'] == 'game_data':
+                #         print('---------------')
+                #         print('Installer is in game_data mode.')
+                #         import update.gd_controller as gdc
+                #         gdc.update_handler(
+                #             setup_wDir = self.main_wDir, 
+                #             main_wDir = self.setup_wDir
+                #         )
 
 
 
