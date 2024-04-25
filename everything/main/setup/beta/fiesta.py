@@ -131,7 +131,6 @@ class Install:
             f = open(f'{self.setup_wDir}/data.json', 'r')
             data_dict = json.load(f)
             f.close()
-            print(data_dict)
             if data_dict['shortcut']:
 
 

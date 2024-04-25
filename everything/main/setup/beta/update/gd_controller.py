@@ -108,6 +108,7 @@ def update_handler(
             pass
         else:
             print('!!! UPDATE ERROR: The installed directory does not exist. Cancelling.')
+            print(f'!!! UPDATE ERROR: Path: {setup_wDir}/top/container/game_data')
             input('Enter anything to exit: ')
             exit()
 
