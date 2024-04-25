@@ -35,9 +35,16 @@ def backup_handler(
         copy_destination = f'{os.path.dirname(copy_source)}/full-redo/update/tools/backup/everything'
 
         if backOrLoad == 'back':
-            print('Update: Backing up everything...')
+            print('Update: Deleting previous backup...')
             print('- source:', copy_source)
             print('- destination:', copy_destination)
+            input('Enter anything to authorize deletion: ')
+            try:
+                shutil.rmtree(copy_destination)
+                print('Update: Previous backup deleted')
+            except:
+                print('No prior backup')
+            print('Update: Backing up everything...')
             shutil.copytree(copy_source, copy_destination)
             print('Update: Files are backed up')
 
