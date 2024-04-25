@@ -68,7 +68,11 @@ def backup_handler(
     # if full-redo
     elif target == 'full-redo':
         # set up vars
-        copy_source = os.path.dirname(main_wDir)
+        #copy_source = os.path.dirname(main_wDir)
+
+        # darn vscode
+        copy_source = main_wDir
+        
         copy_destination = f'{os.path.dirname(copy_source)}/full-redo/update/tools/backup/everything'
 
         if backOrLoad == 'back':
