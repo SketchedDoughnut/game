@@ -100,7 +100,7 @@ Variables:
 #############################################################################
 #############################################################################
 
-import update.fr_controller as frc
+import update.fr_controller_install as frc
 frc.update_handler_install(
     mode = 'full-install',
     tmp_path = tmp_path,
