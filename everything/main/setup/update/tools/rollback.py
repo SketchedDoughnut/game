@@ -23,8 +23,7 @@ def decide(
 
         data_json_path = os.path.dirname(os.path.dirname(__file__))
 
-        # for vscode
-        # data_json_path = os.path.dirname(data_json_path)
+        data_json_path = os.path.dirname(data_json_path)
         
         data_json_path = os.path.join(data_json_path, 'data.json')
 
