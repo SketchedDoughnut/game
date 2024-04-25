@@ -1,6 +1,7 @@
 tododododo
 
 Sync all update folders (BESIDES FR_CONTROLLER, ROLLBACK)
+Have backup.py delete previous backup
 Test systems
     - new updates (game_data, top): STATUS: UNKNOWN
     - full-redo update formatting: STATUS: FAIL

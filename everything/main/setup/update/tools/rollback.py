@@ -21,11 +21,16 @@ def decide(
         print('To choose to ignore, type "ignore".')
         choice = input('-> ')
 
+        data_json_path = os.path.dirname(os.path.dirname(__file__))
+
+        # for vscode
+        data_json_path = os.path.dirname(data_json_path)
+        
+        data_json_path = os.path.join(data_json_path, 'data.json')
 
         if choice == 'full':
             print('------------------------------------')
             print('Update: Changing data.json...')
-            data_json_path = os.path.dirname(os.path.dirname(__file__))
             f = open(data_json_path, 'r')
             dict = json.load(f)
             f.close()
@@ -58,14 +63,6 @@ re-download the file 'file_list.json' located in 'everything/main/setup/file_lis
 guaranteed until action is taken to fix this issue.""")
             print('------------------------------------')
             print('Update: Changing data.json...')
-            data_json_path = os.path.dirname(os.path.dirname(__file__))
-
-            # for vscode
-            data_json_path = os.path.dirname(data_json_path)
-            
-            
-            data_json_path = os.path.join(data_json_path, 'data.json')
-            
             f = open(data_json_path, 'r')
             dict = json.load(f)
             f.close()
