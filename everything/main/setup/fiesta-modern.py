@@ -127,97 +127,59 @@ class Install:
             f.close()
             if data_dict['shortcut']:
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 if data_dict['update']:
+
                     print('---------------')
                     print('Installer is in update mode.')
 
                     if data_dict['bounds'] == 'full':
+                        print('---------------')
+                        print('Installer is in full mode.')
                         import update.fr_controller as frc
                         frc.update_handler(
-                            mode='full',
-                            main_wDir = self.main_wDir,
-                            setup_wDir = self.setup_wDir,
-                            zip_download_path = f"{self.setup_wDir}/tmp/latest_release.zip",
-                            ext_download_path = f"{self.setup_wDir}/tmp",
+                            setup_wDir = self.setup_wDir
                         )
                         
 
                         
-
-
-
-
-
-
-
-
-
-
+                    if data_dict['bounds'] == 'top':
+                        print('---------------')
+                        print('Installer is in top mode.')
+                        import update.t_controller as tc
+                        tc.update_handler(
+                            main_wDir = self.main_wDir,
+                            setup_wDir = self.setup_wDir
+                        )
 
 
 
                     if data_dict['bounds'] == 'game_data':
                         print('---------------')
                         print('Installer is in game_data mode.')
-                        if bob:
-
-                        # '''
-                        # flow for game data re-install
-
-                        #     - deletes previous "tmp" folder in setup
-                        #     - creates new "tmp folder"
-                        #     - deletes previous "game_data"
-                        #     - downloads .zip
-                        #     - extracts all of .zip
-                        #     - copies "game_data" from the extracted version into proper directory
-                        #     - gets rid of "tmp"
-                        #     - resets "data.json"
-                        #     - done!
-                        # '''
-
-
-
-
-
-
-
-
-
-                    if data_dict['bounds'] == 'top':
-                        print('---------------')
-                        print('Installer is in top mode.')
-                        if bob:
-
-                        # '''
-                        # flow for game data re-install
-
-                        #     - deletes previous "tmp" folder in setup
-                        #     - creates new "tmp folder"
-                        #     - deletes previous "top"
-                        #     - downloads .zip
-                        #     - extracts all of .zip
-                        #     - copies "top" from the extracted version into proper directory
-                        #     - gets rid of "tmp"
-                        #     - resets "data.json"
-                        #     - done!
-                        # '''
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                        import update.gd_controller as gdc
+                        gdc.update_handler(
+                            setup_wDir = self.main_wDir, 
+                            main_wDir = self.setup_wDir
+                        )
 
 
 
@@ -246,6 +208,14 @@ class Install:
 
 
 
+
+
+
+
+
+
+
+                    
             print('---------------')
             print("""
             Welcome to the open-source installer created by Sketched Doughnut! 

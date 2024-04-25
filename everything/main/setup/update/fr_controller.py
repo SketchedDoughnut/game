@@ -1,3 +1,4 @@
+# builtins
 import os
 import shutil
 import json
@@ -10,18 +11,10 @@ import requests
 import download as d
 import extract as ee
 import copy as c
-import verify as v
 
 
 def update_handler(
-        mode,
-        main_wDir,
-        setup_wDir,
-        zip_download_path,
-        ext_download_path,
-        copy_location,
-        json_path,
-        everything_path,
+        setup_wDir
     ):
 
     '''
@@ -39,14 +32,10 @@ def update_handler(
         done!
     '''
 
-    '''
-    variables here
-    - repo_url
-    - release_version
-    - copy source
-    '''
-
     # setup the vars provided here
+    zip_download_path = f"{setup_wDir}/tmp/latest_release.zip",
+    ext_download_path = f"{setup_wDir}/tmp"
+    mode = 'full'
     copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/full-redo"
     repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
     dump_location = f'{ut2_wDir}/full-redo'

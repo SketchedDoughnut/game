@@ -5,7 +5,7 @@ import time
 
 # packages
 import requests
-
+ 
 # file imports
 import download as d
 import extract as ee
@@ -13,25 +13,29 @@ import copy as c
 import verify as v
 
 
-def update_handler(
-        mode,
-        main_wDir,
-        setup_wDir,
-        zip_download_path,
-        ext_download_path,
-        copy_source,
-        copy_location,
-        json_path,
-        everything_path,
-    ):
+def update_handler(main_wDir, setup_wDir):
 
-    '''
-    variables here
-    - repo_url
-    - release_version
-    '''
+    # setup the vars provided here
+    mode = 'top',
+    zip_download_path = f"{setup_wDir}/tmp/latest_release.zip",
+    ext_download_path = f"{setup_wDir}/tmp",
+    copy_location = f'{main_wDir}/top',
+    json_path = os.path.join(setup_wDir, 'file_list.json'),
+    everything_path = os.path.dirname(main_wDir)
+    repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+    copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/main/top"
+    state = False
 
-    if mode == 'game_data':
+    # commit label
+    release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
+    release_version = release_version.json()
+    release_version = str(release_version['body'])
+    release_version = release_version.split()
+    release_version = release_version[0]
+
+    
+
+    if mode == 'top':
         print('Update: installing top')
         print('If you want to backup your top, copy the directory now.')
         print(f'The directory is: {main_wDir}/top')
@@ -65,25 +69,14 @@ def update_handler(
         except Exception as e:
             print('Update: No prior top:', e)
         print('Update: Downloading .zip...')
-        repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
-        zip_download_path = f"{setup_wDir}/tmp/latest_release.zip"  # Change the path if needed
         d.download_latest_release(repo_url, zip_download_path)
-        ext_download_path = f"{setup_wDir}/tmp"
         print('Update: Extracting files...')
 
         # https://www.geeksforgeeks.org/unzipping-files-in-python/
         ee.extract(zip_download_path, ext_download_path)
 
         print('Update: Getting commit label...')
-        release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
-        release_version = release_version.json()
-        release_version = str(release_version['body'])
-        release_version = release_version.split()
-        release_version = release_version[0]
-        copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/main/top"
-        copy_location = f'{main_wDir}/top'
         print(f'Update: Copying files to {copy_location}...')
-        #print(f'Update: Copying files...')
 
         # https://pynative.com/python-copy-files-and-directories/
         c.copy(copy_source, copy_location)
@@ -103,8 +96,6 @@ def update_handler(
             exit()
 
         print('Update: Checking file integrity...')
-        json_path = os.path.join(setup_wDir, 'file_list.json')
-        everything_path = os.path.dirname(main_wDir)
         v.verify_files(json_path, everything_path)
             
         print('Update: Resetting data.json...')
@@ -129,13 +120,9 @@ def update_handler(
         time.sleep(0.25)
         print('Update: Reaching to state.json...')
         print(f'Update: Path: {main_wDir}/top/container/version.json')
-        f = open(f'{main_wDir}/top/container/state.json', 'r')
-        tmp = json.load(f)
-        f.close()
         f = open(f'{main_wDir}/top/container/state.json', 'w')
-        tmp = False
         print('Update: Dumping state...')
-        json.dump(tmp, f)
+        json.dump(state, f)
         f.close()
 
         print('Update: top update complete!')
