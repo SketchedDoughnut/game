@@ -38,7 +38,10 @@ def backup_handler(
             print('- source:', copy_source)
             print('- destination:', copy_destination)
             input('Enter anything to authorize deletion: ')
-            shutil.rmtree(copy_destination)
+            try:
+                shutil.rmtree(copy_destination)
+            except:
+                print('No prior backup')
             print('Update: Backing up top...')
             shutil.copytree(copy_source, copy_destination)
             print('Update: Files are backed up')
@@ -60,6 +63,10 @@ def backup_handler(
             print('- source:', copy_source)
             print('- destination:', copy_destination)
             input('Enter anything to authorize deletion: ')
+            try:
+                shutil.rmtree(copy_destination)
+            except:
+                print('No prior backup')
             print('Update: Backing up top...')
             shutil.copytree(copy_source, copy_destination)
             print('Update: Files are backed up')
@@ -81,6 +88,10 @@ def backup_handler(
             print('- source:', copy_source)
             print('- destination:', copy_destination)
             input('Enter anything to authorize deletion: ')
+            try:
+                shutil.rmtree(copy_destination)
+            except:
+                print('No prior backup')
             print('Update: Backing up everything...')
             shutil.copytree(copy_source, copy_destination)
             print('Update: Files are backed up')
