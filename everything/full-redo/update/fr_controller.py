@@ -9,6 +9,7 @@ import requests
 
 # file imports
 from .tools import backup as b
+from .tools import rollback as r
 from .tools import download as d
 from .tools import extract as ee
 from .tools import copy as c
@@ -40,19 +41,15 @@ def update_handler_install(
         print('Update: Extracting files...')
         ee.extract(zip_path, tmp_path)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
+        main_wDir = f'{everything_path}/main'
+        setup_wDir = f'{everything_path}/main/setup'
+        b.backup_handler(
+            main_wDir = main_wDir,
+            setup_wDir = setup_wDir,
+            backOrLoad = 'back',
+            target = 'full-redo'
+        )
 
 
 
@@ -69,10 +66,22 @@ def update_handler_install(
 
         print('Update: Checking file integrity...')
         json_path = f'{everything_path}/main/setup/file_list.json'
-        v.verify_files(
+        results = v.verify_files(
             json_path = json_path,
             everything_path = everything_path
         )
+
+        if results:
+            r.decide(
+                if_full_redo = True
+            )
+            
+            b.backup_handler(
+                main_wDir = main_wDir,
+                setup_wDir = setup_wDir,
+                backOrLoad = 'load',
+                target = 'full-redo'
+            )
 
 
         print('Update: Reaching into data.json...')

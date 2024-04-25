@@ -83,3 +83,7 @@ def backup_handler(
             shutil.rmtree(copy_source)
             print('Update: Reloading backup of everything...')
             shutil.copytree(copy_destination, copy_source)
+
+    else:
+        print('No valid target.')
+        exit()

@@ -1,0 +1,9 @@
+tododododo
+
+Sync all update folders (BESIDES FR_CONTROLLER, ROLLBACK)
+Test systems
+    - new updates (game_data, top)
+    - full-redo update formatting
+    - full-redo execution 
+    - backing up systems (edit file_list.json)
+    - make sure nothing else broke

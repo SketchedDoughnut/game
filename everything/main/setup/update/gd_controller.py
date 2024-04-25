@@ -84,7 +84,9 @@ def update_handler(
 
         b.backup_handler(
             main_wDir = main_wDir,
-            setup_wDir = setup_wDir
+            setup_wDir = setup_wDir,
+            backOrLoad = 'back',
+            target = 'game_data'
         )
 
         
@@ -123,9 +125,20 @@ def update_handler(
             input('Enter anything to exit: ')
             exit()
 
+
+
         print('Update: Checking file integrity...')
-        v.verify_files(json_path, everything_path)
+        results = v.verify_files(json_path, everything_path)
         
+        if results:
+            b.backup_handler(
+                main_wDir = main_wDir, 
+                setup_wDir = setup_wDir,
+                backOrLoad = 'load',
+                target = 'game_data'
+            )
+
+
         print('Update: Resetting data.json...')
         f = open(f'{setup_wDir}/data.json', 'r')
         td = json.load(f)
