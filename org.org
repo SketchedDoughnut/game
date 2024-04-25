@@ -13,6 +13,7 @@ Test systems
 
 Resets 
     - line 98 of fiesta
-    - line 64 of rollback.py in main/setup/update/tools
+    - line 64 of rollback.py in everything/main/setup/update/tools
+    - line 46 of full-redo.py in everything/full-redo
     - data.json
     - file_list.json

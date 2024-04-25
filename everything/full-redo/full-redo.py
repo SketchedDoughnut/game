@@ -43,7 +43,7 @@ high_wDir = os.path.dirname(wDir)
 
 # FOR COMPILE
 # wDir, folder above this (full-redo)
-wDir = os.path.dirname(wDir)
+# wDir = os.path.dirname(wDir) ############### darn vscode
 high_wDir = os.path.dirname(high_wDir) # changed from wDir to high_wDir
 
 # commit label, the random crap (in this case we ignore the bounds since we know we are installing full)
