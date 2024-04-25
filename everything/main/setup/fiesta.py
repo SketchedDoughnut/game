@@ -157,6 +157,7 @@ class Install:
                         print('---------------')
                         print('Installer is in full mode.')
                         import update.fr_controller as frc
+                        import update.tools.download as d
                         frc.update_handler(
                             setup_wDir = self.setup_wDir
                         )
