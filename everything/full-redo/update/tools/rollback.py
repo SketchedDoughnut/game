@@ -46,14 +46,14 @@ def decide(
             print('------------------------------------')
             print('A full re-installation will now happen. Please re-launch.')
             print('------------------------------------')
-            input('Enter anything to proceed: ')
+            input('Enter anything to exit: ')
             return 'full'
 
         elif choice == 'again':
             print('------------------------------------')
             print('This file will attempt to update again. Please re-launch.')
             print('------------------------------------')
-            input('Enter anything to proceed: ')
+            input('Enter anything to exit: ')
             return 'again'
 
         elif choice == 're-download':
@@ -61,7 +61,7 @@ def decide(
             print("""Please go to where you installed the game from and 
 re-download the file 'file_list.json' located in 'everything/main/setup/file_list.json'""")
             print('------------------------------------')
-            input('Enter anything to proceed: ')
+            input('Enter anything to exit: ')
             return 're-download'
 
         
@@ -82,5 +82,5 @@ guaranteed until action is taken to fix this issue.""")
             f.close()
             print('Update: data.json has been updated')
             print('------------------------------------')
-            input('Enter anything to proceed: ')
+            input('Enter anything to exit: ')
             return 'ignore'
