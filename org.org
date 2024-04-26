@@ -9,7 +9,7 @@ Test systems
     - full-redo update setup: STATUS: WORKING
     - full-redo execution: STATUS: FAIL
     - backing up systems (edit file_list.json to test for nonexistents): STATUS: UNKNOWN
-    - make sure nothing else broke
+    - make sure nothing else broke: STATUS: UNKNOWN
 
 Resets 
     - line 98 of fiesta
