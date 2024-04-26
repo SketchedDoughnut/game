@@ -74,7 +74,6 @@ def update_handler_install(
         if results:
             b.backup_handler(
                 main_wDir = main_wDir,
-                setup_wDir = setup_wDir,
                 backOrLoad = 'load',
                 target = 'full-redo'
             )
