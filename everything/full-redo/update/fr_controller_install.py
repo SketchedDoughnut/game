@@ -39,11 +39,15 @@ def update_handler_install(
 
         main_wDir = f'{everything_path}/main'
         setup_wDir = f'{everything_path}/main/setup'
-        b.backup_handler(
-            main_wDir = main_wDir,
-            backOrLoad = 'back',
-            target = 'full-redo'
-        )
+        
+        try: 
+            b.backup_handler(
+                main_wDir = main_wDir,
+                backOrLoad = 'back',
+                target = 'full-redo'
+            )
+        except Exception as e:
+            print('Update: Backup error:', e)
         
         print('Update: Downloading .zip...')
         d.download_latest_release(repo_url, zip_path) # changed tmp_path to zip_path

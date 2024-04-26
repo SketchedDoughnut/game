@@ -68,12 +68,15 @@ def update_handler(main_wDir, setup_wDir):
         print('Update: Making tmp...')
         os.mkdir(f'{setup_wDir}/tmp')
 
-        b.backup_handler(
-            main_wDir = main_wDir,
-            setup_wDir = setup_wDir,
-            backOrLoad = 'back',
-            target = 'top'
-        )
+        try:
+            b.backup_handler(
+                main_wDir = main_wDir,
+                setup_wDir = setup_wDir,
+                backOrLoad = 'back',
+                target = 'top'
+            )
+        except Exception as e:
+            print('Update: Backup error:', e)
         
         print('Update: deleting previous top...')
         try:

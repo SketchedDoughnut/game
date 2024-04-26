@@ -81,12 +81,15 @@ def update_handler(
         print('Update: Making tmp...')
         os.mkdir(f'{setup_wDir}/tmp')
 
-        b.backup_handler(
-            main_wDir = main_wDir,
-            setup_wDir = setup_wDir,
-            backOrLoad = 'back',
-            target = 'game_data'
-        )
+        try:
+            b.backup_handler(
+                main_wDir = main_wDir,
+                setup_wDir = setup_wDir,
+                backOrLoad = 'back',
+                target = 'game_data'
+            )
+        except Exception as e:
+            print('Update: Backup error:', e)
 
         print('Update: deleting previous game_data...')
         try:
