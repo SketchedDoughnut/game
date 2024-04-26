@@ -80,18 +80,25 @@ def update_handler_install(
             r.decide(True)
 
         print('Update: Reaching into data.json...')
+        print('Update: Path:', esif)
         f = open(esif, 'r')
         td = json.load(f)
         f.close()
         td['shortcut'] = True
+        td['update'] = False
+        td['bounds'] = 'x'
         print('Update: Dumping into data.json...')
+        print('Update: Path:', esif)
         f = open(esif, 'w')
         json.dump(td, f)
         f.close()
         print('Update: Reaching into version.json...')
+        print('Update: Path:', esif)
         print('Update: Dumping into version.json...')
+        print('Update: Path:', vsif)
         f = open(vsif, 'w')
         json.dump(commit_label, f)
+        f.close()
         print('Update: Cleaning up tmp...')
         shutil.rmtree(tmp_path)
         print('Update: Full re-install done!')
