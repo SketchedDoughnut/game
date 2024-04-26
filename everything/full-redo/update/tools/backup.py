@@ -35,14 +35,14 @@ def backup_handler(
 
         if backOrLoad == 'back':
             print('Update: Deleting previous backup...')
-            print('- source:', copy_source)
-            print('- destination:', copy_destination)
-            input('Enter anything to authorize deletion: ')
+            print('    - source:', copy_source)
+            print('    - destination:', copy_destination)
+            input('--> Enter anything to authorize deletion: ')
             try:
                 shutil.rmtree(copy_destination)
                 print('Update: Previous backup deleted')
             except:
-                print('No prior backup')
+                print('Update: No prior backup')
             print('Update: Backing up everything...')
             shutil.copytree(copy_source, copy_destination)
             print('Update: Files are backed up')
