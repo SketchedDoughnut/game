@@ -27,12 +27,63 @@ def backup_handler(
         target
     ):
 
-    
+    # if game_data
+    if target == 'game_data':
+        # set up vars
+        copy_source = f'{main_wDir}/top/container/game_data'
+        copy_destination = f'{setup_wDir}/update/tools/backups/game_data'
+
+        if backOrLoad == 'back':
+            print('Update: Deleting previous backup...')
+            print('- source:', copy_source)
+            print('- destination:', copy_destination)
+            input('Enter anything to authorize deletion: ')
+            try:
+                shutil.rmtree(copy_destination)
+                print('Update: Previous backup deleted')
+            except:
+                print('No prior backup')
+            print('Update: Backing up top...')
+            shutil.copytree(copy_source, copy_destination)
+            print('Update: Files are backed up')
+        
+        elif backOrLoad == 'load':
+            print('Update: Cleaning failed installation...')
+            shutil.rmtree(copy_source)
+            print('Update: Reloading backup of game_data...')
+            shutil.copytree(copy_destination, copy_source)
+
+    # if top
+    elif target == 'top':
+        # set up vars
+        copy_source = f'{main_wDir}/top'
+        copy_destination = f'{setup_wDir}/update/tools/backups/top'
+
+        if backOrLoad == 'back':
+            print('Update: Deleting previous backup...')
+            print('- source:', copy_source)
+            print('- destination:', copy_destination)
+            input('Enter anything to authorize deletion: ')
+            try:
+                shutil.rmtree(copy_destination)
+                print('Update: Previous backup deleted')
+            except:
+                print('No prior backup')
+            print('Update: Backing up top...')
+            shutil.copytree(copy_source, copy_destination)
+            print('Update: Files are backed up')
+
+        elif backOrLoad == 'load':
+            print('Update: Cleaning failed installation...')
+            shutil.rmtree(copy_source)
+            print('Update: Reloading backup of top...')
+            shutil.copytree(copy_destination, copy_source)
+
     # if full-redo
-    if target == 'full-redo':
+    elif target == 'full-redo':
         # set up vars
         copy_source = os.path.dirname(main_wDir)
-        copy_destination = f'{os.path.dirname(copy_source)}/full-redo/update/tools/backup/everything'
+        copy_destination = f'{setup_wDir}/update/tools/backups/everything'
 
         if backOrLoad == 'back':
             print('Update: Deleting previous backup...')

@@ -37,12 +37,6 @@ def update_handler_install(
         print('Update: Creating new tmp...')
         os.mkdir(tmp_path)
 
-        print('Update: Downloading .zip...')
-        d.download_latest_release(repo_url, zip_path) # changed tmp_path to zip_path
-
-        print('Update: Extracting files...')
-        ee.extract(zip_path, tmp_path)
-
         main_wDir = f'{everything_path}/main'
         setup_wDir = f'{everything_path}/main/setup'
         b.backup_handler(
@@ -51,6 +45,12 @@ def update_handler_install(
             backOrLoad = 'back',
             target = 'full-redo'
         )
+        
+        print('Update: Downloading .zip...')
+        d.download_latest_release(repo_url, zip_path) # changed tmp_path to zip_path
+
+        print('Update: Extracting files...')
+        ee.extract(zip_path, tmp_path)
 
         print('Update: Deleting previous everything...')
         try:
