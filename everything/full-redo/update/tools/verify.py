@@ -27,5 +27,6 @@ def verify_files(json_path, everything_path):
                 failed = True
                 print('------------------------------------')
                 print('- It appears that 1 or more files are missing. This update will cancel, and instead reload your backup.')
+                print('------------------------------------')
                 break
     return failed
