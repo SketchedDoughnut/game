@@ -30,7 +30,7 @@ def backup_handler(
     if target == 'full-redo':
         # set up vars
         copy_source = os.path.dirname(main_wDir)
-        top_wDir = os.path.dirname(main_wDir)
+        top_wDir = os.path.dirname(copy_source)
         copy_destination = f'{top_wDir}/full-redo/update/tools/backups/everything'
 
         if backOrLoad == 'back':
