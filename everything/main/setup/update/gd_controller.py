@@ -145,6 +145,7 @@ def update_handler(
             print('Update: No tmp')
         
         print('Update: Resetting data.json...')
+        print(f'Update: Path: {setup_wDir}/data.json')
         f = open(f'{setup_wDir}/data.json', 'r')
         td = json.load(f)
         f.close()

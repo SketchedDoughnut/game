@@ -8,7 +8,5 @@
   - Consider using the remote tunnel for VScode, run at home?
   - Make updates detect if more then one was released since last update (more in ideas.egg, "update detection")
   - Make new updating system working, implement it
-    - make file to backup files before update, restore if failed (triggered by main update, or by verify detecting 10+ missing files)
-      - modify full-redo to adapt to the new system (goal is to get verify / backup finished by end of (y'know) hours, work on rest later)
-      - update all of the update folders with the new code
+    - transfer over user specific data (colors.json, high_scores, etc)
     

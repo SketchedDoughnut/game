@@ -1,13 +1,11 @@
 tododododo
 
-Sync all update folders (BESIDES FR_CONTROLLER, ROLLBACK)
-
 Test systems
     - new updates:
-        - game_data: STATUS: WORKING
-        - top: STATUS: WORKING
-    - full-redo update setup: STATUS: WORKING
-    - full-redo execution: STATUS: FAIL
+        - game_data: STATUS: UNKNOWN
+        - top: STATUS: UNKNOWN
+    - full-redo update setup: STATUS: UNKNOWN
+    - full-redo execution: STATUS: UNKNOWN
     - backing up systems (edit file_list.json to test for nonexistents): STATUS: UNKNOWN
     - make sure nothing else broke: STATUS: UNKNOWN
 
