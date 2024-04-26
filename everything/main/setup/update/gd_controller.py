@@ -131,7 +131,9 @@ def update_handler(
                 backOrLoad = 'load',
                 target = 'game_data'
             )
+
             r.decide(False)
+            exit()
 
         print('Update: Cleaning up tmp...')
         try:

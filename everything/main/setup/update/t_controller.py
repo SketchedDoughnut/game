@@ -113,6 +113,7 @@ def update_handler(main_wDir, setup_wDir):
                 target = 'top'
             )
             r.decide(False)
+            exit()
 
         print('Update: Cleaning up tmp...')
         try:

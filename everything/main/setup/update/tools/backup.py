@@ -31,7 +31,7 @@ def backup_handler(
     if target == 'game_data':
         # set up vars
         copy_source = f'{main_wDir}/top/container/game_data'
-        copy_destination = f'{setup_wDir}/update/tools/backup/game_data'
+        copy_destination = f'{setup_wDir}/update/tools/backups/game_data'
 
         if backOrLoad == 'back':
             print('Update: Deleting previous backup...')
@@ -57,7 +57,7 @@ def backup_handler(
     elif target == 'top':
         # set up vars
         copy_source = f'{main_wDir}/top'
-        copy_destination = f'{setup_wDir}/update/tools/backup/top'
+        copy_destination = f'{setup_wDir}/update/tools/backups/top'
 
         if backOrLoad == 'back':
             print('Update: Deleting previous backup...')
@@ -83,7 +83,7 @@ def backup_handler(
     elif target == 'full-redo':
         # set up vars
         copy_source = os.path.dirname(main_wDir)
-        copy_destination = f'{setup_wDir}/update/tools/backup/everything'
+        copy_destination = f'{setup_wDir}/update/tools/backups/everything'
 
         if backOrLoad == 'back':
             print('Update: Deleting previous backup...')
