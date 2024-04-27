@@ -15,6 +15,25 @@ from .tools import extract as ee
 from .tools import copy as c
 from .tools import verify as v
 
+def createShortcut(self, path, target='', wDir='', icon=''):  
+    from win32com.client import Dispatch
+    ext = path[-3:]
+    if ext == 'url':
+        #shortcut = file(path, 'w')
+        shortcut = open(path, 'w')
+        shortcut.write('[InternetShortcut]\n')
+        shortcut.write('URL=%s' % target)
+        shortcut.close()
+    else:
+        shell = Dispatch('WScript.Shell')
+        shortcut = shell.CreateShortCut(path)
+        shortcut.Targetpath = target
+        shortcut.WorkingDirectory = wDir
+        if icon == '':
+            pass
+        else:
+            shortcut.IconLocation = icon
+        shortcut.save()
 
 
 def update_handler_install(
@@ -63,6 +82,18 @@ def update_handler_install(
 
         print('Update: Copying files...')
         c.copy(extract_path, everything_path)
+
+        print('Update: Redirecting shortcut...')
+        import winshell
+        desktop = winshell.desktop()     
+        path = os.path.join(desktop, "game_name.lnk") # CHANGE game_name TO NAME
+        target = f"{everything_path}/main/setup/fiesta.exe" # CHANGE TO EXE
+        wDir = f"{everything_path}/main/setup"
+        icon = f"{everything_path}/main/setup/fiesta.exe" # CHANGE TO EXE
+        try:
+            createShortcut(target=target, path=path, wDir=wDir, icon=icon)
+        except Exception as e:
+            print(f'Update: Shortcut transfer error: {e}')
 
         print('Update: Checking file integrity...')
         json_path = f'{everything_path}/main/setup/file_list.json'

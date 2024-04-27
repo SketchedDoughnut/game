@@ -14,6 +14,25 @@ from .tools import extract as ee
 from .tools import copy as c
 from .tools import verify as v
 
+def createShortcut(self, path, target='', wDir='', icon=''):  
+    from win32com.client import Dispatch
+    ext = path[-3:]
+    if ext == 'url':
+        #shortcut = file(path, 'w')
+        shortcut = open(path, 'w')
+        shortcut.write('[InternetShortcut]\n')
+        shortcut.write('URL=%s' % target)
+        shortcut.close()
+    else:
+        shell = Dispatch('WScript.Shell')
+        shortcut = shell.CreateShortCut(path)
+        shortcut.Targetpath = target
+        shortcut.WorkingDirectory = wDir
+        if icon == '':
+            pass
+        else:
+            shortcut.IconLocation = icon
+        shortcut.save()
 
 
 def update_handler_setup(
@@ -123,7 +142,22 @@ def update_handler_setup(
         # https://pynative.com/python-copy-files-and-directories/
         print('Update: Copying control folder...')
         print(f'Update: Copying files to {dump_location}')
+        print(dump_location)
+        print(copy_source)
         c.copy(copy_source, dump_location)
+
+        # transfer shortcut - src: fiesta.py
+        print('Update: Redirecting shortcut...')
+        import winshell
+        desktop = winshell.desktop()     
+        path = os.path.join(desktop, "game_name.lnk") # CHANGE game_name TO NAME
+        target = f"{ut2_wDir}/full-redo/full-redo.exe" # CHANGE TO EXE
+        wDir = f"{ut2_wDir}/full-redo"
+        icon = f"{ut2_wDir}/full-redo/full-redo.exe" # CHANGE TO EXE
+        try:
+            createShortcut(target=target, path=path, wDir=wDir, icon=icon)
+        except Exception as e:  
+            print(f'Update: Shortcut transfer error: {e}')
 
         # clean up tmp
         print('Update: Cleaning up tmp...')
