@@ -48,6 +48,7 @@ def update_handler_install(
     vsif
     ):
     if mode == 'full-install':
+        print('---------------')
         print('Update: Deleting previous tmp...')
         try:
             shutil.rmtree(tmp_path)
@@ -124,7 +125,7 @@ def update_handler_install(
         json.dump(td, f)
         f.close()
         print('Update: Reaching into version.json...')
-        print('Update: Path:', esif)
+        print('Update: Path:', vsif)
         print('Update: Dumping into version.json...')
         print('Update: Path:', vsif)
         f = open(vsif, 'w')

@@ -201,6 +201,22 @@ class Install:
                         )
 
 
+                    else:
+                        print('---------------')
+                        print('Improper update bounds. Redirecting to starter file...')
+                        
+                        # FOR PYTHON
+                        self.top_wDir = (os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+                        # FOR COMPILE
+                        self.top_wDir = os.path.dirname(self.top_wDir)
+
+                        self.top_wDir = os.path.join(self.top_wDir, 'top')
+                        os.system(f'python {self.top_wDir}/starter.py')
+                        exit() 
+
+
+
 
                 else:
                     print('---------------')

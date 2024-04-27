@@ -81,6 +81,7 @@ def update_handler_setup(
         #os.path.dirname(ut2_wDir)
 
         # cancel if they want to
+        print('---------------')
         print('Update: installing full')
         print('- This is a update that requires a re-installation of all game files.')
         print('  Nothing will be saved.')
@@ -142,8 +143,6 @@ def update_handler_setup(
         # https://pynative.com/python-copy-files-and-directories/
         print('Update: Copying control folder...')
         print(f'Update: Copying files to {dump_location}')
-        print(dump_location)
-        print(copy_source)
         c.copy(copy_source, dump_location)
 
         # transfer shortcut - src: fiesta.py
