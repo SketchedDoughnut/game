@@ -15,7 +15,7 @@ from .tools import extract as ee
 from .tools import copy as c
 from .tools import verify as v
 
-def createShortcut(self, path, target='', wDir='', icon=''):  
+def createShortcut(path, target='', wDir='', icon=''):  
     from win32com.client import Dispatch
     ext = path[-3:]
     if ext == 'url':
