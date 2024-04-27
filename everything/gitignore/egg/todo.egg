@@ -9,4 +9,3 @@
   - Make updates detect if more then one was released since last update (more in ideas.egg, "update detection")
   - Make new updating system working, implement it
     - transfer over user specific data (colors.json, high_scores, etc?)
-    - have it redirect shortcut to full-redo.exe, then back to fiesta.exe.
