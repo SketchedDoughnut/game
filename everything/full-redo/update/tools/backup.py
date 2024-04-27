@@ -35,7 +35,7 @@ def backup_handler(
 
         if backOrLoad == 'back':
             print('Update: Deleting previous backup...')
-            print('    - location:', copy_source)
+            print('    - location:', copy_destination)
             input('--> Enter anything to authorize deletion: ')
             try:
                 shutil.rmtree(copy_destination)

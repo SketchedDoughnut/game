@@ -185,13 +185,13 @@ This installer is incapable of finishing this update, as it will require deletin
 In order to finish this install, please go to --
 > {ut2_wDir}/full-redo/
 -- and run the file named "full-redo.exe". It will run you through the process to finish this update.""")
-        print('---------------')
-        input('Enter anything to exit: ')
-        exit()
+            print('---------------')
+            input('Enter anything to exit: ')
+            exit()
 
-    elif transShortcut:
-        print('---------------')
-        print('Update: Part 1/2 is done. Please relaunch via the shortcut on your desktop.')
-        print('---------------')
-        input('Enter anything to exit: ')
-        exit()
+        elif transShortcut:
+            print('---------------')
+            print('Update: Part 1/2 is done. Please relaunch via the shortcut on your desktop.')
+            print('---------------')
+            input('Enter anything to exit: ')
+            exit()
