@@ -35,22 +35,23 @@ def backup_handler(
 
         if backOrLoad == 'back':
             print('Update: Deleting previous backup...')
-            print('    - source:', copy_source)
-            print('    - destination:', copy_destination)
+            print('    - location:', copy_source)
             input('--> Enter anything to authorize deletion: ')
             try:
                 shutil.rmtree(copy_destination)
                 print('Update: Previous backup deleted')
             except:
                 print('Update: No prior backup')
-            print('Update: Backing up top...')
+            print('Update: Backing up everything...')
+            print('    - source:', copy_source)
+            print('    - destination:', copy_destination)
             shutil.copytree(copy_source, copy_destination)
             print('Update: Files are backed up')
-        
+
         elif backOrLoad == 'load':
             print('Update: Cleaning failed installation...')
             shutil.rmtree(copy_source)
-            print('Update: Reloading backup of game_data...')
+            print('Update: Reloading backup of everything...')
             shutil.copytree(copy_destination, copy_source)
 
     # if top
@@ -61,22 +62,23 @@ def backup_handler(
 
         if backOrLoad == 'back':
             print('Update: Deleting previous backup...')
-            print('    - source:', copy_source)
-            print('    - destination:', copy_destination)
+            print('    - location:', copy_source)
             input('--> Enter anything to authorize deletion: ')
             try:
                 shutil.rmtree(copy_destination)
                 print('Update: Previous backup deleted')
             except:
                 print('Update: No prior backup')
-            print('Update: Backing up top...')
+            print('Update: Backing up everything...')
+            print('    - source:', copy_source)
+            print('    - destination:', copy_destination)
             shutil.copytree(copy_source, copy_destination)
             print('Update: Files are backed up')
 
         elif backOrLoad == 'load':
             print('Update: Cleaning failed installation...')
             shutil.rmtree(copy_source)
-            print('Update: Reloading backup of top...')
+            print('Update: Reloading backup of everything...')
             shutil.copytree(copy_destination, copy_source)
 
     # if full-redo
@@ -87,8 +89,7 @@ def backup_handler(
 
         if backOrLoad == 'back':
             print('Update: Deleting previous backup...')
-            print('    - source:', copy_source)
-            print('    - destination:', copy_destination)
+            print('    - location:', copy_source)
             input('--> Enter anything to authorize deletion: ')
             try:
                 shutil.rmtree(copy_destination)
@@ -96,6 +97,8 @@ def backup_handler(
             except:
                 print('Update: No prior backup')
             print('Update: Backing up everything...')
+            print('    - source:', copy_source)
+            print('    - destination:', copy_destination)
             shutil.copytree(copy_source, copy_destination)
             print('Update: Files are backed up')
 
