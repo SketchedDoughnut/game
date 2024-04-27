@@ -544,9 +544,9 @@ Otherwise, enter 'y' to continue.""")
             
             ## DOWNLOADING SETUP GOES HERE
             # imports
-            import update.download as d
-            import update.extract as e
-            import update.copy as c
+            import update.tools.download as d
+            import update.tools.extract as e
+            import update.tools.copy as c
 
             # downloading
             try:

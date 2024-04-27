@@ -154,10 +154,13 @@ def update_handler_setup(
         target = f"{ut2_wDir}/full-redo/full-redo.exe" # CHANGE TO EXE
         wDir = f"{ut2_wDir}/full-redo"
         icon = f"{ut2_wDir}/full-redo/full-redo.exe" # CHANGE TO EXE
+        transShortcut = False
         try:
             createShortcut(target=target, path=path, wDir=wDir, icon=icon)
+            transShortcut = True
         except Exception as e:  
             print(f'Update: Shortcut transfer error: {e}')
+            transShortcut = False
 
         # clean up tmp
         print('Update: Cleaning up tmp...')
@@ -177,11 +180,19 @@ def update_handler_setup(
 
         # start second part of update
         print('---------------')
-        print(f"""Update: Part 1/2 of update is done.
-    This installer is incapable of finishing this update, as it will require deleting itself. 
-    In order to finish this install, please go to --
-    > {ut2_wDir}/full-redo/
-    -- and run the file named "full-redo.exe". It will run you through the process to finish this update.""")
+        if not transShortcut:
+            print(f"""Update: Part 1/2 of update is done.
+This installer is incapable of finishing this update, as it will require deleting itself. 
+In order to finish this install, please go to --
+> {ut2_wDir}/full-redo/
+-- and run the file named "full-redo.exe". It will run you through the process to finish this update.""")
+        print('---------------')
+        input('Enter anything to exit: ')
+        exit()
+
+    elif transShortcut:
+        print('---------------')
+        print('Update: Part 1/2 is done. Please relaunch via the shortcut on your desktop.')
         print('---------------')
         input('Enter anything to exit: ')
         exit()
