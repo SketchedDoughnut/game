@@ -95,7 +95,7 @@ HEIGHT = pygame.display.Info().current_h
 '''
 Everything that is dependent on screen dimensions:
 - bottom zone
-- notes width (height?)
+- notes width / height
 - time delay to handle how much to delay songs / notes for travel from top to bottom of screen
 '''
 ## a crapton of colors (thank you ChatGPT)
@@ -135,6 +135,12 @@ def pause_game():
     while paused:
         pass
 
+def scale(num, mode):
+    if mode == 'x':
+        return (num / 1920) * WIDTH
+    
+    elif mode == 'y':
+        return (num / 1080) * HEIGHT
 ### classes
 
 class Data_format:
@@ -154,10 +160,25 @@ class Data:
     def iter(self):
         new_list = []
         for cubex in self.active_cubes:
+            # old
             cubex.y += 1
+
+
+
+
+            # new experimental scaling
+            #cubex.y += scale(1, 'y') / 2
+
+
+
+
+
+
 
             if cubex.y < HEIGHT:
                 new_list.append(cubex)
+            else:
+                points.reset_streak() # working
 
         self.active_cubes = new_list
 
@@ -182,8 +203,8 @@ class Profiles:
         self.data = Data()
 
         ## constants
-        self.CUBE_HEIGHT = (10 / 1080) * HEIGHT
-        self.CUBE_WIDTH = (100 / 1920) * WIDTH
+        self.CUBE_HEIGHT = scale(10, 'y')
+        self.CUBE_WIDTH = scale(100, 'x')
 
         ## set up music player
         self.player = pygame.mixer
@@ -581,8 +602,9 @@ class Points:
         self.total_points += 1
         self.streak += 1
     
-    def point_down(self):
-        self.total_points -= 1
+    # def point_down(self):
+    #     self.total_points -= 1
+
 
 
 class Draw:
@@ -671,7 +693,8 @@ class Zone:
         self.div = Div()
 
         #vals to change
-        self.move_up = 150
+        self.move_up = scale(150, 'y')
+        #self.move_up = 150
         
         # math (local)
         extra = HEIGHT - self.move_up
@@ -683,7 +706,7 @@ class Zone:
 
         # size
         self.width = WIDTH
-        self.height = (gap / 1080) * HEIGHT
+        self.height = gap
 
     def append(self):
         # set up draw object
@@ -711,10 +734,10 @@ class Zone:
 
 #######################################################################################
 ## set up class objects
+points = Points()
 zone = Zone()
 zone.handler()
 notes = Notes()
-points = Points()
 
 ## NEW ADDITION - before loading song profile, allow them to select
 # run display menu
@@ -741,6 +764,10 @@ ct.start()
 # set up clock (not used)
 clock = pygame.time.Clock()
 
+# set up text font
+f_size = round(scale((36 * 1.5), 'x'))
+font = pygame.font.Font('freesansbold.ttf', f_size)
+
 # load booleans
 pressed1 = False
 pressed2 = False
@@ -750,6 +777,8 @@ while running:
     # set fps to 60
     # clock.tick(60)
     # delay
+    #delay = round(scale(1, 'y')) * 2
+    #pygame.time.delay(delay)
     pygame.time.delay(1)
 
     # checking for events
@@ -796,11 +825,11 @@ while running:
     ## draws
     window.fill(BLACK)
     # draws the input zone at bottom
-    #zone.draw()
     zone.div.draw.draw()
     # iterates through list of notes
     for obj in notes.profiles.data.active_cubes:
         active_note = pygame.draw.rect(obj.window, obj.color, (obj.x, obj.y, obj.width, obj.height))
+
         #https://stackoverflow.com/questions/49954039/how-do-you-create-rect-variables-in-pygame-without-drawing-them
         #pygame.Rect(obj.x, obj.y, obj.width, obj.height)
         
@@ -813,10 +842,6 @@ while running:
                 if index == REGISTER[active_num1][0]:
                     active_key = REGISTER[active_num1][1]
                     break
-                
-            # check if note is outside of screen, reset streak and delete if it is - NOT WORKING
-            if active_note.y > HEIGHT:
-                points.reset_streak()
 
             # checks if note is within zone
             if active_note.colliderect(zone.zone_rect):
@@ -825,26 +850,19 @@ while running:
                     #if pressed1 == False: #############
                     notes.profiles.data.active_cubes.remove(obj)
                     points.point_up()
-                        #pressed1 = True ################
 
-                #elif not keys[active_key]: ###########
-                    #pressed1 = False ############
-
-            # system for preventing spam inputs & deducting points for false inputs, currently not plausible until future development
-            # else:
-            #     for i in REGISTER:
-            #         active_num2 = REGISTER.index(i)
-            #         if keys[REGISTER[active_num2][1]]:
-            #             if pressed2 == False:
-            #                 points.point_down()
-            #                 pressed2 = True
-
-            #         elif not keys[REGISTER[active_num2][1]]:
-            #             pressed2 = False
+    # generate text for points
+    txt_msg = f'{points.streak} | {points.total_points}'
+    text = font.render(txt_msg, True, WHITE, None) # text, some bool(?), text color, bg color
+    # draw text
+    text_rect = text.get_rect()
+    tr_x = WIDTH / 2 # originally was just 75
+    tr_y = 50
+    tr_y = scale(tr_y, 'y')
+    text_rect.center = (tr_x, tr_y)
+    window.blit(text, text_rect)
 
     if paused == False:
-        # moves notes down
-        #print('iter')
         notes.profiles.data.iter()
     pygame.display.update()
 
