@@ -9,7 +9,11 @@
   - Make updates detect if more then one was released since last update (more in ideas.egg, "update detection")
   - Make new updating system working, implement it
     - transfer over user specific data (colors.json, high_scores, etc?)
+    
   - Update rhythm game
     - Fix score handling (high score, current score, remove score if failed notes)
+      - add high score.json, display that on end screen
+      - update high score if higher is reached
     - Fix time scaling
     - Add pausing?
+    - add volume controls

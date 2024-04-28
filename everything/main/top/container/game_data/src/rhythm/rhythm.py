@@ -98,6 +98,7 @@ Everything that is dependent on screen dimensions:
 - notes width / height
 - time delay to handle how much to delay songs / notes for travel from top to bottom of screen
 '''
+
 ## a crapton of colors (thank you ChatGPT)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -167,7 +168,7 @@ class Data:
 
 
             # new experimental scaling
-            #cubex.y += scale(1, 'y') / 2
+            #cubex.y += scale(1, 'y')
 
 
 
@@ -179,6 +180,7 @@ class Data:
                 new_list.append(cubex)
             else:
                 points.reset_streak() # working
+                points.total += 1
 
         self.active_cubes = new_list
 
@@ -210,6 +212,9 @@ class Profiles:
         self.player = pygame.mixer
         self.player.init()
 
+    def set(self):
+        global ended
+        ended = True
 
     def music_delay(self, time_amount, path):
         time.sleep(time_amount)
@@ -240,7 +245,6 @@ class Profiles:
                             pass
                     elif paused == False:
                         time.sleep(main_delay)
-                        print('- secondary sleep over, starting notes.')
                         x_val = notes.notes_pos[track_right]
                         obj = Data_format()
                         obj.window = window
@@ -254,6 +258,7 @@ class Profiles:
                     start_delay = 20.275 - 2.50 # secondary delay for ('timings_1_3-5')
                     start_delay_ms = int(1000 * start_delay)
                     time.sleep(start_delay)
+                    print('- secondary sleep over, starting notes.')
                     starting_toggle = True
         print('Second playback done.')
 
@@ -330,6 +335,7 @@ class Profiles:
                     print('- main start delay over, starting notes')
                     starting_toggle = True
         print('Main playback done.')
+        threading.Thread(target=lambda:self.state_eval(), daemon=True).start()
 
     def Stayed_Gone(self):
         print('--------------------------')
@@ -421,6 +427,7 @@ class Profiles:
                     print('- main start delay over, starting notes')
                     starting_toggle = True
         print('Main playback done.')
+        threading.Thread(target=lambda:self.state_eval(), daemon=True).start()
 
     def Rule_The_World(self):
         print('--------------------------')
@@ -480,7 +487,7 @@ class Profiles:
                         self.data.add_to_active(obj)
                 if starting_toggle == False:
                     self.player.music.load(music_path)
-                    self.player.music.set_volume(0.50)
+                    self.player.music.set_volume(0.40)
                     #self.player.music.set_volume(0.00)
                     self.player.music.play()
                     start_delay = 63.5 - 2.65 # delay for timings_1_0-5
@@ -491,6 +498,7 @@ class Profiles:
                     print('- main start delay over, starting notes')
                     starting_toggle = True
         print('Main playback done.')
+        threading.Thread(target=lambda:self.state_eval(), daemon=True).start()
 
     def Boggle(self):
         print('--------------------------')
@@ -561,6 +569,18 @@ class Profiles:
                     print('- main start delay over, starting notes')
                     starting_toggle = True
         print('Main playback done.')
+        threading.Thread(target=lambda:self.state_eval(), daemon=True).start()
+
+    def state_eval(self):
+        state = self.player.music.get_busy()
+        print('Awaiting song end... status:', state)
+        while True:
+            state = self.player.music.get_busy()
+            if state == False:
+                if not self.player.music.get_busy():
+                    self.set()
+                    print('Song end recieved. Setting end')
+                    break
 
     def prof_setup(self):
         # song lists
@@ -594,6 +614,8 @@ class Points:
     def __init__(self):
         self.total_points = 0
         self.streak = 0
+        self.total = 0
+        self.score_color = WHITE
     
     def reset_streak(self):
         self.streak = 0
@@ -732,12 +754,112 @@ class Zone:
         #self.div.dump_text(self.div.text.append()) #########################################################################################################
 
 
+class EndScreen:
+    def __init__(self):
+        self.draw_queue = []
+        self.rect_color = (0, 0, 0)
+
+    def iter_color(self):
+        amount = 2
+        am2 = 5
+        while True:
+            #if self.color[0] < 254: # 255/5 = 51 steps to get white
+            if self.rect_color[0] < 127: # 128/2 = 64 steps to get grey
+                self.rect_color = (self.rect_color[0] + amount, self.rect_color[1] + amount, self.rect_color[2] + amount)
+            
+            if points.score_color[0] > 0:
+                points.score_color = (points.score_color[0] - am2, points.score_color[1] - am2, points.score_color[2] - am2)
+
+            if self.rect_color[0] == 128 and points.score_color[0] == 0:
+                break
+            
+            time.sleep(0.0025)
+
+    def body_to_queue(self):
+        self.width = scale(900, 'x')
+        self.height = scale(500, 'y')
+        self.x = WIDTH / 2 - self.width / 2
+        self.y = HEIGHT / 2 - self.height / 2
+        self.rect_obj = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.draw_queue.append(['rect', self.rect_obj])
+
+    def text_to_queue(self):
+        msg1 = f"Total score: {points.total_points} / {points.total}"
+        txt1 = font.render(msg1, None, BLACK, None)
+        txt_rect1 = txt1.get_rect()
+        txt_rect1.center = (self.x + self.width / 2, self.y + 1.25 * (self.height / 4))
+
+        msg2 = f"Streak: {points.streak}"
+        txt2 = font.render(msg2, None, BLACK, None)
+        txt_rect2 = txt2.get_rect()
+        txt_rect2.center = (self.x + self.width / 2, self.y + 2.25 * (self.height / 4))
+        
+        self.draw_queue.append(['txt', txt1, txt_rect1])
+        self.draw_queue.append(['txt', txt2, txt_rect2])
+
+    def button_to_queue(self):
+        width = self.width
+        height = self.height
+        x = self.x
+        y = self.y
+
+        x += width / 10
+        y += 3 * (height / 4)
+
+        width -= (2 * (width / 10))
+        height -= (8.5 * (height / 10))
+
+        self.button_obj = pygame.Rect(x, y, width, height)
+        self.draw_queue.append(['button', (64, 64 ,64), self.button_obj])
+
+    def display_handler(self):
+        print('--------------------------')
+        print('End screen invoked')
+        time.sleep(3) # originally 5
+        self.body_to_queue()
+        self.iter_color()
+        time.sleep(0.25)
+        self.text_to_queue()
+        self.button_to_queue()
+        print('End screen over')
+        print('--------------------------')
+
+
+
+class Env:
+    def __init__(self):
+        self.count = 0
+
+    def analyze(self):
+        goal = 3
+        self.prev_mouse_pos = mouse_pos
+        while True:
+            if mouse_pos == self.prev_mouse_pos:
+                if self.count < goal:
+                    self.count += 1
+
+            else:
+                self.count = 0
+                pygame.mouse.set_visible(True)
+
+            self.prev_mouse_pos = mouse_pos
+            if self.count == goal:
+                pygame.mouse.set_visible(False)
+                pygame.mouse.set_pos(mouse_pos[0] + 1, mouse_pos[1] + 1)
+            time.sleep(1)
+            print(self.count)
+            
+
 #######################################################################################
 ## set up class objects
 points = Points()
+end_screen = EndScreen()
 zone = Zone()
 zone.handler()
 notes = Notes()
+
+mouse_pos = pygame.mouse.get_pos()
+env = Env()
 
 ## NEW ADDITION - before loading song profile, allow them to select
 # run display menu
@@ -761,6 +883,16 @@ ct.start()
 #music_thread = threading.Thread(target=lambda:notes.profiles.Stayed_Gone(), daemon=True)
 #music_thread.start()
 
+# end thread
+et = threading.Thread(target=lambda:end_screen.display_handler(), daemon=True)
+
+# mouse detection thread
+pygame.mouse.set_visible(False)
+mst = threading.Thread(target=lambda:env.analyze(), daemon=True)
+if not mst.is_alive():
+    mst.start()
+
+
 # set up clock (not used)
 clock = pygame.time.Clock()
 
@@ -772,12 +904,15 @@ font = pygame.font.Font('freesansbold.ttf', f_size)
 pressed1 = False
 pressed2 = False
 space_pressed = False
+ended = False
+et_start = False
 running = True
 while running:
     # set fps to 60
     # clock.tick(60)
     # delay
-    #delay = round(scale(1, 'y')) * 2
+    # delay = (scale(1, 'y'))
+    # delay = int(delay)
     #pygame.time.delay(delay)
     pygame.time.delay(1)
 
@@ -804,9 +939,11 @@ while running:
             running = False
     if keys[K_ESCAPE]:
         #music_thread.join()
-        print('--------------------------')
-        print('escape')
-        running = False
+        print('--------------------------') ####################################
+        print('escape') ####################################
+        running = False ####################################
+        #notes.profiles.player.music.stop()
+        #ended = True
     
     # pause if
     # if keys[K_SPACE]:
@@ -849,11 +986,31 @@ while running:
                 if keys[active_key]:
                     #if pressed1 == False: #############
                     notes.profiles.data.active_cubes.remove(obj)
+                    points.total += 1
                     points.point_up()
 
+    if ended:
+        for item in end_screen.draw_queue:
+            if item[0] == 'rect':
+                pygame.draw.rect(window, end_screen.rect_color, item[1])
+            elif item[0] == 'txt':
+                window.blit(item[1], item[2])
+            elif item[0] == 'button':
+                pygame.draw.rect(window, item[1], item[2])
+            
+        try:
+            if end_screen.button_obj.collidepoint(mouse_pos):
+                if pygame.mouse.get_pressed()[0]:
+                    running = False
+        except:
+            pass
+
+
+
+
     # generate text for points
-    txt_msg = f'{points.streak} | {points.total_points}'
-    text = font.render(txt_msg, True, WHITE, None) # text, some bool(?), text color, bg color
+    txt_msg = f'{points.streak} | {points.total_points} | {points.total}'
+    text = font.render(txt_msg, True, points.score_color, None) # text, some bool(?), text color, bg color
     # draw text
     text_rect = text.get_rect()
     tr_x = WIDTH / 2 # originally was just 75
@@ -861,6 +1018,11 @@ while running:
     tr_y = scale(tr_y, 'y')
     text_rect.center = (tr_x, tr_y)
     window.blit(text, text_rect)
+
+    if ended:
+        if not et.is_alive() and not et_start:
+            et.start()
+            et_start = True
 
     if paused == False:
         notes.profiles.data.iter()
