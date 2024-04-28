@@ -487,7 +487,7 @@ class Profiles:
                         self.data.add_to_active(obj)
                 if starting_toggle == False:
                     self.player.music.load(music_path)
-                    self.player.music.set_volume(0.40)
+                    self.player.music.set_volume(0.25)
                     #self.player.music.set_volume(0.00)
                     self.player.music.play()
                     start_delay = 63.5 - 2.65 # delay for timings_1_0-5
