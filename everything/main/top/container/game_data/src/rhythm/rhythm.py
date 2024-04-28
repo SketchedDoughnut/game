@@ -847,7 +847,6 @@ class Env:
                 pygame.mouse.set_visible(False)
                 pygame.mouse.set_pos(mouse_pos[0] + 1, mouse_pos[1] + 1)
             time.sleep(1)
-            print(self.count)
             
 
 #######################################################################################
