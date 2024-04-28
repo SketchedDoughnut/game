@@ -759,6 +759,18 @@ class EndScreen:
         self.draw_queue = []
         self.rect_color = (0, 0, 0)
 
+    def reset_mouse(self):
+        pygame.mouse.set_visible(True)
+        pygame.mouse.set_pos(mouse_pos[0] - 1, mouse_pos[1] - 1)
+
+    def body_to_queue(self):
+        self.width = scale(900, 'x')
+        self.height = scale(500, 'y')
+        self.x = WIDTH / 2 - self.width / 2
+        self.y = HEIGHT / 2 - self.height / 2
+        self.rect_obj = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.draw_queue.append(['rect', self.rect_obj])
+
     def iter_color(self):
         amount = 2
         am2 = 5
@@ -772,16 +784,7 @@ class EndScreen:
 
             if self.rect_color[0] == 128 and points.score_color[0] == 0:
                 break
-            
             time.sleep(0.0025)
-
-    def body_to_queue(self):
-        self.width = scale(900, 'x')
-        self.height = scale(500, 'y')
-        self.x = WIDTH / 2 - self.width / 2
-        self.y = HEIGHT / 2 - self.height / 2
-        self.rect_obj = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.draw_queue.append(['rect', self.rect_obj])
 
     def text_to_queue(self):
         msg1 = f"Total score: {points.total_points} / {points.total}"
@@ -816,6 +819,7 @@ class EndScreen:
         print('--------------------------')
         print('End screen invoked')
         time.sleep(3) # originally 5
+        self.reset_mouse()
         self.body_to_queue()
         self.iter_color()
         time.sleep(0.25)
