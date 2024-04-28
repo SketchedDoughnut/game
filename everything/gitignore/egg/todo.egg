@@ -17,3 +17,5 @@
     - Fix time scaling
     - Add pausing?
     - add volume controls
+    - convert music files to .ogg?
+      - https://www.pygame.org/docs/ref/music.html: "Consider using OGG file format for music as that can give slightly better compression than MP3 in most cases."
