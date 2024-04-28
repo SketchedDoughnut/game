@@ -121,7 +121,8 @@ DISPLAY_REGISTER = [[0, 'S'], [1, 'D'], [2, 'F'], [3, 'J'], [4, 'K'], [5, 'L']]
 ### PRELOADING
 
 # establishing window 
-window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+#window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
 
 pygame.display.set_caption("thing!")
 
@@ -167,8 +168,13 @@ class Data:
 
 
 
-            # new experimental scaling
-            #cubex.y += scale(1, 'y')
+            #new experimental scaling
+            # if HEIGHT == 1080:
+            #     cubex.y += 1
+            # elif HEIGHT > 1080:
+            #     cubex.y = cubex.y + (1 + scale(1, 'y'))
+            # elif HEIGHT < 1080:
+            #     cubex.y = cubex.y + (1 - scale(1, 'y'))
 
 
 
@@ -224,7 +230,7 @@ class Profiles:
         #self.player.music.set_volume(0.00)
         self.player.music.play()
 
-    def secondary(self, right_time_track_list, right_track_list, color):
+    def secondary(self, right_time_track_list, right_track_list, color, sd):
         print('Secondary music thread started.')
         #print('--------------------------')
         
@@ -255,7 +261,7 @@ class Profiles:
                         obj.height = self.CUBE_HEIGHT
                         self.data.add_to_active(obj)
                 if starting_toggle == False:
-                    start_delay = 20.275 - 2.50 # secondary delay for ('timings_1_3-5')
+                    start_delay = 20.275 - sd # secondary delay for ('timings_1_3-5')
                     start_delay_ms = int(1000 * start_delay)
                     time.sleep(start_delay)
                     print('- secondary sleep over, starting notes.')
@@ -377,7 +383,7 @@ class Profiles:
         right_track_list = json.load(f)
         f.close()
         #thread object
-        secondary_thread = threading.Thread(target=lambda:self.secondary(right_time_track_list, right_track_list, RED))
+        secondary_thread = threading.Thread(target=lambda:self.secondary(right_time_track_list, right_track_list, RED, 2.50))
         secondary_thread.start()
         
         ## vars
