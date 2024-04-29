@@ -153,6 +153,7 @@ class Data_format:
         self.y = None
         self.width = None
         self.height = None
+        self.state = None
     
 
 class Data:
@@ -644,7 +645,10 @@ class Draw:
         for obj in self.draw_list:
             # metallic gold:(211,175,55)
             # yellow: const YELLOW
-            pygame.draw.rect(obj.window, end_screen.zone_color, (obj.x, obj.y, obj.width, obj.height)) # color used to be obj.color
+            if obj.state != 'Div':
+                pygame.draw.rect(obj.window, end_screen.zone_color, (obj.x, obj.y, obj.width, obj.height)) # color used to be obj.color
+            else:
+                pygame.draw.rect(obj.window, obj.color, (obj.x, obj.y, obj.width, obj.height)) # color used to be obj.color
         for obj in self.text_list:
             msg = font.render(str(obj[0]), True, end_screen.txt_color, None)
             window.blit(msg, obj[1])
@@ -686,12 +690,6 @@ class Text:
 
 
 
-
-
-
-        return list_out
-
-
 class Div:
     def __init__(self):
         # class object
@@ -715,16 +713,14 @@ class Div:
 
             self.obj = Data_format()
             self.obj.window = window
-            self.obj.color = BLACK
+            self.obj.color = WHITE
             self.obj.x = self.cube_x
             self.obj.y = HEIGHT - self.move_up
             self.obj.width = self.div_width
             self.obj.height = self.height
+            self.obj.state = 'Div'
             #print('Adding dividers to background draw list...')
             #self.draw.draw_list.append(self.obj)
-
-    def dump_text(self, list_in):
-        self.draw.text_list = list_in
         
 
 
@@ -766,11 +762,15 @@ class Zone:
         #self.zone_rect = pygame.draw.rect(window, YELLOW, (self.x, self.y, self.width, self.height))
         self.zone_rect = pygame.Rect(self.x, self.y, self.width, self.height)
     
+    def dump_text(self):
+        zone_text = Text(zone_x = zone.x, zone_y = zone.y, zone_width = zone.width, zone_height = zone.height)
+        self.div.draw.text_list = zone_text.append()
+
     def handler(self):
         self.append()   
         self.draw()
+        self.dump_text()
         self.div.append()
-        #self.div.dump_text(self.div.text.append()) #########################################################################################################
 
 
 class EndScreen:
@@ -919,8 +919,6 @@ points = Points()
 end_screen = EndScreen()
 zone = Zone()
 zone.handler()
-zone_text = Text(zone_x = zone.x, zone_y = zone.y, zone_width = zone.width, zone_height = zone.height)
-zone.div.dump_text(zone_text.append())
 notes = Notes()
 
 mouse_pos = pygame.mouse.get_pos()
