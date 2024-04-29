@@ -646,16 +646,18 @@ class Draw:
             # yellow: const YELLOW
             pygame.draw.rect(obj.window, end_screen.zone_color, (obj.x, obj.y, obj.width, obj.height)) # color used to be obj.color
         for obj in self.text_list:
-            window.blit(obj[0], obj[1])
+            msg = font.render(str(obj[0]), True, end_screen.txt_color, None)
+            window.blit(msg, obj[1])
 
 
 class Text: 
     def __init__(self, zone_x, zone_y, zone_width, zone_height):
         # div stuff
+        self.pos = []
         self.num_txt = 6
-        self.num_txt_gap = 5
-        self.txt_width = WIDTH / self.num_txt # for the new letter gen system
-        self.txt_pos = []
+        self.txt_width = scale(100, 'x')
+
+        self.gap = (WIDTH - (self.num_txt * self.txt_width)) / (self.num_txt + 1)
 
         # zone stuff
         self.zx = zone_x
@@ -664,27 +666,29 @@ class Text:
         self.zh = zone_height
 
         # Calculate the gap between each cube
-        self.gap = (WIDTH - (self.num_txt_gap * self.txt_width)) / (self.num_txt_gap + 1)
-        self.move_up = scale(100, 'y')
-
-        # run append function
-        self.append()
+        self.move_up = scale(75, 'y')
     
     def append(self):
-        list_out = []
         txt_size = scale(36 * 1.5, 'x')
         font = pygame.font.Font('freesansbold.ttf', round(txt_size))
+
         for i in range(self.num_txt):
             active_letter = DISPLAY_REGISTER[i][1]
-            text = font.render(str(active_letter), True, BLACK, None) # text, some bool(?), text color, bg color
-            cube_x = (i + 1) * self.gap + i * self.txt_width
-            height = HEIGHT - (HEIGHT - self.move_up)
+            text = font.render(str(active_letter), True, WHITE, None)
 
-            # obj format
-            rect = text.get_rect()
-            rect.center = (cube_x, self.gap / 2)
-            print(rect)
-            list_out.append([text, rect])
+            self.txt_x = (i + 1) * self.gap + i * self.txt_width
+            self.txt_y = HEIGHT - self.move_up
+
+            txt_rect = text.get_rect()
+            txt_rect.center = (self.txt_x + self.txt_width / 2, self.txt_y)
+            self.pos.append([active_letter, txt_rect])
+        return self.pos
+
+
+
+
+
+
         return list_out
 
 
@@ -756,15 +760,6 @@ class Zone:
         self.obj.height = self.height
         #print('Adding zone to bg draw list...')
         self.div.draw.draw_list.append(self.obj)
-
-        # set up text class
-        zone_text = Text(
-            zone_x = self.x,
-            zone_y = self.y,
-            zone_width = self.width,
-            zone_height = self.height
-        )
-        self.div.dump_text(zone_text)
     
     def draw(self):
         #self.div.draw.draw_list.append(self.obj)
@@ -783,6 +778,7 @@ class EndScreen:
         self.draw_queue = []
         self.rect_color = (0, 0, 0)
         self.zone_color = (211,175,55) # metallic gold: #D4AF37
+        self.txt_color = (255, 255, 255)
 
     def reset_mouse(self):
         pygame.mouse.set_visible(True)
@@ -799,11 +795,11 @@ class EndScreen:
     def iter_color(self):
         amount = 2
         am2 = 5
-
         goTo = False
-
         while True:
-            #if self.color[0] < 254: # 255/5 = 51 steps to get white
+            if self.txt_color[0] > 0: # 255/5 = 51 steps to get white
+                self.txt_color = (self.txt_color[0] - 5, self.txt_color[1] - 5, self.txt_color[2] - 5)
+            
             if self.rect_color[0] < 127: # 128/2 = 64 steps to get grey
                 self.rect_color = (self.rect_color[0] + amount, self.rect_color[1] + amount, self.rect_color[2] + amount)
             
@@ -820,8 +816,6 @@ class EndScreen:
             else:
                 goTo = True
             self.zone_color = (n1, n2, n3)
-            #if not goTo:
-                #print('initial:', self.zone_color)
 
             if goTo:
                 n1 = False
@@ -847,9 +841,8 @@ class EndScreen:
                 if n3 == True:
                     n3 = self.zone_color[2] - 1
                 self.zone_color = (n1, n2, n3)
-                #print('fine tuning:', self.zone_color)
 
-            if self.rect_color[0] == 128 and points.score_color[0] == 0 and self.zone_color[0] == 0:
+            if self.rect_color[0] == 128 and points.score_color[0] == 0 and self.zone_color[0] == 0 and self.txt_color[0] == 0:
                 break
             time.sleep(0.0025)
 
@@ -926,6 +919,8 @@ points = Points()
 end_screen = EndScreen()
 zone = Zone()
 zone.handler()
+zone_text = Text(zone_x = zone.x, zone_y = zone.y, zone_width = zone.width, zone_height = zone.height)
+zone.div.dump_text(zone_text.append())
 notes = Notes()
 
 mouse_pos = pygame.mouse.get_pos()
@@ -1003,11 +998,11 @@ while running:
             running = False
     if keys[K_ESCAPE]:
         #music_thread.join()
-        print('--------------------------') ####################################
-        print('escape') ####################################
-        running = False ####################################
-        #notes.profiles.player.music.stop()
-        #ended = True
+        #print('--------------------------') ####################################
+        #print('escape') ####################################
+        #running = False ####################################
+        notes.profiles.player.music.stop()
+        ended = True
     
     # pause if
     # if keys[K_SPACE]:
