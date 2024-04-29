@@ -12,7 +12,9 @@ s.connect(('127.0.0.1', port))
  
 # receive data from the server and decoding to get the string.
 while True:
-    print(s.recv(1024).decode())
-    
+    #print(s.recv(1024).decode())
+    import base64
+    print(base64.b64decode(s.recv(1024)))
+
 # close the connection 
 s.close()     
