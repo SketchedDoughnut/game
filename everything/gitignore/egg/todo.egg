@@ -19,3 +19,7 @@
     - add volume controls
     - convert music files to .ogg?
       - https://www.pygame.org/docs/ref/music.html: "Consider using OGG file format for music as that can give slightly better compression than MP3 in most cases."
+    THE BELOW HAVE TO FADE, ADAPT CODE FOR THAT
+      - Add text to zone to indicate where keys are
+        - Draw divider lines upwards?
+    

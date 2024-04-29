@@ -649,44 +649,51 @@ class Draw:
             window.blit(obj[0], obj[1])
 
 
-# class Text: #########################################################################################################
-#     def __init__(self):
-#         self.num_divs = 6
-#         self.div_width = WIDTH / self.num_divs # for the new letter gen system
-#         self.divs_pos = []
+class Text: 
+    def __init__(self, zone_x, zone_y, zone_width, zone_height):
+        # div stuff
+        self.num_txt = 6
+        self.num_txt_gap = 5
+        self.txt_width = WIDTH / self.num_txt # for the new letter gen system
+        self.txt_pos = []
 
-#         # Calculate the gap between each cube
-#         self.gap = (WIDTH - (self.num_divs * self.div_width)) / (self.num_divs + 1)
+        # zone stuff
+        self.zx = zone_x
+        self.zy = zone_y
+        self.zw = zone_width
+        self.zh = zone_height
+
+        # Calculate the gap between each cube
+        self.gap = (WIDTH - (self.num_txt_gap * self.txt_width)) / (self.num_txt_gap + 1)
+        self.move_up = scale(100, 'y')
+
+        # run append function
+        self.append()
     
-#     def append(self):
-#         list_out = []
-#         self.move_up = 100
-#         font = pygame.font.Font('freesansbold.ttf', round(36 * 1.5))
-#         for i in range(self.num_divs):
-#             active_letter = DISPLAY_REGISTER[i][1]
-#             text = font.render(str(active_letter), True, BLACK, None) # text, some bool(?), text color, bg color
-#             self.cube_x = (i + 1) * self.gap + i * self.div_width
-#             self.height = HEIGHT - (HEIGHT - self.move_up)
+    def append(self):
+        list_out = []
+        txt_size = scale(36 * 1.5, 'x')
+        font = pygame.font.Font('freesansbold.ttf', round(txt_size))
+        for i in range(self.num_txt):
+            active_letter = DISPLAY_REGISTER[i][1]
+            text = font.render(str(active_letter), True, BLACK, None) # text, some bool(?), text color, bg color
+            cube_x = (i + 1) * self.gap + i * self.txt_width
+            height = HEIGHT - (HEIGHT - self.move_up)
 
-#             # obj format
-#             self.obj = Data_format()
-#             #self.obj.window = window
-#             #self.obj.color = BLACK
-#             self.obj.x = self.cube_x + 200
-#             self.obj.y = HEIGHT - self.move_up
-#             self.obj.width = self.div_width
-#             self.obj.height = self.height
-#             self.obj = pygame.Rect(self.obj.x, self.obj.y, self.obj.width, self.obj.height)
-#             list_out.append([text, self.obj])
-            
-#         return list_out
+            # obj format
+            rect = text.get_rect()
+            rect.center = (cube_x, self.gap / 2)
+            print(rect)
+            list_out.append([text, rect])
+        return list_out
 
 
 class Div:
     def __init__(self):
         # class object
         self.draw = Draw()
-        #self.text = Text() #########################################################################################################
+
+        # div stuff
         self.divs_pos = []
         self.num_divs = 5
         self.div_width = 10  # Adjust this as needed
@@ -749,6 +756,15 @@ class Zone:
         self.obj.height = self.height
         #print('Adding zone to bg draw list...')
         self.div.draw.draw_list.append(self.obj)
+
+        # set up text class
+        zone_text = Text(
+            zone_x = self.x,
+            zone_y = self.y,
+            zone_width = self.width,
+            zone_height = self.height
+        )
+        self.div.dump_text(zone_text)
     
     def draw(self):
         #self.div.draw.draw_list.append(self.obj)
@@ -931,12 +947,6 @@ notes.profiles.prof_setup()
 ct = notes.profiles.song_dict[chosen_song] # ct = chosen thread
 ct.start()
 
-## OLD SYSTEM
-# start music thread with chosen profile
-#music_thread = threading.Thread(target=lambda:notes.profiles.Whats_the_Rush(), daemon=True)
-#music_thread = threading.Thread(target=lambda:notes.profiles.Stayed_Gone(), daemon=True)
-#music_thread.start()
-
 # end thread
 et = threading.Thread(target=lambda:end_screen.display_handler(), daemon=True)
 
@@ -1020,9 +1030,6 @@ while running:
     # iterates through list of notes
     for obj in notes.profiles.data.active_cubes:
         active_note = pygame.draw.rect(obj.window, obj.color, (obj.x, obj.y, obj.width, obj.height))
-
-        #https://stackoverflow.com/questions/49954039/how-do-you-create-rect-variables-in-pygame-without-drawing-them
-        #pygame.Rect(obj.x, obj.y, obj.width, obj.height)
         
         # only do if not paused
         if paused == False:
