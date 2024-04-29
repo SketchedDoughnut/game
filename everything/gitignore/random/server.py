@@ -30,7 +30,7 @@ while True:
   print('Got connection from', addr )
  
   # send a thank you message to the client. encoding to send byte type. 
-  c.send('Thank you for connecting'.encode()) 
+  #c.send('Thank you for connecting'.encode()) 
   while True:
     import base64
     c.send(base64.b64encode(b'Thank your connecting!'))
