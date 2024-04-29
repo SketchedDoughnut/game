@@ -642,7 +642,7 @@ class Draw:
 
     def draw(self):
         for obj in self.draw_list:
-            pygame.draw.rect(obj.window, obj.color, (obj.x, obj.y, obj.width, obj.height))
+            pygame.draw.rect(obj.window, (211,175,55), (obj.x, obj.y, obj.width, obj.height)) # color used to be obj.color
         for obj in self.text_list:
             window.blit(obj[0], obj[1])
 
