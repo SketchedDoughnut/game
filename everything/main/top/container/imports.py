@@ -4,10 +4,9 @@ print('----------------------------')
 import pip
 
 # also consider cryptography, pywin32 
-pip.main(['install', 'pygame', 'requests'])
+pip.main(['install', 'pygame', 'requests', 'winshell'])
 
 # test every other import. Why? God knows why, man.
-
 # builtins
 print('----------------------------')
 print('Testing bulitins...')
@@ -23,3 +22,4 @@ print('Testing installed...')
 import pygame
 from pygame.locals import *
 import requests
+import winshell
