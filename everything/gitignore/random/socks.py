@@ -5,8 +5,9 @@ import base64
 print('----------------------------------')
 
 domain  = 'www.google.com'
-ip = socket.gethostbyname(domain)
-port  = 80 
+#ip = socket.gethostbyname(domain)
+ip = '192.168.68.1'
+port  = 80
 
 # example connecting to google server
 try:
@@ -14,12 +15,14 @@ try:
     print('Socket: socket created!')
 except Exception as e:
     print(f'Socket: error creating socket:', e)
+    exit()
 
 try:
     s.connect((ip, port))
     print('Socket: connected to server!')
 except Exception as e:
     print('Socket: connection error:', e)
+    exit()
 
 print(f"""----------------------------------
 Data:
@@ -38,9 +41,12 @@ print('Socket: sending message...')
 s.send(encoded)
 print('Socket: awaiting reply...')
 s.settimeout(10)
-reply = s.recv(131072)
+try:
+    reply = s.recv(131072)
+    print('Socket: reply:', end="")
+    print(reply)
+except Exception as e:
+    print('Socket: reply error:', e)
+
 print('Socket: closing socket...')
 s.close()
-
-print('Socket: reply:', end="")
-print(reply)
