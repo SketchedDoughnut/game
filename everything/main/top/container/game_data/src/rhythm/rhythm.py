@@ -642,7 +642,9 @@ class Draw:
 
     def draw(self):
         for obj in self.draw_list:
-            pygame.draw.rect(obj.window, (211,175,55), (obj.x, obj.y, obj.width, obj.height)) # color used to be obj.color
+            # metallic gold:(211,175,55)
+            # yellow: const YELLOW
+            pygame.draw.rect(obj.window, end_screen.zone_color, (obj.x, obj.y, obj.width, obj.height)) # color used to be obj.color
         for obj in self.text_list:
             window.blit(obj[0], obj[1])
 
@@ -764,6 +766,7 @@ class EndScreen:
     def __init__(self):
         self.draw_queue = []
         self.rect_color = (0, 0, 0)
+        self.zone_color = (211,175,55) # metallic gold: #D4AF37
 
     def reset_mouse(self):
         pygame.mouse.set_visible(True)
@@ -780,6 +783,9 @@ class EndScreen:
     def iter_color(self):
         amount = 2
         am2 = 5
+
+        goTo = False
+
         while True:
             #if self.color[0] < 254: # 255/5 = 51 steps to get white
             if self.rect_color[0] < 127: # 128/2 = 64 steps to get grey
@@ -787,8 +793,47 @@ class EndScreen:
             
             if points.score_color[0] > 0:
                 points.score_color = (points.score_color[0] - am2, points.score_color[1] - am2, points.score_color[2] - am2)
+            
+            # I am not sure how any of this works but it makes zone end after its over so
+            if self.zone_color[0] > 9:
+                n1 = self.zone_color[0] - 10
+            if self.zone_color[1] > 5:
+                n2 = self.zone_color[1] - 6
+            if self.zone_color[2] > 4:
+                n3 = self.zone_color[2] - 5
+            else:
+                goTo = True
+            self.zone_color = (n1, n2, n3)
+            #if not goTo:
+                #print('initial:', self.zone_color)
 
-            if self.rect_color[0] == 128 and points.score_color[0] == 0:
+            if goTo:
+                n1 = False
+                n2 = False
+                n3 = False
+                if self.zone_color[0] > 0:
+                    n1 = True
+                else:
+                    n1 = 0
+                if self.zone_color[1] > 5:
+                    n2 = True
+                else:
+                    n2 = 0
+                if self.zone_color[2] > 0:
+                    n3 = True
+                else:
+                    n3 = 0
+                
+                if n1 == True:
+                    n1 = self.zone_color[0] - 1
+                if n2 == True:
+                    n2 = self.zone_color[1] - 1
+                if n3 == True:
+                    n3 = self.zone_color[2] - 1
+                self.zone_color = (n1, n2, n3)
+                #print('fine tuning:', self.zone_color)
+
+            if self.rect_color[0] == 128 and points.score_color[0] == 0 and self.zone_color[0] == 0:
                 break
             time.sleep(0.0025)
 
