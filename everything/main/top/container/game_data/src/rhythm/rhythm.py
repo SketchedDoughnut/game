@@ -996,11 +996,11 @@ while running:
             running = False
     if keys[K_ESCAPE]:
         #music_thread.join()
-        #print('--------------------------') ####################################
-        #print('escape') ####################################
-        #running = False ####################################
-        notes.profiles.player.music.stop()
-        ended = True
+        print('--------------------------') ####################################
+        print('escape') ####################################
+        running = False ####################################
+        #notes.profiles.player.music.stop()
+        #ended = True
     
     # pause if
     # if keys[K_SPACE]:
