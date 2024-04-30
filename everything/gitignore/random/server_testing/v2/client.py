@@ -2,16 +2,31 @@
 import socket     
 
 port = 12345 
-host = socket.gethostname() 
+host = socket.gethostname()                 
 
-# create local server, client-side
-messenger = socket.socket(socket.AF_INET, socket.SOCK_STREAM)                  
- 
-# connect to the server
-messenger.connect(('192.168.68.131', 12345))
- 
-# receive data from the server and decoding to get the string.
-print(messenger.recv(1024).decode('utf-8'))
+while True:
+    # connect to the server
+    print('Searching for connection...')
+    messenger = socket.socket(socket.AF_INET, socket.SOCK_STREAM)   
+    messenger.connect((host, port))
+    
+    # receive data from the server and decoding to get the string.
+    while True:
+        try:
+            msg = (messenger.recv(1024).decode('utf-8'))
+        except:
+            print('Connection to server lost.')
+            messenger.close()
+            break
+
+        if msg == 'exit':
+            print('Recieved message:', msg)
+            break
+        else:
+            print('Recieved message:', msg)
+
+    if msg == 'exit':
+        break
 
 # close the connection 
 messenger.close()
