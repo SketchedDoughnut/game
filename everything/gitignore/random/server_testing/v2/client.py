@@ -8,7 +8,12 @@ while True:
     # connect to the server
     print('Searching for connection...')
     messenger = socket.socket(socket.AF_INET, socket.SOCK_STREAM)   
-    messenger.connect((host, port))
+    while True:
+        try:
+            messenger.connect((host, port))
+            break
+        except:
+            pass
     
     # receive data from the server and decoding to get the string.
     while True:
