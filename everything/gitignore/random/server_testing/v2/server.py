@@ -4,16 +4,20 @@ import socket
 
 def listening_init():
     msg = 'Connection to server established.'.encode('utf-8')
-    in_client.send(msg)
+    client.send(msg)
     print('Message sent!')
 
+def send_message(msg: str):
+    msg = msg.encode('utf-8')
+    client.send(msg)
+    print('Message sent!')
 
 port = 12345  
-#host = socket.gethostname()
+host = socket.gethostname()
 
 # set up local server
-local_server = socket.socket()  
-local_server.bind(('', port))
+local_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
+local_server.bind((host, port))
 
 # set up out client
 #out_client = socket.socket()
@@ -21,11 +25,19 @@ local_server.bind(('', port))
 
 # set up in client
 print('Listening for a connection...')
-local_server.listen(50)
-in_client, addr = local_server.accept()
+local_server.listen(5)
+client, address = local_server.accept()
 local_server.close()
-print('Got connection from', addr)
+print('Got connection from', address)
 
 listening_init()
-local_server.close()
-in_client.close()
+
+while True:
+    print('-------------')
+    ins = input('Msg: ')
+    if ins == 'exit':
+        send_message('exit')
+        break
+    send_message(ins)
+
+client.close()
