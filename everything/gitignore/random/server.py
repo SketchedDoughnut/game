@@ -2,7 +2,7 @@
 import socket             
  
 # next create a socket object 
-s = socket.socket()         
+server = socket.socket()         
 print ("Socket successfully created")
  
 # reserve a port on your computer in our 
@@ -14,29 +14,31 @@ port = 12345
 # instead we have inputted an empty string 
 # this makes the server listen to requests 
 # coming from other computers on the network 
-s.bind(('', port))         
+server.bind(('', port))         
 print ("socket binded to %s" %(port)) 
  
 # put the socket into listening mode 
-s.listen(5)     
+server.listen(5)     
 print ("socket is listening...")            
  
 # a forever loop until we interrupt it or 
 # an error occurs 
 while True: 
  
-# Establish connection with client. 
-  c, addr = s.accept()     
-  print('Got connection from', addr )
+    # Establish connection with client. 
+    client, addr = server.accept()     
+    print('Got connection from', addr )
  
-  # send a thank you message to the client. encoding to send byte type. 
-  #c.send('Thank you for connecting'.encode()) 
-  while True:
+    # send a thank you message to the client. encoding to send byte type. 
+    #client.send('Thank you for connecting'.encode()) 
     import base64
-    c.send(base64.b64encode(b'Thank your connecting!'))
+    client.send(base64.b64encode(b'Thank your connecting!'))
  
-  # Close the connection with the client 
-  c.close()
+    # Close the connection with the client 
+    client.close()
    
-  # Breaking once connection closed
-  break
+    # Breaking once connection closed
+    break
+
+# https://stackoverflow.com/questions/12993276/errno-10061-no-connection-could-be-made-because-the-target-machine-actively-re
+# https://stackoverflow.com/questions/55302927/what-ip-address-should-be-used-in-a-client-server-program
