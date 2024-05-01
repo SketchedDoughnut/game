@@ -137,7 +137,7 @@ def pause_game():
     while paused:
         pass
 
-def scale(num, mode):
+def scale(num: int, mode: int) -> int:
     if mode == 'x':
         return (num / 1920) * WIDTH
     
@@ -797,12 +797,15 @@ class EndScreen:
         am2 = 5
         goTo = False
         while True:
+            # iterate color of.. some text
             if self.txt_color[0] > 0: # 255/5 = 51 steps to get white
                 self.txt_color = (self.txt_color[0] - 5, self.txt_color[1] - 5, self.txt_color[2] - 5)
             
+            # bring end screen into view
             if self.rect_color[0] < 127: # 128/2 = 64 steps to get grey
                 self.rect_color = (self.rect_color[0] + amount, self.rect_color[1] + amount, self.rect_color[2] + amount)
             
+            # fades score out?
             if points.score_color[0] > 0:
                 points.score_color = (points.score_color[0] - am2, points.score_color[1] - am2, points.score_color[2] - am2)
             
