@@ -135,6 +135,6 @@ def update_handler_install(
         shutil.rmtree(tmp_path)
         print('Update: Full re-install done!')
         print('---------------')
-        print('Update: Please relaunch to use your new installation.')
+        print('Update: Please relaunch to use your installation.')
         input('Enter anything to exit: ')
         exit()

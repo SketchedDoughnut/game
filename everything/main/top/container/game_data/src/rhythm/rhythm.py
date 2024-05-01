@@ -121,8 +121,8 @@ DISPLAY_REGISTER = [[0, 'S'], [1, 'D'], [2, 'F'], [3, 'J'], [4, 'K'], [5, 'L']]
 ### PRELOADING
 
 # establishing window 
-#window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
-window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+#window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
 
 pygame.display.set_caption("thing!")
 
@@ -137,7 +137,7 @@ def pause_game():
     while paused:
         pass
 
-def scale(num, mode):
+def scale(num: int, mode: int) -> int:
     if mode == 'x':
         return (num / 1920) * WIDTH
     
@@ -280,11 +280,11 @@ class Profiles:
         if ENV:
             left_timing_path = os.path.join(wDir, "maps\\rush\\timings_1_0-5.json")
             left_track_path = os.path.join(wDir, "maps\\rush\\tracks_1_0-5.json")
-            music_path = os.path.join(wDir, "songs\\rush.mp3")
+            music_path = os.path.join(wDir, "songs_ogg\\rush.ogg")
         elif not ENV:
             left_timing_path = "main\\top\\game_data\\src\\rhythm\\maps\\rush\\timings_1_0-5.json"
             left_track_path = "main\\top\\game_data\\src\\rhythm\\maps\\rush\\tracks_1_0-5.json"
-            music_path = "main\\top\\game_data\\src\\rhythm\\songs\\rush.mp3"
+            music_path = "main\\top\\game_data\\src\\rhythm\\songs_ogg\\rush.ogg"
         # load left time track
         print('Loading left timing track...')
         f = open(left_timing_path, 'r')
@@ -358,13 +358,13 @@ class Profiles:
             left_track_path = os.path.join(wDir, "maps\\stayed_gone\\tracks_3_0-2.json")
             right_timing_path = os.path.join(wDir, "maps\\stayed_gone\\timings_1_3-5.json")
             right_track_path = os.path.join(wDir, "maps\\stayed_gone\\tracks_1_3-5.json")
-            music_path = os.path.join(wDir, "songs\\stayed_gone.mp3")
+            music_path = os.path.join(wDir, "songs_ogg\\stayed_gone.ogg")
         elif not ENV:
             left_timing_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\timings_3_0-2.json"
             left_track_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\tracks_3_0-2.json"
             right_timing_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\timings_1_3-5.json"
             right_track_path = "main\\top\\game_data\\src\\rhythm\\maps\\stayed_gone\\tracks_1_3-5.json"
-            music_path = "main\\top\\game_data\\src\\rhythm\\songs\\stayed_gone.mp3"
+            music_path = "main\\top\\game_data\\src\\rhythm\\songs_ogg\\stayed_gone.ogg"
         # load left time track
         print('Loading left timing track...')
         f = open(left_timing_path, 'r')
@@ -448,11 +448,11 @@ class Profiles:
         if ENV:
             left_timing_path = os.path.join(wDir, "maps\\rule_the_world\\timings_1_0-5.json")
             left_track_path = os.path.join(wDir, "maps\\rule_the_world\\tracks_1_0-5.json")
-            music_path = os.path.join(wDir, "songs\\rule_the_world.mp3")
+            music_path = os.path.join(wDir, "songs_ogg\\rule_the_world.ogg")
         elif not ENV:
             left_timing_path = "main\\top\\game_data\\src\\rhythm\\maps\\rule_the_world\\timings_1_0-5.json"
             left_track_path = "main\\top\\game_data\\src\\rhythm\\maps\\rule_the_world\\tracks_1_0-5.json"
-            music_path = "main\\top\\game_data\\src\\rhythm\\songs\\rule_the_world.mp3"
+            music_path = "main\\top\\game_data\\src\\rhythm\\songs_ogg\\rule_the_world.ogg"
         # load left time track
         print('Loading left timing track...')
         f = open(left_timing_path, 'r')
@@ -519,11 +519,11 @@ class Profiles:
         if ENV:
             left_timing_path = os.path.join(wDir, "maps\\boggle\\timings_1_0-5.json")
             left_track_path = os.path.join(wDir, "maps\\boggle\\tracks_1_0-5.json")
-            music_path = os.path.join(wDir, "songs\\boggle.mp3")
+            music_path = os.path.join(wDir, "songs_ogg\\boggle.ogg")
         elif not ENV:
             left_timing_path = "main\\top\\game_data\\src\\rhythm\\maps\\boggle\\timings_1_0-5.json"
             left_track_path = "main\\top\\game_data\\src\\rhythm\\maps\\boggle\\tracks_1_0-5.json"
-            music_path = "main\\top\\game_data\\src\\rhythm\\songs\\boggle.mp3"
+            music_path = "main\\top\\game_data\\src\\rhythm\\songs_ogg\\boggle.ogg"
         # load left time track
         print('Loading left timing track...')
         f = open(left_timing_path, 'r')
@@ -797,12 +797,11 @@ class EndScreen:
         am2 = 5
         goTo = False
         while True:
-            if self.txt_color[0] > 0: # 255/5 = 51 steps to get white
-                self.txt_color = (self.txt_color[0] - 5, self.txt_color[1] - 5, self.txt_color[2] - 5)
-            
+            #if self.color[0] < 254: # 255/5 = 51 steps to get white
             if self.rect_color[0] < 127: # 128/2 = 64 steps to get grey
                 self.rect_color = (self.rect_color[0] + amount, self.rect_color[1] + amount, self.rect_color[2] + amount)
             
+            # fades score out?
             if points.score_color[0] > 0:
                 points.score_color = (points.score_color[0] - am2, points.score_color[1] - am2, points.score_color[2] - am2)
             
@@ -964,13 +963,14 @@ space_pressed = False
 ended = False
 et_start = False
 running = True
+
+# delta time uwu
+clock = pygame.time.Clock()
+
+
+
 while running:
-    # set fps to 60
-    # clock.tick(60)
-    # delay
-    # delay = (scale(1, 'y'))
-    # delay = int(delay)
-    #pygame.time.delay(delay)
+    print(clock.get_fps())
     pygame.time.delay(1)
 
     # checking for events
