@@ -13,14 +13,14 @@
   - Make updates detect if more then one was released since last update (more in ideas.egg, "update detection")
   - Make new updating system working, implement it
     - transfer over user specific data (colors.json, high_scores, etc?)
+  - if no shortcut during installer, tell them what file to run
+  - add dev feature using old installer system in order to get the most recent files (also disclose the risks with this)
     
   - Update rhythm game
     - Update score handling
       - have a health handler that will make you lose if you miss too many notes
       - add high score.json, display that on end screen ----------------------------------------------
       - update high score if higher is reached -------------------------------------------------------
-    - Fix time scaling
-      - develop delta time system, convert game to that new logic (only affects data.iter?)
     - Add pausing?
     - add volume controls
     - divider lines upwards lining up with letters (between letter and zone) - NOTE: HAS TO FADE

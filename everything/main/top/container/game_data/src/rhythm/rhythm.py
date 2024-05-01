@@ -170,12 +170,9 @@ class Data:
 
 
             #new experimental scaling
-            # if HEIGHT == 1080:
-            #     cubex.y += 1
-            # elif HEIGHT > 1080:
-            #     cubex.y = cubex.y + (1 + scale(1, 'y'))
-            # elif HEIGHT < 1080:
-            #     cubex.y = cubex.y + (1 - scale(1, 'y'))
+            movement = 7.55 * dt * TARGET_FPS
+            # print('moving by:', movement)
+            cubex.y += movement
 
 
 
@@ -497,7 +494,7 @@ class Profiles:
                     self.player.music.set_volume(0.25)
                     #self.player.music.set_volume(0.00)
                     self.player.music.play()
-                    start_delay = 63.5 - 2.65 # delay for timings_1_0-5
+                    start_delay = 63.5 - scale(2.65, 'y') # delay for timings_1_0-5
                     start_delay_ms = int(1000 * start_delay)
                     print('Starting playback.')
                     print(f'- start delaying by {start_delay}s, {start_delay_ms}ms')
@@ -797,11 +794,7 @@ class EndScreen:
         am2 = 5
         goTo = False
         while True:
-            # iterate color of.. some text
-            if self.txt_color[0] > 0: # 255/5 = 51 steps to get white
-                self.txt_color = (self.txt_color[0] - 5, self.txt_color[1] - 5, self.txt_color[2] - 5)
-            
-            # bring end screen into view
+            #if self.color[0] < 254: # 255/5 = 51 steps to get white
             if self.rect_color[0] < 127: # 128/2 = 64 steps to get grey
                 self.rect_color = (self.rect_color[0] + amount, self.rect_color[1] + amount, self.rect_color[2] + amount)
             
@@ -970,12 +963,21 @@ running = True
 
 # delta time uwu
 clock = pygame.time.Clock()
+FPS = 60
+TARGET_FPS = 60
+prev = time.time()
 
 
 
 while running:
-    print(clock.get_fps())
-    pygame.time.delay(1)
+    # timing (delta)
+    clock.tick(FPS)
+    #print(round(clock.get_fps(), 2))
+    now = time.time()
+    dt = now - prev
+    prev = now
+
+    # pygame.time.delay(1)
 
     # checking for events
     for event in pygame.event.get():
@@ -1000,11 +1002,11 @@ while running:
             running = False
     if keys[K_ESCAPE]:
         #music_thread.join()
-        print('--------------------------') ####################################
-        print('escape') ####################################
-        running = False ####################################
-        #notes.profiles.player.music.stop()
-        #ended = True
+        #print('--------------------------') ####################################
+        #print('escape') ####################################
+        #running = False ####################################
+        notes.profiles.player.music.stop()
+        ended = True
     
     # pause if
     # if keys[K_SPACE]:
