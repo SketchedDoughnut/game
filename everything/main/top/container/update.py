@@ -94,7 +94,24 @@ def check_version():
 
         # seeing if there is a difference
         if str(current_version) != new_version:
-            print(f'Name decrepancy: {current_version} != {new_version} \nAffected areas: {directory} \nStatus: {status} \nPrompting for update...')
+
+            # new addition- run check modes for multiple updates
+            print('Name decrepancy: Analyzing modes...')
+            import eggs as egg
+            directory, status, multiple = egg.eval_modes(current_version)
+            print('----------------------------')
+
+            if multiple:
+                print(f"""It appears you are multiple updates behind.
+Affected areas: {directory},
+Status: {status}
+Prompting for update...""")
+                
+            elif not multiple:
+                print(f"""Name decrepancy: {current_version} != {new_version} 
+Affected areas: {directory} 
+Status: {status} 
+Prompting for update...""")
             global WIDTH
             global HEIGHT
             do_exit = True
