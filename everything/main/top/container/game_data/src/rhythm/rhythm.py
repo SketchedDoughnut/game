@@ -121,8 +121,8 @@ DISPLAY_REGISTER = [[0, 'S'], [1, 'D'], [2, 'F'], [3, 'J'], [4, 'K'], [5, 'L']]
 ### PRELOADING
 
 # establishing window 
-#window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
-window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+#window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
 
 pygame.display.set_caption("thing!")
 
