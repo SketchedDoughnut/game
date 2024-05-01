@@ -4,7 +4,9 @@ import time
 import json
 
 file_list = []
-blacklist = ['everything\\main\\top\\container\\game_data\\src\\rhythm\\setup']
+blacklist = [
+    'everything\\main\\top\\container\\game_data\\src\\rhythm\\setup'
+]
 
 def iter(path):
     files = []

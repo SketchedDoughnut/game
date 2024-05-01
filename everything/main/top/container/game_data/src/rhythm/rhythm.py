@@ -971,7 +971,7 @@ clock = pygame.time.Clock()
 
 
 while running:
-    #clock.get_fps()
+    print(clock.get_fps())
     pygame.time.delay(1)
 
     # checking for events
