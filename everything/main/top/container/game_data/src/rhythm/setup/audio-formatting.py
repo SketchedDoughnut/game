@@ -50,16 +50,16 @@ m = pygame.mixer
 m.init()
 
 # https://open.spotify.com/track/6FEisGZPcJyGwSpuhH1fMx?si=f23f1eb11c6349dd
-m.music.load('everything/main/top/container/game_data/src/rhythm/songs/boggle.mp3')
+m.music.load('everything/main/top/container/game_data/src/rhythm/songs_ogg/boggle.ogg')
 
 # https://open.spotify.com/track/4RvWPyQ5RL0ao9LPZeSouE?si=37529cd0288c4cf8
-#m.music.load('everything/main/top/container/game_data/src/rhythm/songs/rule_the_world.mp3')
+#m.music.load('everything/main/top/container/game_data/src/rhythm/songs_ogg/rule_the_world.ogg)
 
 # https://open.spotify.com/track/75eo472nc6DIqpwlVOA91B?si=77a2e07864e5445a
-#m.music.load('main\\top\game_data\src\\rhythm\songs\\rush.mp3')
+#m.music.load('main\\top\game_data\src\\rhythm\songs_ogg\\rush.ogg')
 
 # https://open.spotify.com/track/4Po97bPnn3ISdEkuJBMt2f?si=6a51325cff4a49e2
-#m.music.load('main\\top\game_data\src\\rhythm\songs\stayed_gone.mp3')
+#m.music.load('main\\top\game_data\src\\rhythm\songs_ogg\stayed_gone.ogg')
 
 
 m.music.set_volume(0.75)

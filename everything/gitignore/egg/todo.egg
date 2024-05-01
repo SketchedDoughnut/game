@@ -11,7 +11,8 @@
     - transfer over user specific data (colors.json, high_scores, etc?)
     
   - Update rhythm game
-    - Fix score handling (high score, current score, remove score if failed notes)
+    - Update score handling
+      - have a health handler that will make you lose if you miss too many notes
       - add high score.json, display that on end screen
       - update high score if higher is reached
     - Fix time scaling
