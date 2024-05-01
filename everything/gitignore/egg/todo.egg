@@ -19,8 +19,6 @@
       - have a health handler that will make you lose if you miss too many notes
       - add high score.json, display that on end screen ----------------------------------------------
       - update high score if higher is reached -------------------------------------------------------
-    - Fix time scaling
-      - develop delta time system, convert game to that new logic (only affects data.iter?)
     - Add pausing?
     - add volume controls
     - divider lines upwards lining up with letters (between letter and zone) - NOTE: HAS TO FADE
