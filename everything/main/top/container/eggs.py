@@ -35,18 +35,40 @@ def find_data(current_in: str):
     # Tcurrent_mode = ''
     # Tcurrent_state = ''
     #print('current mode', current_in)
+
+    # check if current_in (label) is in list 
+    for data in release_data:
+        if data[0] == current_in:
+            within = True
+            break
+        else:
+            within = False
+
+    # default data if not within list
+    if not within:
+        print('It appears you have an invalid label. Defaulting to full, forced')
+        return 'full', 'forced'
+
+    # go through list, find mode of current label
     for i in release_data:
         #print('looping', i)
         if i[0] == current_in:
             print('Mode found:', i[1])
-            Tcurrent_mode = i[1]
-            Tcurrent_state = i[2]
-            break
+            try:
+                Tcurrent_mode = i[1]
+                Tcurrent_state = i[2]
+                break
+            except Exception as e:
+                print('Error assigning variables:', e)
+                print('This is likely due to an outdated system.')
+                print('Due to this, your update will be defaulted to full, forced')
+                return 'full', 'forced'
     try:
         return Tcurrent_mode, Tcurrent_state
-    except:
-        print('Update is older then the modern system. Defaulting to full')
-        return 'full', 'forced'
+    except Exception as e:
+        print('Return error:', e)
+        input('Enter anything to exit: ')
+        exit()
 
 def eval_modes(current: str):
     # get mode based off of current
