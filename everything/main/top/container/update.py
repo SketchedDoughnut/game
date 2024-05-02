@@ -69,6 +69,11 @@ def check_version():
     # globals
     global do_exit, text_msg, confirm, _cancel, text_height, directory
 
+    '''
+    RUNDOWN
+    - check for if latest version does not match current version
+    '''
+
     # release destination, working directory, loading version
     dest = 'https://api.github.com/repos/SketchedDoughnut/development/releases/latest' # link format: https://api.github.com/repos/{owner}/{repo}/releases/latest
     response = requests.get(dest)
@@ -95,19 +100,22 @@ def check_version():
         # seeing if there is a difference
         if str(current_version) != new_version:
 
+
             # new addition- run check modes for multiple updates
             print('Name decrepancy: Analyzing modes...')
             import eggs as egg
-            directory, status, multiple = egg.eval_modes(current_version)
+            current_mode, new_mode, status, ran = egg.eval_modes(current_version)
             print('----------------------------')
+            directory = new_mode
 
-            if multiple:
+
+            if ran:
                 print(f"""It appears you are multiple updates behind.
 Affected areas: {directory},
 Status: {status}
 Prompting for update...""")
                 
-            elif not multiple:
+            elif not ran:
                 print(f"""Name decrepancy: {current_version} != {new_version} 
 Affected areas: {directory} 
 Status: {status} 

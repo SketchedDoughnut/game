@@ -9,52 +9,84 @@ all_response = requests.get(all_releases).json()
 release_data = []
 
 # parse response_data
+c = 0
 for response in all_response:
     label = response['body'].split()[0]
     mode = response['body'].split()[1]
-    release_data.append([label, mode])
+    try:
+        bounds = response['body'].split()[2]
+        release_data.append([label, mode, bounds])
+    except Exception as e:
+        #print('bounds error:', e)
+        #print('count:', c)
+        #print(response['tag_name'])
+        c += 1
+        pass
 print('----------------------------')
 print('Loaded releases parsed')
+print('Total skips:', c)
 
-# eval
-print('Evaluating...')
 
-def find_mode(current):
+
+
+
+
+def find_data(current_in: str):
+    # Tcurrent_mode = ''
+    # Tcurrent_state = ''
+    #print('current mode', current_in)
     for i in release_data:
-        if i[0] == current:
+        #print('looping', i)
+        if i[0] == current_in:
             print('Mode found:', i[1])
-            current_mode = i[1]
-    for i in release_data
+            Tcurrent_mode = i[1]
+            Tcurrent_state = i[2]
+            break
+    if Tcurrent_mode == None or Tcurrent_state  == None:
+        print('Update is older then the modern system. Defaulting to full')
+        return 'full', 'forced'
+    else:
+        return Tcurrent_mode, Tcurrent_state
 
 def eval_modes(current: str):
     # get mode based off of current
+    print('Evaluating...')
     print('----------------------------')
-    print('Getting mode based off of label...')
-    find_mode(current)
+    print('Getting mode and state based off of label...')
+    current_mode, state = find_data(current)
+    #find_data(current)
+    new_mode = current_mode
 
     # measure
-    ran_true = False
+    ran = False
 
     for rd in release_data:
         if rd[0] == current: # if labels equal
             print('Scan has returned to previous, finishing.')
             break
         else:
-            if current_mode == 'game_data':
+            if new_mode == 'game_data':
                 if rd[1] == 'top':
-                    print(f'Promoting {current_mode} to {rd[1]}')
-                    current_mode = rd[1]
+                    #print(f'- promoting {current_mode} to {rd[1]}')
+                    #new_mode = rd[1] #####################################
+
+                    # full broken, force to full
+                    print(f'- promoting {current_mode} to full')
+                    new_mode = 'full'
+                    ran = True
                 elif rd[1] == 'full':
-                    print(f'Promoting {current_mode} to {rd[1]}')
-                    current_mode = rd[1]
-            elif current_mode == 'top':
+                    print(f'- promoting {current_mode} to {rd[1]}')
+                    new_mode = rd[1]
+                    ran = True
+            elif new_mode == 'top':
                 if rd[1] == 'full':
-                    print(f'Promoting {current_mode} to {rd[1]}')
-                    current_mode = rd[1]
+                    print(f'- promoting {current_mode} to {rd[1]}')
+                    new_mode = rd[1]
+                    ran = True
 
     print('----------------------------')
-    print('Mode promoted to:', current_mode)
-    return current_mode, state, ran_true
+    print('Mode promoted to:', new_mode)
+    return current_mode, new_mode, state, ran
 
 #current_mode, m_detect = eval_modes()
 #print('Mode promoted to:', current_mode)
