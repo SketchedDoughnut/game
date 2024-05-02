@@ -46,7 +46,7 @@ def find_data(current_in: str):
 
     # default data if not within list
     if not within:
-        print('It appears you have an invalid label. Defaulting to full, forced')
+        print('It appears you have an invalid or outdated label. Defaulting to full, forced')
         return 'full', 'forced'
 
     # go through list, find mode of current label
