@@ -802,6 +802,10 @@ class EndScreen:
             if points.score_color[0] > 0:
                 points.score_color = (points.score_color[0] - am2, points.score_color[1] - am2, points.score_color[2] - am2)
             
+            # fades bottom text
+            if self.txt_color[0] > 0:
+                self.txt_color = (self.txt_color[0] - 5, self.txt_color[1] - 5, self.txt_color[2] - 5)
+
             # I am not sure how any of this works but it makes zone end after its over so
             if self.zone_color[0] > 9:
                 n1 = self.zone_color[0] - 10
