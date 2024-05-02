@@ -263,7 +263,7 @@ while True:
     wall_2.t_vertical(wall_1.y)
 
     #re-initialize challenge
-    challenge = Challenge()
+    # challenge = Challenge()
 
     # main loop vars / cases
     space_pressed = False
