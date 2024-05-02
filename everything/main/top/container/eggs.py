@@ -42,11 +42,11 @@ def find_data(current_in: str):
             Tcurrent_mode = i[1]
             Tcurrent_state = i[2]
             break
-    if Tcurrent_mode == None or Tcurrent_state  == None:
+    try:
+        return Tcurrent_mode, Tcurrent_state
+    except:
         print('Update is older then the modern system. Defaulting to full')
         return 'full', 'forced'
-    else:
-        return Tcurrent_mode, Tcurrent_state
 
 def eval_modes(current: str):
     # get mode based off of current
