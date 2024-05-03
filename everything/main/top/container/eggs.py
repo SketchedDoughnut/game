@@ -79,14 +79,18 @@ def eval_modes(current: str):
     #find_data(current)
     new_mode = current_mode
 
+    l = 0
+
     # measure
     ran = False
 
     for rd in release_data:
         if rd[0] == current: # if labels equal
             print('Scan has returned to previous, finishing.')
+            print('Looped:', l)
             break
         else:
+            l += 1
             if new_mode == 'game_data':
                 if rd[1] == 'top':
                     #print(f'- promoting {current_mode} to {rd[1]}')
