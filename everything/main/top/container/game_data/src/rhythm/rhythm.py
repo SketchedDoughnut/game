@@ -1042,8 +1042,11 @@ try:
 
     # get dict entry
     notes.profiles.prof_setup()
-    ct = notes.profiles.song_dict[chosen_song] # ct = chosen thread
-    ct.start()
+    try:
+        ct = notes.profiles.song_dict[chosen_song] # ct = chosen thread
+        ct.start()
+    except:
+        exit()
 
     # end thread
     et = threading.Thread(target=lambda:end_screen.display_handler(), daemon=True)
