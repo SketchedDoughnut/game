@@ -88,7 +88,7 @@ class Crash_Handler:
         import os
         import json
         time_val = self.format_time()
-        nc_log = os.path.join(dumps_dir, f'crash_log_{time_val}.txt')
+        nc_log = os.path.join(dumps_dir, f'crash_log_{time_val}.log')
         nc_log = self.convert_path(nc_log, '\\')
         return nc_log
 
@@ -99,12 +99,12 @@ class Crash_Handler:
         f.write(error)
         f.close()
 
-# try:
-#     raise KeyError
-# except:
-#     import traceback
-#     import os
-#     Crash_Handler(
-#         wDir = os.path.abspath(__file__),
-#         error = traceback.format_exc()
-#     )
+try:
+    raise KeyError
+except:
+    import traceback
+    import os
+    Crash_Handler(
+        wDir = os.path.abspath(__file__),
+        error = traceback.format_exc()
+    )
