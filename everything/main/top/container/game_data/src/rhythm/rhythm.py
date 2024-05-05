@@ -326,6 +326,7 @@ try:
             ended = True
 
         def music_delay(self, time_amount, path):
+            time_amount = scale(time_amount, 'y')
             time.sleep(time_amount)
             print('- music delay over, starting song.')
             self.player.music.load(path)
@@ -340,6 +341,7 @@ try:
             ## vars
             # toggle when first starting, starts music and built-in delay
             starting_toggle = False
+            sd = scale(sd, 'y')
             
             # main iter loop
             for times_right, track_right in zip(right_time_track_list, right_track_list):
@@ -528,7 +530,7 @@ try:
                         #start_delay = 20.275 - 2.25 # delay for ('vox vocals 1', 8).json
                         #start_delay = 20.275 - 2.70 # delay for ('vox vocals 1', 8).json
                         #start_delay = 20.275 - 2.70 # delay for timings_2_0-2
-                        start_delay = 20.275 - 2.65 # delay for timings_3_0-2
+                        start_delay = 20.275 - scale(2.65, 'y') # delay for timings_3_0-2
                         start_delay_ms = int(1000 * start_delay)
                         print('Starting playback.')
                         print(f'- start delaying by {start_delay}s, {start_delay_ms}ms')
@@ -599,7 +601,8 @@ try:
                         self.player.music.set_volume(0.25)
                         #self.player.music.set_volume(0.00)
                         self.player.music.play()
-                        start_delay = 63.5 - scale(2.65, 'y') # delay for timings_1_0-5
+                        #start_delay = 63.5 - scale(2.65, 'y') # delay for timings_1_0-5
+                        start_delay = 63.5 - scale(2.55, 'y') # delay for timings_1_0-5
                         start_delay_ms = int(1000 * start_delay)
                         print('Starting playback.')
                         print(f'- start delaying by {start_delay}s, {start_delay_ms}ms')
@@ -609,7 +612,7 @@ try:
             print('Main playback done.')
             threading.Thread(target=lambda:self.state_eval(), daemon=True).start()
 
-        def Boggle(self):
+        def Boggle(self): 
             print('--------------------------')
             print('Main music thread started.')
             #filename = os.path.join(wDir, 'setup/analyze.py')
@@ -670,7 +673,7 @@ try:
                         self.player.music.set_volume(0.50)
                         #self.player.music.set_volume(0.00)
                         self.player.music.play()
-                        start_delay = 29 - 2.65 # delay for timings_1_0-5 ################################################
+                        start_delay = 29 - scale(2.65, 'y') # delay for timings_1_0-5 ################################################
                         start_delay_ms = int(1000 * start_delay)
                         print('Starting playback.')
                         print(f'- start delaying by {start_delay}s, {start_delay_ms}ms')
