@@ -99,6 +99,11 @@ class Crash_Handler:
         f.write(error)
         f.close()
 
+
+
+
+
+
 try:
     raise KeyError
 except:
@@ -108,3 +113,6 @@ except:
         wDir = os.path.abspath(__file__),
         error = traceback.format_exc()
     )
+
+# https://stackoverflow.com/questions/56549300/handle-exception-when-running-python-script-from-another-python-script
+# https://www.freecodecamp.org/news/python-bytes-to-string-how-to-convert-a-bytestring/
