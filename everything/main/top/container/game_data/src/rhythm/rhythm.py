@@ -602,7 +602,7 @@ try:
                         #self.player.music.set_volume(0.00)
                         self.player.music.play()
                         #start_delay = 63.5 - scale(2.65, 'y') # delay for timings_1_0-5
-                        start_delay = 63.5 - scale(2.55, 'y') # delay for timings_1_0-5
+                        start_delay = 63.6 - scale(2.65, 'y') # delay for timings_1_0-5
                         start_delay_ms = int(1000 * start_delay)
                         print('Starting playback.')
                         print(f'- start delaying by {start_delay}s, {start_delay_ms}ms')
