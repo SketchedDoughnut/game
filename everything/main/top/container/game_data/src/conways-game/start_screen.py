@@ -187,6 +187,37 @@ class StartScreen:
             y = txt_y
         )
 
+        txt_msg = '- r to reset board'
+        txt_y += self.scale(60, 'y')
+        self.assemble_text(
+            color = txt_color,
+            size = txt_size,
+            txt_msg = txt_msg,
+            x = txt_x,
+            y = txt_y
+        )
+
+        txt_msg = '- left click to single paint'
+        txt_y += self.scale(60, 'y')
+        self.assemble_text(
+            color = txt_color,
+            size = txt_size,
+            txt_msg = txt_msg,
+            x = txt_x,
+            y = txt_y
+        )
+
+        txt_msg = '- right click to paintbrush'
+        txt_y += self.scale(60, 'y')
+        self.assemble_text(
+            color = txt_color,
+            size = txt_size,
+            txt_msg = txt_msg,
+            x = txt_x,
+            y = txt_y
+        )
+        
+
         txt_msg = '- esc to open this menu'
         txt_y += self.scale(60, 'y')
         self.assemble_text(
@@ -200,7 +231,7 @@ class StartScreen:
         txt_msg = 'Credits'
         txt_size += self.scale(15, 'x')
         txt_x += self.scale(125, 'x')
-        txt_y += self.scale(125, 'y')
+        txt_y += self.scale(115, 'y')
         self.assemble_text(
             color = txt_color,
             size = txt_size,
@@ -220,9 +251,8 @@ class StartScreen:
             y = txt_y
         )
 
-        txt_msg = 'i1aw'
+        txt_msg = 'Sketched Doughnut'
         txt_size -= self.scale(15, 'x')
-        txt_x += self.scale(150, 'x')
         txt_y += self.scale(75, 'y')
         self.assemble_text(
             color = txt_color,
@@ -232,8 +262,8 @@ class StartScreen:
             y = txt_y
         )
 
-        txt_msg = 'Sketched Doughnut'
-        txt_x -= self.scale(160, 'x')
+        txt_msg = 'i1aw'
+        txt_x += self.scale(160, 'x')
         txt_y += self.scale(60, 'y')
         self.assemble_text(
             color = txt_color,
