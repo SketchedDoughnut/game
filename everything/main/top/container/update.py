@@ -76,7 +76,14 @@ def check_version():
 
     # release destination, working directory, loading version
     dest = 'https://api.github.com/repos/SketchedDoughnut/development/releases/latest' # link format: https://api.github.com/repos/{owner}/{repo}/releases/latest
-    response = requests.get(dest)
+    try:
+        response = requests.get(dest)
+        1 + 'x'
+    except:
+        run_no = threading.Thread(target=lambda:no_confirm(texts_msg = 'Update failed, exiting...', sleep_time = 3), daemon=True)
+        run_no.start()
+        time.sleep(2)
+        exit()
     # print(response.json()["name"])
 
     # print
@@ -191,12 +198,12 @@ def yes_confirm():
 
     pass
 
-def no_confirm():
-    global _cancel, do_exit, confirm, text_msg, text_height
+def no_confirm(texts_msg: str = 'Cancelling...', sleep_time: int = 0.75):
+    global _cancel, do_exit, confirm, text_height, text_msg
+    text_msg = texts_msg
     _cancel = False
-    text_msg = 'Cancelling...'
     text_height = (HEIGHT / 2)
-    time.sleep(0.75)
+    time.sleep(sleep_time)
     do_exit = True
     confirm = True
 ################################################################################################

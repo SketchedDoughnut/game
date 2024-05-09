@@ -12,6 +12,7 @@ setup_path_list.append([os.path.join(wDir, 'update.py'), 'Update agent'])
 path_list = []
 path_list.append([os.path.join(wDir, 'game_data/src/flappy/flappy.py'), 'Flappy bird'])
 path_list.append([os.path.join(wDir, 'game_data/src/rhythm/rhythm.py'), 'Rhythm'])
+path_list.append([os.path.join(wDir, 'game_data/src/conways-game/main.py'), 'Conways Game Of Life'])
 
 # imports
 def imports():
@@ -112,11 +113,11 @@ setup = Format()
 setup.handler()
 
 setup_bool = False
+select = False
 
 while True:
   if setup_bool == False:
-    start_1 = False
-    start_2 = False
+    select = False
 
     import random
     color_list = []
@@ -187,16 +188,14 @@ while True:
     bound = pygame.draw.rect(window, i2, (i.x, i.y, i.width, i.height))
     for text in setup.text_draw_queue:
        window.blit(text[0], text[1])
-    mouse_pressed = pygame.mouse.get_pressed()
     if bound.collidepoint(mouse_pos):
-      if mouse_pressed[0]:
-        if setup.draw_queue.index(i) == 0:
-          start_1 = True
-        elif setup.draw_queue.index(i) == 1:
-          start_2 = True
-        else:
-          start_1 = False
-          start_2 = False
+      if pygame.mouse.get_pressed()[0]:
+         num = setup.draw_queue.index(i)
+         select = True
+    #   else:
+    #      select = False
+    # else:
+    #    select = False
 
   # font = pygame.font.Font('freesansbold.ttf', round(36 * 1.5))
   # text1 = font.render(path_list[2][1], True, WHITE, None) # text, some bool(?), text color, bg color
@@ -207,18 +206,14 @@ while True:
   # window.blit(text2, text2_rect)
 
   pygame.display.update()
-  if start_1 or start_2:
-    pygame.quit()
-    if start_1:
-      print('----------------------------')
-      print('Redirecting into flappy bird...')
-      os.system(f'python {path_list[0][0]}')
-      setup_bool = False
-    elif start_2:
-      print('----------------------------')
-      print('Redirecting into rhythm game...')
-      os.system(f'python {path_list[1][0]}')
-      setup_bool = False
+  if select:
+     pygame.quit()
+     print('----------------------------')
+     running = path_list[num][1]
+     print(f'Running {running}...')
+     os.system(f'python {path_list[num][0]}')
+     setup_bool = False
+
 
 print('----------------------------')
 print('Exiting...')
