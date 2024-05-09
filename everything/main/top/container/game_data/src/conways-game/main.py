@@ -207,6 +207,7 @@ try:
                         print('space:', paused, '->', not paused)
                 elif event.key == pygame.K_r:
                     board_gen = eval.GenerateBoard(width, height)
+                    paused = True
                 elif event.key == pygame.K_ESCAPE:
                     print('menu invoked')
                     paused = True
