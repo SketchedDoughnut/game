@@ -2,6 +2,7 @@ import os
 import shutil
 import json
 import time
+import sys
 
 # packages
 import requests
@@ -58,7 +59,7 @@ def update_handler(main_wDir, setup_wDir):
             json.dump(td, f)
             f.close()
             input('Enter anything to exit: ')
-            exit()
+            sys.exit()
 
         print('---------------')
         print('Update: Cleaning tmp...')
@@ -105,7 +106,7 @@ def update_handler(main_wDir, setup_wDir):
             print('!!! UPDATE ERROR: The installed directory does not exist. Reverting update to backup.')
             print(f'!!! UPDATE ERROR: Path: {copy_location}')
             input('Enter anything to exit: ')
-            exit()
+            sys.exit()
 
         print('Update: Checking file integrity...')
         results = v.verify_files(json_path, everything_path)
@@ -117,7 +118,7 @@ def update_handler(main_wDir, setup_wDir):
                 target = 'top'
             )
             r.decide(False)
-            exit()
+            sys.exit()
 
         print('Update: Cleaning up tmp...')
         try:
@@ -156,4 +157,4 @@ def update_handler(main_wDir, setup_wDir):
         print('Update: top update complete!')
         print('---------------')
         input('Enter anything to exit: ')
-        exit()
+        sys.exit()

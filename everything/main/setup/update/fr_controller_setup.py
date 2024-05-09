@@ -3,6 +3,7 @@ import os
 import shutil
 import json
 import time
+import sys
 
 # packages
 import requests
@@ -101,7 +102,7 @@ def update_handler_setup(
             json.dump(td, f)
             f.close()
             input('Enter anything to exit: ')
-            exit()
+            sys.exit()
 
         # clean tmp
         print('---------------')
@@ -175,7 +176,7 @@ def update_handler_setup(
         else:
             print('!!! UPDATE ERROR: The installed directory does not exist. Cancelling.')
             input('Enter anything to exit: ')
-            exit()
+            sys.exit()
 
         # start second part of update
         print('---------------')
@@ -187,11 +188,11 @@ In order to finish this install, please go to --
 -- and run the file named "full-redo.exe". It will run you through the process to finish this update.""")
             print('---------------')
             input('Enter anything to exit: ')
-            exit()
+            sys.exit()
 
         elif transShortcut:
             print('---------------')
             print('Update: Part 1/2 is done. Please relaunch via the shortcut on your desktop.')
             print('---------------')
             input('Enter anything to exit: ')
-            exit()
+            sys.exit()
