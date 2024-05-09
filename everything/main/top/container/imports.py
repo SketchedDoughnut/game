@@ -4,7 +4,7 @@ print('----------------------------')
 import pip
 
 # also consider cryptography, pywin32 
-pip.main(['install', 'pygame', 'requests', 'winshell'])
+pip.main(['install', 'pygame', 'requests', 'pywin32', 'winshell'])
 
 # test every other import. Why? God knows why, man.
 # builtins
