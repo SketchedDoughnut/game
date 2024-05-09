@@ -113,10 +113,10 @@ try:
   setup_path_list.append([os.path.join(wDir, 'imports.py'), 'Imports agent'])
   setup_path_list.append([os.path.join(wDir, 'update.py'), 'Update agent'])
 
-path_list = []
-path_list.append([os.path.join(wDir, 'game_data/src/flappy/flappy.py'), 'Flappy bird'])
-path_list.append([os.path.join(wDir, 'game_data/src/rhythm/rhythm.py'), 'Rhythm'])
-path_list.append([os.path.join(wDir, 'game_data/src/conways-game/main.py'), 'Conways Game Of Life'])
+  path_list = []
+  path_list.append([os.path.join(wDir, 'game_data/src/flappy/flappy.py'), 'Flappy bird'])
+  path_list.append([os.path.join(wDir, 'game_data/src/rhythm/rhythm.py'), 'Rhythm'])
+  path_list.append([os.path.join(wDir, 'game_data/src/conways-game/main.py'), 'Conways Game Of Life'])
 
   # imports
   def imports():
@@ -216,12 +216,12 @@ path_list.append([os.path.join(wDir, 'game_data/src/conways-game/main.py'), 'Con
   setup = Format()
   setup.handler()
 
-setup_bool = False
-select = False
+  setup_bool = False
+  select = False
 
-while True:
-  if setup_bool == False:
-    select = False
+  while True:
+    if setup_bool == False:
+      select = False
 
       import random
       color_list = []
@@ -288,14 +288,14 @@ while True:
       
 
   
-  for i, i2 in zip(setup.draw_queue, color_list):
-    bound = pygame.draw.rect(window, i2, (i.x, i.y, i.width, i.height))
-    for text in setup.text_draw_queue:
-       window.blit(text[0], text[1])
-    if bound.collidepoint(mouse_pos):
-      if pygame.mouse.get_pressed()[0]:
-         num = setup.draw_queue.index(i)
-         select = True
+    for i, i2 in zip(setup.draw_queue, color_list):
+      bound = pygame.draw.rect(window, i2, (i.x, i.y, i.width, i.height))
+      for text in setup.text_draw_queue:
+        window.blit(text[0], text[1])
+      if bound.collidepoint(mouse_pos):
+        if pygame.mouse.get_pressed()[0]:
+          num = setup.draw_queue.index(i)
+          select = True
     #   else:
     #      select = False
     # else:
@@ -309,23 +309,23 @@ while True:
     # window.blit(text1, text1_rect)
     # window.blit(text2, text2_rect)
 
-  pygame.display.update()
-  if select:
-     pygame.quit()
-     print('----------------------------')
-     running = path_list[num][1]
-     print(f'Running {running}...')
-     os.system(f'python {path_list[num][0]}')
-     setup_bool = False
+    pygame.display.update()
+    if select:
+      pygame.quit()
+      print('----------------------------')
+      running = path_list[num][1]
+      print(f'Running {running}...')
+      os.system(f'python {path_list[num][0]}')
+      setup_bool = False
 
 
-print('----------------------------')
-print('Exiting...')
+  print('----------------------------')
+  print('Exiting...')
 
 except Exception as e:
-    import os
-    import traceback
-    Crash_Handler(
-        wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-        error = traceback.format_exc()
-    )
+  import os
+  import traceback
+  Crash_Handler(
+      wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+      error = traceback.format_exc()
+  )

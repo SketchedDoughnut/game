@@ -78,11 +78,10 @@ def check_version():
     dest = 'https://api.github.com/repos/SketchedDoughnut/development/releases/latest' # link format: https://api.github.com/repos/{owner}/{repo}/releases/latest
     try:
         response = requests.get(dest)
-        1 + 'x'
     except:
         run_no = threading.Thread(target=lambda:no_confirm(texts_msg = 'Update failed, exiting...', sleep_time = 3), daemon=True)
         run_no.start()
-        time.sleep(2)
+        #time.sleep(2)
         exit()
     # print(response.json()["name"])
 
