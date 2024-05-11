@@ -678,7 +678,10 @@ try:
                     os.mkdir(f'{self.install_path}/tmp')
 
                     # downloading .zip
-                    repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+                    #repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+                    repo_url = "https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest"
+                    # TRANSITION TO NEW REPO! LETS SEE HOW THIS GOES WOOOOOOOOOOOOOOOOOOOOOOO
+
                     zip_download_path = f"{self.install_path}/tmp/latest_release.zip"  # Change the path if needed
                     d.download_latest_release(repo_url, zip_download_path)
 
@@ -687,7 +690,7 @@ try:
                     e.extract(zip_download_path, ext_download_path)
 
                     print('Update: Getting commit label...')
-                    release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
+                    release_version = requests.get(repo_url)
                     release_version = release_version.json()
                     release_version = str(release_version['body'])
                     release_version = release_version.split()

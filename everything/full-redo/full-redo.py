@@ -47,14 +47,16 @@ wDir = os.path.dirname(wDir) ############### darn vscode
 high_wDir = os.path.dirname(high_wDir) # changed from wDir to high_wDir ############### darn vscode
 
 # commit label, the random crap (in this case we ignore the bounds since we know we are installing full)
-commit_label = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
+#commit_label = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
+commit_label = requests.get("https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest")
 commit_label = commit_label.json()
 commit_label = str(commit_label['body'])
 commit_label = commit_label.split()
 commit_label = commit_label[0]
 
 # url for install
-repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+#repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+repo_url = "https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest"
 
 # tmp directory
 tmp_path = f'{wDir}/tmp' # changed from wDir to high_wDir

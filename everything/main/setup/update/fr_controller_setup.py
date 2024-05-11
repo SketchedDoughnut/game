@@ -59,7 +59,8 @@ def update_handler_setup(
 
     # setup the vars provided here
     # commit label
-    release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
+    #release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
+    release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest")
     release_version = release_version.json()
     release_version = str(release_version['body'])
     release_version = release_version.split()
@@ -70,7 +71,8 @@ def update_handler_setup(
     zip_download_path = f"{setup_wDir}/tmp/latest_release.zip"
     ext_download_path = f"{setup_wDir}/tmp"
     copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/full-redo"
-    repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+    #repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+    repo_url = "https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest"
     dump_location = f'{ut2_wDir}/full-redo'
 
     
