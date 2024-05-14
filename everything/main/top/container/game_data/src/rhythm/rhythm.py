@@ -320,11 +320,20 @@ try:
             ## constants
             self.CUBE_HEIGHT = scale(10, 'y')
             self.CUBE_WIDTH = scale(100, 'x')
+            ## constants
+            self.CUBE_HEIGHT = scale(10, 'y')
+            self.CUBE_WIDTH = scale(100, 'x')
 
             ## set up music player
             self.player = pygame.mixer
             self.player.init()
+            ## set up music player
+            self.player = pygame.mixer
+            self.player.init()
 
+        def set(self):
+            global ended
+            ended = True
         def set(self):
             global ended
             ended = True
@@ -337,7 +346,53 @@ try:
             self.player.music.set_volume(0.50)
             #self.player.music.set_volume(0.00)
             self.player.music.play()
+        def music_delay(self, time_amount, path):
+            time_amount = scale(time_amount, 'y')
+            time.sleep(time_amount)
+            print('- music delay over, starting song.')
+            self.player.music.load(path)
+            self.player.music.set_volume(0.50)
+            #self.player.music.set_volume(0.00)
+            self.player.music.play()
 
+        def secondary(self, right_time_track_list, right_track_list, color, sd, main_time):
+            print('Secondary music thread started.')
+            #print('--------------------------')
+            
+            ## vars
+            # toggle when first starting, starts music and built-in delay
+            starting_toggle = False
+            sd = scale(sd, 'y')
+            
+            # main iter loop
+            for times_right, track_right in zip(right_time_track_list, right_track_list):
+                if times_right[0] == 'end':
+                    pass
+                else:
+                    main_delay = round(times_right[0], 3)
+                    main_delay_ms = int(main_delay * 1000)
+                    if starting_toggle == True:
+                        if paused == True:
+                            while paused == True:
+                                pass
+                        elif paused == False:
+                            time.sleep(main_delay)
+                            x_val = notes.notes_pos[track_right]
+                            obj = Data_format()
+                            obj.window = window
+                            obj.color = color
+                            obj.x = x_val
+                            obj.y = 0
+                            obj.width = self.CUBE_WIDTH
+                            obj.height = self.CUBE_HEIGHT
+                            self.data.add_to_active(obj)
+                    if starting_toggle == False:
+                        start_delay = main_time - sd # secondary delay for ('timings_1_3-5')
+                        start_delay_ms = int(1000 * start_delay)
+                        time.sleep(start_delay)
+                        print('- secondary sleep over, starting notes.')
+                        starting_toggle = True
+            print('Second playback done.')
         def secondary(self, right_time_track_list, right_track_list, color, sd, main_time):
             print('Secondary music thread started.')
             #print('--------------------------')
@@ -429,6 +484,28 @@ try:
                             threading.Thread(target=lambda:self.music_delay(0.95, music_path)).start()
                             second_toggle = True
 
+                        time.sleep(main_delay)
+                        x_val = notes.notes_pos[track_left]
+                        obj = Data_format()
+                        obj.window = window
+                        obj.color = BLUE
+                        obj.x = x_val
+                        obj.y = 0
+                        obj.width = self.CUBE_WIDTH
+                        obj.height = self.CUBE_HEIGHT
+                        self.data.add_to_active(obj)
+                    if starting_toggle == False:
+                        # how long lyrics take to start - how long it takes square to travel down screen
+                        #start_delay = 1.85 - 2.65 # delay for timings 1_0-5
+                        start_delay = 0
+                        start_delay_ms = int(1000 * start_delay)
+                        print('Starting playback.')
+                        print(f'- start delaying by {start_delay}s, {start_delay_ms}ms')
+                        time.sleep(start_delay)
+                        print('- main start delay over, starting notes')
+                        starting_toggle = True
+            print('Main playback done.')
+            threading.Thread(target=lambda:self.state_eval(), daemon=True).start()
                         time.sleep(main_delay)
                         x_val = notes.notes_pos[track_left]
                         obj = Data_format()
@@ -754,6 +831,53 @@ try:
         def __init__(self):
             self.draw_list = []
             self.text_list = []
+
+        def draw(self):
+            for obj in self.draw_list:
+                # metallic gold:(211,175,55)
+                # yellow: const YELLOW
+                if obj.state != 'Div':
+                    pygame.draw.rect(obj.window, end_screen.zone_color, (obj.x, obj.y, obj.width, obj.height)) # color used to be obj.color
+                else:
+                    pygame.draw.rect(obj.window, obj.color, (obj.x, obj.y, obj.width, obj.height)) # color used to be obj.color
+            for obj in self.text_list:
+                msg = font.render(str(obj[0]), True, end_screen.txt_color, None)
+                window.blit(msg, obj[1])
+
+
+    class Text: 
+        def __init__(self, zone_x, zone_y, zone_width, zone_height):
+            # div stuff
+            self.pos = []
+            self.num_txt = 6
+            self.txt_width = scale(100, 'x')
+
+            self.gap = (WIDTH - (self.num_txt * self.txt_width)) / (self.num_txt + 1)
+
+            # zone stuff
+            self.zx = zone_x
+            self.zy = zone_y
+            self.zw = zone_width
+            self.zh = zone_height
+
+            # Calculate the gap between each cube
+            self.move_up = scale(75, 'y')
+        
+        def append(self):
+            txt_size = scale(36 * 1.5, 'x')
+            font = pygame.font.Font('freesansbold.ttf', round(txt_size))
+
+            for i in range(self.num_txt):
+                active_letter = DISPLAY_REGISTER[i][1]
+                text = font.render(str(active_letter), True, WHITE, None)
+
+                self.txt_x = (i + 1) * self.gap + i * self.txt_width
+                self.txt_y = HEIGHT - self.move_up
+
+                txt_rect = text.get_rect()
+                txt_rect.center = (self.txt_x + self.txt_width / 2, self.txt_y)
+                self.pos.append([active_letter, txt_rect])
+            return self.pos
 
         def draw(self):
             for obj in self.draw_list:

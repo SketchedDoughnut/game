@@ -22,29 +22,29 @@ flow
 
 def backup_handler(
         main_wDir, 
-        setup_wDir, 
         backOrLoad, 
         target
     ):
 
-    
     # if full-redo
     if target == 'full-redo':
         # set up vars
         copy_source = os.path.dirname(main_wDir)
-        copy_destination = f'{os.path.dirname(copy_source)}/full-redo/update/tools/backup/everything'
+        top_wDir = os.path.dirname(copy_source)
+        copy_destination = f'{top_wDir}/full-redo/update/tools/backups/everything'
 
         if backOrLoad == 'back':
             print('Update: Deleting previous backup...')
-            print('- source:', copy_source)
-            print('- destination:', copy_destination)
-            input('Enter anything to authorize deletion: ')
+            print('    - location:', copy_destination)
+            input('--> Enter anything to authorize deletion: ')
             try:
                 shutil.rmtree(copy_destination)
                 print('Update: Previous backup deleted')
             except:
-                print('No prior backup')
+                print('Update: No prior backup')
             print('Update: Backing up everything...')
+            print('    - source:', copy_source)
+            print('    - destination:', copy_destination)
             shutil.copytree(copy_source, copy_destination)
             print('Update: Files are backed up')
 

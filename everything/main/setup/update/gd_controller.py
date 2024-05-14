@@ -3,6 +3,7 @@ import shutil
 import json
 import time
 import sys
+import sys
 
 # packages
 import requests
@@ -50,12 +51,13 @@ def update_handler(
     #repo_url = "https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest"
     zip_download_path = f"{setup_wDir}/tmp/latest_release.zip"
     ext_download_path = f"{setup_wDir}/tmp"
-    copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/main/top/container/game_data"
+    copy_source = f"{ext_download_path}/SketchedDoughnut-SDA-src-{release_version}/everything/main/top/container/game_data"
     copy_location = f'{(main_wDir)}/top/container/game_data'
     json_path = os.path.join(setup_wDir, 'file_list.json')
     everything_path = os.path.dirname(main_wDir)    
 
     if mode == 'game_data':
+        print('---------------')
         print('---------------')
         print('Update: installing game_data')
         print('If you want to backup your game_data, copy the directory now.')
@@ -74,6 +76,7 @@ def update_handler(
             json.dump(td, f)
             f.close()
             input('Enter anything to exit: ')
+            sys.exit()
             sys.exit()
         
         print('---------------')
@@ -95,20 +98,33 @@ def update_handler(
         except Exception as e:
             print('Update: Backup error:', e)
 
+        try:
+            b.backup_handler(
+                main_wDir = main_wDir,
+                setup_wDir = setup_wDir,
+                backOrLoad = 'back',
+                target = 'game_data'
+            )
+        except Exception as e:
+            print('Update: Backup error:', e)
+
         print('Update: deleting previous game_data...')
         try:
             shutil.rmtree(f"{main_wDir}/top/container/game_data")
         except:
             print('Update: No prior game_data')
 
+
         print('Update: Downloading .zip...')
         d.download_latest_release(repo_url, zip_download_path)
+
 
         print('Update: Extracting files...')
         # https://www.geeksforgeeks.org/unzipping-files-in-python/
         ee.extract(zip_download_path, ext_download_path)
 
         print('Update: Getting commit label...')
+
 
         print(f'Update: Copying files to {copy_location}...')
         # https://pynative.com/python-copy-files-and-directories/
@@ -127,6 +143,7 @@ def update_handler(
             print('!!! UPDATE ERROR: The installed directory does not exist. Reverting update to backup.')
             print(f'!!! UPDATE ERROR: Path: {copy_location}')
             input('Enter anything to exit: ')
+            sys.exit()
             sys.exit()
 
         print('Update: Checking file integrity...')
@@ -148,7 +165,17 @@ def update_handler(
         except:
             print('Update: No tmp')
         
+            r.decide(False)
+            sys.exit()
+
+        print('Update: Cleaning up tmp...')
+        try:
+            shutil.rmtree(f'{setup_wDir}/tmp')
+        except:
+            print('Update: No tmp')
+        
         print('Update: Resetting data.json...')
+        print(f'Update: Path: {setup_wDir}/data.json')
         print(f'Update: Path: {setup_wDir}/data.json')
         f = open(f'{setup_wDir}/data.json', 'r')
         td = json.load(f)
@@ -176,4 +203,5 @@ def update_handler(
         print('Update: Game data update complete!')
         print('---------------')
         input('Enter anything to exit: ')
+        sys.exit()
         sys.exit()

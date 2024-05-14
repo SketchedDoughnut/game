@@ -47,14 +47,16 @@ wDir = os.path.dirname(wDir) ############### darn vscode
 high_wDir = os.path.dirname(high_wDir) # changed from wDir to high_wDir ############### darn vscode
 
 # commit label, the random crap (in this case we ignore the bounds since we know we are installing full)
-commit_label = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
+#commit_label = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
+commit_label = requests.get("https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest")
 commit_label = commit_label.json()
 commit_label = str(commit_label['body'])
 commit_label = commit_label.split()
 commit_label = commit_label[0]
 
 # url for install
-repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+#repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+repo_url = "https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest"
 
 # tmp directory
 tmp_path = f'{wDir}/tmp' # changed from wDir to high_wDir
@@ -63,7 +65,7 @@ tmp_path = f'{wDir}/tmp' # changed from wDir to high_wDir
 zip_path = f'{tmp_path}/latest-release.zip'
 
 # extract path for install
-extract_path = f"{tmp_path}/SketchedDoughnut-development-{commit_label}/everything"
+extract_path = f"{tmp_path}/SketchedDoughnut-SDA-src-{commit_label}/everything"
 
 # everything path
 everything_path = f'{high_wDir}/everything'
@@ -95,7 +97,7 @@ Variables:
     - copy_destination: {copy_destination}
     - esif: {esif}
     - vsif: {vsif}
----------------""")
+""")
 #############################################################################
 #############################################################################
 #############################################################################

@@ -1,14 +1,13 @@
 import shutil
 import os
+import json
 
 def decide(
     if_full_redo
-):
+    ):
     if if_full_redo:
         print('------------------------------------')
-        print("""Files are missing from your installation. This is an issue with the developer.
-Please notify them via the feedback form. Your update will be rolled back, and functionality will be
-restored.""")
+        print('Your installation is improper due to a developer issue. Please report this issue back to the developers.')
+        print('The update will cancel and your game will act as normal.')
         print('------------------------------------')
-        input('Enter anything to exit: ')
-        exit()
+        input('Enter anything to proceed: ')
