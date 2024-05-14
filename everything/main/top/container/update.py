@@ -69,9 +69,21 @@ def check_version():
     # globals
     global do_exit, text_msg, confirm, _cancel, text_height, directory
 
+    '''
+    RUNDOWN
+    - check for if latest version does not match current version
+    '''
+
     # release destination, working directory, loading version
-    dest = 'https://api.github.com/repos/SketchedDoughnut/development/releases/latest' # link format: https://api.github.com/repos/{owner}/{repo}/releases/latest
-    response = requests.get(dest)
+    #dest = 'https://api.github.com/repos/SketchedDoughnut/development/releases/latest' # link format: https://api.github.com/repos/{owner}/{repo}/releases/latest
+    dest = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+    try:
+        response = requests.get(dest)
+    except:
+        run_no = threading.Thread(target=lambda:no_confirm(texts_msg = 'Update failed, exiting...', sleep_time = 3), daemon=True)
+        run_no.start()
+        #time.sleep(2)
+        exit()
     # print(response.json()["name"])
 
     # print
@@ -94,7 +106,27 @@ def check_version():
 
         # seeing if there is a difference
         if str(current_version) != new_version:
-            print(f'Name decrepancy: {current_version} != {new_version} \nAffected areas: {directory} \nStatus: {status} \nPrompting for update...')
+
+
+            # new addition- run check modes for multiple updates
+            print('Name decrepancy: Analyzing modes...')
+            import eggs as egg
+            current_mode, new_mode, status, ran = egg.eval_modes(current_version)
+            print('----------------------------')
+            directory = new_mode
+
+
+            if ran:
+                print(f"""It appears you are multiple updates behind.
+Affected areas: {directory},
+Status: {status}
+Prompting for update...""")
+                
+            elif not ran:
+                print(f"""Name decrepancy: {current_version} != {new_version} 
+Affected areas: {directory} 
+Status: {status} 
+Prompting for update...""")
             global WIDTH
             global HEIGHT
             do_exit = True
@@ -166,12 +198,12 @@ def yes_confirm():
 
     pass
 
-def no_confirm():
-    global _cancel, do_exit, confirm, text_msg, text_height
+def no_confirm(texts_msg: str = 'Cancelling...', sleep_time: int = 0.75):
+    global _cancel, do_exit, confirm, text_height, text_msg
+    text_msg = texts_msg
     _cancel = False
-    text_msg = 'Cancelling...'
     text_height = (HEIGHT / 2)
-    time.sleep(0.75)
+    time.sleep(sleep_time)
     do_exit = True
     confirm = True
 ################################################################################################

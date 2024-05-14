@@ -2,6 +2,7 @@ import os
 import shutil
 import json
 import time
+import sys
 
 # packages
 import requests
@@ -21,6 +22,7 @@ def update_handler(main_wDir, setup_wDir):
     # setup the vars provided here
     # commit label
     release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
+    #release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest")
     release_version = release_version.json()
     release_version = str(release_version['body'])
     release_version = release_version.split()
@@ -34,12 +36,14 @@ def update_handler(main_wDir, setup_wDir):
     json_path = os.path.join(setup_wDir, 'file_list.json')
     everything_path = os.path.dirname(main_wDir)
     repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+    #repo_url = "https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest"
     copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/main/top"
     state = False
 
 
 
     if mode == 'top':
+        print('---------------')
         print('Update: installing top')
         print('If you want to backup your top, copy the directory now.')
         print(f'The directory is: {main_wDir}/top')
@@ -57,7 +61,7 @@ def update_handler(main_wDir, setup_wDir):
             json.dump(td, f)
             f.close()
             input('Enter anything to exit: ')
-            exit()
+            sys.exit()
 
         print('---------------')
         print('Update: Cleaning tmp...')
@@ -68,40 +72,34 @@ def update_handler(main_wDir, setup_wDir):
         print('Update: Making tmp...')
         os.mkdir(f'{setup_wDir}/tmp')
 
-
-
-        b.backup_handler(
-            main_wDir = main_wDir,
-            setup_wDir = setup_wDir,
-            backOrLoad = 'back',
-            target = 'top'
-        )
-        
-
+        try:
+            b.backup_handler(
+                main_wDir = main_wDir,
+                setup_wDir = setup_wDir,
+                backOrLoad = 'back',
+                target = 'top'
+            )
+        except Exception as e:
+            print('Update: Backup error:', e)
         
         print('Update: deleting previous top...')
         try:
             shutil.rmtree(f"{main_wDir}/top")
         except Exception as e:
             print('Update: No prior top:', e)
+        
         print('Update: Downloading .zip...')
         d.download_latest_release(repo_url, zip_download_path)
-        print('Update: Extracting files...')
 
+        print('Update: Extracting files...')
         # https://www.geeksforgeeks.org/unzipping-files-in-python/
         ee.extract(zip_download_path, ext_download_path)
 
         print('Update: Getting commit label...')
-        print(f'Update: Copying files to {copy_location}...')
 
+        print(f'Update: Copying files to {copy_location}...')
         # https://pynative.com/python-copy-files-and-directories/
         c.copy(copy_source, copy_location)
-
-        print('Update: Cleaning up tmp...')
-        try:
-            shutil.rmtree(f'{setup_wDir}/tmp')
-        except:
-            print('Update: No tmp')
 
         print('Update: Checking install path...')
         if os.path.exists(copy_location):
@@ -110,24 +108,26 @@ def update_handler(main_wDir, setup_wDir):
             print('!!! UPDATE ERROR: The installed directory does not exist. Reverting update to backup.')
             print(f'!!! UPDATE ERROR: Path: {copy_location}')
             input('Enter anything to exit: ')
-            exit()
-
-
+            sys.exit()
 
         print('Update: Checking file integrity...')
         results = v.verify_files(json_path, everything_path)
-        
         if results:
-            r.decide(False)
-
             b.backup_handler(
                 main_wDir = main_wDir,
                 setup_wDir = setup_wDir,
                 backOrLoad = 'load',
                 target = 'top'
             )
+            r.decide(False)
+            sys.exit()
 
-
+        print('Update: Cleaning up tmp...')
+        try:
+            shutil.rmtree(f'{setup_wDir}/tmp')
+        except:
+            print('Update: No tmp')
+        
         print('Update: Resetting data.json...')
         print('Update: Path:', f'{setup_wDir}/data.json')
         f = open(f'{setup_wDir}/data.json', 'r')
@@ -159,4 +159,4 @@ def update_handler(main_wDir, setup_wDir):
         print('Update: top update complete!')
         print('---------------')
         input('Enter anything to exit: ')
-        exit()
+        sys.exit()

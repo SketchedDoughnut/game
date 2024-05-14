@@ -2,6 +2,7 @@ import os
 import shutil
 import json
 import time
+import sys
 
 # packages
 import requests
@@ -36,6 +37,7 @@ def update_handler(
     ## setup the vars provided here
     # commit label
     release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
+    #release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest")
     release_version = release_version.json()
     release_version = str(release_version['body'])
     release_version = release_version.split()
@@ -45,6 +47,7 @@ def update_handler(
     mode = 'game_data'
     state = False
     repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+    #repo_url = "https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest"
     zip_download_path = f"{setup_wDir}/tmp/latest_release.zip"
     ext_download_path = f"{setup_wDir}/tmp"
     copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/main/top/container/game_data"
@@ -53,6 +56,7 @@ def update_handler(
     everything_path = os.path.dirname(main_wDir)    
 
     if mode == 'game_data':
+        print('---------------')
         print('Update: installing game_data')
         print('If you want to backup your game_data, copy the directory now.')
         print(f'The directory is: {main_wDir}/top/container/game_data')
@@ -70,7 +74,7 @@ def update_handler(
             json.dump(td, f)
             f.close()
             input('Enter anything to exit: ')
-            exit()
+            sys.exit()
         
         print('---------------')
         print('Update: Cleaning tmp...')
@@ -81,33 +85,32 @@ def update_handler(
         print('Update: Making tmp...')
         os.mkdir(f'{setup_wDir}/tmp')
 
+        try:
+            b.backup_handler(
+                main_wDir = main_wDir,
+                setup_wDir = setup_wDir,
+                backOrLoad = 'back',
+                target = 'game_data'
+            )
+        except Exception as e:
+            print('Update: Backup error:', e)
 
-
-        b.backup_handler(
-            main_wDir = main_wDir,
-            setup_wDir = setup_wDir,
-            backOrLoad = 'back',
-            target = 'game_data'
-        )
-
-        
-        
         print('Update: deleting previous game_data...')
         try:
             shutil.rmtree(f"{main_wDir}/top/container/game_data")
         except:
             print('Update: No prior game_data')
+
         print('Update: Downloading .zip...')
         d.download_latest_release(repo_url, zip_download_path)
-        print('Update: Extracting files...')
 
+        print('Update: Extracting files...')
         # https://www.geeksforgeeks.org/unzipping-files-in-python/
         ee.extract(zip_download_path, ext_download_path)
 
         print('Update: Getting commit label...')
-        #release_version = ((requests.get(("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")).json()['body']))
-        print(f'Update: Copying files to {copy_location}...')
 
+        print(f'Update: Copying files to {copy_location}...')
         # https://pynative.com/python-copy-files-and-directories/
         c.copy(copy_source, copy_location)
 
@@ -124,16 +127,11 @@ def update_handler(
             print('!!! UPDATE ERROR: The installed directory does not exist. Reverting update to backup.')
             print(f'!!! UPDATE ERROR: Path: {copy_location}')
             input('Enter anything to exit: ')
-            exit()
-
-
+            sys.exit()
 
         print('Update: Checking file integrity...')
         results = v.verify_files(json_path, everything_path)
-        
         if results:
-            r.decide(False)
-            
             b.backup_handler(
                 main_wDir = main_wDir, 
                 setup_wDir = setup_wDir,
@@ -141,8 +139,17 @@ def update_handler(
                 target = 'game_data'
             )
 
+            r.decide(False)
+            sys.exit()
 
+        print('Update: Cleaning up tmp...')
+        try:
+            shutil.rmtree(f'{setup_wDir}/tmp')
+        except:
+            print('Update: No tmp')
+        
         print('Update: Resetting data.json...')
+        print(f'Update: Path: {setup_wDir}/data.json')
         f = open(f'{setup_wDir}/data.json', 'r')
         td = json.load(f)
         f.close()
@@ -169,4 +176,4 @@ def update_handler(
         print('Update: Game data update complete!')
         print('---------------')
         input('Enter anything to exit: ')
-        exit()
+        sys.exit()

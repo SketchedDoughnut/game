@@ -23,9 +23,10 @@ def verify_files(json_path, everything_path):
         else:
             print(f'- FILE DOES NOT EXIST: {assemble}')
             failed_count += 1
-            if failed_count > 2:
-                failed = True
-                print('------------------------------------')
-                print('- It appears that 3 or more files are missing. This update will cancel, and instead reload your backup.')
-                break
+    if failed_count > 0:
+        failed = True
+        print('------------------------------------')
+        print('- It appears that 1 or more files are missing. This update will cancel, and instead reload your backup.')
+        print('------------------------------------')
+        # break
     return failed

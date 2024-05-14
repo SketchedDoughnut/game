@@ -11,11 +11,13 @@ def decide(
     the functionality of your game. Alternatively, there can be an issue 
     with the file named "File_list.json" in "everything/main/setup/file_list.json".
     Because of this, you can do three things:
+        - Retry this update. This might work, and fix the issue. However, it might just repeat the issue.
         - Ignore this warning, and cancel the update. This will restore a backup made before beginning
         installation.
         - Re-install everything. The program can do this automatically, and it will likely fix your issue.
         - Update your file_list.json. This might not fix the issue if the release file is wrong.
     ------------------------------------""")
+        print('To choose to try again, type "again".')
         print('To choose to re-install, type "full".')
         print('To choose to re-download file_list.json, type "re-download".')
         print('To choose to ignore, type "ignore".')
@@ -24,7 +26,7 @@ def decide(
         data_json_path = os.path.abspath(__file__)
         for _ in range(4):
             data_json_path = os.path.dirname(data_json_path)
-            print(data_json_path)
+            #print(data_json_path)
         
         data_json_path = os.path.join(data_json_path, 'data.json')
 
@@ -45,8 +47,14 @@ def decide(
             print('A full re-installation will now happen. Please re-launch.')
             print('------------------------------------')
             input('Enter anything to exit: ')
-            exit()
+            return 'full'
 
+        elif choice == 'again':
+            print('------------------------------------')
+            print('This file will attempt to update again. Please re-launch.')
+            print('------------------------------------')
+            input('Enter anything to exit: ')
+            return 'again'
 
         elif choice == 're-download':
             print('------------------------------------')
@@ -54,7 +62,7 @@ def decide(
 re-download the file 'file_list.json' located in 'everything/main/setup/file_list.json'""")
             print('------------------------------------')
             input('Enter anything to exit: ')
-            exit()
+            return 're-download'
 
         
         elif choice == 'ignore':
@@ -75,4 +83,4 @@ guaranteed until action is taken to fix this issue.""")
             print('Update: data.json has been updated')
             print('------------------------------------')
             input('Enter anything to exit: ')
-            exit()
+            return 'ignore'

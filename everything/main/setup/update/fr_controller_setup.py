@@ -3,6 +3,7 @@ import os
 import shutil
 import json
 import time
+import sys
 
 # packages
 import requests
@@ -14,6 +15,25 @@ from .tools import extract as ee
 from .tools import copy as c
 from .tools import verify as v
 
+def createShortcut(path, target='', wDir='', icon=''):  
+    from win32com.client import Dispatch
+    ext = path[-3:]
+    if ext == 'url':
+        #shortcut = file(path, 'w')
+        shortcut = open(path, 'w')
+        shortcut.write('[InternetShortcut]\n')
+        shortcut.write('URL=%s' % target)
+        shortcut.close()
+    else:
+        shell = Dispatch('WScript.Shell')
+        shortcut = shell.CreateShortCut(path)
+        shortcut.Targetpath = target
+        shortcut.WorkingDirectory = wDir
+        if icon == '':
+            pass
+        else:
+            shortcut.IconLocation = icon
+        shortcut.save()
 
 
 def update_handler_setup(
@@ -40,6 +60,7 @@ def update_handler_setup(
     # setup the vars provided here
     # commit label
     release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
+    #release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest")
     release_version = release_version.json()
     release_version = str(release_version['body'])
     release_version = release_version.split()
@@ -51,6 +72,7 @@ def update_handler_setup(
     ext_download_path = f"{setup_wDir}/tmp"
     copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/full-redo"
     repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+    #repo_url = "https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest"
     dump_location = f'{ut2_wDir}/full-redo'
 
     
@@ -62,6 +84,7 @@ def update_handler_setup(
         #os.path.dirname(ut2_wDir)
 
         # cancel if they want to
+        print('---------------')
         print('Update: installing full')
         print('- This is a update that requires a re-installation of all game files.')
         print('  Nothing will be saved.')
@@ -81,7 +104,7 @@ def update_handler_setup(
             json.dump(td, f)
             f.close()
             input('Enter anything to exit: ')
-            exit()
+            sys.exit()
 
         # clean tmp
         print('---------------')
@@ -125,6 +148,22 @@ def update_handler_setup(
         print(f'Update: Copying files to {dump_location}')
         c.copy(copy_source, dump_location)
 
+        # transfer shortcut - src: fiesta.py
+        print('Update: Redirecting shortcut...')
+        import winshell
+        desktop = winshell.desktop()     
+        path = os.path.join(desktop, "game_name.lnk") # CHANGE game_name TO NAME
+        target = f"{ut2_wDir}/full-redo/full-redo.exe" # CHANGE TO EXE
+        wDir = f"{ut2_wDir}/full-redo"
+        icon = f"{ut2_wDir}/full-redo/full-redo.exe" # CHANGE TO EXE
+        transShortcut = False
+        try:
+            createShortcut(target=target, path=path, wDir=wDir, icon=icon)
+            transShortcut = True
+        except Exception as e:  
+            print(f'Update: Shortcut transfer error: {e}')
+            transShortcut = False
+
         # clean up tmp
         print('Update: Cleaning up tmp...')
         try:
@@ -139,15 +178,23 @@ def update_handler_setup(
         else:
             print('!!! UPDATE ERROR: The installed directory does not exist. Cancelling.')
             input('Enter anything to exit: ')
-            exit()
+            sys.exit()
 
         # start second part of update
         print('---------------')
-        print(f"""Update: Part 1/2 of update is done.
-    This installer is incapable of finishing this update, as it will require deleting itself. 
-    In order to finish this install, please go to --
-    > {ut2_wDir}/full-redo/
-    -- and run the file named "full-redo.exe". It will run you through the process to finish this update.""")
-        print('---------------')
-        input('Enter anything to exit: ')
-        exit()
+        if not transShortcut:
+            print(f"""Update: Part 1/2 of update is done.
+This installer is incapable of finishing this update, as it will require deleting itself. 
+In order to finish this install, please go to --
+> {ut2_wDir}/full-redo/
+-- and run the file named "full-redo.exe". It will run you through the process to finish this update.""")
+            print('---------------')
+            input('Enter anything to exit: ')
+            sys.exit()
+
+        elif transShortcut:
+            print('---------------')
+            print('Update: Part 1/2 is done. Please relaunch via the shortcut on your desktop.')
+            print('---------------')
+            input('Enter anything to exit: ')
+            sys.exit()
