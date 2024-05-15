@@ -76,7 +76,7 @@ def check_version():
 
     # release destination, working directory, loading version
     #dest = 'https://api.github.com/repos/SketchedDoughnut/development/releases/latest' # link format: https://api.github.com/repos/{owner}/{repo}/releases/latest
-    dest = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+    dest = "https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest"
     try:
         response = requests.get(dest)
     except:

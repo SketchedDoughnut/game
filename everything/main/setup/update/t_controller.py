@@ -3,7 +3,6 @@ import shutil
 import json
 import time
 import sys
-import sys
 
 # packages
 import requests
@@ -22,8 +21,8 @@ def update_handler(main_wDir, setup_wDir):
 
     # setup the vars provided here
     # commit label
-    release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
-    #release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest")
+    #release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/development/releases/latest")
+    release_version = requests.get("https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest")
     release_version = release_version.json()
     release_version = str(release_version['body'])
     release_version = release_version.split()
@@ -36,15 +35,14 @@ def update_handler(main_wDir, setup_wDir):
     copy_location = f'{main_wDir}/top'
     json_path = os.path.join(setup_wDir, 'file_list.json')
     everything_path = os.path.dirname(main_wDir)
-    repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
-    #repo_url = "https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest"
-    copy_source = f"{ext_download_path}/SketchedDoughnut-development-{release_version}/everything/main/top"
+    #repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+    repo_url = "https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest"
+    copy_source = f"{ext_download_path}/SketchedDoughnut-SDA-src-{release_version}/everything/main/top"
     state = False
 
 
 
     if mode == 'top':
-        print('---------------')
         print('---------------')
         print('Update: installing top')
         print('If you want to backup your top, copy the directory now.')
@@ -63,7 +61,6 @@ def update_handler(main_wDir, setup_wDir):
             json.dump(td, f)
             f.close()
             input('Enter anything to exit: ')
-            sys.exit()
             sys.exit()
 
         print('---------------')
@@ -84,15 +81,6 @@ def update_handler(main_wDir, setup_wDir):
             )
         except Exception as e:
             print('Update: Backup error:', e)
-        try:
-            b.backup_handler(
-                main_wDir = main_wDir,
-                setup_wDir = setup_wDir,
-                backOrLoad = 'back',
-                target = 'top'
-            )
-        except Exception as e:
-            print('Update: Backup error:', e)
         
         print('Update: deleting previous top...')
         try:
@@ -103,13 +91,11 @@ def update_handler(main_wDir, setup_wDir):
         print('Update: Downloading .zip...')
         d.download_latest_release(repo_url, zip_download_path)
 
-
         print('Update: Extracting files...')
         # https://www.geeksforgeeks.org/unzipping-files-in-python/
         ee.extract(zip_download_path, ext_download_path)
 
         print('Update: Getting commit label...')
-
 
         print(f'Update: Copying files to {copy_location}...')
         # https://pynative.com/python-copy-files-and-directories/
@@ -123,7 +109,6 @@ def update_handler(main_wDir, setup_wDir):
             print(f'!!! UPDATE ERROR: Path: {copy_location}')
             input('Enter anything to exit: ')
             sys.exit()
-            sys.exit()
 
         print('Update: Checking file integrity...')
         results = v.verify_files(json_path, everything_path)
@@ -136,15 +121,7 @@ def update_handler(main_wDir, setup_wDir):
             )
             r.decide(False)
             sys.exit()
-            r.decide(False)
-            sys.exit()
 
-        print('Update: Cleaning up tmp...')
-        try:
-            shutil.rmtree(f'{setup_wDir}/tmp')
-        except:
-            print('Update: No tmp')
-        
         print('Update: Cleaning up tmp...')
         try:
             shutil.rmtree(f'{setup_wDir}/tmp')
@@ -182,5 +159,4 @@ def update_handler(main_wDir, setup_wDir):
         print('Update: top update complete!')
         print('---------------')
         input('Enter anything to exit: ')
-        sys.exit()
         sys.exit()

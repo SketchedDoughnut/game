@@ -173,8 +173,7 @@ if os.path.exists(path):
         input('Cancelled. Enter anything to exit: ')
 
 ## make downloader obj with github url
-#downloader = Downloader("https://github.com/SketchedDoughnut/development")
-downloader = Downloader("https://github.com/SketchedDoughnut/SDA-src")
+downloader = Downloader("https://github.com/SketchedDoughnut/development")
 
 ## make install dir
 os.mkdir(path)
