@@ -678,8 +678,8 @@ try:
                     os.mkdir(f'{self.install_path}/tmp')
 
                     # downloading .zip
-                    #repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
-                    repo_url = "https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest"
+                    repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
+                    #repo_url = "https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest"
                     # TRANSITION TO NEW REPO! LETS SEE HOW THIS GOES WOOOOOOOOOOOOOOOOOOOOOOO
 
                     zip_download_path = f"{self.install_path}/tmp/latest_release.zip"  # Change the path if needed
