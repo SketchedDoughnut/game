@@ -137,3 +137,8 @@ for file in n_list:
 print('---------------')
 print('FOMX: cleaning up tmp...')
 shutil.rmtree(tmp_path)
+
+print('---------------')
+print('FOMX process is done, Enter anything to continue on to launch: ')
+input('--> ')
+sys.exit()
