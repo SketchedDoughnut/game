@@ -118,13 +118,18 @@ print('---------------')
 print('FOMX: Copying over code...')
 for file in n_list:
     mode = file[0]
+    if mode == 'normal':
+        op = 'r'
+        wr = 'w'
+    elif mode == 'binary':
+        op = 'rb'
+        wr = 'wb'
     source = file[1]
     dest = file[2]
-    if mode == 'normal':
-        f = open(source, 'r')
-        content = f.read()
-        f.close()
-        f = open(dest, 'w')
-        f.write(content)
-        f.close()
-        print(f'FOMX: wrote content from "{source}" to "{dest}"')
+    f = open(source, op)
+    content = f.read()
+    f.close()
+    f = open(dest, wr)
+    f.write(content)
+    f.close()
+    print(f'FOMX: wrote content from "{source}" to "{dest}"')
