@@ -68,7 +68,8 @@ if current_label != latest_label:
 print('---------------')
 # vars
 tmp_path = os.path.join(wDir, 'tmp')
-zip_path = os.path.join(f'{tmp_path}/latest_release.zip')
+zip_path = f'{tmp_path}/latest_release.zip'
+bounds_json = f'{tmp_path}/SketchedDoughnut-SDA-FOMX-{latest_label}/data/bounds.json'
 
 
 
@@ -85,3 +86,11 @@ download.download_latest_release(url, zip_path)
 
 print('FOMX: extracting...')
 extract.extract(zip_path, tmp_path)
+
+print('FOMX: reading bounds file...')
+f = open(bounds_json, 'r')
+bounds = json.load(f)
+f.close()
+
+print('FOMX: bounds data:')
+print(bounds)
