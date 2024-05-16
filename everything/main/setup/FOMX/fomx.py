@@ -142,6 +142,12 @@ print('FOMX: cleaning up tmp...')
 time.sleep(0.25)
 shutil.rmtree(tmp_path)
 
+print('FOMX: updating local version...')
+f = open(os.path.join(wDir, 'version.json'), 'w')
+json.dump(latest_label, f)
+f.close()
+time.sleep(0.25)
+
 print('---------------')
 print('FOMX process is done, Enter anything to continue on to launch: ')
 input('--> ')
