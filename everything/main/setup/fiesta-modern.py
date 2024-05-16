@@ -846,6 +846,10 @@ try:
         # quits install file (to make sure it goes right)
         def quit_install(self):
             print('---------------')
+            if not self.desktop_shortcut:
+                print(f'Since you did not choose to have a shortcut, the file to run is located in: ')
+                print(f'- {self.install_path}/everything/main/setup/fiesta.exe')
+                print('---------------')
             input(f'Install complete! Time: {round(self.end - self.start, 2)}s \nEnter anything to exit: ')
             #print('Install complete. Exit in:')
             #for i in range(3, 0, -1):
