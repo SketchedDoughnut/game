@@ -681,7 +681,8 @@ try:
                     repo_url = "https://api.github.com/repos/SketchedDoughnut/development/releases/latest"
                     #repo_url = "https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest"
                     # TRANSITION TO NEW REPO! LETS SEE HOW THIS GOES WOOOOOOOOOOOOOOOOOOOOOOO
-
+                    
+                    print('Update: Downloading .zip...')
                     zip_download_path = f"{self.install_path}/tmp/latest_release.zip"  # Change the path if needed
                     d.download_latest_release(repo_url, zip_download_path)
 
