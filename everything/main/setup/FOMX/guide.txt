@@ -11,7 +11,10 @@ Here is how data is formatted:
     "file_paths": ["everything/blah/blah/blah", "everything/blah"]
 }
 
-Explenation:
+FILE_DETAILS AND FILE_PATHS MUST BE IN THE SAME ORDER, DUE TO HOW IT IS HANDLED LATER
+
+
+Explanation:
 - description:
     - is used to display in console IF THE USER WANTS TO.
 - file_details:
