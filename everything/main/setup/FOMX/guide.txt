@@ -7,6 +7,7 @@ If your curious, FOMX stands for:
 Here is how data is formatted:
 {
     "description": "This is an example message about a small release message! This is in the body of the release.",
+    "version": "0/20",
     "file_details": [["file.py", "normal"], ["file.exe", "binary"], ["data.json", "json"]],
     "file_paths": ["everything/blah/blah/blah", "everything/blah"]
 }
@@ -17,6 +18,8 @@ JSON IS NOT CURRENTLY SUPPORTED IN CODE
 Explanation:
 - description:
     - is used to display in console IF THE USER WANTS TO.
+- version:
+    - how many files are affected in the patch, up to 20. When it reaches 20 / it has been two months, the patches get reset and an update is put out.
 - file_details:
     - is used for the file names, and what type of read/write mode they need (read binary and write binary, normal read and write, etc).
 - file_paths:
