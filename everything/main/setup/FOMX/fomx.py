@@ -85,6 +85,7 @@ os.mkdir(tmp_path)
 
 print('FOMX: downloading .zip...')
 download.download_latest_release(url, zip_path)
+time.sleep(0.5)
 
 print('FOMX: extracting...')
 extract.extract(zip_path, tmp_path)
@@ -93,6 +94,7 @@ print('FOMX: reading bounds file...')
 f = open(bounds_json, 'r')
 bounds = json.load(f)
 f.close()
+time.sleep(0.5)
 
 print('FOMX: bounds description:')
 print('-', bounds['description'])
@@ -112,10 +114,11 @@ for data in n_list:
         exit()
     if not os.path.exists(data[2]): # if copy file exists
         exit()
-print('FOMX: all paths exist.')
+print('FOMX: all files exist.')
 print('---------------')
 
 print('FOMX: Copying over code...')
+time.sleep(0.5)
 for file in n_list:
     mode = file[0]
     if mode == 'normal':
@@ -136,6 +139,7 @@ for file in n_list:
 
 print('---------------')
 print('FOMX: cleaning up tmp...')
+time.sleep(0.25)
 shutil.rmtree(tmp_path)
 
 print('---------------')
