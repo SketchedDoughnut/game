@@ -66,13 +66,18 @@ if current_label != latest_label:
         print('FOMX: exiting...')
         time.sleep(1)
         sys.exit()
+
+else:
+    print('FOMX: versions match. Continuing to launch')
+    time.sleep(0.5)
+    sys.exit()
+    
 print('---------------')
 # vars
 tmp_path = os.path.join(wDir, 'tmp')
 zip_path = f'{tmp_path}/latest_release.zip'
 copy_location = f'{tmp_path}/SketchedDoughnut-SDA-FOMX-{latest_label}/data'
 bounds_json = f'{copy_location}/bounds.json'
-
 
 
 
