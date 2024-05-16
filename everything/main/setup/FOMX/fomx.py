@@ -132,4 +132,8 @@ for file in n_list:
     f = open(dest, wr)
     f.write(content)
     f.close()
-    print(f'FOMX: wrote content from "{source}" to "{dest}"')
+    print(f'- wrote content from "{source}" to "{dest}"')
+
+print('---------------')
+print('FOMX: cleaning up tmp...')
+shutil.rmtree(tmp_path)
