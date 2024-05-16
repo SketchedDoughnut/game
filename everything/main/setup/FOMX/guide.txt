@@ -12,14 +12,15 @@ IMPORTANT
 - JSON IS NOT CURRENTLY SUPPORTED IN FOMX RELEASE
 - THE FOLLOWING FILES CAN NOT BE INFLUENCED BY FOMX:
     - obviously, fomx.py
-        - copy.py and download.py can not be accessed if there is no pycache
-    - any .json files
+        - copy.py and download.py can not be accessed if there is no pycache, 
+          they can be (THIS HAS NOT BEEN TESTED, PLEASE REFRAIN FROM DOING THIS IN A 
+          PUBLIC RELEASE)
     - and audio files (.mp3, .wav, etc)
     - any folders
     - fiesta.exe
     - full-redo.py
     - full-redo.exe
-    - IF NOT THESE, THEN THE FILE CAN BE INFLUENCED
+    - IF NOT THESE, THEN THE FILE IS AVAILABLE FOR READ/WRITE
 
 -------------------------------------------------------------------------------------------
 
