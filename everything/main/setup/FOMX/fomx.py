@@ -66,14 +66,22 @@ if current_label != latest_label:
         time.sleep(1)
         sys.exit()
 print('---------------')
+# vars
+tmp_path = os.path.join(wDir, 'tmp')
+zip_path = os.path.join(f'{tmp_path}/latest_release.zip')
+
+
+
+
 print('Attempting to delete previous tmp...')
 try:
-    shutil.rmtree(os.path.join(wDir, 'tmp'))
+    shutil.rmtree(tmp_path)
 except:
     pass
-os.mkdir(os.path.join(wDir, 'tmp'))
-download_path = os.path.join(wDir, 'tmp/latest_release.zip')
+os.mkdir(tmp_path)
+
 print('FOMX: downloading .zip...')
-download.download_latest_release(url, download_path)
+download.download_latest_release(url, zip_path)
+
 print('FOMX: extracting...')
-extract.extract(download_path, os.path.join(wDir, 'tmp'))
+extract.extract(zip_path, tmp_path)

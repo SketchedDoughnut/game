@@ -23,7 +23,7 @@ def _download_file(url, download_path):
     with open(download_path, 'wb') as f:
         f.write(response.content)
     #print(f"Downloaded the latest release to {download_path}")
-    print(f"Update: Downloaded the latest release to {download_path}")
+    print(f"FOMX: Downloaded the latest release to {download_path}")
     #print(f'Update: Downloaded the latest release')
 
 # if __name__ == "__main__":
