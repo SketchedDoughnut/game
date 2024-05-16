@@ -66,9 +66,23 @@ zip_path = f'{tmp_path}/latest-release.zip'
 
 # extract path for install
 extract_path = f"{tmp_path}/SketchedDoughnut-development-{commit_label}/everything"
+back_extract = os.path.diranme(extract_path)
+other_paths = [ 
+    # all MD
+    f"{back_extract}/changelog.md",
+    f"{back_extract}/README.md",
+    # all extensionless (txt)
+    f"{back_extract}/.gitattributes.txt",
+    f"{back_extract}/LICENSE.txt",
+    f"{back_extract}/Pipfile.txt",
+    # all other types (.lock, other .txt)
+    f"{back_extract}/requirements.txt", 
+    f"{back_extract}/Pipfile.lock"
+]
 
 # everything path
 everything_path = f'{high_wDir}/everything'
+back_everythings = high_wDir
 eb1 = os.path.dirname(everything_path)
 
 # copy paths (source, destination) for install
@@ -109,6 +123,8 @@ frc.update_handler_install(
     zip_path = zip_path,
     everything_path = everything_path,
     extract_path = extract_path,
+    other_path = other_paths,
+    back_everything = back_everythings,
     repo_url = repo_url,
     commit_label = commit_label,
     esif = esif,
