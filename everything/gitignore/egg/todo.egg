@@ -14,9 +14,7 @@
   - add dev feature using old installer system in order to get the most recent files (also disclose the risks with this)
 
   - Update installer
-    - More details about what abs path means (give active example of where file is located?
-    - Advise against using paths with space in them
-    - More instructions overall
+    - add functionality for default path in program files (sys protected, use documents instead?)
     
   - Update rhythm game
     - Update score handling

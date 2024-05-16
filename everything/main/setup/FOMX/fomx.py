@@ -1,5 +1,6 @@
 '''
 PLEASE REFER TO ./GUIDE.TXT FOR MORE INFO
+~ swoosh ~
 '''
 
 # builtins
