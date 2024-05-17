@@ -15,7 +15,10 @@
 
   - Update installer
     - add functionality for default path in program files (sys protected, use documents instead?)
-    
+
+  - update conway game
+    - finish exporting / loading maps
+      - display on start page how to export and load
   - Update rhythm game
     - Update score handling
       - have a health handler that will make you lose if you miss too many notes
