@@ -122,7 +122,7 @@ for data in n_list:
         exit()
     # if not os.path.exists(data[2]): # if copy file exists
     #     print('-- dest does not exist.')
-    #     exit()
+    #     exit() 
 print('FOMX: all files exist.')
 print('---------------')
 
