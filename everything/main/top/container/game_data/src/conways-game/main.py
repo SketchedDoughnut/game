@@ -115,6 +115,7 @@ try:
 
     # my files
     import eval
+    import loads
 
     pygame.init()
     WINDOW = pygame.display.set_mode((600,400), pygame.RESIZABLE)
@@ -223,7 +224,7 @@ try:
                     try:
                         can_exit = False
                         c = Crash_Handler(None, None, 'setup')
-                        timee = c.format_time()
+                        now_time = c.format_time()
                         import os
                         log_wDir = os.path.abspath(__file__)
                         path = c.convert_path(log_wDir, '/')
@@ -232,21 +233,32 @@ try:
                         path = c.convert_path(path, '\\')
                         #print('before mk:', path)
                         try:
-                            os.mkdir(f'{path}\\maps')
+                            os.mkdir(f'{path}\\maps_out')
                         except:
                             pass
                         #print('after mk:', path)
                         path = c.convert_path(path, '/')
                         #print('conv back:', path)
-                        f = open(f'{path}/maps/map_{timee}.json', 'w')
+                        f = open(f'{path}/maps_out/map_{now_time}.json', 'w')
                         import json
                         json.dump(board_gen.get_current_board(), f)
                         f.close()
-                        print(f'logged map to: {path}/maps/map_{timee}.json')
+                        print(f'logged map to: {path}/maps_out/map_{now_time}.json')
                         can_exit = True
                     except Exception as e:
                         print('output map error:', e)
                         raise 'outputMapError'
+                    
+                elif keys[pygame.K_l]:
+                    if start_menu == True:
+                        map_path = loads.load_map()
+                        print('----------------------')
+                        print('Setting loaded board...')
+                        board_gen = eval.GenerateBoard(width, height, load_map = map_path)
+                        print('Restarting window...')
+                        pygame.init()
+                        WINDOW = pygame.display.set_mode((600,400), pygame.RESIZABLE)
+                        pygame.display.set_caption('Conways Game Of Life')
 
 
                 if event.key == pygame.K_SPACE:
