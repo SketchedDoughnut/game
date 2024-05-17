@@ -120,9 +120,9 @@ for data in n_list:
     if not os.path.exists(data[1]): # if destination exists
         print('-- source does not exist.')
         exit()
-    if not os.path.exists(data[2]): # if copy file exists
-        print('-- dest does not exist.')
-        exit()
+    # if not os.path.exists(data[2]): # if copy file exists
+    #     print('-- dest does not exist.')
+    #     exit()
 print('FOMX: all files exist.')
 print('---------------')
 
