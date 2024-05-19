@@ -323,7 +323,7 @@ try:
                 new_board = board_gen.gen_new_board()
         renderer.tick(WINDOW, current_board)
         if start_menu == True:
-            start_menu = SS.draw()
+            start_menu, board_gen = SS.draw(board_gen)
         if tickTimer > 1 / generationTickRate:
             if paused == False:
                 current_board = new_board

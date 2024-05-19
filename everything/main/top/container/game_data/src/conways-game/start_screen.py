@@ -355,7 +355,9 @@ class StartScreen:
 
     
     ## DRAW FUNCTION
-    def draw(self) -> bool:
+    def draw(self, board: list) -> bool:
+        # selfs
+        self.board = board
         pressed = pygame.mouse.get_pressed()
 
         for bg in self.bg_queue:
@@ -376,7 +378,7 @@ class StartScreen:
         for text in self.text_queue:
             self.window.blit(text[0], text[1])
 
-        return True
+        return True, self.board
 
 
 
@@ -402,7 +404,11 @@ class StartScreen:
     # basic function to close menu
     def close_menu(self) -> bool:
         print('menu closed')
-        return False # to end start_menu
+        # import eval
+        # width = 100
+        # height = width
+        # self.board = eval.GenerateBoard(width, height)
+        return False, self.board # to end start_menu
     
     def learn_more(self) -> None:
         import os
