@@ -29,5 +29,3 @@ def load_map():
             break
     print('Returning path...')
     return map_path
-
-load_map()

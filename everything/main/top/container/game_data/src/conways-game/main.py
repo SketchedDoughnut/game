@@ -116,6 +116,7 @@ try:
     # my files
     import eval
     import loads
+    import start_screen
 
     pygame.init()
     WINDOW = pygame.display.set_mode((600,400), pygame.RESIZABLE)
@@ -133,6 +134,7 @@ try:
     width = 100
     height = 100
     board_gen = eval.GenerateBoard(width, height)
+
     generationTickRate = 5
     lastTime = time.perf_counter()
     tickTimer = 0
@@ -154,7 +156,6 @@ try:
     running = True
     can_exit = True
 
-    import start_screen
     SS = start_screen.StartScreen(WINDOW)
     while running:
 
@@ -254,11 +255,14 @@ try:
                         map_path = loads.load_map()
                         print('----------------------')
                         print('Setting loaded board...')
-                        board_gen = eval.GenerateBoard(width, height, load_map = map_path)
                         print('Restarting window...')
                         pygame.init()
                         WINDOW = pygame.display.set_mode((600,400), pygame.RESIZABLE)
                         pygame.display.set_caption('Conways Game Of Life')
+                        width = 100
+                        height = 100
+                        board_gen = eval.GenerateBoard(width, height, load_map = map_path)
+                        SS = start_screen.StartScreen(WINDOW)
 
 
                 if event.key == pygame.K_SPACE:
