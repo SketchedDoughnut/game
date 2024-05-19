@@ -112,15 +112,7 @@ print('-', bounds['file_details'])
 print('FOMX: formatting data list...')
 n_list = []
 for path, file in zip(bounds['file_paths'], bounds['file_details']):
-    n_list.append
-    ([file[1],os.path.join(copy_location, file[0]), os.path.join(os.path.join(above_everything_dir, path), file[0]), file[0]])
-
-# print('---------------')
-# print('FOMX: Checking for CMD file...')
-# do_cmd = bounds['cmd_exist']
-# if do_cmd == True:
-#     print('FOMX: CMD file found, running CMD...')
-#     cmd_reader.read_commands(above_everything_dir, os.path.join(copy_location, 'necessary/cmd.txt'))
+    n_list.append([file[1], os.path.join(copy_location, file[0]), os.path.join(os.path.join(above_everything_dir, path), file[0]), file[0]])
 
 # print('---------------')
 # print('FOMX: Checking for CMD file...')
