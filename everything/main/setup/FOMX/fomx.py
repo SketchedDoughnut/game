@@ -16,6 +16,7 @@ import requests
 # file imports
 import tools.download as download
 import tools.extract as extract
+import tools.cmd_reader as cmd_reader
 
 # ---------------------------------------------
 url = 'https://api.github.com/repos/SketchedDoughnut/SDA-FOMX/releases/latest'
@@ -78,7 +79,7 @@ print('---------------')
 tmp_path = os.path.join(wDir, 'tmp')
 zip_path = f'{tmp_path}/latest_release.zip'
 copy_location = f'{tmp_path}/SketchedDoughnut-SDA-FOMX-{latest_label}/data'
-bounds_json = f'{copy_location}/bounds.json'
+bounds_json = f'{copy_location}/necessary/bounds.json'
 
 
 
@@ -111,7 +112,27 @@ print('-', bounds['file_details'])
 print('FOMX: formatting data list...')
 n_list = []
 for path, file in zip(bounds['file_paths'], bounds['file_details']):
-    n_list.append([file[1], os.path.join(copy_location, file[0]), os.path.join(os.path.join(above_everything_dir, path), file[0]), file[0]])
+    n_list.append
+    (
+        [
+        file[1], # mode (normal, binary, json)
+        os.path.join # path to the source file
+        (
+            copy_location, # src wDir
+            file[0] # filename 
+        ), 
+        os.path.join # abs path including filename to destination file
+        (
+            os.path.join # abs path to destination of src file
+            (
+                above_everything_dir, # path above everything
+                path # path everything > wDir of destination file
+            ), 
+            file[0] # filename
+        ), 
+        file[0] # filename
+        ]
+    )
 
 print('---------------')
 print('FOMX: verifying files exist...')
@@ -125,6 +146,11 @@ for data in n_list:
     #     exit() 
 print('FOMX: all files exist.')
 print('---------------')
+
+print('FOMX: Checking for CMD file...')
+if bounds['file_details'][0] == 'cmd.txt':
+    print('FOMX: CMD file found, running CMD...')
+    cmd_reader.read_commands(above_everything_dir, bounds['file_paths'][0])
 
 print('FOMX: Copying over code...')
 time.sleep(0.5)
