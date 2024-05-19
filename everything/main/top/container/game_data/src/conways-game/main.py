@@ -112,11 +112,32 @@ try:
     import pygame
     import rendering
     import time
+    import threading
 
     # my files
     import eval
     import loads
     import start_screen
+
+
+
+
+
+    def pho_run(window: pygame.Surface, text: str, text_rect: pygame.Rect) -> None:
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    if can_exit:
+                        print('window quit')
+                        global running
+                        running = False
+                    else:
+                        print('cannot exit: a task is running')
+            window.blit(text, text_rect)
+            pygame.display.update()
+
+
+
 
     pygame.init()
     WINDOW = pygame.display.set_mode((600,400), pygame.RESIZABLE)
@@ -250,19 +271,31 @@ try:
                         print('output map error:', e)
                         raise 'outputMapError'
                     
-                elif keys[pygame.K_l]:
+                elif keys[pygame.K_i]:
                     if start_menu == True:
                         map_path = loads.load_map()
                         print('----------------------')
-                        print('Setting loaded board...')
                         print('Restarting window...')
                         pygame.init()
                         WINDOW = pygame.display.set_mode((600,400), pygame.RESIZABLE)
                         pygame.display.set_caption('Conways Game Of Life')
-                        width = 100
-                        height = 100
+                        # create loading text
+                        f_size = round(36) # size is normally 36 in other projects
+                        font = pygame.font.Font('freesansbold.ttf', f_size)
+                        msg = 'Loading map...'
+                        msg = font.render(msg, True, (255, 255, 255), None)  # text, some bool(?), text color, bg color
+                        rect = msg.get_rect()
+                        rect.center = (pygame.display.get_window_size()[0] / 2, pygame.display.get_window_size()[1] / 2)
+                        # pho_thread = threading.Thread(target=lambda:pho_run(WINDOW, msg, rect))
+                        # pho_thread.start()
+                        WINDOW.blit(msg, rect)
+                        pygame.display.update()
+                        print('Loading map, start screen...')
                         board_gen = eval.GenerateBoard(width, height, load_map = map_path)
                         SS = start_screen.StartScreen(WINDOW)
+                        print('Loading done')
+                        #pho_thread.join()
+                        print('----------------------')
 
 
                 if event.key == pygame.K_SPACE:
@@ -277,7 +310,8 @@ try:
                 elif event.key == pygame.K_ESCAPE:
                     print('menu invoked')
                     paused = True
-                    start_menu = True
+                    #start_menu = True
+                    start_menu = not start_menu
                 
         deltaTime = time.perf_counter() - lastTime
         lastTime = time.perf_counter()

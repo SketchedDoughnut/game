@@ -2,11 +2,11 @@
 class GenerateBoard:
     # init
     def __init__(self, width: int, height: int, load_map = None) -> None:
+        self.width = width
+        self.height = height
         if load_map == None:
             board = []
             n_list = []
-            self.width = width
-            self.height = height
             for x in range(width): # x for visualization
                 for y in range(height): # y for visualization
                     n_list.append(False)
