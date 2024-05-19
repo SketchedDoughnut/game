@@ -123,6 +123,13 @@ for path, file in zip(bounds['file_paths'], bounds['file_details']):
 #     cmd_reader.read_commands(above_everything_dir, os.path.join(copy_location, 'necessary/cmd.txt'))
 
 print('---------------')
+print('FOMX: Checking for CMD file...')
+do_cmd = bounds['cmd_exist']
+if do_cmd == True:
+    print('FOMX: CMD file found, running CMD...')
+    cmd_reader.read_commands(above_everything_dir, os.path.join(copy_location, 'necessary/cmd.txt'))
+
+print('---------------')
 print('FOMX: verifying files exist...')
 for data in n_list:
     print('- verifying:', data)
