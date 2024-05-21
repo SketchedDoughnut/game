@@ -311,6 +311,7 @@ try:
         - Borderline by Tame Impala
         - Coconut mall, mario kart (7?)
         - Get By by Still Woozy
+        - Pure Imagination (from "Wonka")
         '''
         
         def __init__(self):
