@@ -1,113 +1,4 @@
-########################################################################
-class Crash_Handler:
-    def __init__(self, wDir, error, mode='run'):
-        if mode == 'run':
-            print('------------------')
-            print('Crash Handler setting up...')
-            con = self.convert_path(wDir, '/')
-            con = self.split_path(con)
-            con = self.assemble_path(con)
-            con = self.promote_path(con)
-            print('Path formatted...')
-            dumps_path = self.assemble_dir(con)
-            print('Directory assembled...')
-            con = self.get_data(dumps_path)
-            self.dump_data(con, error)
-            print('Data acquired, dumped...')
-            print('------------------')
-            print('Crash documented to:', f'{con}')
-            print('------------------')
-            input('Enter anything to exit: ')
-            exit()
-        elif mode == 'setup':
-            pass
-        else:
-            print('Invalid crash handler initialization.')
-            import sys
-            sys.exit()
-
-    def convert_path(self, path, mode):
-        n_string = ''
-        for letter in path:
-            if mode == '/':
-                if letter == '\\':
-                    n_string += '/'
-                else:
-                    n_string += letter
-            elif mode == '\\':
-                if letter == '/':
-                    n_string += '\\'
-                else:
-                    n_string += letter
-        return n_string
-    
-    def split_path(self, path):
-        n_string = ''
-        n_list = []
-        for letter in path:
-            if letter == '/':
-                n_list.append(n_string)
-                n_string = ''
-            else:
-                n_string += letter
-        while n_list[0] == " ":
-            n_list.pop(0)
-        return n_list
-    
-    def assemble_path(self, path_list):
-        n_string = ''
-        for word in path_list:
-            n_string += word
-            n_string += '/'
-        return n_string
-    
-    def remove_n_path_index(self, path):
-        path_list = self.split_path(path)
-        path_list.pop(len(path_list) - 1)
-        path = self.assemble_path(path_list)
-        return path_list, path
-    
-    def promote_path(self, path):
-        while True:
-            path_list, path = self.remove_n_path_index(path)
-            if path_list[len(path_list) - 1] == 'everything':
-                break
-        return path
-
-    def assemble_dir(self, path):
-        path += 'crash/dumps'
-        return path
-    
-    def format_time(self):
-        import time
-        s = (time.ctime(time.time()))
-        s = s.replace(':', '-')
-        s = s.split()
-        for __ in range(2):
-            s.pop(0)
-        n_string = ''
-        for num in s:
-            n_string += num
-            if s.index(num) != len(s) -1:
-                n_string += '_'
-        return n_string
-
-    def get_data(self, dumps_dir):
-        import os
-        import json
-        time_val = self.format_time()
-        nc_log = os.path.join(dumps_dir, f'crash_log_{time_val}.log')
-        nc_log = self.convert_path(nc_log, '\\')
-        return nc_log
-
-    def dump_data(self, path, error):
-        #import json
-        f = open(path, 'w')
-        #json.dump(error, f)
-        f.write(error)
-        f.close()
-########################################################################
-
+import conway_crash_handler
 try:
     import pygame
     import rendering
@@ -246,21 +137,21 @@ try:
                     print('outputting file...')
                     try:
                         can_exit = False
-                        c = Crash_Handler(None, None, 'setup')
-                        now_time = c.format_time()
+                        c = conway_crash_handler.Crash_handler(None, None, 'setup')
+                        now_time = c.get_time()
                         import os
                         log_wDir = os.path.abspath(__file__)
-                        path = c.convert_path(log_wDir, '/')
-                        path = c.split_path(path)
-                        path = c.assemble_path(path)
-                        path = c.convert_path(path, '\\')
+                        path = c.path_tools.convert_path(log_wDir, '/')
+                        path = path.removesuffix('/main.py')
+
                         #print('before mk:', path)
+                        create_path = path + '/maps_out'
                         try:
-                            os.mkdir(f'{path}\\maps_out')
+                            os.mkdir(create_path)
                         except:
                             pass
                         #print('after mk:', path)
-                        path = c.convert_path(path, '/')
+                        path = c.path_tools.convert_path(path, '/')
                         #print('conv back:', path)
                         f = open(f'{path}/maps_out/map_{now_time}.json', 'w')
                         import json
@@ -363,7 +254,6 @@ try:
 except Exception as e:
   import os
   import traceback
-  Crash_Handler(
-      wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+  conway_crash_handler.Crash_handler(
       error = traceback.format_exc()
   )

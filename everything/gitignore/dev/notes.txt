@@ -1,9 +1,0 @@
-The following files have a crash handler:
-    - fiesta.py / fiesta.exe
-    - fiesta-modern.py / fiesta-modern.exe
-    - index.py
-    - rhythm.py
-    - flappy.py
-    - main.py
-
-The following files have a elevator:

@@ -1,0 +1,1 @@
+# this file propogates the one template copy of the crash handler to every other crash handler

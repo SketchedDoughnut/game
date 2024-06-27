@@ -107,3 +107,10 @@ class Crash_Handler:
         f.write(error)
         f.close()
 ########################################################################
+
+import os
+import traceback
+Crash_Handler(
+    wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    error = traceback.format_exc()
+)

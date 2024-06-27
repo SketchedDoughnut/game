@@ -94,14 +94,13 @@ class Crash_handler:
                 n_string += '_'
         return n_string
     
-    def log_data(self, path: str, do_log: bool = True) -> str:
+    def log_data(self, path: str) -> str:
         everything_path_list = self.path_tools.promote_path(path)
         everything_path = everything_path_list[1]
         log_path = everything_path + 'crash/dumps'
         timed_path = log_path + f'/crash_log_{self.current_time}.log'
         backslash_timed_path = self.path_tools.convert_path(timed_path, '\\')
-        if do_log:
-            f = open(backslash_timed_path, mode='w')
-            f.write(self.error)
-            f.close()
+        f = open(backslash_timed_path, mode='w')
+        f.write(self.error)
+        f.close()
         return backslash_timed_path

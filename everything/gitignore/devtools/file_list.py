@@ -23,7 +23,7 @@ def iter(path):
 file_list = iter('everything')
 print('Indexed.')
 
-f = open('everything/main/setup/file_list.json', 'w')
+f = open('everything\main\setup\file_list.json', 'w')
 json.dump(file_list, f)
 f.close()
 print('Dumped.')
