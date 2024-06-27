@@ -67,7 +67,3 @@ class Elevator:
         elevated = elevated.removesuffix('/')
         elevated += '/universe'
         return elevated
-    
-
-e = Elevator()
-print(e.elevated_universe)

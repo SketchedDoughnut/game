@@ -35,14 +35,10 @@ def propogate_crash_handler():
 
 def propogate_elevator():
     raw_elevator_file_list = [
-
+        r'everything\main\top\container\index_elevator.py'
     ]
 
-    compiled_elevator_file_list = [
-
-    ]
-
-    elevator_source = ''
+    elevator_source = r'everything\gitignore\dev\elevator.py'
 
     f = open(elevator_source, 'r')
     elevator_source_content = f.read()
