@@ -24,7 +24,9 @@ try:
     #print('----------------------------')
     print(f'Running {setup_path_list[0][1]}...')
     print('----------------------------')
-    os.system(f'python {setup_path_list[0][0]}')
+    c1 = r'python {path}'.format(path=setup_path_list[0][0]) # calling string
+    # os.system(f'python {setup_path_list[0][0]}')
+    os.system(c1)
 
   imports()
 
@@ -50,7 +52,9 @@ try:
   def update():
     print('----------------------------')
     print(f'Running {setup_path_list[1][1]}...')
-    os.system(f'python {setup_path_list[1][0]}')
+    c2 = r'python {path}'.format(path=setup_path_list[1][0]) # calling string
+    # os.system(f'python {setup_path_list[1][0]}')
+    os.system(c2)
 
   class Format:
     def __init__(self):
@@ -221,7 +225,9 @@ try:
       print('----------------------------')
       running = path_list[num][1]
       print(f'Running {running}...')
-      os.system(f'python {path_list[num][0]}')
+      c3 = r'python {path}'.format(path=path_list[num][0])
+      # os.system(f'python {path_list[num][0]}')
+      os.system(c3)
       setup_bool = False
 
 

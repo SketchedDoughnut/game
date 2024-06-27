@@ -202,7 +202,9 @@ try:
                         self.top_wDir = os.path.dirname(self.top_wDir)
 
                         self.top_wDir = os.path.join(self.top_wDir, 'top')
-                        os.system(f'python {self.top_wDir}/starter.py')
+                        c2 = r'python {path}/starter.py'.format(path=self.top_wDir)
+                        # os.system(f'python {self.top_wDir}/starter.py')
+                        os.system(c2)
                         sys.exit() 
 
 
@@ -246,11 +248,15 @@ try:
 
                             # for run
                             if self.rules['env'] == 'run':
-                                os.system(f'python {self.main_wDir}/delete.py')
+                                c1 = r'python {path}/delete.py'.format(path=self.main_wDir)
+                                # os.system(f'python {self.main_wDir}/delete.py')
+                                os.system(c1)
 
                             # - for codespace
                             else:
-                                os.system(f'python main/setup/delete.py')
+                                c1 = r'python main/setup/delete.py'
+                                # os.system(f'python main/setup/delete.py')
+                                os.system(c1)
 
                             # final, then finishes
                             print('---------------')
