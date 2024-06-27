@@ -1,14 +1,13 @@
 # this file propogates the one template copy of the crash handler to every other crash handler
 raw_crash_file_list = [
-    r'everything\main\top\container\game_data\src\rhythm\rhythm.py',
-    r'everything\main\top\container\game_data\src\flappy\flappy.py',
-    r'everything\main\top\container\game_data\src\conways-game\main.py',
-    r'everything\main\top\container\index.py'
+    r'everything\main\top\container\index_crash_handler.py',
+    r'everything\main\top\container\game_data\src\conways-game\conway_crash_handler.py',
+    r'everything\main\top\container\game_data\src\flappy\flappy_crash_handler.py',
+    r'everything\main\top\container\game_data\src\rhythm\rhythm_crash_handler.py'
 ]
 
 compiled_crash_file_list = [
-    r'everything\main\setup\fiesta-modern.py',
-    r'everything\main\setup\fiesta.py'
+    r'everything\main\setup\setup_crash_handler.py'
 ]
 
 crash_source = r'everything\gitignore\dev\crash_handler.py'
