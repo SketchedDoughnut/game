@@ -21,24 +21,31 @@ import urllib.request
 '''
 ########################################################################
 class Crash_Handler:
-    def __init__(self, wDir, error):
-        print('------------------')
-        print('Crash Handler setting up...')
-        con = self.convert_path(wDir, '/')
-        con = self.split_path(con)
-        con = self.assemble_path(con)
-        con = self.promote_path(con)
-        print('Path formatted...')
-        dumps_path = self.assemble_dir(con)
-        print('Directory assembled...')
-        con = self.get_data(dumps_path)
-        self.dump_data(con, error)
-        print('Data acquired, dumped...')
-        print('------------------')
-        print('Crash documented to:', f'{con}')
-        print('------------------')
-        input('Enter anything to exit: ')
-        sys.exit()
+    def __init__(self, wDir, error, mode='run'):
+        if mode == 'run':
+            print('------------------')
+            print('Crash Handler setting up...')
+            con = self.convert_path(wDir, '/')
+            con = self.split_path(con)
+            con = self.assemble_path(con)
+            con = self.promote_path(con)
+            print('Path formatted...')
+            dumps_path = self.assemble_dir(con)
+            print('Directory assembled...')
+            con = self.get_data(dumps_path)
+            self.dump_data(con, error)
+            print('Data acquired, dumped...')
+            print('------------------')
+            print('Crash documented to:', f'{con}')
+            print('------------------')
+            input('Enter anything to exit: ')
+            exit()
+        elif mode == 'setup':
+            pass
+        else:
+            print('Invalid crash handler initialization.')
+            import sys
+            sys.exit()
 
     def convert_path(self, path, mode):
         n_string = ''

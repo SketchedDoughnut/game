@@ -76,7 +76,7 @@ def check_version():
 
     # release destination, working directory, loading version
     dest = 'https://api.github.com/repos/SketchedDoughnut/development/releases/latest' # link format: https://api.github.com/repos/{owner}/{repo}/releases/latest
-    #dest = "https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest"
+    # dest = "https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest"
     try:
         response = requests.get(dest)
     except:
@@ -193,7 +193,7 @@ def yes_confirm():
     f.close()
     text_msg = 'Please relaunch.'
     print('Update setup finished')
-    time.sleep(1.5)
+    time.sleep(5)
     exit_handler()
 
     pass
