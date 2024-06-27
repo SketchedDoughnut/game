@@ -883,7 +883,7 @@ try:
     ## ONLY TWO ACTING LINES OF CODE
     # initializes Install class
     install = Install()
-    1 + '1'
+
 
     # calls on run function
     install.run()
