@@ -26,6 +26,6 @@ for file in raw_crash_file_list:
 
 for file in compiled_crash_file_list:
     f = open(file, 'w')
-    f.writable(crash_source_content)
+    f.write(crash_source_content)
     f.close()
     print('Propogating to compiled file:', file)
