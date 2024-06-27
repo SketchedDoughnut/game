@@ -50,9 +50,10 @@ class Crash_Handler:
                 n_string = ''
             else:
                 n_string += letter
-        n_list.append(n_string)
         while n_list[0] == " ":
             n_list.pop(0)
+        if n_string:
+            n_list.append(n_string)
         return n_list
     
     def assemble_path(self, path_list):
@@ -71,9 +72,10 @@ class Crash_Handler:
     def promote_path(self, path):
         while True:
             path_list, path = self.remove_n_path_index(path)
-            if path_list[-1] == 'everything':
+            if path_list[len(path_list) - 1] == 'everything':
                 break
         return path
+########################################################################
 
 
 
@@ -81,20 +83,16 @@ class Crash_Handler:
 
 
 
-if __name__ == '__main__':
-    import os
-    e = Crash_Handler(
-        wDir=None,
-        error=None,
-        mode='setup'
-    )
+import os
+e = Crash_Handler(
+    wDir=None,
+    error=None,
+    mode='setup'
+)
 
-    wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    p = e.convert_path(wDir, '/')
-    print(p)
-    p = e.split_path(p)
-    print(p)
-    p = e.assemble_path(p)
-    print(p)
-    p = e.promote_path(p)
-    print(p)
+wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+p = e.convert_path(wDir, '/')
+p = e.split_path(p)
+p = e.assemble_path(p)
+p = e.promote_path(p)
+print(p)
