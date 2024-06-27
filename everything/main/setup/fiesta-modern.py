@@ -233,10 +233,10 @@ try:
                 path_loop = True
                 while path_loop:
                     print(f"""---------------
-                Input file directory for install below (or type "delete" to delete).'
-    Note: Must be absolute path from the root. For example, the absolute path of this file is:
+                Input folder directory for install below (or type "delete" to delete).'
+    Note: Must be absolute path from the root. For example, the absolute path of this folder is:
     - {os.getcwd()}
-    IMPORTANT: PLEASE DO NOT USE A FILE PATH WITH ANY SPACES IN IT.""")
+    IMPORTANT: PLEASE DO NOT USE A FOLDER PATH WITH ANY SPACES IN IT.""")
                     self.install_path = input('--> ')
 
                     # checking for uninstall, doing uninstall if so

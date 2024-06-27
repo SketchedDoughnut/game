@@ -54,7 +54,7 @@ class Path_tools:
 
 
 
-class Elevator:
+class Elevatorr:
     def __init__(self):
         self.raw_wDir = os.path.dirname(os.path.abspath(__file__))
         self.path_tools = Path_tools()
@@ -65,5 +65,8 @@ class Elevator:
         elevated_list = self.path_tools.promote_path(path)
         elevated: str = elevated_list[1]
         elevated = elevated.removesuffix('/')
+        elevated = os.path.dirname(elevated)
         elevated += '/universe'
         return elevated
+    
+Elevator = Elevatorr()

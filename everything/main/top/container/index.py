@@ -5,6 +5,9 @@ try:
   # import for initial
   import os
 
+  # file imports
+  import index_elevator as elevator
+
   # vars
   wDir = os.path.dirname(os.path.abspath(__file__))
   setup_path_list = []
@@ -161,14 +164,19 @@ try:
     
     if keys[K_s]:
       if s_pressed == False:
-        f = open(os.path.join(wDir, 'game_data/ignore/colors.json'), 'r')
+        path = elevator.Elevator.elevated_universe
+        # f = open(os.path.join(wDir, 'game_data/ignore/colors.json'), 'r')
+        path += '/index/colors.json'
+        f = open(path, 'r')
         color_load = list(json.load(f))
         f.close()
         color_load.append(color_list)
-        f = open(os.path.join(wDir, 'game_data/ignore/colors.json'), 'w')
+        # f = open(os.path.join(wDir, 'game_data/ignore/colors.json'), 'w')
+        f = open(path, 'w')
         json.dump(color_load, f)
         f.close()
-        print('- dumped colors into game_data/ignore/colors.json')
+        # print('- dumped colors into game_data/ignore/colors.json')
+        print(f'- dumped colors into {path}')
         s_pressed = True
     elif not keys[K_s]:
       s_pressed = False
