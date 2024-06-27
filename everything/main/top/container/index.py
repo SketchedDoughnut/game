@@ -54,8 +54,6 @@ class Crash_Handler:
                 n_string += letter
         while n_list[0] == " ":
             n_list.pop(0)
-        if n_string:
-            n_list.append(n_string)
         return n_list
     
     def assemble_path(self, path_list):
