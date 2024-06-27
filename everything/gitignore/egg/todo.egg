@@ -52,7 +52,7 @@
     - redesign crash handler (DONE)
       - make into standalone file imported by others: have files reach for crash handlers below them in the file tree (DONE)
     - design elevator
-    - create propogation tool for elevator and crash handler
+    - create propogation tool for elevator and crash handler (DONE)
   - do test releases on the development page
   - transfer files to SDA-SRC, and SDA with the affected files
   - release update!

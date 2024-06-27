@@ -1,6 +1,6 @@
 # this file propogates the one template copy of the crash handler to every other crash handler
 # it is built for use with VSCode because paths are wonky
-
+########################################################################
 def propogate_crash_handler():
     raw_crash_file_list = [
         r'everything\main\top\container\index_crash_handler.py',
