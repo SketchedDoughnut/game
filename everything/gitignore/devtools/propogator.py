@@ -51,12 +51,6 @@ def propogate_elevator():
         f.close()
         print('Propogating to raw file:', file)
 
-    for file in compiled_elevator_file_list:
-        f = open(file, 'w')
-        f.write(elevator_source_content)
-        f.close()
-        print('Propogating to compiled file:', file)
-
 
 
 running = input('-> ')
