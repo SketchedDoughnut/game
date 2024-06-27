@@ -50,6 +50,7 @@ class Crash_Handler:
                 n_string = ''
             else:
                 n_string += letter
+        n_list.append(n_string)
         while n_list[0] == " ":
             n_list.pop(0)
         return n_list
@@ -70,42 +71,9 @@ class Crash_Handler:
     def promote_path(self, path):
         while True:
             path_list, path = self.remove_n_path_index(path)
-            if path_list[len(path_list) - 1] == 'everything':
+            if path_list[-1] == 'everything':
                 break
         return path
-
-    def assemble_dir(self, path):
-        path += 'crash/dumps'
-        return path
-    
-    def format_time(self):
-        import time
-        s = (time.ctime(time.time()))
-        s = s.replace(':', '-')
-        s = s.split()
-        for __ in range(2):
-            s.pop(0)
-        n_string = ''
-        for num in s:
-            n_string += num
-            if s.index(num) != len(s) -1:
-                n_string += '_'
-        return n_string
-
-    def get_data(self, dumps_dir):
-        import os
-        import json
-        time_val = self.format_time()
-        nc_log = os.path.join(dumps_dir, f'crash_log_{time_val}.log')
-        nc_log = self.convert_path(nc_log, '\\')
-        return nc_log
-
-    def dump_data(self, path, error):
-        #import json
-        f = open(path, 'w')
-        #json.dump(error, f)
-        f.write(error)
-        f.close()
 
 
 
@@ -120,3 +88,13 @@ if __name__ == '__main__':
         error=None,
         mode='setup'
     )
+
+    wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    p = e.convert_path(wDir, '/')
+    print(p)
+    p = e.split_path(p)
+    print(p)
+    p = e.assemble_path(p)
+    print(p)
+    p = e.promote_path(p)
+    print(p)

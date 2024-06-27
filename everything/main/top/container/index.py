@@ -52,6 +52,7 @@ class Crash_Handler:
                 n_string = ''
             else:
                 n_string += letter
+        n_list.append(n_string)
         while n_list[0] == " ":
             n_list.pop(0)
         return n_list
