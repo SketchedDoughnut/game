@@ -90,7 +90,7 @@ def update_handler_install(
         # NEW SYSTEM FOR COPYING OVER EXTRA FILES
         print('Update: Copying other files...')
         for file in other_path:
-            c.copy(file, back_everything)
+            c.copy(file, back_everything, mode='file')
 
         # new new system for creating universe/ folders if non existent
         print('Update: Creating universe if nonexistent...')
