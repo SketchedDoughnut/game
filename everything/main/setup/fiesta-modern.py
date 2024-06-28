@@ -618,8 +618,8 @@ try:
                         [f"{ext_download_path}/SketchedDoughnut-development-{self.release_version}/Pipfile.lock", 'Pipfile.lock']
                     ]
                     folder_create = [
-                        f'{back_extract}/universe',
-                        f'{back_extract}/universe/index'
+                        'universe',
+                        'universe/index'
                     ]
 
                     print(f'Update: Copying files to {copy_location}...')
@@ -636,10 +636,10 @@ try:
                     print('Update: Creating universe if non-existent...')
                     for folder in folder_create:
                         try:
-                            os.mkdir(folder)
+                            os.mkdir(f'{back_extract}/{folder}')
                             print('- created:', folder)
-                        except:
-                            pass
+                        except Exception as ee:
+                            print('- error creating universe folder:', ee)
 
                     print('Update: Cleaning up tmp...')
                     try:
