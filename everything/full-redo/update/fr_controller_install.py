@@ -98,8 +98,8 @@ def update_handler_install(
             try:
                 os.mkdir(folder)
                 print('- created:', folder)
-            except:
-                pass
+            except Exception as e:
+                print('error creating universe files:', e)
 
         print('Update: Redirecting shortcut...')
         import winshell
