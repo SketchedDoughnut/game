@@ -113,20 +113,20 @@ def update_handler_install(
         except Exception as e:
             print(f'Update: Shortcut transfer error: {e}')
 
-        # print('Update: Checking file integrity...')
-        # json_path = f'{everything_path}/main/setup/file_list.json'
-        # results = v.verify_files(
-        #     json_path = json_path,
-        #     everything_path = everything_path
-        # )
+        print('Update: Checking file integrity...')
+        json_path = f'{everything_path}/main/setup/file_list.json'
+        results = v.verify_files(
+            json_path = json_path,
+            everything_path = everything_path
+        )
 
-        # if results:
-        #     b.backup_handler(
-        #         main_wDir = main_wDir,
-        #         backOrLoad = 'load',
-        #         target = 'full-redo'
-        #     )
-        #     r.decide(True)
+        if results:
+            b.backup_handler(
+                main_wDir = main_wDir,
+                backOrLoad = 'load',
+                target = 'full-redo'
+            )
+            r.decide(True)
 
         print('Update: Reaching into data.json...')
         print('Update: Path:', esif)
