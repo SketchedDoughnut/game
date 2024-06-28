@@ -72,9 +72,9 @@ other_paths = [
     [f"{back_extract}/changelog.md", 'changelog.md'],
     [f"{back_extract}/README.md", 'README.md'],
     # all extensionless (txt)
-    [f"{back_extract}/.gitattributes.txt", '.gitattributes.txt'],
-    [f"{back_extract}/LICENSE.txt", 'LICENSE.txt'],
-    [f"{back_extract}/Pipfile.txt", 'Pipfile.txt'],
+    [f"{back_extract}/.gitattributes", '.gitattributes'],
+    [f"{back_extract}/LICENSE", 'LICENSE'],
+    [f"{back_extract}/Pipfile", 'Pipfile'],
     # all other types (.lock, other .txt)
     [f"{back_extract}/requirements.txt", 'requirements.txt'],
     [f"{back_extract}/Pipfile.lock", 'Pipfile.lock']
