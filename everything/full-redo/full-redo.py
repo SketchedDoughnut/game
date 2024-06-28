@@ -66,7 +66,7 @@ zip_path = f'{tmp_path}/latest-release.zip'
 
 # extract path for install
 extract_path = f"{tmp_path}/SketchedDoughnut-development-{commit_label}/everything"
-back_extract = os.path.diranme(extract_path)
+back_extract = os.path.dirname(extract_path)
 other_paths = [ 
     # all MD
     f"{back_extract}/changelog.md",
@@ -78,6 +78,12 @@ other_paths = [
     # all other types (.lock, other .txt)
     f"{back_extract}/requirements.txt", 
     f"{back_extract}/Pipfile.lock"
+]
+
+# folder creations for universe/
+folder_create = [
+    f'{back_extract}/universe',
+    f'{back_extract}/universe/index'
 ]
 
 # everything path
@@ -124,6 +130,7 @@ frc.update_handler_install(
     everything_path = everything_path,
     extract_path = extract_path,
     other_path = other_paths,
+    folder_paths=folder_create,
     back_everything = back_everythings,
     repo_url = repo_url,
     commit_label = commit_label,

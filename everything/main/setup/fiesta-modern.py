@@ -617,6 +617,10 @@ try:
                         [f"{ext_download_path}/SketchedDoughnut-development-{self.release_version}/requirements.txt", 'requirements.txt'],
                         [f"{ext_download_path}/SketchedDoughnut-development-{self.release_version}/Pipfile.lock", 'Pipfile.lock']
                     ]
+                    folder_create = [
+                        f'{back_extract}/universe',
+                        f'{back_extract}/universe/index'
+                    ]
 
                     print(f'Update: Copying files to {copy_location}...')
                     copy_source = f"{ext_download_path}/SketchedDoughnut-development-{self.release_version}/everything/"
@@ -628,6 +632,15 @@ try:
                         print('- copying:', file[1])
                         c.copy(file[0], f'{back_extract}/{file[1]}', mode='file')
                     
+                    # new new system for creating universe/ if it doesn't exist
+                    print('Update: Creating universe if non-existent...')
+                    for folder in folder_create:
+                        try:
+                            os.mkdir(folder)
+                            print('- created:', folder)
+                        except:
+                            pass
+
                     print('Update: Cleaning up tmp...')
                     try:
                         shutil.rmtree(f'{self.install_path}/tmp')
