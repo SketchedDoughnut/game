@@ -82,8 +82,8 @@ other_paths = [
 
 # folder creations for universe/
 folder_create = [
-    f'{back_extract}/universe',
-    f'{back_extract}/universe/index'
+    'universe',
+    'universe/index'
 ]
 
 # everything path

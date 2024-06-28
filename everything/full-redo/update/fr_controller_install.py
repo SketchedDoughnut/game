@@ -96,10 +96,10 @@ def update_handler_install(
         print('Update: Creating universe if nonexistent...')
         for folder in folder_paths:
             try:
-                os.mkdir(folder)
+                os.mkdir(f'{back_everything}/{folder}')
                 print('- created:', folder)
             except Exception as e:
-                print('error creating universe files:', e)
+                print('- error creating universe folder:', e)
 
         print('Update: Redirecting shortcut...')
         import winshell
