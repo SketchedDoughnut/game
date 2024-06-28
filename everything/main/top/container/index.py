@@ -124,6 +124,11 @@ try:
   setup_bool = False
   select = False
 
+  path = elevator.Elevator.elevated_universe
+  f = open(f'{path}/index/content_url.txt', 'w')
+  f.write("gay")
+  f.close()
+
   while True:
     if setup_bool == False:
       select = False
@@ -171,11 +176,14 @@ try:
         path = elevator.Elevator.elevated_universe
         # f = open(os.path.join(wDir, 'game_data/ignore/colors.json'), 'r')
         path += '/index/colors.json'
-        f = open(path, 'r')
-        color_load = list(json.load(f))
-        f.close()
-        color_load.append(color_list)
-        # f = open(os.path.join(wDir, 'game_data/ignore/colors.json'), 'w')
+        try:
+          f = open(path, 'r')
+          color_load = list(json.load(f))
+          f.close()
+          color_load.append(color_list)
+          # f = open(os.path.join(wDir, 'game_data/ignore/colors.json'), 'w')
+        except: # directory does not exist
+          color_load = [color_list]
         f = open(path, 'w')
         json.dump(color_load, f)
         f.close()
