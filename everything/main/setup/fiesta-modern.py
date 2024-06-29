@@ -433,7 +433,7 @@ try:
             choiceee = input('-> ')
             if choiceee.lower() == 'n':
                 import update.install.python_helper as py_helper
-                loader = py_helper.Python_helper()
+                loader = py_helper.Python_helper(self.setup_wDir)
                 loader.main()
                 if loader.run_install == True:
                     loader.run_python_installer()

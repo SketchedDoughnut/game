@@ -25,10 +25,11 @@ text_1_2_1 = 'If you have a version besides Python 3.11 installed, you can click
 text_1_2_2 = 'If you want to go back, click "Go back" below.'
 
 class Python_helper:
-    def __init__(self):
+    def __init__(self, wDir):
         # unrelated jazz
-        self.wDir = os.path.dirname(os.path.abspath(__file__))
-        self.wDir = os.path.dirname(os.path.dirname(self.wDir))
+        # self.wDir = os.path.dirname(os.path.abspath(__file__))
+        # self.wDir = os.path.dirname(os.path.dirname(self.wDir))
+        self.wDir = wDir
 
         # tkinter stuff
         self.window = tkinter.Tk(className="window~!")
