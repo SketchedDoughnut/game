@@ -4,7 +4,7 @@
 # this file propogates the one template copy of the crash handler to every other crash handler
 # it is built for use with VSCode because paths are wonky
 ########################################################################
-def propogate_crash_handler():
+def propogate_crash_handler(wDir):
     raw_crash_file_list = [
         r'everything\main\top\container\index_crash_handler.py',
         r'everything\main\top\container\game_data\src\conways-game\conway_crash_handler.py',
@@ -18,45 +18,46 @@ def propogate_crash_handler():
 
     crash_source = r'everything\gitignore\dev\crash_handler.py'
 
-    f = open(crash_source, 'r')
+    f = open(wDir +  crash_source, 'r')
     crash_source_content = f.read()
     f.close()
     print('-> FOMX: Getting contents of source...')
 
     for file in raw_crash_file_list:
-        f = open(file, 'w')
+        f = open(wDir + file, 'w')
         f.write(crash_source_content)
         f.close()
         print('-> FOMX: Propogating to raw file:', file)
 
     for file in compiled_crash_file_list:
-        f = open(file, 'w')
+        f = open(wDir + file, 'w')
         f.write(crash_source_content)
         f.close()
         print('-> FOMX: Propogating to compiled file:', file)
 
 
-def propogate_elevator():
+def propogate_elevator(wDir):
     raw_elevator_file_list = [
         r'everything\main\top\container\index_elevator.py'
     ]
 
     elevator_source = r'everything\gitignore\dev\elevator.py'
 
-    f = open(elevator_source, 'r')
+    f = open(wDir + elevator_source, 'r')
     elevator_source_content = f.read()
     f.close()
     print('-> FOMX: Getting contents of source...')
 
     for file in raw_elevator_file_list:
-        f = open(file, 'w')
+        f = open(wDir + file, 'w')
         f.write(elevator_source_content)
         f.close()
         print('-> FOMX: Propogating to raw file:', file)
 
 
-def propogate_master(elevator: bool = False, crash: bool = False):
+def propogate_master(wDir, elevator: bool = False, crash: bool = False):
+    wDir += '\\'
     if elevator:
-        propogate_elevator()
+        propogate_elevator(wDir)
     if crash:
-        propogate_crash_handler()
+        propogate_crash_handler(wDir)

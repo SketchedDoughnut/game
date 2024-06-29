@@ -20,7 +20,7 @@ import requests
 import tools
 
 # propogation
-propogate = (False, False)
+propogate_data = (False, False)
 # ---------------------------------------------
 url = 'https://api.github.com/repos/SketchedDoughnut/SDA-FOMX/releases/latest'
 wDir = os.path.dirname(os.path.abspath(__file__))
@@ -129,7 +129,7 @@ if do_cmd == True:
     idk = os.path.join(copy_location, 'necessary/cmd.txt')
     # cmd_reader.read_commands(above_everything_dir, os.path.join(copy_location, 'necessary/cmd.txt'))
     # tools.cmd_reader.read_commands(above_everything_dir, idk)
-    propogate = tools.read_commands(above_everything_dir, idk)
+    propogate_data = tools.read_commands(above_everything_dir, idk)
 
 print('---------------')
 print('FOMX: verifying files exist...')
@@ -179,10 +179,11 @@ for file in n_list:
 
 
 print('---------------')
-for elem in propogate:
+for elem in propogate_data:
     if elem == True:
-        print('FOMX: running propogator, crash, elevator flags are:', propogate)
-        tools.propogate_master(propogate[0], propogate[1])
+        print('FOMX: running propogator, crash, elevator flags are:', propogate_data)
+        from tools import propogator
+        propogator.propogate_master(above_everything_dir, propogate_data[0], propogate_data[1])
         print('---------------')
 
 print('FOMX: cleaning up tmp...')
