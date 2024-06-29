@@ -14,6 +14,7 @@ class Python_helper:
 
         # tkinter stuff
         self.window = tkinter.Tk(className="window~!")
+        self.window.geometry('500x500')
         self.text = tkinter.StringVar()
         self.button_text = tkinter.StringVar()
         self.element_list = []
@@ -88,7 +89,7 @@ class Python_helper:
             self.window.mainloop()
 
     # CUSTOM FUNCTIONS
-    def download(self):
+    def run_installer(self):
         installer_data = requests.get('https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe')
         if installer_data.status_code == 200:
             tmp_path = self.wDir + '/tmp'
@@ -101,3 +102,6 @@ class Python_helper:
             f.write(installer_data.content)
             f.close()
             os.system(exec_path)
+
+Python_helper() 
+Python_helper.main()
