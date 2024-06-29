@@ -427,18 +427,27 @@ try:
             
             # make sure they have python installed
             print('---------------')
-            print("""
-                        Before we proceed, you need to have an installation of python installed.
-                If you already have one, type "y" to proceed. If you don't, do the following instructions:
-                - go to Microsoft Store
-                - search "Python 3.11"
-                - Install
-                - You're done!
-                            Once done doing these instructions, type 'y' (anything else to cancel).
-                        NOTE: FUNCTIONALITY CAN NOT BE GUARANTEED WITH ANY OTHER PYTHON VERSIONS.
-                """)
-            if input('--> ').lower() != 'y':
-                sys.exit()
+            print("""Before we proceed, you need to have an installation of python installed.
+        If you already have one, enter 'y' to proceed. If you don't, enter 'n'""")
+            choiceee = input('-> ')
+            if choiceee.lower() == 'y':
+                import update.install.python_helper as py_helper
+                loader = py_helper.Python_helper()
+                loader.main()
+            # print("""
+            #             Before we proceed, you need to have an installation of python installed.
+            #     If you already have one, type "y" to proceed. If you don't, do the following instructions:
+            #     - go to Microsoft Store
+            #     - search "Python 3.11"
+            #     - Install
+            #     - You're done!
+            #                 Once done doing these instructions, type 'y' (anything else to cancel).
+            #             NOTE: FUNCTIONALITY CAN NOT BE GUARANTEED WITH ANY OTHER PYTHON VERSIONS.
+            #     """)
+            # if input('--> ').lower() != 'y':
+            #     sys.exit()
+            if False:
+                pass
 
             else:
                 state = ''
