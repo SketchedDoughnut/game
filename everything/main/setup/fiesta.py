@@ -217,7 +217,7 @@ try:
                             c1 = r'{path}/starter.py'.format(path=self.top_wDir) # calling string
                             # os.system(f'python {self.top_wDir}/starter.py')
                             # os.system(c1)
-                            subprocess.run(f"python {c1}")
+                            subprocess.run(f'python "{c2}"')
                             sys.exit() 
 
 
@@ -243,7 +243,7 @@ try:
                         c2 = r'{path}/starter.py'.format(path=self.top_wDir) # calling string
                         # os.system(f'python {self.top_wDir}/starter.py')
                         # os.system(c2)
-                        subprocess.run(f"python {c2}")
+                        subprocess.run(f'python "{c2}"')
                         sys.exit() 
 
 
@@ -288,14 +288,14 @@ try:
                                 c3 = r'{path}/delete.py'.format(path=self.main_wDir)
                                 # os.system(f'python {self.main_wDir}/delete.py')
                                 # os.system(c3)
-                                subprocess.run(f"python {c3}")
+                                subprocess.run(f'python "{c3}"')
 
                             # - for codespace
                             else:
                                 c3 = r'main/setup/delete.py'
                                 # os.system(f'python main/setup/delete.py')
                                 # os.system(c3)
-                                subprocess.run(f"python {c3}")
+                                subprocess.run(f'python "{c3}"')
 
                             # final, then finishes
                             print('---------------')

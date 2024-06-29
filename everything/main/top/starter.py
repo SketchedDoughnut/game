@@ -15,4 +15,4 @@ print('----------------------------')
 c1 = r'{patth}'.format(patth=path) # calling string
 # os.system(f'python {path}')
 # os.system(c1)
-subprocess.run(f"python {c1}")
+subprocess.run(f'python "{c1}"')

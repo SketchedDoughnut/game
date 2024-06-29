@@ -252,14 +252,14 @@ try:
                                 c1 = r'{path}/delete.py'.format(path=self.main_wDir)
                                 # os.system(f'python {self.main_wDir}/delete.py')
                                 # os.system(c1)
-                                subprocess.run(f"python {c1}")
+                                subprocess.run(f'python "{c1}"')
 
                             # - for codespace
                             else:
                                 c1 = r'main/setup/delete.py'
                                 # os.system(f'python main/setup/delete.py')
                                 # os.system(c1)
-                                subprocess.run(f"python {c1}")
+                                subprocess.run(f'python "{c1}"')
 
                             # final, then finishes
                             print('---------------')
