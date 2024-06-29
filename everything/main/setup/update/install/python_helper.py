@@ -2,8 +2,9 @@
 #########################################################################################################
 # loading 
 import os
+import subprocess
 # import json
-import time
+# import time
 import requests
 import tkinter
 
@@ -218,7 +219,8 @@ class Python_helper:
             f.write(installer_data.content)
             f.close()
             print('Running file...')
-            os.system(exec_path)
+            # os.system(exec_path)
+            subprocess.run(exec_path)
             print('Success!')
 
 # Python_helper().main()

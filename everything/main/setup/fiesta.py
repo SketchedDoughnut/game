@@ -1,5 +1,6 @@
 # importing builtin
 import os
+import subprocess
 import time
 import shutil
 import timeit
@@ -215,7 +216,8 @@ try:
                             self.top_wDir = os.path.join(self.top_wDir, 'top')
                             c1 = r'python {path}/starter.py'.format(path=self.top_wDir) # calling string
                             # os.system(f'python {self.top_wDir}/starter.py')
-                            os.system(c1)
+                            # os.system(c1)
+                            subprocess.run(c1)
                             sys.exit() 
 
 
@@ -232,13 +234,15 @@ try:
                         print('Installer running FOMX...')
                         c2 = r'python {path}/setup/FOMX/fomx.py'.format(path=self.top_wDir) # caling string
                         # os.system(f'python {self.top_wDir}/setup/FOMX/fomx.py')
-                        os.system(c2)
+                        # os.system(c2)
+                        subprocess.run(c2)
                         print('---------------')
                         self.top_wDir = os.path.join(self.top_wDir, 'top')
                         print('Installer redirecting to starter file...')
                         c2 = r'python {path}/starter.py'.format(path=self.top_wDir) # calling string
                         # os.system(f'python {self.top_wDir}/starter.py')
-                        os.system(c2)
+                        # os.system(c2)
+                        subprocess.run(c2)
                         sys.exit() 
 
 
@@ -282,13 +286,15 @@ try:
                             if self.rules['env'] == 'run':
                                 c3 = r'python {path}/delete.py'.format(path=self.main_wDir)
                                 # os.system(f'python {self.main_wDir}/delete.py')
-                                os.system(c3)
+                                # os.system(c3)
+                                subprocess.run(c3)
 
                             # - for codespace
                             else:
                                 c3 = r'python main/setup/delete.py'
                                 # os.system(f'python main/setup/delete.py')
-                                os.system(c3)
+                                # os.system(c3)
+                                subprocess.run(c3)
 
                             # final, then finishes
                             print('---------------')
