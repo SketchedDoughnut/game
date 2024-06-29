@@ -196,4 +196,4 @@ class Python_helper:
             print('Running file...')
             os.system(exec_path)
 
-Python_helper().main()
+# Python_helper().main()
