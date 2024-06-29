@@ -35,3 +35,4 @@ def read_commands(above_everything_dir, cmd_dir) -> tuple[bool, bool]:
         except Exception as e:
             print('cmd error:', e)
         print('----- endline -----')
+    return propogate
