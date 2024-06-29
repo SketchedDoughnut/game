@@ -28,6 +28,7 @@ class Python_helper:
     def __init__(self):
         # unrelated jazz
         self.wDir = os.path.dirname(os.path.abspath(__file__))
+        self.wDir = os.path.dirname(self.wDir)
 
         # tkinter stuff
         self.window = tkinter.Tk(className="window~!")
@@ -178,17 +179,21 @@ class Python_helper:
         return tkinter.Label(self.window, textvariable=text_obj, justify=justifyer, wraplength=wraplengther, padx = padding_x, pady=padding_y)
 
     def run_python_installer(self):
+        print('Getting installer data...')
         installer_data = requests.get('https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe')
         if installer_data.status_code == 200:
             tmp_path = self.wDir + '/tmp'
             try:
+                print('Creating tmp directory...')
                 os.mkdir(tmp_path)
             except:
                 pass
             exec_path = tmp_path + '/python-3.11.9-amd64.exe'
+            print('Writing to file...')
             f = open(exec_path, 'wb')
             f.write(installer_data.content)
             f.close()
+            print('Running file...')
             os.system(exec_path)
 
 Python_helper().main()
