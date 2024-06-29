@@ -20,7 +20,14 @@ It is advised that you use this installer (I spent a long time making the system
 Select the respective buttons below to decide.""",
 """The installer will now install the Python installation agent, and then run it. When the installer runs, on the first page, please select the option to
 "Install Now". As well as that, select the option to "Add Python.exe to PATH". These are both necessary settings for this project to work. On the last page, when Python
-is done installing, select the checkbox that allows Python to make its PATh variable longer. Then, you're done!"""
+is done installing, select the checkbox that allows Python to make its PATh variable longer. Then, you're done!""",
+"""
+                 Do the followng instructions to install Python from the Microsoft Store:
+                 - go to Microsoft Store
+                 - search "Python 3.11"
+                 - Install
+                 - You're done!
+                         NOTE: FUNCTIONALITY CAN NOT BE GUARANTEED WITH ANY OTHER PYTHON VERSIONS."""
 ]
 
 text_1_2_1 = 'If you have Python installed, you can click "Exit" below. However, functionality can not be guaranteed with any versions besides Python 3.11.'
