@@ -18,7 +18,9 @@ TEXT_DATA = [
 you use this installer, it will be quicker but slightly more complex. If you use the Microsoft store, it will take longer but will be more simple.
 It is advised that you use this installer (I spent a long time making the system :c ).
 Select the respective buttons below to decide.""",
-"The installer will now install the Python installation agent, and then run it."
+"""The installer will now install the Python installation agent, and then run it. When the installer runs, on the first page, please select the option to
+"Install Now". As well as that, select the option to "Add Python.exe to PATH". These are both necessary settings for this project to work. On the last page, when Python
+is done installing, select the checkbox that allows Python to make its PATh variable longer. Then, you're done!"""
 ]
 
 text_1_2_1 = 'If you have Python installed, you can click "Exit" below. However, functionality can not be guaranteed with any versions besides Python 3.11.'
@@ -152,6 +154,19 @@ class Python_helper:
             )
             self.pack_elements()
         
+        elif self.phase == 4:
+            self.clear_screen()
+            self.reset_element_list()
+            label1 = self.label_wrapped(text_data=TEXT_DATA[6])
+            self.submit_elements(
+                [
+                    label1,
+                    tkinter.Button(self.window, text="Exit", command=self.end),
+                    tkinter.Button(self.window, text="Go back", command=lambda:self.set_phase(3))
+                ]
+            )
+            self.pack_elements()
+
         elif self.phase == 5:
             self.clear_screen()
             self.reset_element_list()
@@ -197,5 +212,6 @@ class Python_helper:
             f.close()
             print('Running file...')
             os.system(exec_path)
+            print('Success!')
 
 # Python_helper().main()
