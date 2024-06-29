@@ -28,7 +28,7 @@ try:
     c1 = r'python {path}'.format(path=setup_path_list[0][0]) # calling string
     # os.system(f'python {setup_path_list[0][0]}')
     # os.system(c1)
-    subprocess.run(c1)
+    subprocess.run(f"{c1}")
 
   imports()
 
@@ -57,7 +57,7 @@ try:
     c2 = r'python {path}'.format(path=setup_path_list[1][0]) # calling string
     # os.system(f'python {setup_path_list[1][0]}')
     # os.system(c2)
-    subprocess.run(c2)
+    subprocess.run(f"{c2}")
 
   class Format:
     def __init__(self):
@@ -239,7 +239,7 @@ try:
       c3 = r'python {path}'.format(path=path_list[num][0])
       # os.system(f'python {path_list[num][0]}')
       # os.system(c3)
-      subprocess.run(c3)
+      subprocess.run(f"{c3}")
       setup_bool = False
 
 

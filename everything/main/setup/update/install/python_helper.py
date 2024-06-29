@@ -220,7 +220,7 @@ class Python_helper:
             f.close()
             print('Running file...')
             # os.system(exec_path)
-            subprocess.run(exec_path)
+            subprocess.run(f"{exec_path}")
             print('Success!')
 
 # Python_helper().main()
