@@ -155,6 +155,7 @@ class Python_helper:
     # CUSTOM FUNCTIONS
     def label_wrapped(self, text_data: str = 'autofill', justifyer: str = 'center', wraplengther = 490, padding_x = 10, padding_y = 10) -> tkinter.Label:
         # justify can be center, left, or right
+        # https://stackoverflow.com/questions/11949391/how-do-i-use-tkinter-to-create-line-wrapped-text-that-fills-the-width-of-the-win
         if text_data == 'autofill':
             text_data = self.text
         text_obj = tkinter.StringVar()
