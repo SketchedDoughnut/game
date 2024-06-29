@@ -21,7 +21,7 @@ Select the respective buttons below to decide.""",
 "The installer will now install the Python installation agent, and then run it."
 ]
 
-text_1_2_1 = 'If you have a version besides Python 3.11 installed, you can click "Exit" below. However, functionality can not be guaranteed.'
+text_1_2_1 = 'If you have Python installed, you can click "Exit" below. However, functionality can not be guaranteed with any versions besides Python 3.11.'
 text_1_2_2 = 'If you want to go back, click "Go back" below.'
 
 class Python_helper:
@@ -116,8 +116,8 @@ class Python_helper:
                 [
                     label1,
                     label2,
-                    tkinter.Button(self.window, text="Yes, I have Python 3.11", command=lambda: self.set_phase(2)),
-                    tkinter.Button(self.window, text="No, I do not have Python 3.11", command=lambda:self.set_phase(3))
+                    tkinter.Button(self.window, text="Yes, I have Python", command=lambda: self.set_phase(2)),
+                    tkinter.Button(self.window, text="No, I do not have Python", command=lambda:self.set_phase(3))
                 ]
             )
             self.pack_elements()
@@ -141,6 +141,7 @@ class Python_helper:
             self.clear_screen()
             self.reset_element_list()
             label1 = self.label_wrapped(text_data=TEXT_DATA[4])
+            self.run_install = False
             self.submit_elements(
                 [
                     label1,
