@@ -185,6 +185,7 @@ for elem in propagate_data:
         from tools import propagator
         propagator.propagate_master(above_everything_dir, propagate_data[0], propagate_data[1])
         print('---------------')
+        break # ran propogator, dont want to run again
 
 print('FOMX: cleaning up tmp...')
 time.sleep(0.25)
