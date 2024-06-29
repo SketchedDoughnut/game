@@ -240,7 +240,7 @@ try:
     Note: Must be absolute path from the root. For example, the absolute path of this folder is:
     - {os.getcwd()}
     The default file path, if nothing is entered, is set to Program Files.
-    - {os.path.join(os.environ['SystemDrive'], 'Program Files')}""")
+    - {os.path.join(os.environ['SystemDrive'], '/Program Files')}""")
     # IMPORTANT: PLEASE DO NOT USE A FOLDER PATH WITH ANY SPACES IN IT.
                     self.install_path = input('--> ')
 
@@ -314,7 +314,7 @@ try:
                 print('Path is defaulting to Program Files.')
                 try:
                     path = os.path.abspath("Program Files")
-                    path = os.path.join(os.environ['SystemDrive'], 'Program Files')
+                    path = os.path.join(os.environ['SystemDrive'], '/Program Files')
                     ns = ''
                     next = False
                     for letter in path:
