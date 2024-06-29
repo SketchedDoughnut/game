@@ -233,7 +233,7 @@ try:
                         print('---------------')
                         print('Installer running FOMX...')
                         c2 = '{path}/setup/FOMX/fomx.py'.format(path=self.top_wDir) # caling string
-                        print('going to path:', c2)
+                        # print('going to path:', c2)
                         # os.system(f'python {self.top_wDir}/setup/FOMX/fomx.py')
                         # os.system(c2)
                         subprocess.run(f'python "{c2}"')

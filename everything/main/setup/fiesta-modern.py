@@ -239,7 +239,9 @@ try:
                 Input folder directory for install below (or type "delete" to delete).'
     Note: Must be absolute path from the root. For example, the absolute path of this folder is:
     - {os.getcwd()}
-    IMPORTANT: PLEASE DO NOT USE A FOLDER PATH WITH ANY SPACES IN IT.""")
+    The default file path, if nothing is entered, is set to Program Files.
+    - {os.path.join(os.environ['SystemDrive'], 'Program Files')}""")
+    # IMPORTANT: PLEASE DO NOT USE A FOLDER PATH WITH ANY SPACES IN IT.
                     self.install_path = input('--> ')
 
                     # checking for uninstall, doing uninstall if so
