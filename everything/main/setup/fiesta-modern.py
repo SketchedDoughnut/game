@@ -435,8 +435,7 @@ try:
                 import update.install.python_helper as py_helper
                 loader = py_helper.Python_helper()
                 loader.main()
-                results = loader.run_install
-                if results == True:
+                if loader.run_install == True:
                     loader.run_python_installer()
                 else:
                     print('User has chosen not to run install, skipping...')

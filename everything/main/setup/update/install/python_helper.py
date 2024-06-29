@@ -17,7 +17,8 @@ TEXT_DATA = [
     """You now have two options. You can install Python from the Microsoft store, or install it via this installer. If
 you use this installer, it will be quicker but slightly more complex. If you use the Microsoft store, it will take longer but will be more simple.
 It is advised that you use this installer (I spent a long time making the system :c ).
-Select the respective buttons below to decide."""
+Select the respective buttons below to decide.""",
+"The installer will now install the Python installation agent, and then run it."
 ]
 
 text_1_2_1 = 'If you have a version besides Python 3.11 installed, you can click "Exit" below. However, functionality can not be guaranteed.'
@@ -144,6 +145,20 @@ class Python_helper:
                     tkinter.Button(self.window, text="Microsoft store", command=lambda:self.set_phase(4)),
                     tkinter.Button(self.window, text="Install via this installer", command=lambda:self.set_phase(5)),
                     tkinter.Button(self.window, text="Go back", command=lambda:self.set_phase(1))
+                ]
+            )
+            self.pack_elements()
+        
+        elif self.phase == 5:
+            self.clear_screen()
+            self.reset_element_list()
+            label1 = self.label_wrapped(text_data=TEXT_DATA[5])
+            self.run_install = True
+            self.submit_elements(
+                [
+                    label1,
+                    tkinter.Button(self.window, text="Continue", command=self.end),
+                    tkinter.Button(self.window, text="Go back", command=lambda:self.set_phase(3))
                 ]
             )
             self.pack_elements()
