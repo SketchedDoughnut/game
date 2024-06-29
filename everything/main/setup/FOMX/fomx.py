@@ -181,6 +181,7 @@ for file in n_list:
 print('---------------')
 for elem in propogate:
     if elem == True:
+        print('FOMX: running propogator, crash, elevator flags are:', propogate)
         tools.propogate_master(propogate[0], propogate[1])
         print('---------------')
 

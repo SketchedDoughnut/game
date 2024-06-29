@@ -21,19 +21,19 @@ def propogate_crash_handler():
     f = open(crash_source, 'r')
     crash_source_content = f.read()
     f.close()
-    print('Getting contents of source...')
+    print('-> FOMX: Getting contents of source...')
 
     for file in raw_crash_file_list:
         f = open(file, 'w')
         f.write(crash_source_content)
         f.close()
-        print('Propogating to raw file:', file)
+        print('-> FOMX: Propogating to raw file:', file)
 
     for file in compiled_crash_file_list:
         f = open(file, 'w')
         f.write(crash_source_content)
         f.close()
-        print('Propogating to compiled file:', file)
+        print('-> FOMX: Propogating to compiled file:', file)
 
 
 def propogate_elevator():
@@ -46,13 +46,13 @@ def propogate_elevator():
     f = open(elevator_source, 'r')
     elevator_source_content = f.read()
     f.close()
-    print('Getting contents of source...')
+    print('-> FOMX: Getting contents of source...')
 
     for file in raw_elevator_file_list:
         f = open(file, 'w')
         f.write(elevator_source_content)
         f.close()
-        print('Propogating to raw file:', file)
+        print('-> FOMX: Propogating to raw file:', file)
 
 
 def propogate_master(elevator: bool = False, crash: bool = False):
