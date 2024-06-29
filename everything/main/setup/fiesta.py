@@ -394,7 +394,7 @@ try:
             path = new_string
 
             if os.path.exists(path):
-                path += '/game_name'
+                path += '/SDA_game_name' # used to be game_name
                 return [path, False]
         
             else:
@@ -629,7 +629,7 @@ try:
                             print('Creating shortcut...')
                             desktop = winshell.desktop()
                             
-                            path = os.path.join(desktop, "game_name.lnk") # CHANGE game_name TO NAME
+                            path = os.path.join(desktop, "SDA_game_name.lnk") # CHANGE game_name TO NAME
                             self.abs_shortcut = path
                             #target = f"{self.install_path}/main/top/starter.exe" # CHANGE TO EXE
                             target = f"{self.install_path}/everything/main/setup/fiesta.exe" # CHANGE TO EXE
