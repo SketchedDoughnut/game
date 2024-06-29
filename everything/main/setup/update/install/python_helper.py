@@ -8,26 +8,26 @@ import requests
 import tkinter
 
 TEXT_DATA = [
-    """Welcome to the Python Helper! This guide will help you through the process of installing Python. Click "Continue" to get started.""",
+    """Welcome to the Python helper! This guide will help you through the process of installing Python. Click "Continue" to get started.""",
     """This project requires an installation of Python. It was specifically made on Python 3.11.""",
     """To check if you have Python installed, open command prompt and enter -
     -> "python --version". 
 - You should get a version number back. This project can not guarantee proper functionality on versions other then Python 3.11.""",
     """If you have Python installed, click "Yes, I have Python" below. Otherwise, click "No, I do not have Python" below.""",
-    """You now have two options. You can install Python from the Microsoft store, or install it via this installer. If
-you use this installer, it will be quicker but slightly more complex. If you use the Microsoft store, it will take longer but will be more simple.
+    """You now have two options. You can install Python from the Microsoft store, or install it via this installer.
+If you use this installer, it will be quicker but slightly more complex. If you use the Microsoft Store, it will take longer but will be more simple.
 It is advised that you use this installer (I spent a long time making the system :c ).
 Select the respective buttons below to decide.""",
 """The installer will now install the Python installation agent, and then run it. When the installer runs, on the first page, please select the option to
 "Install Now". As well as that, select the option to "Add Python.exe to PATH". These are both necessary settings for this project to work. On the last page, when Python
 is done installing, select the checkbox that allows Python to make its PATh variable longer. Then, you're done!""",
 """
-                 Do the followng instructions to install Python from the Microsoft Store:
-                 - go to Microsoft Store
-                 - search "Python 3.11"
-                 - Install
-                 - You're done!
-                         NOTE: FUNCTIONALITY CAN NOT BE GUARANTEED WITH ANY OTHER PYTHON VERSIONS."""
+Do the followng instructions to install Python from the Microsoft Store:
+- go to Microsoft Store
+- search "Python 3.11"
+- Install
+- You're done!
+NOTE: FUNCTIONALITY CAN NOT BE GUARANTEED WITH ANY OTHER PYTHON VERSIONS."""
 ]
 
 text_1_2_1 = 'If you have Python installed, you can click "Exit" below. However, functionality can not be guaranteed with any versions besides Python 3.11.'
@@ -140,8 +140,8 @@ class Python_helper:
                 [
                     label1,
                     label2,
-                    tkinter.Button(self.window, text="Go back", command=lambda:self.set_phase(1)),
-                    tkinter.Button(self.window, text="Exit", command=self.end)
+                    tkinter.Button(self.window, text="Exit", command=self.end),
+                    tkinter.Button(self.window, text="Go back", command=lambda:self.set_phase(1))
                 ]
             )
             self.pack_elements()
