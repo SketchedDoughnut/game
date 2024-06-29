@@ -75,7 +75,7 @@ class Python_helper:
         for element in self.element_list:
             element.pack()
 
-    def phase_setter(self, text: str, button_text: str):
+    def phase_setter(self, text: str = 'default', button_text: str = 'default'):
         self.text.set(text)
         self.button_text.set(button_text)
 
@@ -89,7 +89,6 @@ class Python_helper:
             self.clear_screen()
             self.reset_element_list()
             self.phase_setter(
-                text='not used',
                 button_text="Continue"
             )
             label = self.label_wrapped(text_data=TEXT_DATA[0])
