@@ -3,7 +3,7 @@ import os
 import shutil
 
 def read_commands(above_everything_dir, cmd_dir) -> tuple[bool, bool]:
-    propogate = (False, False)
+    propagate = (False, False)
     f = open(cmd_dir, 'r')
     cmds = f.readlines()
     f.close()
@@ -24,15 +24,15 @@ def read_commands(above_everything_dir, cmd_dir) -> tuple[bool, bool]:
                 f.close()
             elif cmd == 'rmfile':
                 os.remove(os.path.join(above_everything_dir, dir))
-            elif cmd == 'propogate':
-                elevator = propogate[0]
-                crash = propogate[1]
+            elif cmd == 'propagate':
+                elevator = propagate[0]
+                crash = propagate[1]
                 if dir == 'crash':
                     crash = True
                 elif dir == 'elevator':
                     elevator = True
-                propogate = (elevator, crash)
+                propagate = (elevator, crash)
         except Exception as e:
             print('cmd error:', e)
         print('----- endline -----')
-    return propogate
+    return propagate

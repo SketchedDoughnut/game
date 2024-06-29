@@ -51,6 +51,6 @@ mkdir: makes a directory -> takes one argument, path from everything to director
 rmdir: removes a directory -> takes one argument, path from everything to directory to remove -> examples: rmdir everything/main/top/container/test
 mkfile: makes an empty file -> takes one argument, path from everything to file to make -> examples: mkfile everything/main/top/container/test/test.txt
 rmfile: removes a file -> takes one argument, path from everything to file to remove -> examples: rmfile everything/main/top/container/test/test.txt
-propogate: propogates systems -> takes one argument, either crash or elevator - > examples: propogate crash (or) propogate elevator
+propagate: propagate systems -> takes one argument, either crash or elevator - > examples: propagate crash (or) propagate elevator
 
 NOTE: THIS IS RAN BEFORE ANY DOWNLOADS (propogating is done after downloading files)
