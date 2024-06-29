@@ -12,7 +12,7 @@ print(path)
 
 print('Starter redirecting to index file...')
 print('----------------------------')
-c1 = r'python {patth}'.format(patth=path) # calling string
+c1 = r'{patth}'.format(patth=path) # calling string
 # os.system(f'python {path}')
 # os.system(c1)
-subprocess.run(f"{c1}")
+subprocess.run(f"python {c1}")
