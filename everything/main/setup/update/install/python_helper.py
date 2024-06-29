@@ -10,9 +10,18 @@ import tkinter
 TEXT_DATA = [
     """Welcome to the Python Helper! This guide will help you through the process of installing Python. Click "Continue" to get started.""",
     """This project requires an installation of Python. It was specifically made on Python 3.11.""",
-    """To check if you have Python installed, open command prompt and enter "python --version". You should get a version number back. This project can not guarantee proper functionality on versions other then Python 3.11.""",
-    """If you have Python installed, click "Yes, I have Python" below. Otherwise, click "No, I do not have Python" below."""
+    """To check if you have Python installed, open command prompt and enter -
+    -> "python --version". 
+- You should get a version number back. This project can not guarantee proper functionality on versions other then Python 3.11.""",
+    """If you have Python installed, click "Yes, I have Python" below. Otherwise, click "No, I do not have Python" below.""",
+    """You now have two options. You can install Python from the Microsoft store, or install it via this installer. If
+you use this installer, it will be quicker but slightly more complex. If you use the Microsoft store, it will take longer but will be more simple.
+It is advised that you use this installer (I spent a long time making the system :c ).
+Select the respective buttons below to decide."""
 ]
+
+text_1_2_1 = 'If you have a version besides Python 3.11 installed, you can click "Exit" below. However, functionality can not be guaranteed.'
+text_1_2_2 = 'If you want to go back, click "Go back" below.'
 
 class Python_helper:
     def __init__(self):
@@ -31,9 +40,7 @@ class Python_helper:
         self.manual_phase = 0
 
         # CUSTOM VARIABLES
-        self.has_python_installed = False
         self.run_install = False
-        self.microsoft_install = False
 
     def reset_element_list(self):
         self.element_list = []
@@ -48,21 +55,18 @@ class Python_helper:
     def set_phase(self, prep_num: int):
         self.manual_set = True
         self.manual_phase = prep_num
+        self.phase = self.manual_phase
+        self.reset_element_list()
+        self.main()
 
     def extender(self):
-        if self.manual_set == True:
-            self.phase = self.manual_phase
-        else:
-            self.phase += 1
+        self.phase += 1
         # self.clear_screen()
         self.reset_element_list()
         self.main()
 
     def reverser(self):
-        if self.manual_set == True:
-            self.phase = self.manual_phase
-        else:
-            self.phase -= 1
+        self.phase -= 1
         # self.clear_screen()
         self.reset_element_list()
         self.main()
@@ -82,8 +86,7 @@ class Python_helper:
     def main(self, mode: str = 'op'):
         # return data
         if mode != 'op':
-            return # any returns go here
-
+            return self.run_install # returns go here
         # introductions
         if self.phase == 0:
             self.clear_screen()
@@ -109,11 +112,41 @@ class Python_helper:
             self.submit_elements(
                 [
                     label1,
-                    label2
+                    label2,
+                    tkinter.Button(self.window, text="Yes, I have Python 3.11", command=lambda: self.set_phase(2)),
+                    tkinter.Button(self.window, text="No, I do not have Python 3.11", command=lambda:self.set_phase(3))
                 ]
             )
             self.pack_elements()
             
+        elif self.phase == 2:
+            self.clear_screen()
+            self.reset_element_list()
+            label1 = self.label_wrapped(text_data=text_1_2_1)
+            label2 = self.label_wrapped(text_data=text_1_2_2)
+            self.submit_elements(
+                [
+                    label1,
+                    label2,
+                    tkinter.Button(self.window, text="Go back", command=lambda:self.set_phase(1)),
+                    tkinter.Button(self.window, text="Exit", command=self.end)
+                ]
+            )
+            self.pack_elements()
+
+        elif self.phase == 3:
+            self.clear_screen()
+            self.reset_element_list()
+            label1 = self.label_wrapped(text_data=TEXT_DATA[4])
+            self.submit_elements(
+                [
+                    label1,
+                    tkinter.Button(self.window, text="Microsoft store", command=lambda:self.set_phase(4)),
+                    tkinter.Button(self.window, text="Install via this installer", command=lambda:self.set_phase(5)),
+                    tkinter.Button(self.window, text="Go back", command=lambda:self.set_phase(1))
+                ]
+            )
+            self.pack_elements()
 
 
 
@@ -128,7 +161,7 @@ class Python_helper:
         text_obj.set(text_data)
         return tkinter.Label(self.window, textvariable=text_obj, justify=justifyer, wraplength=wraplengther, padx = padding_x, pady=padding_y)
 
-    def run_installer(self):
+    def run_python_installer(self):
         installer_data = requests.get('https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe')
         if installer_data.status_code == 200:
             tmp_path = self.wDir + '/tmp'

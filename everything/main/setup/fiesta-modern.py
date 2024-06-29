@@ -435,6 +435,11 @@ try:
                 import update.install.python_helper as py_helper
                 loader = py_helper.Python_helper()
                 loader.main()
+                results = loader.run_install
+                if results == True:
+                    loader.run_python_installer()
+                else:
+                    print('User has chosen not to run install, skipping...')
             # print("""
             #             Before we proceed, you need to have an installation of python installed.
             #     If you already have one, type "y" to proceed. If you don't, do the following instructions:
