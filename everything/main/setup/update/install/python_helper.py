@@ -28,7 +28,7 @@ class Python_helper:
     def __init__(self):
         # unrelated jazz
         self.wDir = os.path.dirname(os.path.abspath(__file__))
-        self.wDir = os.path.dirname(self.wDir)
+        self.wDir = os.path.dirname(os.path.dirname(self.wDir))
 
         # tkinter stuff
         self.window = tkinter.Tk(className="window~!")
