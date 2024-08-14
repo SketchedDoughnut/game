@@ -1,0 +1,10 @@
+The purpose of this file is to note down what to do for releasing updates.
+---------------------------------------------------------------------------
+- transfer files over from FOMX
+- transfer files to SDA-SRC, and SDA with the affected files
+    - make sure URLs and anything like that are kept the same
+- run any propogators (elevator or crash handler)
+- compile files LAST
+- push code to Github
+- create a release of the new code (for SDA-src, refer to "THE-OVERBEARING-NOTES.EGG" for how to format releases)
+    - do note, it will take a little for Github to update with the newest files

@@ -1,6 +1,7 @@
 ----------------------------------------------------------------------------
 FULL-REDO REVAMP
 --------------------------------------
+STATUS: Done?
 AFFECTS: 
     - full-redo.py, full-redo.exe, full-redo/_internal (maybe (update/*)?)
 
@@ -22,6 +23,7 @@ IN SUMMARY:
 
 UPDATE DETECTION
 --------------------------------------
+STATUS: Done?
 AFFECTS: 
     - update.py 
 

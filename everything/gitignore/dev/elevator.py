@@ -1,7 +1,8 @@
 # this file is a template to be pasted into all other elevators
-# it is meant to be used inside of everything/
 # It uses a similar system for promoting paths as the crash handler
+# it is meant to be used inside of everything/
 ########################################################################
+
 import os
 
 class Path_tools:

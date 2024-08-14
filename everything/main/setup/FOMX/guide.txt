@@ -15,21 +15,34 @@ IMPORTANT
         - copy.py and download.py can not be accessed if there is no pycache, 
           they can be (THIS HAS NOT BEEN TESTED, PLEASE REFRAIN FROM DOING THIS IN A 
           PUBLIC RELEASE)
-    - and audio files (.mp3, .wav, etc)
-    - any folders
     - fiesta.exe
     - full-redo.py
     - full-redo.exe
     - IF NOT THESE, THEN THE FILE IS AVAILABLE FOR READ/WRITE
 
+NOTES
+    - 8/14/24_1:25am
+    - These are now possible to be edited:
+        - any audio files (.mp3, .wav, etc)
+        - any folders
 -------------------------------------------------------------------------------------------
 
-Here is how data is formatted:
+Here is how data is formatted in bounds.json, on the SDA_FOMX repository:
 {
     "description": "This is an example message about a small release message! This is in the body of the release.",
     "version": "0/20",
-    "file_details": [["file.py", "normal"], ["file.exe", "binary"], ["data.json", "json"]],
-    "file_paths": ["everything/blah/blah/blah", "everything/blah"]
+    "rollover": 0,
+    "transfer": 2,
+    "cmd_exist": true,
+    "file_details": [
+        ["file.py", "normal"], 
+        ["file.exe", "binary"], 
+        ["data.json", "json"]
+    ],
+    "file_paths": [
+        "everything/blah/blah/blah", 
+        "everything/blah"
+    ]
 }
 
 Explanation:
@@ -54,3 +67,15 @@ rmfile: removes a file -> takes one argument, path from everything to file to re
 propagate: propagate systems -> takes one argument, either crash or elevator - > examples: propagate crash (or) propagate elevator
 
 NOTE: THIS IS RAN BEFORE ANY DOWNLOADS (propogating is done after downloading files)
+
+-------------------------------------------------------------------------------------------
+
+Here is the run order of FOMX
+
+- download data
+- run cmd_reader if cmd_exist = True in bounds.json
+- verify all source files exist from downloaded data
+- copy data from the source (downloaded data) to the target destination
+- clean up the tmp/ directory created for downloading the data
+- update the locally saved version
+- done!

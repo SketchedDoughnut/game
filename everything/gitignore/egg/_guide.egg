@@ -1,0 +1,13 @@
+This file is a guide for what each .egg file here is for.
+----------------------------------------------------------
+file tracker.egg: this tracks attributes of files, such as where propogators and crash handlers are located
+guide.egg: a file to guide you throughout other files, duh!
+ideas.egg: a place to document ideas for this project
+pyinstaller.egg: a file containing notes about pyinstaller and different things to do 
+release.egg: this contains information for creating releases!
+THE-OVERBEARING-NOTES.egg: just contains a small bit about creating the body of releases on Github
+todo.egg: the main todo file for things to do for this project
+whateverthisgithubstuffis.egg: a bunch of random stuff? I am not quite sure
+unused/diagram.egg: a diagram for the file tree, and the call order of things
+unused/org.org: a file used when there was the great organization
+unused/pre-commit-checklist.egg: a checklist for before commits to Github

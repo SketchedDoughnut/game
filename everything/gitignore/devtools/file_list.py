@@ -1,6 +1,7 @@
-# This file lists every existing file in everything
-# It is used to verify after an update is installed
+# This file lists every existing file in everything/
+# It is used to verify files after an update is installed
 ########################################################################
+
 import os
 import shutil
 import time

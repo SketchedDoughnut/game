@@ -1,6 +1,8 @@
 # this file propagates the one template copy of the crash handler to every other crash handler
+# it can also propogate the template copy of the elevator to every other elevator
 # it is built for use with VSCode because paths are wonky
 ########################################################################
+
 def propagate_crash_handler():
     raw_crash_file_list = [
         r'everything\main\top\container\index_crash_handler.py',

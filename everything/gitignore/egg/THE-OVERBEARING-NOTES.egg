@@ -11,6 +11,7 @@ FOR RELEASES:
               release is out, based on a new commit.
             - the "tag" is what files are to be re-installed.
                 - game_data: re-installs the "game_data" folder
-                - top: re-installs the "top" folder
+                - top: re-installs the "top" folder (broken??)
                 - full: re-installs everything in the folder that "main" is in (the root folder?)
-            - the message provides brief info.
+                  - 8/14/24_1:05am note: I believe it reinstalls the "everything/" directory, but other directories (such as "universe/") stays the same
+            - the message provides brief info, and the mesage must be a single string with no spaces.
