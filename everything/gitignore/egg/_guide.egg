@@ -8,6 +8,13 @@ release.egg: this contains information for creating releases!
 THE-OVERBEARING-NOTES.egg: just contains a small bit about creating the body of releases on Github
 todo.egg: the main todo file for things to do for this project
 whateverthisgithubstuffis.egg: a bunch of random stuff? I am not quite sure
-unused/diagram.egg: a diagram for the file tree, and the call order of things
 unused/org.org: a file used when there was the great organization
 unused/pre-commit-checklist.egg: a checklist for before commits to Github
+
+
+
+
+
+NOTES
+- unused/diagram.egg was moved out of unused/. Here is the former description of it:
+    - unused/diagram.egg: a diagram for the file tree, and the call order of things

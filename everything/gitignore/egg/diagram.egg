@@ -1,0 +1,40 @@
+This is a .egg file, I am a god.
+Anyways, a diagram of how this runs, from top down.
+---------------------------------------------------------------------
+
+- Start shortcut
+- main/setup/fiesta.exe
+- main/setup/FOMX/fomx.py
+- main/top/starter.py
+- main/top/container/index.py
+- main/top/container/imports.py
+- main/top/container/update.py
+
+At this point, index.py can branch out to any of the following files:
+- main/top/container/game_data/src/conways-game/main.py
+- main/top/container/game_data/src/flappy.py
+- main/top/container/game_data/src/rhythm.py
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------
+---------------------------------------------------------------------
+---------------------------------------------------------------------
+OLD DIAGRAM
+- Start shortcut -> main/top/starter.exe
+- Runs index -> container/index.py
+- Runs imports -> imports.py
+- Runs update -> update.py
+    - for update:
+        - end my suffering
