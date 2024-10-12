@@ -34,4 +34,4 @@ def do_gen_pipfile():
 do_pip_freeze() # generates requirement.txt in root
 do_gen_pipfile() # generates pipfile.lock in root
 do_propagate() # propagates crash handler / elevator templates (NOTE: BEFORE COMPILING)
-do_file_list() # lists all files existing
+do_file_list() # lists all files existing (NOTE: DO AFTER COMPILING)
