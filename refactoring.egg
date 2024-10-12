@@ -1,8 +1,70 @@
-everything\main\setup\FOMX:
-  - fomx.py: DONE
-  - tools: 
-    - __init__.py: DONE
-    - cmd_reader.py: DONE
-    - download.py: DONE
-    - extracter.py: DONE
-    - propagater.py: 
+everything/:
+  - full-redo/:
+    - full-redo.py
+    - update/:
+      - fr_controller_install.py: 
+      - tools/:
+        - backup.py
+        - copy.py 
+        - download.py
+        - extract.py
+        - rollback.py
+        - verify.py
+        - backups/:
+  - gitignore/:
+    - dev/:
+      - crash_handler.py:
+      - elevator.py:
+      - random/:
+    - devtools/:
+      - file_list.py:
+      - propagator.py: 
+    - egg/:
+    - txt/:
+  - main/:
+    - setup/:
+      - delete.py:
+      - fiesta-modern.py:
+      - fiesta.py: 
+      - setup_crash_handler.py: 
+      - FOMX/: DONE
+        - fomx.py: DONE
+        - tools/: DONE
+          - __init__.py: DONE
+          - cmd_reader.py: DONE
+          - download.py: DONE
+          - extracter.py: DONE
+          - propagater.py: DONE
+      - update/:
+        - fr_controller_setup.py: 
+        - gd_controller.py: 
+        - t_controller.py: 
+        - install/:
+          - python_helper.py:
+        - tools/:
+          - backup.py:
+          - copy.py: 
+          - download.py: 
+          - extract.py: 
+          - rollback.py: 
+          - verify.py: 
+          - backups/:
+    - top/:
+      - starter.py:
+      - container/:
+        - eggs.py:
+        - imports.py:
+        - index_crash_handler.py:
+        - index_elevator.py:
+        - index.py: 
+        - update.py: 
+        - game_data/:
+          - ignore/:
+          - src/:
+            - ideas.txt: 
+            - conways-game/:
+            - flappy/:
+            - other/:
+            - rhythm/: 
+universe/:
+  - index/:

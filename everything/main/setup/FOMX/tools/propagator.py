@@ -1,9 +1,9 @@
-# a copy of the propagator for FOMX, which is ran last
-# this file is only imported right after use, so that it can be updated by FOMX
-
-# this file propagates the one template copy of the crash handler to every other crash handler
-# it is built for use with VSCode because paths are wonky
-########################################################################
+'''
+This file is the propagator for the FOMX system.
+Its job is to propagate the crash handlers and elevators where necessary. Simple!
+--------------------------------------------------------------------------------------------------------------------------------
+This files adheres to the commenting guidelines :D
+'''
 def propagate_crash_handler(wDir):
     raw_crash_file_list = [
         r'everything\main\top\container\index_crash_handler.py',
