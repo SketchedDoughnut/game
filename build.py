@@ -31,8 +31,7 @@ def do_pip_freeze():
 def do_gen_pipfile():
     os.system('pipenv lock')
 
-do_pip_freeze()
-do_gen_pipfile()
-exit()
-do_file_list()
-do_propagate()
+do_pip_freeze() # generates requirement.txt in root
+do_gen_pipfile() # generates pipfile.lock in root
+do_propagate() # propagates crash handler / elevator templates (NOTE: BEFORE COMPILING)
+do_file_list() # lists all files existing

@@ -12,12 +12,12 @@ everything/:
         - verify.py
         - backups/:
   - toolsource/:
-    - dev/:
+    - dev/: DONE (10/11/24)
       - crash_handler.py: DONE (10/11/24)
       - elevator.py: DONE (10/11/24)
-    - devtools/: 
+    - devtools/: DONE (10/11/24)
       - file_list.py: DONE (10/11/24)
-      - propagator.py: 
+      - propagator.py: DONE (10/11/24)
   - main/:
     - setup/:
       - delete.py:
