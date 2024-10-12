@@ -23,6 +23,16 @@ def do_propagate():
     callpath = WDIR + r'/everything/toolsource/devtools/propagator.py'
     os.system(f"{PYTHON_PATH} {callpath}")
 
+# this is a function responsible for freezing pip
+def do_pip_freeze():
+    os.system('pip freeze > requirements.txt')
 
+# this is a function responsible for generating pipfile.lock
+def do_gen_pipfile():
+    os.system('pipenv lock')
+
+do_pip_freeze()
+do_gen_pipfile()
+exit()
 do_file_list()
 do_propagate()
