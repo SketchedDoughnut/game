@@ -1,7 +1,14 @@
-# this file propagates the one template copy of the crash handler to every other crash handler
-# it can also propogate the template copy of the elevator to every other elevator
-# it is built for use with VSCode because paths are wonky
-########################################################################
+'''
+This is a tool used during build, which propagates template files to other directories.
+This was developed because I did not want to maintain a variety of different files individually,
+when they all have the same code. Instead, this copies code from a single template file all of the other files!
+This means that I only have ot maintain one, and all of the others get updated. This lets all of them recieve 
+updates at the sane tune, the FOMX system has a variant of this.
+Therefore, it is most important to call on this before releasing a build!
+--------------------------------------------------------------------------------------------------------------------------------
+This files adheres to the commenting guidelines :D
+'''
+
 
 def propagate_crash_handler():
     raw_crash_file_list = [
@@ -53,10 +60,5 @@ def propagate_elevator():
         f.close()
         print('Propogating to raw file:', file)
 
-
-
-running = input('-> ')
-if running == '1':
-    propagate_crash_handler()
-elif running == '2':
-    propagate_elevator()
+propagate_crash_handler()
+propagate_elevator()

@@ -1,0 +1,16 @@
+Commenting guidelines
+
+Imports
+- for builtin modules, label "builtin module(s)"
+- for external modules, label "external module(s)"
+- for file imports, label "file import(s)"
+
+General Commenting
+- each file should have a detailed description at the top of it that talks about what it does. It should look something like this:
+    - '''
+      blah blah blah
+      --------------------------------------------------------------------------------------------------------------------------------
+      This files adheres to the commenting guidelines :D
+      '''
+- break current comment lines for a new comment line when it gets too long horizontally.
+- Be descriptive!
