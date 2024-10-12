@@ -1,3 +1,11 @@
+'''
+This is an extracter for the FOMX system.
+Its job is to extract files from a .zip
+It was written by ChatGPT, and is not commented since it is already
+partly commented, and I think its self explanatory.
+--------------------------------------------------------------------------------------------------------------------------------
+This files adheres to the commenting guidelines (kinda) :D
+'''
 
 # importing the zipfile module 
 from zipfile import ZipFile 

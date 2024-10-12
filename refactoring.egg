@@ -1,0 +1,8 @@
+everything\main\setup\FOMX:
+  - fomx.py: DONE
+  - tools: 
+    - __init__.py: DONE
+    - cmd_reader.py: DONE
+    - download.py: DONE
+    - extracter.py: DONE
+    - propagater.py: 
