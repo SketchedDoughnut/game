@@ -40,3 +40,7 @@ NOISE:
         - https://www.lfd.uci.edu/~gohlke/pythonlibs/ 
         - NOTE: refer to render folder for which version is installed
         - NOTE: use "pip install (full path to whl file)"
+
+
+GENERATING PIPFILE:
+    https://stackoverflow.com/questions/46330327/how-are-pipfile-and-pipfile-lock-used
