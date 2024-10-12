@@ -4,7 +4,7 @@ Its job is to propagate the crash handlers and elevators where necessary. Simple
 --------------------------------------------------------------------------------------------------------------------------------
 This files adheres to the commenting guidelines :D
 '''
-def propagate_crash_handler(wDir):
+def propagate_crash_handler(wDir: str):
     raw_crash_file_list = [
         r'everything\main\top\container\index_crash_handler.py',
         r'everything\main\top\container\game_data\src\conways-game\conway_crash_handler.py',
@@ -36,7 +36,7 @@ def propagate_crash_handler(wDir):
         print('-> FOMX: Propogating to compiled file:', file)
 
 
-def propagate_elevator(wDir):
+def propagate_elevator(wDir: str):
     raw_elevator_file_list = [
         r'everything\main\top\container\index_elevator.py'
     ]
@@ -55,7 +55,7 @@ def propagate_elevator(wDir):
         print('-> FOMX: Propogating to raw file:', file)
 
 
-def propagate_master(wDir, elevator: bool = False, crash: bool = False):
+def propagate_master(wDir: str, elevator: bool = False, crash: bool = False):
     wDir += '\\'
     if elevator:
         propagate_elevator(wDir)

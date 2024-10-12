@@ -24,14 +24,14 @@ everything/:
       - fiesta-modern.py:
       - fiesta.py: 
       - setup_crash_handler.py: 
-      - FOMX/: 
-        - fomx.py: 
-        - tools/: 
-          - __init__.py: 
-          - cmd_reader.py: 
-          - download.py: 
-          - extracter.py: 
-          - propagater.py: 
+      - FOMX/: DONE (10/11/24)
+        - fomx.py: DONE (10/11/24)
+        - tools/: DONE (10/11/24)
+          - __init__.py: DONE (10/11/24)
+          - cmd_reader.py: DONE (10/11/24)
+          - download.py: DONE (10/11/24)
+          - extracter.py: DONE (10/11/24)
+          - propagater.py: DONE (10/11/24)
       - update/:
         - fr_controller_setup.py: 
         - gd_controller.py: 

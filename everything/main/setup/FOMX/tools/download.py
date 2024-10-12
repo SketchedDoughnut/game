@@ -15,7 +15,7 @@ import time
 # and stores it in a file
 # this was not written by me so I am not sure what is going on here
 # but I still tried to comment it the best I could!
-def download_latest_release(url, download_path):
+def download_latest_release(url: str, download_path: str):
     try:
 
         # get data from the url, and json it
@@ -46,7 +46,7 @@ def download_latest_release(url, download_path):
 
 # I also have no idea what this does, but basically it just downloads a file?
 # yeah sure-
-def _download_file(url, download_path):
+def _download_file(url: str, download_path: str):
     response = requests.get(url)
     with open(download_path, 'wb') as f:
         f.write(response.content)

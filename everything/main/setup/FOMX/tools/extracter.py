@@ -9,7 +9,7 @@ This files adheres to the commenting guidelines (kinda) :D
 
 # importing the zipfile module 
 from zipfile import ZipFile 
-def extract(zip_path, location):  
+def extract(zip_path: str, location: str):  
     # loading the temp.zip and creating a zip object 
     with ZipFile(zip_path, 'r') as zObject: 
     
