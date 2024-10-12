@@ -1,3 +1,6 @@
+This tracker was started on 10/11/24.
+This tracker was finished on x/x/x at xx:xx(am/pm)
+--------------------------------------------------------------------
 everything/:
   - full-redo/:
     - full-redo.py
@@ -44,10 +47,10 @@ everything/:
           - download.py: 
           - extract.py: 
           - rollback.py: 
-          - verify.py: 
+          - verify.py: DONE (10/12/24)
           - backups/:
     - top/:
-      - starter.py:
+      - starter.py: DONE (10/12/24)
       - container/:
         - eggs.py:
         - imports.py:
@@ -56,7 +59,7 @@ everything/:
         - index.py: 
         - update.py: 
         - game_data/:
-          - ignore/:
+          - ignore/: DONE (10/12/24)
           - src/:
             - conways-game/:
             - flappy/:

@@ -1,22 +1,35 @@
+'''
+This is a tool used by the controller for updates.
+It verifies the installed files against every file that should be installed.
+If there are any issues, then the backup will be restored.
+--------------------------------------------------------------------------------------------------------------------------------
+This files adheres to the commenting guidelines :D
+'''
+
+# builtin modules
 import os
 import json
-# import shutil
-# import time
 # import py_compile # interesting thing
 
+# the main function for verifying that all files exist
+# its just that shrimple!
 def verify_files(json_path, everything_path):
-    # vars
+    
+    # setting up variables
     failed = False
     failed_count = 0
 
-    # load files
+    # load the data from the json file (file_list.json)
     f = open( json_path, 'r')
     files = json.load(f)
     f.close()
 
+    # for each path in that json, make sure it exists
+    # if it does not exist, increase failcount
+    # once counter is over threshold, raise error then return the state
+    # that state decides if the backup is restored
     for file in files:
         assemble = os.path.join(os.path.dirname(everything_path), file)
-        #assemble = os.path.join(everything_path, file)
         if os.path.exists(assemble):
             #print(f'- verified {files.index(file) + 1}/{len(files)} - {assemble}')
             pass
