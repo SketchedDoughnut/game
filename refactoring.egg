@@ -58,13 +58,15 @@ everything/:
         - game_data/:
           - ignore/:
           - src/:
-            - ideas.txt: 
             - conways-game/:
             - flappy/:
-            - other/:
             - rhythm/: 
 - universe/:
   - index/:
 - extra/: DONE (10/11/24)
+  - archive/: DONE (10/11/24)
+  - gitignore/: DONE (10/11/24)
+  - extra games/: DONE (10/11/24)
+  - text/: DONE (10/12/24)
 - documentation/: DONE (10/11/24)
 - build.py: 
