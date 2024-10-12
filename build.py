@@ -9,6 +9,7 @@ This files adheres to the commenting guidelines :D
 import os
 import subprocess
 
+# get the current working directory for future use
 WDIR = os.path.dirname(os.path.abspath(__file__))
 
 # this is a function responsible for running the file lsit
