@@ -22,7 +22,7 @@ def propagate_crash_handler():
         r'everything\main\setup\setup_crash_handler.py'
     ]
 
-    crash_source = r'everything\gitignore\dev\crash_handler.py'
+    crash_source = r'everything\toolsource\dev\crash_handler.py'
 
     f = open(crash_source, 'r')
     crash_source_content = f.read()
@@ -47,7 +47,7 @@ def propagate_elevator():
         r'everything\main\top\container\index_elevator.py'
     ]
 
-    elevator_source = r'everything\gitignore\dev\elevator.py'
+    elevator_source = r'everything\toolsource\dev\elevator.py'
 
     f = open(elevator_source, 'r')
     elevator_source_content = f.read()

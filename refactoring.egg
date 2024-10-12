@@ -63,7 +63,8 @@ everything/:
             - flappy/:
             - other/:
             - rhythm/: 
-universe/:
+- universe/:
   - index/:
-extra/: DONE
-documentation/: DONE
+- extra/: DONE
+- documentation/: DONE
+- build.py: 
