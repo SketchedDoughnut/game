@@ -10,18 +10,18 @@ import os
 import subprocess
 
 # get the current working directory for future use
-PYTHON_PATH = r'D:/VScode/SDA/game/.venv/Scripts/'
+PYTHON_PATH = r'D:/VScode/SDA/game/.venv/Scripts/python.exe'
 WDIR = os.path.dirname(os.path.abspath(__file__))
 
 # this is a function responsible for running the file lsit
 def do_file_list():
     callpath = WDIR + r'/everything/toolsource/devtools/file_list.py'
-    subprocess.call(f"python {callpath}", cwd=PYTHON_PATH)
+    os.system(f"{PYTHON_PATH} {callpath}")
 
 # this is a function responsible for running the propagation
 def do_propagate(): 
     callpath = WDIR + r'/everything/toolsource/devtools/propagator.py'
-    subprocess.call(f"python {callpath}", cwd=PYTHON_PATH)
+    os.system(f"{PYTHON_PATH} {callpath}")
 
 
 do_file_list()
