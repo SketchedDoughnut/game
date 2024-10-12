@@ -28,7 +28,7 @@ direct_filter = [
 # then iterates down. I won't explain in full how it works (because I don't
 # really understand myself), but it lists every file that it should into a single
 # outputted json.
-def iter(path):
+def iter(path: str):
     files = []
     for filename in os.listdir(path):
         f = os.path.join(path, filename)
