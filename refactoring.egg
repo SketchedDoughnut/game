@@ -26,7 +26,7 @@ everything/:
       - delete.py:
       - fiesta-modern.py:
       - fiesta.py: 
-      - setup_crash_handler.py: 
+      - setup_crash_handler.py: DONE (10/12/24)
       - FOMX/: DONE (10/11/24)
         - fomx.py: DONE (10/11/24)
         - tools/: DONE (10/11/24)
@@ -54,8 +54,8 @@ everything/:
       - container/:
         - eggs.py:
         - imports.py:
-        - index_crash_handler.py:
-        - index_elevator.py:
+        - index_crash_handler.py: DONE (10/12/24)
+        - index_elevator.py: DONE (10/12/24)
         - index.py: 
         - update.py: 
         - game_data/:
