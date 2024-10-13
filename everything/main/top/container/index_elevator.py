@@ -1,14 +1,26 @@
-# this file is a template to be pasted into all other elevators
-# it is meant to be used inside of everything/
-# It uses a similar system for promoting paths as the crash handler
-########################################################################
+'''
+This is the elevator baseplate used throughout SDA.
+Its job is simple, it merely elevates the current directory up until
+the end of the path is everything/.
+It uses a modified version of the path tools from the crash handler. Due to this, 
+some of the comments are merely commented over to save some time.
+Thats all!
+--------------------------------------------------------------------------------------------------------------------------------
+This files adheres to the commenting guidelines :D
+'''
+# builtin modules
 import os
 
+# a class for tools that edit file paths
+# this is very helpful, yes yes
 class Path_tools:
     def __init__(self) -> None:
         pass
 
-    def convert_path(self, path: str, mode: str) -> str: # copied over from old crash handler, idek what it does
+    # this function converts the slashes in paths
+    # specifically, it converts / to \\ and \\ to /
+    # this depends on the mode inputted (either "/" or "\\")
+    def convert_path(self, path: str, mode: str) -> str: 
         n_string = ''
         for letter in path:
             if mode == '/':
@@ -23,21 +35,24 @@ class Path_tools:
                     n_string += letter
         return n_string
 
-    def promote_path(self, path: str) -> list[list, str]: # promotes path until it reaches everything/
-        forward_slash_path = self.convert_path(path, '/') # convert to forward slash path, regardless of input
+    # this is a function that promotes the path. In order words, 
+    # it elevates the path. I am not sure how it works, it just does.
+    # It keeps running until the end of the path is everything/
+    def promote_path(self, path: str) -> list[list, str]:
+        forward_slash_path = self.convert_path(path, '/') 
         path_list = [] 
         carry_over = ''
         new_path = ''
-        for letter in forward_slash_path: # go over every letter, and make a list of each argument: (folder1), (folder2), etc
+        for letter in forward_slash_path:
             if letter == '/':
                 path_list.append(carry_over)
                 carry_over = ''
                 continue
             carry_over += letter
         path_list.append(carry_over)
-        while path_list[-1] != 'everything': # remove things from the end until we reach everything
+        while path_list[-1] != 'everything': 
             path_list.pop()
-        for folder in path_list: # create a new path
+        for folder in path_list: 
             new_path += folder
             new_path += '/'
         new_path.removesuffix('/')
