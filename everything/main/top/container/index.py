@@ -362,21 +362,23 @@ try:
     pygame.display.update()
 
     # if they did select something, end the pygame window
+    # then, start that file.
+    # When they exit the file, the loop will continue, and setup_bool will be reset
+    # so once this loop repeats again, 
     if select:
       pygame.quit()
       print('----------------------------')
       running = path_list[selected_index][1]
       print(f'Running {running}...')
-      c3 = r'{path}'.format(path=path_list[selected_index][0])
-      # os.system(f'python {path_list[num][0]}')
-      # os.system(c3)
-      subprocess.run(f'python "{c3}"')
+      subprocess.run(f'python "{r'{path}'.format(path=path_list[selected_index][0])}"')
       setup_bool = False
 
-
+  # if they exit the loop, the program will exit as normal
   print('----------------------------')
   print('Exiting...')
+  sys.exit()
 
+# for crash handler to log a crash
 except Exception as e:
   import os
   import traceback

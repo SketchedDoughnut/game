@@ -1,3 +1,9 @@
+'''
+This files job is to make sure that all of the dependencies are installed.
+--------------------------------------------------------------------------------------------------------------------------------
+This files adheres to the commenting guidelines :D
+'''
+
 # install files necessary with pip
 print('Installing pip files...')
 print('----------------------------')

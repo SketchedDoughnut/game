@@ -56,7 +56,7 @@ everything/:
         - imports.py:
         - index_crash_handler.py: DONE (10/12/24)
         - index_elevator.py: DONE (10/12/24)
-        - index.py: 
+        - index.py: DONE (10/16/24)
         - update.py: 
         - game_data/:
           - ignore/: DONE (10/12/24)
