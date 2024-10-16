@@ -23,7 +23,6 @@ keyring==25.2.1
 markdown-it-py==3.0.0
 MarkupSafe==2.1.5
 mdurl==0.1.2
-MilesToMuppets==0.0.18
 more-itertools==10.2.0
 mutagen==1.47.0
 nh3==0.2.17
