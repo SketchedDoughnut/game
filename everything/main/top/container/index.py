@@ -79,6 +79,9 @@ try:
   WIDTH = pygame.display.Info().current_w # 1920
   HEIGHT = pygame.display.Info().current_h # 1080
 
+  # save the elevated path into a variable
+  ELEVATED_PATH = elevator.Elevator.elevated_universe
+
   # this is the class responsible for building the screen elements
   # it can divide the screen into sections, make rectangles that format themselves,
   # and assign text labels
@@ -204,6 +207,11 @@ try:
   setup = Format()
   setup.handler()
 
+  # yeah.
+  f = open(f'{ELEVATED_PATH}/index/content_url.txt', 'w')
+  f.write("gay")
+  f.close()
+
   # this file is designed to direct into other games
   # if you are put into those games and exit, you get
   # led back to this file. So due to that, it needs
@@ -214,12 +222,6 @@ try:
   # beyond that point
   setup_bool = False
   select = False
-
-  # yeah.
-  path = elevator.Elevator.elevated_universe
-  f = open(f'{path}/index/content_url.txt', 'w')
-  f.write("gay")
-  f.close()
 
   # this is the main loop that repeats indefinitely
   # unless you exit

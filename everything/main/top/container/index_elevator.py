@@ -75,6 +75,8 @@ class Elevatorr:
         self.path_tools = Path_tools()
         self.wDir = self.path_tools.convert_path(self.raw_wDir, '/')
         self.elevated_universe = self.elevate_path(self.wDir)
+        self.elevated_everything = (self.elevated_universe.removesuffix('/universe')) + '/everything'
+        self.elevated = self.elevated_universe.removesuffix('/universe')
 
     def elevate_path(self, path) -> str:
         elevated_list = self.path_tools.promote_path(path)
