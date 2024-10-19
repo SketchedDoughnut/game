@@ -61,14 +61,16 @@ TOOL_FILES = {
         r'everything\full-redo\update\tools\download.py',
 
         # raw
-        r'everything\main\setup\update\tools\download.py'
+        r'everything\main\setup\update\tools\download.py',
+        r'everything\main\setup\FOMX\tools\download.py'
     ],
     'extract': [
         # compiled
         r'everything\full-redo\update\tools\extract.py',
 
         # raw
-        r'everything\main\setup\update\tools\extract.py'
+        r'everything\main\setup\update\tools\extract.py',
+        r'everything\main\setup\FOMX\tools\extracter.py'
     ],
     'verify': [
         # compiled

@@ -8,11 +8,11 @@ everything/:
       - fr_controller_install.py: 
       - tools/:
         - backup.py
-        - copy.py 
-        - download.py
-        - extract.py
+        - copy.py DONE (10/18/24)
+        - download.py DONE (10/18/24)
+        - extract.py DONE (10/18/24)
         - rollback.py
-        - verify.py
+        - verify.py DONE (10/18/24)
         - backups/:
   - toolsource/: DONE (10/11/24)
     - dev/: DONE (10/11/24)
@@ -34,7 +34,7 @@ everything/:
           - cmd_reader.py: DONE (10/11/24)
           - download.py: DONE (10/11/24)
           - extracter.py: DONE (10/11/24)
-          - propagater.py: 
+          - propagator.py: 
       - update/:
         - fr_controller_setup.py: 
         - gd_controller.py: 
@@ -43,9 +43,9 @@ everything/:
           - python_helper.py:
         - tools/:
           - backup.py:
-          - copy.py: 
-          - download.py: 
-          - extract.py: 
+          - copy.py: DONE (10/18/24)
+          - download.py: DONE (10/18/24)
+          - extract.py: DONE (10/18/24)
           - rollback.py: 
           - verify.py: DONE (10/12/24)
           - backups/:

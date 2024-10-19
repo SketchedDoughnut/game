@@ -5,7 +5,7 @@ Thank you AI if it was, though I try not to use you too much :D
 NOTE: As it is from AI, I am not going to mess with the comments, and I will just
 leave in the ones that the AI made.
 --------------------------------------------------------------------------------------------------------------------------------
-This files adheres to the commenting guidelines :D
+This files adheres to the commenting guidelines (kinda) :D
 '''
 
 # importing the zipfile module 
