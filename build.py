@@ -18,6 +18,8 @@ from rich import print
 # just in case
 WDIR = os.path.dirname(os.path.abspath(__file__))
 PYTHON_PATH = r'{}\\.venv\\Scripts\\python.exe'.format(WDIR)
+PROPAGATE_CALLPATH = WDIR + r'/everything/toolsource/devtools/propagator.py'
+FILELIST_CALLPATH = WDIR + r'/everything/toolsource/devtools/file_list.py'
 
 # define a start time to time how long build takes
 # and how long each process takes
@@ -34,39 +36,32 @@ def check_time(doPrint: bool = True):
         print(f'[yellow]Time taken: {round(dif, 3)} seconds')
     previous = now
 
-# this is a function responsible for running the file lsit
-def do_file_list(): 
-    path = WDIR + r'/everything/toolsource/devtools/file_list.py'
-    print('[purple]-------------------------\nListing all files...')
-    time.sleep(0.25)
-    subprocess.call(f'"{PYTHON_PATH}" "{path}"')
-
-# this is a function responsible for running the propagation
-def do_propagate(): 
-    path = WDIR + r'/everything/toolsource/devtools/propagator.py'
-    print('[purple]-------------------------\nPropagating files...')
-    time.sleep(0.25)
-    subprocess.call(f'"{PYTHON_PATH}" "{path}"')
-
-# this is a function responsible for freezing pip
-def do_pip_freeze(): 
-    print('[purple]-------------------------\nGenerating requirements.txt...')
-    time.sleep(0.25)
-    os.system('pip freeze > requirements.txt')
-
-# this is a function responsible for generating pipfile.lock
-def do_gen_pipfile():
-    print('[purple]-------------------------\nGenerating Pipfile.lock...')
-    time.sleep(0.25)
-    os.system('pipenv lock')
-
-do_pip_freeze() # generates requirement.txt in root
+# generates requirement.txt in root
+# which contains all of the dependencies
+print('[purple]-------------------------\nGenerating requirements.txt...')
+time.sleep(0.25)
+os.system('pip freeze > requirements.txt')
 check_time()
-do_gen_pipfile() # generates pipfile.lock in root
+
+# generates Pipfile.lock in root
+# and also Pipfile if it does not exist
+# also contains dependencies but... different?
+print('[purple]-------------------------\nGenerating Pipfile.lock...')
+time.sleep(0.25)
+os.system('pipenv lock')
 check_time()
-do_propagate() # propagates crash handler / elevator templates (NOTE: BEFORE COMPILING)
+
+# propagates all template files (NOTE: BEFORE COMPILING)
+print('[purple]-------------------------\nPropagating files...')
+time.sleep(0.25)
+subprocess.call(f'"{PYTHON_PATH}" "{PROPAGATE_CALLPATH}"')
 check_time()
-# do_file_list() # lists all files existing (NOTE: DO AFTER COMPILING)
+
+# lists all files existing (NOTE: DO AFTER COMPILING)
+print('[purple]-------------------------\nListing all files...')
+time.sleep(0.25)
+subprocess.call(f'"{PYTHON_PATH}" "{FILELIST_CALLPATH}"')
+check_time()
 
 # print the final run time
 print(f'[green]Total build time: {time.time() - START} seconds')
