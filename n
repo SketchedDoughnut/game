@@ -1,0 +1,20 @@
+Every place that has tools:
+- everything/full-redo/update/tools
+    - backup.py (has to be different)
+    - copy.py (same)
+    - download.py (same)
+    - extract.py (same)
+    - rollback.py (has to be different)
+    - verify.py (same)
+- everything/main/setup/update/tools
+    - backup.py (has to be different)
+    - copy.py (same)
+    - download.py (same)
+    - extract.py (same)
+    - rollback.py (has to be different)
+    - verify.py (same)
+- everything/main/setup/FOMX/tools
+    - cmd_reader.py
+    - download.py
+    - extracter.py
+    - propagator.py

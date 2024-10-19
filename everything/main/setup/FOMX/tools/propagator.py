@@ -16,7 +16,7 @@ def propagate_crash_handler(wDir: str):
         r'everything\main\setup\setup_crash_handler.py'
     ]
 
-    crash_source = r'everything\toolsource\dev\crash_handler.py'
+    crash_source = r'everything\toolsource\devsource\crash_handler.py'
 
     f = open(wDir +  crash_source, 'r')
     crash_source_content = f.read()
@@ -41,7 +41,7 @@ def propagate_elevator(wDir: str):
         r'everything\main\top\container\index_elevator.py'
     ]
 
-    elevator_source = r'everything\toolsource\dev\elevator.py'
+    elevator_source = r'everything\toolsource\devsource\elevator.py'
 
     f = open(wDir + elevator_source, 'r')
     elevator_source_content = f.read()
