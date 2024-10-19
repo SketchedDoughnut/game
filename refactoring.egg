@@ -15,26 +15,33 @@ everything/:
         - verify.py DONE (10/18/24)
         - backups/: DONE (10/18/24)
   - toolsource/: DONE (10/11/24)
-    - dev/: DONE (10/11/24)
+    - devsource/: DONE (10/11/24)
+      - copy.py:  DONE (10/18/24)
       - crash_handler.py: DONE (10/11/24)
+      - download.py: DONE (10/18/24)
       - elevator.py: DONE (10/11/24)
+      - extract.py: DONE (10/18/24)
+      - verify.py: DONE (10/18/24)
     - devtools/: DONE (10/11/24)
+      - elevator.py: DONE (10/18/24)
       - file_list.py: DONE (10/11/24)
       - propagator.py: DONE (10/11/24)
+      - randomizer.py: DONE (10/18/24)
   - main/:
     - setup/:
       - delete.py:
       - fiesta-modern.py:
       - fiesta.py: 
       - setup_crash_handler.py: DONE (10/12/24)
-      - FOMX/: 
+      - FOMX/: DONE (10/18/24)
         - fomx.py: DONE (10/11/24)
-        - tools/:
+        - tools/: DONE (10/18/24)
           - __init__.py: DONE (10/11/24)
           - cmd_reader.py: DONE (10/11/24)
           - download.py: DONE (10/11/24)
+          - elevator.py: DONE (10/18/24)
           - extracter.py: DONE (10/11/24)
-          - propagator.py: 
+          - propagator.py: DONE (10/18/24)
       - update/:
         - fr_controller_setup.py: 
         - gd_controller.py: 
@@ -64,12 +71,12 @@ everything/:
             - conways-game/:
             - flappy/:
             - rhythm/: 
-- universe/:
-  - index/:
+- universe/: DONE (10/18/24)
+  - index/: DONE (10/18/24)
 - extra/: DONE (10/11/24)
   - archive/: DONE (10/11/24)
   - gitignore/: DONE (10/11/24)
   - extra games/: DONE (10/11/24)
   - text/: DONE (10/12/24)
-- documentation/: DONE (10/11/24)
+- documentation/:
 - build.py: 
