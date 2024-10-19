@@ -10,6 +10,7 @@ This files adheres to the commenting guidelines :D
 # builtin modules
 import subprocess
 import os
+import shutil
 import time
 
 # external modules
@@ -79,6 +80,7 @@ os.system(f'pyinstaller "{FIESTA_PATH}" --uac-admin')
 print('[purple]-------------------------\nBuilding full-redo.py...')
 os.system(f'pyinstaller "{FULL_REDO_PATH}" --uac-admin')
 # cleaning up 
+shutil.rmtree('build')
 check_time()
 
 
