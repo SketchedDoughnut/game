@@ -115,10 +115,11 @@ def propagate_elevator():
 def propagate_tools():
     # get all of the sources of the templates
     print('Getting contents of tool sources...')
-    with open(COPY_SOURCE, 'w') as f: copy_contents = f.read()
-    with open(DOWNLOAD_SOURCE, 'w') as f: download_contents = f.read()
-    with open(EXTRACT_SOURCE, 'w') as f: extract_contents = f.read()
-    with open(VERIFY_SOURCE, 'w') as f: verify_contents = f.read()
+    with open(COPY_SOURCE) as f: 
+        copy_contents = f.read()
+    with open(DOWNLOAD_SOURCE) as f: download_contents = f.read()
+    with open(EXTRACT_SOURCE) as f: extract_contents = f.read()
+    with open(VERIFY_SOURCE) as f: verify_contents = f.read()
 
     # iterate over all of the respective files and propagate
     for file in TOOL_FILES['copy']:
