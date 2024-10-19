@@ -107,7 +107,10 @@ shutil.rmtree(WDIR + '/dist')
 os.remove(WDIR + '/fiesta-modern.spec')
 os.remove(WDIR + '/fiesta.spec')
 os.remove(WDIR + '/full-redo.spec')
-timekeep.append(['Compiling files', timekeep[timekeep(len(timekeep) - 1)][1] + timekeep[timekeep(len(timekeep) - 2)][1] + timekeep[timekeep(len(timekeep) - 3)][1]])
+lastValue = timekeep[len(timekeep) - 1]
+secondlastValue = timekeep[len(timekeep) - 2]
+thirdLastValue = timekeep[len(timekeep) - 3]
+timekeep.append(['Compiling files', lastValue[1] + secondlastValue[1] + thirdLastValue[1]])
 
 
 # lists all files existing (NOTE: DO AFTER COMPILING)
