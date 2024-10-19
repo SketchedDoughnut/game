@@ -18,6 +18,7 @@ from rich import print
 
 # get the current working directory for future use
 # as well as establish the Python interpreter path
+# and other path variables
 # just in case
 WDIR = os.path.dirname(os.path.abspath(__file__))
 PYTHON_PATH = r'{}\\.venv\\Scripts\\python.exe'.format(WDIR)
@@ -27,6 +28,10 @@ FIESTA_MODERN_PATH = WDIR + r'/everything/main/setup/fiesta-modern.py'
 FIESTA_PATH = WDIR + r'/everything/main/setup/fiesta.py'
 FULL_REDO_PATH = WDIR + r'/everything/full-redo/full-redo.py'
 
+# establish a list that contains all of the stats
+# for the things that have finished
+timekeep = []
+
 # define a start time to time how long build takes
 # and how long each process takes
 START = time.time()
@@ -34,20 +39,21 @@ previous = time.time()
 
 # this is a function that checks how long a time has passed
 # then changes the counters
-def check_time(doPrint: bool = True):
+def check_time(doPrint: bool = True) -> float:
     global previous
     now = time.time()
     dif = now - previous
     if doPrint:
         print(f'[yellow]Time taken: {round(dif, 3)} seconds')
     previous = now
+    return dif
 
 # generates requirement.txt in root
 # which contains all of the dependencies
 print('[purple]-------------------------\nGenerating requirements.txt...')
 time.sleep(0.25)
 os.system('pip freeze > requirements.txt')
-check_time()
+timekeep.append(['requirements.txt', check_time()])
 
 # deletes the Pipfile and Pipfile.lock
 # and then generates Pipfile.lock in root
@@ -62,13 +68,13 @@ try:
 except FileNotFoundError: pass
 time.sleep(0.25)
 os.system('pipenv lock')
-check_time()
+timekeep.append(['Pipfile / Pipfile.lock', check_time()])
 
 # propagates all template files (NOTE: BEFORE COMPILING)
 print('[purple]-------------------------\nPropagating files...')
 time.sleep(0.25)
 subprocess.call(f'"{PYTHON_PATH}" "{PROPAGATE_CALLPATH}"')
-check_time()
+timekeep.append(['Propagating files', check_time()])
  
 # build fiesta-modern.py, fiesta.py, and full-redo.py into .exe files
 # and locate them in the proper area
@@ -90,7 +96,7 @@ shutil.copyfile('full-redo.spec', 'everything/full-redo/full-redo.spec')
 # cleaning up
 shutil.rmtree('build')
 shutil.rmtree('dist')
-check_time()
+timekeep.append(['Compiling files', check_time()])
 
 
 # lists all files existing (NOTE: DO AFTER COMPILING)
@@ -102,3 +108,9 @@ check_time()
 # print the final run time
 build_time = time.time() - START
 print(f'[green]Total build time: {round(build_time, 3)} seconds')
+statsMessage = ''
+for data in timekeep:
+    statsMessage += f'{data[0]}: {round(data[1], 3)} seconds'
+    statsMessage += '\n'
+statsMessage = statsMessage.removesuffix('\n')
+print(statsMessage)
