@@ -69,7 +69,7 @@ print('[purple]-------------------------\nPropagating files...')
 time.sleep(0.25)
 subprocess.call(f'"{PYTHON_PATH}" "{PROPAGATE_CALLPATH}"')
 check_time()
-
+ 
 # build fiesta-modern.py, fiesta.py, and full-redo.py into .exe files
 # and locate them in the proper area
 # also, copy over the _internal files
