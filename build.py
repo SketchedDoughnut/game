@@ -96,6 +96,9 @@ shutil.copyfile('full-redo.spec', 'everything/full-redo/full-redo.spec')
 # cleaning up
 shutil.rmtree('build')
 shutil.rmtree('dist')
+os.remove('fiesta-modern.spec')
+os.remove('fiesta.spec')
+os.remove('full-redo.spec')
 timekeep.append(['Compiling files', check_time()])
 
 
