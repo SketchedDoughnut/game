@@ -11,12 +11,13 @@ random
 EXTERNAL
 winshell
 requests
-urllib
 pygame
-tkinter
+pyinstaller
 
 UNKNOWN
 zipfile
 traceback
 win32com
 typing
+urllib
+tkinter
