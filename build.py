@@ -72,8 +72,8 @@ check_time()
 # build fiesta-modern.py, fiesta.py, and full-redo.py into .exe files
 # and locate them in the proper area
 # also, copy over the _internal files
-print('[purple]-------------------------\nBuilding fiesta-modern.py...')
-os.system(f'pyinstaller {FIESTA_MODERN_PATH} --uac-admin')
+# print('[purple]-------------------------\nBuilding fiesta-modern.py...')
+# os.system(f'pyinstaller {FIESTA_MODERN_PATH} --uac-admin')
 
 # lists all files existing (NOTE: DO AFTER COMPILING)
 # print('[purple]-------------------------\nListing all files...')
