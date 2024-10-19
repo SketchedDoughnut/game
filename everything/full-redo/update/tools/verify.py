@@ -1,7 +1,5 @@
 import os
 import json
-# import shutil
-# import time
 # import py_compile # interesting thing
 
 def verify_files(json_path, everything_path):

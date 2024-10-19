@@ -2,10 +2,6 @@
 import os
 import shutil
 import json
-import time
-
-# packages
-import requests
 
 # file imports
 from .tools import backup as b

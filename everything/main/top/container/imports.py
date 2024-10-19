@@ -7,8 +7,6 @@ This files adheres to the commenting guidelines :D
 # install files necessary with pip
 print('Installing pip files...')
 print('----------------------------')
-import pip
-import os
 import subprocess
 
 # also consider cryptography, pywin32 

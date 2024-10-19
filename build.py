@@ -7,7 +7,6 @@ This files adheres to the commenting guidelines :D
 
 # builtin modules
 import os
-import subprocess
 
 # get the current working directory for future use
 PYTHON_PATH = r'D:/VScode/SDA/game/.venv/Scripts/python.exe'

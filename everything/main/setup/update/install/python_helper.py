@@ -3,8 +3,6 @@
 # loading 
 import os
 import subprocess
-# import json
-# import time
 import requests
 import tkinter
 

@@ -9,8 +9,6 @@ This files adheres to the commenting guidelines :D
 
 # builtin modules
 import os
-import shutil
-import time
 import json
 
 # set up lists resembling a variety of different paths

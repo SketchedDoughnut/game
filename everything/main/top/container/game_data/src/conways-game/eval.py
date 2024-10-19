@@ -1,3 +1,5 @@
+import json
+
 ## classes
 class GenerateBoard:
     # init
@@ -15,7 +17,6 @@ class GenerateBoard:
             self.board = board
         else:
             f = open(load_map, 'r')
-            import json
             board = json.load(f)
             f.close()
             self.board = board

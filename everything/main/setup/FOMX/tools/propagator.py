@@ -57,7 +57,5 @@ def propagate_elevator(wDir: str):
 
 def propagate_master(wDir: str, elevator: bool = False, crash: bool = False):
     wDir += '\\'
-    if elevator:
-        propagate_elevator(wDir)
-    if crash:
-        propagate_crash_handler(wDir)
+    if elevator: propagate_elevator(wDir)
+    if crash: propagate_crash_handler(wDir)

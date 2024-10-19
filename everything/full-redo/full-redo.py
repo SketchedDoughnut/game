@@ -5,9 +5,6 @@ that will re-install ALL files. This is if fiesta.exe needs an update.
 
 # import builtin
 import os
-import shutil
-import time
-import json
 
 # import installed
 import requests

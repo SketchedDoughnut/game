@@ -34,7 +34,7 @@ everything/:
           - cmd_reader.py: DONE (10/11/24)
           - download.py: DONE (10/11/24)
           - extracter.py: DONE (10/11/24)
-          - propagater.py: DONE (10/11/24)
+          - propagater.py: 
       - update/:
         - fr_controller_setup.py: 
         - gd_controller.py: 

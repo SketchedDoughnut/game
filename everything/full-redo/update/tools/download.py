@@ -1,5 +1,4 @@
 import requests
-import os
 
 def download_latest_release(url, download_path):
     try:

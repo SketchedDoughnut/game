@@ -1,15 +1,14 @@
 import conway_crash_handler
 try:
     import pygame
-    import rendering
     import time
-    import threading
     import tkinter # window stuff
 
     # my files
     import eval
     import loads
     import start_screen
+    import rendering
 
 
 

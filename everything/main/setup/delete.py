@@ -2,7 +2,6 @@ import shutil
 import os
 import json
 import time
-import pip
 
 in_folder = False
 #################################################################

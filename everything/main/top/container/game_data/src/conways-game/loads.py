@@ -1,8 +1,5 @@
 # loading 
 import os
-# import json
-import time
-# import pygame
 import tkinter
 
 class Map_loader:

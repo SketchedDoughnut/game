@@ -97,7 +97,7 @@ class Crash_handler:
             print('Crash documented to:', f'{logged_path}')
             print('------------------')
             input('Enter anything to exit: ')
-            exit()
+            sys.exit()
 
     # this function gets the current timestamp
     # it also formats it to make it prettier, then returns

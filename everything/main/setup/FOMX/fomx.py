@@ -36,7 +36,6 @@ import requests
 
 # file imports
 import tools
-from tools import propagator
 
 # all constants
 # code to establish other constants is also done here

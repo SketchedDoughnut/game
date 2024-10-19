@@ -66,9 +66,7 @@ try:
     # other imports
     import pygame
     from pygame.locals import *
-    import random
     import time
-    import timeit
     import os
     import threading
     import json

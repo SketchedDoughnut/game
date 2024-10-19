@@ -1,5 +1,4 @@
 import shutil
-import os
 
 def copy(source_dir, destination_dir, mode='folder'):
     if mode == 'folder':

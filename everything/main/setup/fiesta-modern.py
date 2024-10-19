@@ -9,7 +9,6 @@ import sys
 # downloader imports(?)
 import json
 import requests
-import urllib.request 
 
 '''
 {

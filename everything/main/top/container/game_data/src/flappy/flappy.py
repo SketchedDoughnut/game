@@ -17,8 +17,6 @@ try:
     from pygame.locals import *
     import random
     import time
-    import os
-    import threading
 
     # init
     pygame.init()
