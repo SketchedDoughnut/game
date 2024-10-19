@@ -79,6 +79,7 @@ os.system(f'pyinstaller "{FIESTA_PATH}" --uac-admin')
 print('[purple]-------------------------\nBuilding full-redo.py...')
 os.system(f'pyinstaller "{FULL_REDO_PATH}" --uac-admin')
 # cleaning up 
+check_time()
 
 
 # lists all files existing (NOTE: DO AFTER COMPILING)
