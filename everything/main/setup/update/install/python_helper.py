@@ -7,27 +7,33 @@ import requests
 import tkinter
 
 TEXT_DATA = [
+    # first message
     """Welcome to the Python helper! This guide will help you through the process of installing Python. Click "Continue" to get started.""",
 
+    # more information
     """This project requires an installation of Python. It was specifically made on Python 3.11.""",
 
+    # how to check if they already have Python installed
     """To check if you have Python installed, open command prompt and enter -
     -> "python --version". 
 - You should get a version number back. This project can not guarantee proper functionality on versions other then Python 3.11.""",
 
+    # what to do if they do / don't have Python installed
     """If you have Python installed, click "Yes, I have Python" below. Otherwise, click "No, I do not have Python" below.""",
 
+    # If they do not have Python installed, tell them their options
     """You now have two options. You can install Python from the Microsoft store, or install it via this installer.
 If you use this installer, it will be quicker but slightly more complex. If you use the Microsoft Store, it will take longer but will be more simple.
 It is advised that you use this installer (I spent a long time making the system :c ).
 Select the respective buttons below to decide.""",
 
-"""The installer will now install the Python installation agent, and then run it. When the installer runs, on the first page, please select the option to
+    # If they choose to use the Python installer    
+    """The installer will now install the Python installation agent, and then run it. When the installer runs, on the first page, please select the option to
 "Install Now". As well as that, select the option to "Add Python.exe to PATH". These are both necessary settings for this project to work. On the last page, when Python
 is done installing, select the checkbox that allows Python to make its PATH variable longer. Then, you're done!""",
 
-"""
-Do the followng instructions to install Python from the Microsoft Store:
+    # If they want to install via the Microsoft store
+    """Do the following instructions to install Python from the Microsoft Store:
 - go to Microsoft Store
 - search "Python 3.11"
 - Install
@@ -40,9 +46,6 @@ text_1_2_2 = 'If you want to go back, click "Go back" below.'
 
 class Python_helper:
     def __init__(self, wDir):
-        # unrelated jazz
-        # self.wDir = os.path.dirname(os.path.abspath(__file__))
-        # self.wDir = os.path.dirname(os.path.dirname(self.wDir))
         self.wDir = wDir
 
         # tkinter stuff

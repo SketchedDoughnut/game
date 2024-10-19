@@ -13,7 +13,7 @@ everything/:
         - extract.py DONE (10/18/24)
         - rollback.py
         - verify.py DONE (10/18/24)
-        - backups/:
+        - backups/: DONE (10/18/24)
   - toolsource/: DONE (10/11/24)
     - dev/: DONE (10/11/24)
       - crash_handler.py: DONE (10/11/24)
@@ -27,9 +27,9 @@ everything/:
       - fiesta-modern.py:
       - fiesta.py: 
       - setup_crash_handler.py: DONE (10/12/24)
-      - FOMX/: DONE (10/11/24)
+      - FOMX/: 
         - fomx.py: DONE (10/11/24)
-        - tools/: DONE (10/11/24)
+        - tools/:
           - __init__.py: DONE (10/11/24)
           - cmd_reader.py: DONE (10/11/24)
           - download.py: DONE (10/11/24)
@@ -48,7 +48,7 @@ everything/:
           - extract.py: DONE (10/18/24)
           - rollback.py: 
           - verify.py: DONE (10/12/24)
-          - backups/:
+          - backups/: DONE (10/18/24)
     - top/:
       - starter.py: DONE (10/12/24)
       - container/:
