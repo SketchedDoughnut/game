@@ -48,12 +48,12 @@ CRASH_FILES = [
 TOOL_FILES = {
     'copy': [
         # compiled
-        r'everything\main\full-redo\update\tools\copy.py',
+        r'everything\\full-redo\update\tools\copy.py',
         
         # raw
         r'everything\main\setup\update\tools\copy.py'
     ],
-    'download.py': [
+    'download': [
         # compiled
         r'everything\full-redo\update\tools\download.py',
 
