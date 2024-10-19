@@ -39,13 +39,12 @@ previous = time.time()
 
 # this is a function that checks how long a time has passed
 # then changes the counters
-def check_time(doPrint: bool = True) -> float:
+def check_time(doPrint: bool = True, reset: bool = True) -> float:
     global previous
     now = time.time()
     dif = now - previous
-    if doPrint:
-        print(f'[yellow]Time taken: {round(dif, 3)} seconds')
-    previous = now
+    if doPrint: print(f'[yellow]Time taken: {round(dif, 3)} seconds')
+    if reset: previous = now
     return dif
 
 # generates requirement.txt in root
@@ -82,23 +81,32 @@ timekeep.append(['Propagating files', check_time()])
 print('[purple]-------------------------\nBuilding fiesta-modern.py...')
 time.sleep(0.25)
 os.system(f'pyinstaller "{FIESTA_MODERN_PATH}" --uac-admin')
+timekeep.append(['Compiling fiesta-modern.py', check_time(reset=False)])
 print('[purple]-------------------------\nBuilding fiesta.py...')
+time.sleep(0.25)
 os.system(f'pyinstaller "{FIESTA_PATH}" --uac-admin')
+timekeep.append(['Compiling fiesta.py', check_time(reset=False)])
 print('[purple]-------------------------\nBuilding full-redo.py...')
+time.sleep(0.25)
 os.system(f'pyinstaller "{FULL_REDO_PATH}" --uac-admin')
+timekeep.append(['Compiling full-redo.py', check_time(reset=False)])
 # transferring files to where they should go
-shutil.copytree('dist/fiesta-modern', 'everything/main/setup', dirs_exist_ok=True)
-shutil.copytree('dist/fiesta', 'everything/main/setup', dirs_exist_ok=True)
-shutil.copytree('dist/full-redo', 'everything/full-redo', dirs_exist_ok=True)
-shutil.copyfile('fiesta-modern.spec', 'everything/main/setup/fiesta-modern.spec')
-shutil.copyfile('fiesta.spec', 'everything/main/setup/fiesta.spec')
-shutil.copyfile('full-redo.spec', 'everything/full-redo/full-redo.spec')
+print('[purple]-------------------------\nCopying over folders / files...')
+time.sleep(0.25)
+shutil.copytree(WDIR + 'dist/fiesta-modern', WDIR + 'everything/main/setup', dirs_exist_ok=True)
+shutil.copytree(WDIR + 'dist/fiesta', WDIR + 'everything/main/setup', dirs_exist_ok=True)
+shutil.copytree(WDIR + 'dist/full-redo', WDIR + 'everything/full-redo', dirs_exist_ok=True)
+shutil.copyfile(WDIR + 'fiesta-modern.spec', WDIR + 'everything/main/setup/fiesta-modern.spec')
+shutil.copyfile(WDIR + 'fiesta.spec', WDIR + 'everything/main/setup/fiesta.spec')
+shutil.copyfile(WDIR + 'full-redo.spec', WDIR + 'everything/full-redo/full-redo.spec')
 # cleaning up
-shutil.rmtree('build')
-shutil.rmtree('dist')
-os.remove('fiesta-modern.spec')
-os.remove('fiesta.spec')
-os.remove('full-redo.spec')
+print('[purple]-------------------------\nCleaning up...')
+time.sleep(0.25)
+shutil.rmtree(WDIR + 'build')
+shutil.rmtree(WDIR + 'dist')
+os.remove(WDIR + 'fiesta-modern.spec')
+os.remove(WDIR + 'fiesta.spec')
+os.remove(WDIR + 'full-redo.spec')
 timekeep.append(['Compiling files', check_time()])
 
 
