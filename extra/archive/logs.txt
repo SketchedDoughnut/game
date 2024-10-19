@@ -1,2 +1,5 @@
 Archive logs started on: 10/11/24
 ------------------------------------------
+10/18/24
+This was the old requirements.txt, which has since been shaved down on 10/18/24 to only include the necessary modules. 
+This was done because the code needs to create a virtual environment, installing the dependencies within it.

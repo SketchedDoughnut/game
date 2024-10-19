@@ -1,0 +1,25 @@
+All builtin Builtin modules
+- os
+- sys
+- json
+- time
+- timeit
+- subprocess
+- threading
+- random
+- tkinter
+- traceback
+- zipfile
+- urllib
+
+All external Python modules (pip install ___)
+NOTE: If they have a name in parenthesis next to them, use that name instead
+- winshell
+- requests
+- pygame
+- pyinstaller
+- typing
+- rich
+- win32com (pywin32)
+- twine
+- build
