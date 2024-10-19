@@ -7,17 +7,18 @@ timeit
 subprocess
 threading
 random
+tkinter
 
 EXTERNAL
 winshell
 requests
 pygame
 pyinstaller
+typing
+rich
 
 UNKNOWN
-zipfile
 traceback
 win32com
-typing
 urllib
-tkinter
+zipfile
