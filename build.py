@@ -1,6 +1,8 @@
 '''
 This file is ran to make the building process more efficient.
-Yay!
+It includes propagating template files, building requirements.txt and Pipfile.lock,
+and most importantly, compiling the .exe files and putting them in their respective places.
+This makes stuff so much more easier- :D
 --------------------------------------------------------------------------------------------------------------------------------
 This files adheres to the commenting guidelines :D
 '''
