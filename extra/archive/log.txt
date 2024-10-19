@@ -4,3 +4,7 @@ Archive logs started on: 10/11/24
 This was the old requirements.txt, which has since been shaved down on 10/18/24 to only include the necessary modules. 
 This was done because the code needs to create a virtual environment, installing the dependencies within it.
 the Pipfile was moved as well since it was part of generating the Pipfile.lock, and a new one is now going to be used.
+
+10/19/24
+The flash installer was moved into the archive as it is outdated and does not work with the new systems. That is not to say
+it is not completely viable, but for now it will not be used. Thank you for your services, flash installer :salute:

@@ -119,7 +119,7 @@ time.sleep(0.25)
 subprocess.call(f'"{PYTHON_PATH}" "{FILELIST_CALLPATH}"')
 check_time()
 
-# print the final run time
+# print the final run time and other statistical info
 build_time = time.time() - START
 print(f'[purple]-------------------------\n[green]Total build time: {round(build_time, 3)} seconds')
 statsMessage = ''
