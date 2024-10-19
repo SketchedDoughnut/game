@@ -52,16 +52,16 @@ check_time()
 # and then generates Pipfile.lock in root
 # and also Pipfile if it does not exist
 # also contains dependencies but... different?
-print('[purple]-------------------------\nGenerating Pipfile.lock...')
-try:
-    # not sure why these two have to be deleted
-    # but it makes regenerating them work, I believe?
-    os.remove(WDIR + r'\Pipfile')
-    os.remove(WDIR + r'\Pipfile.lock')
-except FileNotFoundError: pass
-time.sleep(0.25)
-os.system('pipenv lock')
-check_time()
+# print('[purple]-------------------------\nGenerating Pipfile.lock...')
+# try:
+#     # not sure why these two have to be deleted
+#     # but it makes regenerating them work, I believe?
+#     os.remove(WDIR + r'\Pipfile')
+#     os.remove(WDIR + r'\Pipfile.lock')
+# except FileNotFoundError: pass
+# time.sleep(0.25)
+# os.system('pipenv lock')
+# check_time()
 
 # propagates all template files (NOTE: BEFORE COMPILING)
 print('[purple]-------------------------\nPropagating files...')
@@ -72,8 +72,14 @@ check_time()
 # build fiesta-modern.py, fiesta.py, and full-redo.py into .exe files
 # and locate them in the proper area
 # also, copy over the _internal files
-# print('[purple]-------------------------\nBuilding fiesta-modern.py...')
-# os.system(f'pyinstaller {FIESTA_MODERN_PATH} --uac-admin')
+print('[purple]-------------------------\nBuilding fiesta-modern.py...')
+os.system(f'pyinstaller "{FIESTA_MODERN_PATH}" --uac-admin')
+print('[purple]-------------------------\nBuilding fiesta.py...')
+os.system(f'pyinstaller "{FIESTA_PATH}" --uac-admin')
+print('[purple]-------------------------\nBuilding full-redo.py...')
+os.system(f'pyinstaller "{FULL_REDO_PATH}" --uac-admin')
+# cleaning up 
+
 
 # lists all files existing (NOTE: DO AFTER COMPILING)
 # print('[purple]-------------------------\nListing all files...')
