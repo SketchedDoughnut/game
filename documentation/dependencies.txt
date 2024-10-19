@@ -20,9 +20,12 @@ NOTE: If they have a name in parenthesis next to them, use that name instead
 - pyinstaller
 - rich
 - win32com (pywin32)
-- twine
-- build
 - pipenv
 
 All dependencies that have been removed
 - typing
+    - reason: not compatible with pyinstaller
+- twine
+    - reason: for packages, not this
+- build
+    - reason: for packages, not this

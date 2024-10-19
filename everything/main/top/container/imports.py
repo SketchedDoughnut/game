@@ -13,23 +13,30 @@ import subprocess
 # pip.main(['install', 'pygame', 'requests', 'pywin32', 'winshell'])
 # using new system that does not cause errors, as supposedly pip will be depreciated later
 # os.system('python -m pip install pygame requests pywin32 winshell')
-subprocess.run('python -m pip install pygame requests pywin32 winshell')
+# subprocess.run('python -m pip install pygame requests pywin32 winshell')
 
 # test every other import. Why? God knows why, man.
 # builtins
 print('----------------------------')
 print('Testing bulitins...')
-import timeit
-import time
-import shutil
+import os
+import sys
 import json
-import os 
+import time
+import timeit
+import subprocess
 import threading
 import random
+import tkinter
+import traceback
+import zipfile
+import urllib
 
-# installed
+# externals
 print('Testing installed...')
-import pygame
-from pygame.locals import *
+import winshell
 import requests
-# import winshell
+import pygame
+import rich
+import win32com
+import pipenv

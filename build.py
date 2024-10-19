@@ -32,6 +32,13 @@ FULL_REDO_PATH = WDIR + r'/everything/full-redo/full-redo.py'
 # for the things that have finished
 timekeep = []
 
+# establish variables that control what parts run
+GEN_REQUIREMENTS = True
+GEN_PIPFILES = True
+PROPAGATE_FILES = False
+COMPILE_FILES = False
+LIST_FILES = False
+
 # define a start time to time how long build takes
 # and how long each process takes
 START = time.time()
@@ -49,75 +56,80 @@ def check_time(doPrint: bool = True, reset: bool = True) -> float:
 
 # generates requirement.txt in root
 # which contains all of the dependencies
-print('[purple]-------------------------\nGenerating requirements.txt...')
-time.sleep(0.25)
-os.system('pip freeze > requirements.txt')
-timekeep.append(['requirements.txt', check_time()])
+if GEN_REQUIREMENTS:
+    print('[purple]-------------------------\nGenerating requirements.txt...')
+    time.sleep(0.25)
+    os.system('pip freeze > requirements.txt')
+    timekeep.append(['requirements.txt', check_time()])
 
 # deletes the Pipfile and Pipfile.lock
 # and then generates Pipfile.lock in root
 # and also Pipfile if it does not exist
 # also contains dependencies but... different?
-print('[purple]-------------------------\nGenerating Pipfile.lock...')
-try:
-    # not sure why these two have to be deleted
-    # but it makes regenerating them work, I believe?
-    os.remove(WDIR + r'\Pipfile')
-    os.remove(WDIR + r'\Pipfile.lock')
-except FileNotFoundError: pass
-time.sleep(0.25)
-os.system('pipenv lock')
-timekeep.append(['Pipfile / Pipfile.lock', check_time()])
+if GEN_PIPFILES:
+    print('[purple]-------------------------\nGenerating Pipfile.lock...')
+    try:
+        # not sure why these two have to be deleted
+        # but it makes regenerating them work, I believe?
+        os.remove(WDIR + r'\Pipfile')
+        os.remove(WDIR + r'\Pipfile.lock')
+    except FileNotFoundError: pass
+    time.sleep(0.25)
+    os.system('pipenv lock')
+    timekeep.append(['Pipfile / Pipfile.lock', check_time()])
 
 # propagates all template files (NOTE: BEFORE COMPILING)
-print('[purple]-------------------------\nPropagating files...')
-time.sleep(0.25)
-subprocess.call(f'"{PYTHON_PATH}" "{PROPAGATE_CALLPATH}"')
-timekeep.append(['Propagating files', check_time()])
+if PROPAGATE_FILES:
+    print('[purple]-------------------------\nPropagating files...')
+    time.sleep(0.25)
+    subprocess.call(f'"{PYTHON_PATH}" "{PROPAGATE_CALLPATH}"')
+    timekeep.append(['Propagating files', check_time()])
  
 # build fiesta-modern.py, fiesta.py, and full-redo.py into .exe files
 # and locate them in the proper area
 # also, copy over the _internal files
-print('[purple]-------------------------\nBuilding fiesta-modern.py...')
-time.sleep(0.25)
-os.system(f'pyinstaller "{FIESTA_MODERN_PATH}" --uac-admin')
-timekeep.append(['Compiling fiesta-modern.py', check_time()])
-print('[purple]-------------------------\nBuilding fiesta.py...')
-time.sleep(0.25)
-os.system(f'pyinstaller "{FIESTA_PATH}" --uac-admin')
-timekeep.append(['Compiling fiesta.py', check_time()])
-print('[purple]-------------------------\nBuilding full-redo.py...')
-time.sleep(0.25)
-os.system(f'pyinstaller "{FULL_REDO_PATH}" --uac-admin')
-timekeep.append(['Compiling full-redo.py', check_time()])
-# transferring files to where they should go
-print('[purple]-------------------------\nCopying over folders / files...')
-time.sleep(0.25)
-shutil.copytree(WDIR + '/dist/fiesta-modern', WDIR + '/everything/main/setup', dirs_exist_ok=True)
-shutil.copytree(WDIR + '/dist/fiesta', WDIR + '/everything/main/setup', dirs_exist_ok=True)
-shutil.copytree(WDIR + '/dist/full-redo', WDIR + '/everything/full-redo', dirs_exist_ok=True)
-shutil.copyfile(WDIR + '/fiesta-modern.spec', WDIR + '/everything/main/setup/fiesta-modern.spec')
-shutil.copyfile(WDIR + '/fiesta.spec', WDIR + '/everything/main/setup/fiesta.spec')
-shutil.copyfile(WDIR + '/full-redo.spec', WDIR + '/everything/full-redo/full-redo.spec')
-# cleaning up
-print('[purple]-------------------------\nCleaning up...')
-time.sleep(0.25)
-shutil.rmtree(WDIR + '/build')
-shutil.rmtree(WDIR + '/dist')
-os.remove(WDIR + '/fiesta-modern.spec')
-os.remove(WDIR + '/fiesta.spec')
-os.remove(WDIR + '/full-redo.spec')
-lastValue = timekeep[len(timekeep) - 1]
-secondlastValue = timekeep[len(timekeep) - 2]
-thirdLastValue = timekeep[len(timekeep) - 3]
-timekeep.append(['Compiling files', lastValue[1] + secondlastValue[1] + thirdLastValue[1]])
+if COMPILE_FILES:
+    print('[purple]-------------------------\nBuilding fiesta-modern.py...')
+    time.sleep(0.25)
+    os.system(f'pyinstaller "{FIESTA_MODERN_PATH}" --uac-admin')
+    timekeep.append(['Compiling fiesta-modern.py', check_time()])
+    print('[purple]-------------------------\nBuilding fiesta.py...')
+    time.sleep(0.25)
+    os.system(f'pyinstaller "{FIESTA_PATH}" --uac-admin')
+    timekeep.append(['Compiling fiesta.py', check_time()])
+    print('[purple]-------------------------\nBuilding full-redo.py...')
+    time.sleep(0.25)
+    os.system(f'pyinstaller "{FULL_REDO_PATH}" --uac-admin')
+    timekeep.append(['Compiling full-redo.py', check_time()])
+    # transferring files to where they should go
+    print('[purple]-------------------------\nCopying over folders / files...')
+    time.sleep(0.25)
+    shutil.copytree(WDIR + '/dist/fiesta-modern', WDIR + '/everything/main/setup', dirs_exist_ok=True)
+    shutil.copytree(WDIR + '/dist/fiesta', WDIR + '/everything/main/setup', dirs_exist_ok=True)
+    shutil.copytree(WDIR + '/dist/full-redo', WDIR + '/everything/full-redo', dirs_exist_ok=True)
+    shutil.copyfile(WDIR + '/fiesta-modern.spec', WDIR + '/everything/main/setup/fiesta-modern.spec')
+    shutil.copyfile(WDIR + '/fiesta.spec', WDIR + '/everything/main/setup/fiesta.spec')
+    shutil.copyfile(WDIR + '/full-redo.spec', WDIR + '/everything/full-redo/full-redo.spec')
+    # cleaning up
+    print('[purple]-------------------------\nCleaning up...')
+    time.sleep(0.25)
+    shutil.rmtree(WDIR + '/build')
+    shutil.rmtree(WDIR + '/dist')
+    os.remove(WDIR + '/fiesta-modern.spec')
+    os.remove(WDIR + '/fiesta.spec')
+    os.remove(WDIR + '/full-redo.spec')
+    lastValue = timekeep[len(timekeep) - 1]
+    secondlastValue = timekeep[len(timekeep) - 2]
+    thirdLastValue = timekeep[len(timekeep) - 3]
+    timekeep.append(['Compiling files', lastValue[1] + secondlastValue[1] + thirdLastValue[1]])
 
 
 # lists all files existing (NOTE: DO AFTER COMPILING)
-print('[purple]-------------------------\nListing all files...')
-time.sleep(0.25)
-subprocess.call(f'"{PYTHON_PATH}" "{FILELIST_CALLPATH}"')
-check_time()
+if LIST_FILES:
+    print('[purple]-------------------------\nListing all files...')
+    time.sleep(0.25)
+    subprocess.call(f'"{PYTHON_PATH}" "{FILELIST_CALLPATH}"')
+    check_time()
 
 # print the final run time and other statistical info
 build_time = time.time() - START
