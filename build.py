@@ -91,10 +91,10 @@ check_time()
 
 
 # lists all files existing (NOTE: DO AFTER COMPILING)
-# print('[purple]-------------------------\nListing all files...')
-# time.sleep(0.25)
-# subprocess.call(f'"{PYTHON_PATH}" "{FILELIST_CALLPATH}"')
-# check_time()
+print('[purple]-------------------------\nListing all files...')
+time.sleep(0.25)
+subprocess.call(f'"{PYTHON_PATH}" "{FILELIST_CALLPATH}"')
+check_time()
 
 # print the final run time
 build_time = time.time() - START
