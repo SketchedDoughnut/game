@@ -82,7 +82,7 @@ os.system(f'pyinstaller "{FULL_REDO_PATH}" --uac-admin')
 # cleaning up 
 shutil.rmtree('build')
 shutil.copytree('dist/fiesta', 'dist/documentation')
-shutil.rmtree('dist')
+# shutil.rmtree('dist')
 check_time()
 
 
