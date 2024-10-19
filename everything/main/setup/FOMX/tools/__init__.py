@@ -9,4 +9,4 @@ This files adheres to the commenting guidelines :D
 from .cmd_reader import read_commands
 from .download import download_latest_release
 from .extracter import extract
-from .propagator import propagate_master
+from .propagator import propagate_self, propagate_crash_handler, propagate_elevator, propagate_tools

@@ -8,19 +8,27 @@ Therefore, it is most important to call on this before releasing a build!
 --------------------------------------------------------------------------------------------------------------------------------
 This files adheres to the commenting guidelines :D
 '''
+# builtin modules
+import os
 
 # external modules
 from rich import print
 
+# file imports
+import elevator
+
 # these are the sources for template files
 # where the the main code is pulled from, and duplicated to any templates
-DEVSOURCE_STEM = r'everything\toolsource\devsource'
+ABS_ROOT_STEM = elevator.Elevator.elevated + '\\'
+ABS_EVERYTHING_STEM = elevator.Elevator.elevated_everything
+DEVSOURCE_STEM = ABS_EVERYTHING_STEM + r'\toolsource\devsource'
 CRASH_SOURCE = DEVSOURCE_STEM + r'\crash_handler.py'
 ELEVATOR_SOURCE = DEVSOURCE_STEM + r'\elevator.py'
 COPY_SOURCE = DEVSOURCE_STEM + r'\copy.py'
 DOWNLOAD_SOURCE = DEVSOURCE_STEM + r'\download.py'
 EXTRACT_SOURCE = DEVSOURCE_STEM + r'\extract.py'
 VERIFY_SOURCE = DEVSOURCE_STEM + r'\verify.py'
+SELF_SOURCE = os.path.join(os.path.dirname(DEVSOURCE_STEM), 'devtools\propagator.py')
 
 # for below,
 # any file that is labeled "raw" means it stays as a Python file.
@@ -32,7 +40,9 @@ VERIFY_SOURCE = DEVSOURCE_STEM + r'\verify.py'
 # this is the list of all the raw / compiled .py files to propagate the elevator to
 ELEVATOR_FILES = [
     # raw
-    r'everything\main\top\container\index_elevator.py'
+    r'everything\main\top\container\index_elevator.py',
+    r'everything\main\setup\FOMX\tools\elevator.py',
+    r'everything\toolsource\devtools\elevator.py'
     ]
 
 # this is the list of all of the raw / compiled .py files to propagate the crash handler to
@@ -51,7 +61,7 @@ CRASH_FILES = [
 TOOL_FILES = {
     'copy': [
         # compiled
-        r'everything\\full-redo\update\tools\copy.py',
+        r'everything\full-redo\update\tools\copy.py',
         
         # raw
         r'everything\main\setup\update\tools\copy.py'
@@ -81,6 +91,12 @@ TOOL_FILES = {
     ]
 }
 
+# this is a list containing all of the raw / compiled .py files to propagate the propagator to :P
+PROPAGATE_FILES = [
+    # raw 
+    r'everything\main/setup/FOMX/tools/propagator.py'
+]
+
 # this propagates the crash handler template
 # to all of its respective files (listed below)
 def propagate_crash_handler():
@@ -93,10 +109,10 @@ def propagate_crash_handler():
 
     # propagating template to raw files
     for file in CRASH_FILES:
-        f = open(file, 'w')
+        f = open(ABS_ROOT_STEM + file, 'w')
         f.write(crash_source_content)
         f.close()
-        print('- Propogating to file:', file)
+        print('- Propogating to file:', ABS_ROOT_STEM + file)
 
 # this does the same as above, but propagates the elevator file
 # to all of its respective files (listed below)
@@ -109,10 +125,10 @@ def propagate_elevator():
 
     # propagating templates to raw files
     for file in ELEVATOR_FILES:
-        f = open(file, 'w')
+        f = open(ABS_ROOT_STEM + file, 'w')
         f.write(elevator_source_content)
         f.close()
-        print('- Propogating to file:', file)
+        print('- Propogating to file:', ABS_ROOT_STEM + file)
 
 # this function does the same as above, except it propagates 
 # all of the tool files
@@ -120,28 +136,41 @@ def propagate_elevator():
 def propagate_tools():
     # get all of the sources of the templates
     print('[blue]Getting contents of tool sources...')
-    with open(COPY_SOURCE) as f: 
-        copy_contents = f.read()
+    with open(COPY_SOURCE) as f: copy_contents = f.read()
     with open(DOWNLOAD_SOURCE) as f: download_contents = f.read()
     with open(EXTRACT_SOURCE) as f: extract_contents = f.read()
     with open(VERIFY_SOURCE) as f: verify_contents = f.read()
 
     # iterate over all of the respective files and propagate
     for file in TOOL_FILES['copy']:
-        print('- Propogating to file:', file)
-        with open(file, 'w') as f: f.write(copy_contents)
+        print('- Propogating to file:', ABS_ROOT_STEM + file)
+        with open(ABS_ROOT_STEM + file, 'w') as f: f.write(copy_contents)
     for file in TOOL_FILES['download']:
-        print('- Propogating to file:', file)
-        with open(file, 'w') as f: f.write(download_contents)
+        print('- Propogating to file:', ABS_ROOT_STEM + file)
+        with open(ABS_ROOT_STEM + file, 'w') as f: f.write(download_contents)
     for file in TOOL_FILES['extract']: 
-        print('- Propogating to file:', file)
-        with open(file, 'w') as f: f.write(extract_contents)
+        print('- Propogating to file:', ABS_ROOT_STEM + file)
+        with open(ABS_ROOT_STEM + file, 'w') as f: f.write(extract_contents)
     for file in TOOL_FILES['verify']:
-        print('- Propogating to file:', file)
-        with open(file, 'w') as f: f.write(verify_contents)
+        print('- Propogating to file:', ABS_ROOT_STEM + file)
+        with open(ABS_ROOT_STEM + file, 'w') as f: f.write(verify_contents)
 
+def propagate_self():
+    # get the source from the template
+    print('[blue]Getting contents of propagator sources...')
+    with open(SELF_SOURCE) as f: source_contents = f.read()
 
-# calling on both functions when this file is ran
-propagate_crash_handler()
-propagate_elevator()
-propagate_tools()
+    # iterate over all of the respective files and propagate
+    for file in PROPAGATE_FILES:
+        print('- Propagating to file:', ABS_ROOT_STEM + file)
+        with open(ABS_ROOT_STEM + file, 'w') as f: f.write(source_contents)
+
+# calling on all functions when this file is ran
+# this will only run if the file is being ran
+# if it is being imported or otherwise used, 
+# the following won't run
+if __name__ == '__main__':
+    propagate_crash_handler()
+    propagate_elevator()
+    propagate_tools()
+    propagate_self()

@@ -5,6 +5,8 @@ the end of the path is everything/.
 It uses a modified version of the path tools from the crash handler. Due to this, 
 some of the comments are merely commented over to save some time.
 Thats all!
+NOTE: This copy is unique to the propagator, and is not propagated to.
+It needs to be updated manually. This is unfortunately something that has to be done, for now D:
 --------------------------------------------------------------------------------------------------------------------------------
 This files adheres to the commenting guidelines :D
 '''
@@ -76,7 +78,7 @@ class Elevatorr:
         self.wDir = self.path_tools.convert_path(self.raw_wDir, '/')
         self.elevated_universe = self.elevate_path(self.wDir)
         self.elevated_everything = (self.elevated_universe.removesuffix('/universe')) + '/everything'
-        self.elevated = (self.elevated_universe.removesuffix('/universe'))
+        self.elevated = self.elevated_universe.removesuffix('/universe')
 
     def elevate_path(self, path) -> str:
         elevated_list = self.path_tools.promote_path(path)

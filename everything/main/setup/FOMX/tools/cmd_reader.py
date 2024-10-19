@@ -13,9 +13,10 @@ import shutil
 # function for reading commands from a text file
 # and executing them (besides propagation)
 def read_commands(above_everything_dir: str, cmd_dir: str) -> tuple[bool, bool]:
+
     # establish the variable representing what to propagate
     # this is returned once the function is done
-    propagate = (False, False)
+    propagate = (False, False, False)
 
     # access all of the commands, into a list of each line
     f = open(cmd_dir, 'r')
@@ -58,11 +59,11 @@ def read_commands(above_everything_dir: str, cmd_dir: str) -> tuple[bool, bool]:
             elif cmd == 'propagate':
                 elevator = propagate[0]
                 crash = propagate[1]
-                if dir == 'crash':
-                    crash = True
-                elif dir == 'elevator':
-                    elevator = True
-                propagate = (elevator, crash)
+                tools = propagate[2]
+                if dir == 'crash': crash = True
+                elif dir == 'elevator': elevator = True
+                elif dir == 'tools': tools = True
+                propagate = (elevator, crash, tools)
 
         except Exception as e:
             print('cmd error:', e)

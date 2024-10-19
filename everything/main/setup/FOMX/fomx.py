@@ -19,7 +19,8 @@ FOMX is capable of a variety of things, such as these (in order of execution):
     - copying over files from patch
     - propogating elevator / crash handler if necessary
     - post cleanup
-
+For reference on how to configure FOMX, go here:
+- https://github.com/SketchedDoughnut/SDA-FOMX/blob/master/data/necessary/guide.txt
 --------------------------------------------------------------------------------------------------------------------------------
 This files adheres to the commenting guidelines :D
 '''
@@ -59,6 +60,7 @@ BODY = ''
 for word in split_data:
     BODY += word
     BODY += " "
+BODY = BODY.removesuffix(" ")
 TMP_PATH = os.path.join(WDIR, 'tmp') # for the tmp folder
 ZIP_PATH = f'{TMP_PATH}/latest_release.zip' # for downloading the .zip online
 COPY_LOCATION = f'{TMP_PATH}/SketchedDoughnut-SDA-FOMX-{LATEST_LABEL}/data' # for copying data
@@ -238,17 +240,15 @@ for file in formatted_list:
         print(f'- wrote content from "{source}" to "{dest}"')
     
 # if the propogater is enabled, then this runs
-# it goes through propogate_data, and sees what needs to be propogated
-# I am not sure why this is in a for loop
-# or why any of this is like this
-# TODO: fix this code to not be bad, why is it in a for loop?
+# it will propagate all template files to all other locations
 print('---------------')
-for elem in propagate_data:
-    if elem == True:
-        print('FOMX: running propagator, crash, elevator flags are:', propagate_data)
-        tools.propagate_master(ABOVE_EVERYTHING_DIR, propagate_data[0], propagate_data[1])
-        print('---------------')
-        break # ran propogator, dont want to run again
+if True in propagate_data:
+    print('FOMX: running propagator, flags are:', propagate_data)
+    # tools.propagate_master(ABOVE_EVERYTHING_DIR, propagate_data[0], propagate_data[1])
+    if propagate_data[0]: tools.propagate_elevator()
+    if propagate_data[1]: tools.propagate_crash_handler()
+    if propagate_data[2]: tools.propagate_tools()
+    print('---------------')
 
 # after everything done, attempt to clean up the tmp folder
 # if this fails, its fine as it will be cleaned up next time
