@@ -121,7 +121,7 @@ check_time()
 
 # print the final run time
 build_time = time.time() - START
-print(f'[green]Total build time: {round(build_time, 3)} seconds')
+print(f'[purple]-------------------------\n[green]Total build time: {round(build_time, 3)} seconds')
 statsMessage = ''
 for data in timekeep:
     statsMessage += f'{data[0]}: {round(data[1], 3)} seconds'
