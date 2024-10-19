@@ -81,7 +81,7 @@ os.system(f'pyinstaller "{FIESTA_MODERN_PATH}" --uac-admin')
 # os.system(f'pyinstaller "{FULL_REDO_PATH}" --uac-admin')
 # cleaning up 
 shutil.rmtree('build')
-shutil.copytree('dist/fiesta-modern', 'dist/documentation')
+shutil.copytree('dist/fiesta-modern', 'documentation')
 # shutil.rmtree('dist')
 check_time()
 
