@@ -8,26 +8,31 @@ This files adheres to the commenting guidelines :D
 # builtin modules
 import os
 
+# external modules
+from rich import print
+
 # get the current working directory for future use
 PYTHON_PATH = r'D:/VScode/SDA/game/.venv/Scripts/python.exe'
 WDIR = os.path.dirname(os.path.abspath(__file__))
 
 # this is a function responsible for running the file lsit
-def do_file_list():
-    callpath = WDIR + r'/everything/toolsource/devtools/file_list.py'
-    os.system(f"{PYTHON_PATH} {callpath}")
+def do_file_list(): 
+    print('[purple] Listing all files...')
+    os.system(f"{PYTHON_PATH} {WDIR + r'/everything/toolsource/devtools/file_list.py'}")
 
 # this is a function responsible for running the propagation
 def do_propagate(): 
-    callpath = WDIR + r'/everything/toolsource/devtools/propagator.py'
-    os.system(f"{PYTHON_PATH} {callpath}")
+    print('[purple] Propagating files...')
+    os.system(f"{PYTHON_PATH} {WDIR + r'/everything/toolsource/devtools/propagator.py'}")
 
 # this is a function responsible for freezing pip
-def do_pip_freeze():
+def do_pip_freeze(): 
+    print('[purple] Generating requirements.txt...')
     os.system('pip freeze > requirements.txt')
 
 # this is a function responsible for generating pipfile.lock
 def do_gen_pipfile():
+    print('[purple] Generating Pipfile.lock...')
     os.system('pipenv lock')
 
 do_pip_freeze() # generates requirement.txt in root
