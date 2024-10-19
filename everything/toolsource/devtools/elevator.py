@@ -5,8 +5,6 @@ the end of the path is everything/.
 It uses a modified version of the path tools from the crash handler. Due to this, 
 some of the comments are merely commented over to save some time.
 Thats all!
-NOTE: This copy is unique to the propagator, and is not propagated to.
-It needs to be updated manually. This is unfortunately something that has to be done, for now D:
 --------------------------------------------------------------------------------------------------------------------------------
 This files adheres to the commenting guidelines :D
 '''

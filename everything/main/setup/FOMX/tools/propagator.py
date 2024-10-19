@@ -41,7 +41,8 @@ SELF_SOURCE = os.path.join(os.path.dirname(DEVSOURCE_STEM), 'devtools\propagator
 ELEVATOR_FILES = [
     # raw
     r'everything\main\top\container\index_elevator.py',
-    r'everything\main\setup\FOMX\tools\elevator.py'
+    r'everything\main\setup\FOMX\tools\elevator.py',
+    r'everything\toolsource\devtools\elevator.py'
     ]
 
 # this is the list of all of the raw / compiled .py files to propagate the crash handler to
