@@ -9,6 +9,9 @@ Therefore, it is most important to call on this before releasing a build!
 This files adheres to the commenting guidelines :D
 '''
 
+# external modules
+from rich import print
+
 # these are the sources for template files
 # where the the main code is pulled from, and duplicated to any templates
 DEVSOURCE_STEM = r'everything\toolsource\devsource'
@@ -81,7 +84,7 @@ TOOL_FILES = {
 def propagate_crash_handler():
 
     # getting the contents of the template
-    print('Getting contents of crash handler source...')
+    print('[blue]Getting contents of crash handler source...')
     f = open(CRASH_SOURCE, 'r')
     crash_source_content = f.read()
     f.close()
@@ -91,13 +94,13 @@ def propagate_crash_handler():
         f = open(file, 'w')
         f.write(crash_source_content)
         f.close()
-        print('Propogating to file:', file)
+        print('- Propogating to file:', file)
 
 # this does the same as above, but propagates the elevator file
 # to all of its respective files (listed below)
 def propagate_elevator():
     # getting the contents of the tempalte
-    print('Getting contents of elevator source...')
+    print('[blue]Getting contents of elevator source...')
     f = open(ELEVATOR_SOURCE, 'r')
     elevator_source_content = f.read()
     f.close()
@@ -107,14 +110,14 @@ def propagate_elevator():
         f = open(file, 'w')
         f.write(elevator_source_content)
         f.close()
-        print('Propogating to file:', file)
+        print('- Propogating to file:', file)
 
 # this function does the same as above, except it propagates 
 # all of the tool files
 # which makes maintanence easier as well :D
 def propagate_tools():
     # get all of the sources of the templates
-    print('Getting contents of tool sources...')
+    print('[blue]Getting contents of tool sources...')
     with open(COPY_SOURCE) as f: 
         copy_contents = f.read()
     with open(DOWNLOAD_SOURCE) as f: download_contents = f.read()
@@ -123,16 +126,16 @@ def propagate_tools():
 
     # iterate over all of the respective files and propagate
     for file in TOOL_FILES['copy']:
-        print('Propogating to file:', file)
+        print('- Propogating to file:', file)
         with open(file, 'w') as f: f.write(copy_contents)
     for file in TOOL_FILES['download']:
-        print('Propogating to file:', file)
+        print('- Propogating to file:', file)
         with open(file, 'w') as f: f.write(download_contents)
     for file in TOOL_FILES['extract']: 
-        print('Propogating to file:', file)
+        print('- Propogating to file:', file)
         with open(file, 'w') as f: f.write(extract_contents)
     for file in TOOL_FILES['verify']:
-        print('Propogating to file:', file)
+        print('- Propogating to file:', file)
         with open(file, 'w') as f: f.write(verify_contents)
 
 
