@@ -18,9 +18,11 @@ NOTE: If they have a name in parenthesis next to them, use that name instead
 - requests
 - pygame
 - pyinstaller
-- typing
 - rich
 - win32com (pywin32)
 - twine
 - build
 - pipenv
+
+All dependencies that have been removed
+- typing
