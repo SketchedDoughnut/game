@@ -75,13 +75,13 @@ check_time()
 # also, copy over the _internal files
 print('[purple]-------------------------\nBuilding fiesta-modern.py...')
 os.system(f'pyinstaller "{FIESTA_MODERN_PATH}" --uac-admin')
-print('[purple]-------------------------\nBuilding fiesta.py...')
-os.system(f'pyinstaller "{FIESTA_PATH}" --uac-admin')
-print('[purple]-------------------------\nBuilding full-redo.py...')
-os.system(f'pyinstaller "{FULL_REDO_PATH}" --uac-admin')
+# print('[purple]-------------------------\nBuilding fiesta.py...')
+# os.system(f'pyinstaller "{FIESTA_PATH}" --uac-admin')
+# print('[purple]-------------------------\nBuilding full-redo.py...')
+# os.system(f'pyinstaller "{FULL_REDO_PATH}" --uac-admin')
 # cleaning up 
 shutil.rmtree('build')
-shutil.copytree('dist/fiesta', 'dist/documentation')
+shutil.copytree('dist/fiesta-modern', 'dist/documentation')
 # shutil.rmtree('dist')
 check_time()
 
