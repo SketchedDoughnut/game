@@ -58,10 +58,11 @@ subprocess.call(f'"{PYTHON_PATH}" "{PROPAGATE_CALLPATH}"')
 check_time()
 
 # lists all files existing (NOTE: DO AFTER COMPILING)
-print('[purple]-------------------------\nListing all files...')
-time.sleep(0.25)
-subprocess.call(f'"{PYTHON_PATH}" "{FILELIST_CALLPATH}"')
-check_time()
+# print('[purple]-------------------------\nListing all files...')
+# time.sleep(0.25)
+# subprocess.call(f'"{PYTHON_PATH}" "{FILELIST_CALLPATH}"')
+# check_time()
 
 # print the final run time
-print(f'[green]Total build time: {time.time() - START} seconds')
+build_time = time.time() - START
+print(f'[green]Total build time: {round(build_time, 3)} seconds')
