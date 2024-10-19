@@ -53,16 +53,16 @@ check_time()
 # and then generates Pipfile.lock in root
 # and also Pipfile if it does not exist
 # also contains dependencies but... different?
-# print('[purple]-------------------------\nGenerating Pipfile.lock...')
-# try:
-#     # not sure why these two have to be deleted
-#     # but it makes regenerating them work, I believe?
-#     os.remove(WDIR + r'\Pipfile')
-#     os.remove(WDIR + r'\Pipfile.lock')
-# except FileNotFoundError: pass
-# time.sleep(0.25)
-# os.system('pipenv lock')
-# check_time()
+print('[purple]-------------------------\nGenerating Pipfile.lock...')
+try:
+    # not sure why these two have to be deleted
+    # but it makes regenerating them work, I believe?
+    os.remove(WDIR + r'\Pipfile')
+    os.remove(WDIR + r'\Pipfile.lock')
+except FileNotFoundError: pass
+time.sleep(0.25)
+os.system('pipenv lock')
+check_time()
 
 # propagates all template files (NOTE: BEFORE COMPILING)
 print('[purple]-------------------------\nPropagating files...')
@@ -84,9 +84,9 @@ os.system(f'pyinstaller "{FULL_REDO_PATH}" --uac-admin')
 shutil.copytree('dist/fiesta-modern', 'everything/main/setup', dirs_exist_ok=True)
 shutil.copytree('dist/fiesta', 'everything/main/setup', dirs_exist_ok=True)
 shutil.copytree('dist/full-redo', 'everything/full-redo', dirs_exist_ok=True)
-shutil.copyfile('fiesta-modern.spec', 'everything/main/setup')
-shutil.copyfile('fiesta.spec', 'everything/main/setup')
-shutil.copyfile('full-redo.spec', 'everything/full-redo')
+shutil.copyfile('fiesta-modern.spec', 'everything/main/setup/fiesta-modern.spec')
+shutil.copyfile('fiesta.spec', 'everything/main/setup/fiesta.spec')
+shutil.copyfile('full-redo.spec', 'everything/full-redo/full-redo.spec')
 # cleaning up
 shutil.rmtree('build')
 shutil.rmtree('dist')
