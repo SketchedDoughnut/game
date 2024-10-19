@@ -22,6 +22,9 @@ WDIR = os.path.dirname(os.path.abspath(__file__))
 PYTHON_PATH = r'{}\\.venv\\Scripts\\python.exe'.format(WDIR)
 PROPAGATE_CALLPATH = WDIR + r'/everything/toolsource/devtools/propagator.py'
 FILELIST_CALLPATH = WDIR + r'/everything/toolsource/devtools/file_list.py'
+FIESTA_MODERN_PATH = WDIR + r'/everything/main/setup/fiesta-modern.py'
+FIESTA_PATH = WDIR + r'/everything/main/setup/fiesta.py'
+FULL_REDO_PATH = WDIR + r'/everything/full-redo/full-redo.py'
 
 # define a start time to time how long build takes
 # and how long each process takes
@@ -69,7 +72,8 @@ check_time()
 # build fiesta-modern.py, fiesta.py, and full-redo.py into .exe files
 # and locate them in the proper area
 # also, copy over the _internal files
-
+print('[purple]-------------------------\nBuilding fiesta-modern.py...')
+os.system(f'pyinstaller {FIESTA_MODERN_PATH} --uac-admin')
 
 # lists all files existing (NOTE: DO AFTER COMPILING)
 # print('[purple]-------------------------\nListing all files...')
