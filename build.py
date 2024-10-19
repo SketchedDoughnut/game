@@ -45,10 +45,17 @@ time.sleep(0.25)
 os.system('pip freeze > requirements.txt')
 check_time()
 
-# generates Pipfile.lock in root
+# deletes the Pipfile and Pipfile.lock
+# and then generates Pipfile.lock in root
 # and also Pipfile if it does not exist
 # also contains dependencies but... different?
 print('[purple]-------------------------\nGenerating Pipfile.lock...')
+try:
+    # not sure why these two have to be deleted
+    # but it makes regenerating them work, I believe?
+    os.remove(WDIR + r'\Pipfile')
+    os.remove(WDIR + r'\Pipfile.lock')
+except FileNotFoundError: pass
 time.sleep(0.25)
 os.system('pipenv lock')
 check_time()
