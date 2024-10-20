@@ -12,6 +12,7 @@ import subprocess
 import os
 import shutil
 import time
+import json
 
 # external modules
 from rich import print
@@ -35,9 +36,22 @@ timekeep = []
 # establish variables that control what parts run
 GEN_REQUIREMENTS = True
 GEN_PIPFILES = True
-PROPAGATE_FILES = False
-COMPILE_FILES = False
-LIST_FILES = False
+PROPAGATE_FILES = True
+COMPILE_FILES = True
+LIST_FILES = True
+DEV_BUILD = True
+OFFICAL_BUILD = False
+URLS = {
+    'files': [
+            WDIR + '/' + r'everything/main/top/container/url.json', 'latest'
+        ],
+    'dev': {
+        'latest': 'https://api.github.com/repos/SketchedDoughnut/development/releases/latest'
+    },
+    'official': {
+        'latest': 'https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest'
+    }
+}
 
 # define a start time to time how long build takes
 # and how long each process takes
@@ -68,15 +82,48 @@ if GEN_REQUIREMENTS:
 # also contains dependencies but... different?
 if GEN_PIPFILES:
     print('[purple]-------------------------\nGenerating Pipfile.lock...')
+    time.sleep(0.25)
     try:
         # not sure why these two have to be deleted
         # but it makes regenerating them work, I believe?
         os.remove(WDIR + r'\Pipfile')
         os.remove(WDIR + r'\Pipfile.lock')
     except FileNotFoundError: pass
-    time.sleep(0.25)
     os.system('pipenv lock')
     timekeep.append(['Pipfile / Pipfile.lock', check_time()])
+
+# makes sure the correct URLs are in files
+# for either a dev build or an official build
+if DEV_BUILD:
+    print('[purple]-------------------------\nSetting development links...')
+    time.sleep(0.25)
+    for file in URLS['files']:
+        path = file[0]
+        link_type = file[1]
+        f = open(path, 'w')
+        json.dump(
+            {
+                'url': URLS['dev'][link_type]
+            }, 
+            f
+        )
+        f.close()
+    timekeep.append(['Setting dev build links', check_time()])
+elif OFFICAL_BUILD:
+    print('[purple]-------------------------\nSetting official links...')
+    time.sleep(0.25)
+    for file in URLS['files']:
+        path = file[0]
+        link_type = file[1]
+        f = open(path, 'w')
+        json.dump(
+            {
+                'url': URLS['official'][link_type]
+            }, 
+            f
+        )
+        f.close()
+    timekeep.append(['Setting official build links', check_time()])
 
 # propagates all template files (NOTE: BEFORE COMPILING)
 if PROPAGATE_FILES:
@@ -84,7 +131,7 @@ if PROPAGATE_FILES:
     time.sleep(0.25)
     subprocess.call(f'"{PYTHON_PATH}" "{PROPAGATE_CALLPATH}"')
     timekeep.append(['Propagating files', check_time()])
- 
+
 # build fiesta-modern.py, fiesta.py, and full-redo.py into .exe files
 # and locate them in the proper area
 # also, copy over the _internal files

@@ -75,8 +75,8 @@ def check_version():
     '''
 
     # release destination, working directory, loading version
-    dest = 'https://api.github.com/repos/SketchedDoughnut/development/releases/latest' # link format: https://api.github.com/repos/{owner}/{repo}/releases/latest
-    # dest = "https://api.github.com/repos/SketchedDoughnut/SDA-src/releases/latest"
+    with open(wDir + '/url.json') as f:
+        dest = json.load(f)['url']
     try:
         response = requests.get(dest)
     except:
@@ -283,3 +283,5 @@ while True:
     pygame.quit()
     if confirm:
         break
+
+check_version()
