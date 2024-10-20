@@ -8,3 +8,10 @@ the Pipfile was moved as well since it was part of generating the Pipfile.lock, 
 10/19/24
 The flash installer was moved into the archive as it is outdated and does not work with the new systems. That is not to say
 it is not completely viable, but for now it will not be used. Thank you for your services, flash installer :salute:
+
+The following files were archived before the refactoring, as they are important files that have been the core part of this project. 
+I wanted to save how they looked in previous versions, before rewriting and organizing the majority of the code.
+The files are:
+    - fiesta-modern.py
+    - fiesta.py
+    - delete.py
