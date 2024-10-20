@@ -171,7 +171,7 @@ if COMPILE_FILES:
     lastValue = timekeep[len(timekeep) - 1]
     secondlastValue = timekeep[len(timekeep) - 2]
     thirdLastValue = timekeep[len(timekeep) - 3]
-    timekeep.append(['OVerall compilation time', lastValue[1] + secondlastValue[1] + thirdLastValue[1]])
+    timekeep.append(['Overall compilation time', lastValue[1] + secondlastValue[1] + thirdLastValue[1]])
 
 
 # lists all files existing (NOTE: DO AFTER COMPILING)
