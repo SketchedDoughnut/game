@@ -43,7 +43,10 @@ DEV_BUILD = True
 OFFICAL_BUILD = False
 URLS = {
     'files': [
-            WDIR + '/' + r'everything/main/top/container/url.json', 'latest'
+            [
+                WDIR + r'/everything/main/top/container/url.json', 
+                'latest'
+            ]
         ],
     'dev': {
         'latest': 'https://api.github.com/repos/SketchedDoughnut/development/releases/latest'
