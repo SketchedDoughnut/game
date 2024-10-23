@@ -5,9 +5,9 @@ This files adheres to the commenting guidelines :D
 '''
 
 # install files necessary with pip
-print('Installing pip files...')
-print('----------------------------')
-import subprocess
+# print('Installing pip files...')
+# print('----------------------------')
+# import subprocess
 
 # also consider cryptography, pywin32 
 # pip.main(['install', 'pygame', 'requests', 'pywin32', 'winshell'])
