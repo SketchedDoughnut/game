@@ -33,7 +33,7 @@ everything/:
     - setup/:
       - delete.py:
       - fiesta-modern.py:
-      - fiesta.py: 
+      - fiesta.py: DONE (11/12/24)
       - setup_crash_handler.py: DONE (10/12/24)
       - FOMX/: DONE (10/18/24)
         - fomx.py: DONE (10/11/24)

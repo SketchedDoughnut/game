@@ -9,15 +9,13 @@ This files adheres to the commenting guidelines :D
 # builtin modules
 import os
 import subprocess
-import time
-import shutil
-import timeit
 import sys
 import json
-import urllib.request 
 
-# external modules
-import requests
+# file imports
+from update import fr_controller_setup as frc
+from update import t_controller as tc
+from update import gd_controller as gdc
 
 
 
@@ -37,7 +35,7 @@ try:
         # this it the init class, called on
         # when the class is being initialized into an object
         # conveniently, this also does everything!
-        def __init__(self, mode=0):
+        def __init__(self):
             
             # assigning self variables
             # if the program is in a folder
@@ -136,6 +134,11 @@ try:
             print(self.main_wDir)
             print(self.setup_wDir)
 
+            # here the path for the virtual environment
+            # is created, so we can run python properly
+            # with the right dependencies
+            self.PYTHON_VENV_PATH = f'{self.setup_wDir}/venv/Scripts/python.exe'
+
             # now, we open the file
             # containing rules for what functions to run
             # these are in a different file so it does not get
@@ -174,22 +177,16 @@ try:
             dataFile.close()
             if launchData['shortcut']:
 
-
-                if data_dict['update']:
-                    """
-                    NOTE
-                        - THIS FILE IS NOT CAPABLE OF THE NEW UPDATE CAPABILITIES. IT IS IN BETA AND WILL NOT BE FUNCTIONING UNTIL FIXED.
-                        DO NOT ACCESS THIS FILE IN THE BETA FOLDER FOR ANY REASON, AS IT WILL LIKELY NOT WORK.
-                    """
-
-                    from update import fr_controller_setup as frc
-                    from update import t_controller as tc
-                    from update import gd_controller as gdc
-                    
+                # if the update toggle is set to True,
+                # then we have to see what type of update is being
+                # invoked
+                if launchData['update']:
                     print('---------------')
                     print('Installer is in update mode.')
 
-                    if data_dict['bounds'] == 'full':
+                    # if the full re-install is being invoked,
+                    # do the appropriate actions
+                    if launchData['bounds'] == 'full':
                         print('---------------')
                         print('Installer is in full mode.')
                         frc.update_handler_setup(
@@ -197,10 +194,10 @@ try:
                             mode = 'full-setup',
                             everything_path = os.path.dirname(self.main_wDir)
                         )
-                        
 
-                        
-                    if data_dict['bounds'] == 'top':
+                    # if the top re-install is being invoked,
+                    # do the appropriate actions                        
+                    if launchData['bounds'] == 'top':
                         print('---------------')
                         print('Installer is in top mode.')
                         tc.update_handler(
@@ -208,9 +205,9 @@ try:
                             setup_wDir = self.setup_wDir
                         )
 
-
-
-                    if data_dict['bounds'] == 'game_data':
+                    # if the game_data re-install is being invoked,
+                    # do the appropriate actions
+                    if launchData['bounds'] == 'game_data':
                         print('---------------')
                         print('Installer is in game_data mode.')
                         gdc.update_handler(
@@ -218,59 +215,39 @@ try:
                             main_wDir = self.main_wDir
                         )
 
-
+                    # if the update bounds are wrong,
+                    # then the code just continues on to redirecting
+                    # into files downstream
                     else:
                         print('---------------')
-                        print('Improper update bounds. Redirecting to starter file...')
-                        
-                        # FOR PYTHON
-                        self.top_wDir = (os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+                        print('Improper update bounds. Continuing...')
 
-                        # FOR COMPILE
-                        self.top_wDir = os.path.dirname(self.top_wDir)
-
-                        self.top_wDir = os.path.join(self.top_wDir, 'top')
-                        c1 = r'{path}/starter.py'.format(path=self.top_wDir) # calling string
-                        # os.system(f'python {self.top_wDir}/starter.py')
-                        # os.system(c1)
-                        subprocess.run(f'python "{c2}"')
-                        sys.exit() 
-
-
-
-
+                # if the file is not in update mode,
+                # then continue on with calling things 
+                # such as FOMX, then files downstream
                 else:
-                    # FOR PYTHON
-                    self.top_wDir = (os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-                    # FOR COMPILE
-                    self.top_wDir = os.path.dirname(self.top_wDir)
+                    # first, we call on FOMX to apply patches and whatnot
+                    print('---------------')
+                    FOMX_callpath = r'{path}/FOMX/fomx.py'.format(path=self.setup_wDir)
+                    print(f'Installer running FOMX... ({FOMX_callpath})')
+                    subprocess.run(f'{self.PYTHON_VENV_PATH} "{FOMX_callpath}"')
+                    print('---------------')
 
-                    print('---------------')
-                    print('Installer running FOMX...')
-                    c2 = '{path}/setup/FOMX/fomx.py'.format(path=self.top_wDir) # caling string
-                    # print('going to path:', c2)
-                    # os.system(f'python {self.top_wDir}/setup/FOMX/fomx.py')
-                    # os.system(c2)
-                    subprocess.run(f'python "{c2}"')
-                    print('---------------')
-                    self.top_wDir = os.path.join(self.top_wDir, 'top')
-                    print('Installer redirecting to starter file...')
-                    c2 = r'{path}/starter.py'.format(path=self.top_wDir) # calling string
-                    # os.system(f'python {self.top_wDir}/starter.py')
-                    # os.system(c2)
-                    subprocess.run(f'python "{c2}"')
+                    # next, we call on the starter file which handles things from here
+                    starter_callpath = r'{path}/starter.py'.format(path=os.path.join(self.main_wDir, 'top'))
+                    print(f'Installer redirecting to starter file... ({starter_callpath})')
+                    subprocess.run(f'{self.PYTHON_VENV_PATH} "{starter_callpath}"')
                     sys.exit() 
 
 
     ## ONLY TWO ACTING LINES OF CODE
     # initializes Install class
+    # and also runs all of the code
     install = Install()
 
-
-    # calls on run function
-    install.run()
-
+# in the event of an error, this logs that error
+# in a file and crashes gracefully
 except Exception as e:
     import os
     import traceback
