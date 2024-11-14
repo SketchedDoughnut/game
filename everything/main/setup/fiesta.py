@@ -137,8 +137,6 @@ try:
             print(self.main_wDir)
             print(self.setup_wDir)
 
-            input('-> ') ################################################################
-
             # here the path for the virtual environment
             # is created, so we can run python properly
             # with the right dependencies
@@ -151,16 +149,7 @@ try:
             # and therefore making it hard to edit
             config_path = os.path.join(self.setup_wDir, 'config.json')
             print(f'Loading config... ({config_path})')
-
-            input('-> ') ################################################################
-
-            try:  ################################################################
-                rulesFile = open(config_path, 'r')
-            except Exception as e: ################################################################
-                print(f'error: {e}') ################################################################
-            
-            input('-> ') ################################################################
-
+            rulesFile = open(config_path, 'r')
             self.rules: dict = json.load(rulesFile)
             rulesFile.close()
 
@@ -183,19 +172,24 @@ try:
                 input('-> ')
                 sys.exit()
 
+            # load the data from the data.json file
+            try:
+                data_path = os.path.join(self.setup_wDir, 'data.json')
+                print(f'Loading data... ({data_path})')
+
+                input('-> ') ################################################################
+                
+                dataFile = open(data_path, 'r')
+                launchData: dict = json.load(dataFile)
+                dataFile.close()
+            except Exception as e:
+                print('error:', e)
+
             # if the variable shortcut is set to True,
             # that means that the purpose of this file is simply to redirect
             # into the other files downstream. However, as this file is not for being
             # an installer and it is purely for redirecting / updating, 
             # shortcut is always set to True
-            data_path = os.path.join(self.setup_wDir, 'data.json')
-            print(f'Loading data... ({data_path})')
-
-            input('-> ') ################################################################
-            
-            dataFile = open(data_path, 'r')
-            launchData = json.load(dataFile)
-            dataFile.close()
             if launchData['shortcut']:
 
                 # if the update toggle is set to True,
