@@ -87,9 +87,6 @@ try:
             # this is not done in the most efficient way but oh well
             # the goal of this is to get the proper paths of directories
             while True:
-                
-                print(split_wDir) ################################################################
-                input('path iter-> ') ################################################################
 
                 # if the path still has _internal, we remove that
                 if split_wDir[-1] == '_internal':
@@ -149,7 +146,12 @@ try:
             # these are in a different file so it does not get
             # hard-coded into the .exe when it is compiled,
             # and therefore making it hard to edit
-            rulesFile = open(f'{self.setup_wDir}/config.json', 'r')
+            config_path = os.path.join(self.setup_wDir, 'config.json')
+            print(f'Loading config... ({config_path})')
+
+            input('-> ') ################################################################
+
+            rulesFile = open(config_path, 'r')
             self.rules: dict = json.load(rulesFile)
             rulesFile.close()
 
@@ -167,7 +169,7 @@ try:
             # then exit
             if not nonFalseFound:
                 print('---------------')
-                print(f'Nothing in {self.setup_wDir}/config.json is set to True, exiting')
+                print(f'Nothing in {config_path} is set to True, exiting')
                 print('---------------')
                 input('-> ')
                 sys.exit()
@@ -177,7 +179,12 @@ try:
             # into the other files downstream. However, as this file is not for being
             # an installer and it is purely for redirecting / updating, 
             # shortcut is always set to True
-            dataFile = open(f'{self.setup_wDir}/data.json', 'r')
+            data_path = os.path.join(self.setup_wDir, 'data.json')
+            print(f'Loading data... ({data_path})')
+
+            input('-> ') ################################################################
+            
+            dataFile = open(data_path, 'r')
             launchData = json.load(dataFile)
             dataFile.close()
             if launchData['shortcut']:
