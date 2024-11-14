@@ -89,7 +89,7 @@ try:
             while True:
                 
                 # if the path still has _internal, we remove that
-                if split_wDir[-1] == 'internal':
+                if split_wDir[-1] == '_internal':
                     split_wDir.pop(-1)
                 
                 # if the last entry in the path is "setup",
