@@ -88,6 +88,9 @@ try:
             # the goal of this is to get the proper paths of directories
             while True:
                 
+                print(split_wDir) ################################################################
+                input('path iter-> ') ################################################################
+
                 # if the path still has _internal, we remove that
                 if split_wDir[-1] == '_internal':
                     split_wDir.pop(-1)
@@ -133,6 +136,8 @@ try:
                 print('It appears this file is not within a setup folder. Defaulting to those paths.')
             print(self.main_wDir)
             print(self.setup_wDir)
+
+            input('-> ') ################################################################
 
             # here the path for the virtual environment
             # is created, so we can run python properly
