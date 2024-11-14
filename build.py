@@ -34,8 +34,8 @@ FULL_REDO_PATH = WDIR + r'/everything/full-redo/full-redo.py'
 timekeep = []
 
 # establish variables that control what parts run
-GEN_REQUIREMENTS = True
-GEN_PIPFILES = True
+GEN_REQUIREMENTS = False
+GEN_PIPFILES = False
 PROPAGATE_FILES = True
 COMPILE_FILES = True
 LIST_FILES = False
