@@ -35,9 +35,9 @@ timekeep = []
 
 # establish variables that control what parts run
 GEN_REQUIREMENTS = True
-GEN_PIPFILES = False
+GEN_PIPFILES = True
 PROPAGATE_FILES = True
-COMPILE_FILES = False
+COMPILE_FILES = True
 LIST_FILES = False
 DEV_BUILD = True
 OFFICAL_BUILD = False
