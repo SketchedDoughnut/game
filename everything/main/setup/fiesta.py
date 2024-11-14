@@ -12,6 +12,9 @@ import subprocess
 import sys
 import json
 
+# external modules
+from rich import print
+
 # file imports
 from update import fr_controller_setup as frc
 from update import t_controller as tc
@@ -151,7 +154,13 @@ try:
 
             input('-> ') ################################################################
 
-            rulesFile = open(config_path, 'r')
+            try:  ################################################################
+                rulesFile = open(config_path, 'r')
+            except Exception as e: ################################################################
+                print(f'error: {e}') ################################################################
+            
+            input('-> ') ################################################################
+
             self.rules: dict = json.load(rulesFile)
             rulesFile.close()
 
