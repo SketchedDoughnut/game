@@ -169,21 +169,14 @@ try:
                 print('---------------')
                 print(f'Nothing in {config_path} is set to True, exiting')
                 print('---------------')
-                input('-> ')
+                input('Enter anything to exit: ')
                 sys.exit()
 
             # load the data from the data.json file
-            try:
-                data_path = os.path.join(self.setup_wDir, 'data.json')
-                print(f'Loading data... ({data_path})')
-
-                input('-> ') ################################################################
-                
-                dataFile = open(data_path, 'r')
-                launchData: dict = json.load(dataFile)
-                dataFile.close()
-            except Exception as e:
-                print('error:', e)
+            data_path = os.path.join(self.setup_wDir, 'data.json')
+            dataFile = open(data_path, 'r')
+            launchData: dict = json.load(dataFile)
+            dataFile.close()
 
             # if the variable shortcut is set to True,
             # that means that the purpose of this file is simply to redirect
@@ -254,6 +247,12 @@ try:
                     print(f'Installer redirecting to starter file... ({starter_callpath})')
                     subprocess.run(f'{self.PYTHON_VENV_PATH} "{starter_callpath}"')
                     sys.exit() 
+
+            else:
+                print('---------------')
+                print(f'Shortcut is not set to true in {data_path}, so this program can not do anything.')
+                input('Enter anything to exit: ')
+                sys.exit()
 
 
     ## ONLY TWO ACTING LINES OF CODE
