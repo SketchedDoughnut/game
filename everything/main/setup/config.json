@@ -1,4 +1,6 @@
 {
+    "get_intents": true, 
+    
     "safety_check": true,
 
     "pre_clean": true, 

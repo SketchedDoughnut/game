@@ -15,7 +15,7 @@ import os
 # this is very helpful, yes yes
 class Path_tools:
     def __init__(self) -> None:
-        pass
+        self.app_data_path = os.environ['appData']
 
     # this function converts the slashes in paths
     # specifically, it converts / to \\ and \\ to /

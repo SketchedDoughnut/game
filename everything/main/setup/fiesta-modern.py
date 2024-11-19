@@ -42,6 +42,8 @@ try:
             # assigning self variables
             # if the program is in a folder
             self.in_folder = False
+            # the path to program files
+            self.program_files_path = os.path.join(os.environ['SystemDrive'], '/Program Files')
             
             # here, we just establish the current working directory
             internal_wDir = os.path.dirname(os.path.abspath(__file__))
@@ -137,97 +139,106 @@ try:
                 print('---------------')
                 input('Enter anything to exit: ')
                 sys.exit()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        
-                print('---------------')
-                print("""
-                Welcome to the open-source installer created by Sketched Doughnut! 
-                    Code is written by Sketched Doughnut with snippets from others.
-                    Sources are in: (install location)/gitignore/sources.txt.   
-                """)
-                path_loop = True
-                while path_loop:
-                    print(f"""---------------
-                Input folder directory for install below (or type "delete" to delete).'
-    Note: Must be absolute path from the root. For example, the absolute path of this folder is:
-    - {os.getcwd()}
-    The default file path, if nothing is entered, is set to Program Files.
-    - {os.path.join(os.environ['SystemDrive'], '/Program Files')}""")
-    # IMPORTANT: PLEASE DO NOT USE A FOLDER PATH WITH ANY SPACES IN IT.
-                    self.install_path = input('--> ')
-
-                    # checking for uninstall, doing uninstall if so
-                    if self.install_path == "delete":
-                        print('---------------')
-                        if input('Are you sure you want to delete?  \nType: "confirm-delete", anything else to cancel \n--> ') == 'confirm-delete':
-
-                            # for run
-                            if self.rules['env'] == 'run':
-                                c1 = r'{path}/delete.py'.format(path=self.main_wDir)
-                                # os.system(f'python {self.main_wDir}/delete.py')
-                                # os.system(c1)
-                                subprocess.run(f'python "{c1}"')
-
-                            # - for codespace
-                            else:
-                                c1 = r'main/setup/delete.py'
-                                # os.system(f'python main/setup/delete.py')
-                                # os.system(c1)
-                                subprocess.run(f'python "{c1}"')
-
-                            # final, then finishes
-                            print('---------------')
-                            # print('Delete done. This installer will exit in 30 seconds; afterwards, delete the folder it is in. Thank you for using this installer! :3')
-                            # time.sleep(15)
-                            # for i in range(15, 0, -1):
-                            #     print(i)
-                            #     time.sleep(1)
-                            print('Delete done. You can now get rid of any installer files. Thank you for using this installer! :3')
-                            input('Enter anything to exit: ')
-                            sys.exit()
-                    
-                        # cancelling uninstall if wrong input
-                        else:
-                            print('Cancelling deletion, cancelling file in 5s...')
-                            for i in range(5, 0, -1):
-                                print(i)
-                                time.sleep(1)
-                            sys.exit()
-
-                    else:
-
-                        # formatting file path
-                        try:
-                            self.install_path = self.install_path_format(self.install_path)
-                            path_loop = self.install_path[1]
-                            self.install_path = self.install_path[0]
-
-                        except Exception as e:
-                            print('---------------')
-                            print(f'Path formatting error: {e}')
-                            print('Please restart installer and enter the correct path.')
-                            input('Enter anything to exit: ')
-                            sys.exit()
-                        print('---------------')
                             
+
+
+        # this functions job is to get the users intent
+        # if they want to delete, then it will do that
+        # otherwise this will act as a normal installer
+        def get_intents(self):
+            
+            # print introductionary messages
+            print('---------------')
+            print("""
+Welcome to the open-source installer created by Sketched Doughnut! 
+Code is written by Sketched Doughnut with snippets from others.
+Sources are in: (install location)/everything/credits/sources.txt""")
+            
+            # a loop continously runs
+            # for them to enter a correct path.
+            path_loop = True
+            while path_loop:
+                print(f"""---------------
+Input the path to the folder you want to install in below.
+Note: This must be absolute path from the root. For example, the absolute path of this folder is:
+- {os.getcwd()}
+The default file path, if nothing is entered, is set to Program Files. Game data is stored seperately.
+- {self.program_files_path}""")
+                
+                # here we get the install path inputted
+                self.install_path = input('--> ')
+
+                # if they type in "delete", then prompt
+                # the file for deletion
+                if self.install_path == "delete":
+                    print('---------------')
+
+                    # if they are sure they want to delete, then continue on with it
+                    if input('Are you sure you want to delete?  \nType: "confirm-delete", anything else to cancel \n--> ') == 'confirm-delete':
+                        deleteFilePath = r'{path}/delete.py'.format(path=self.main_wDir)
+                        subprocess.run(f'python "{deleteFilePath}"')
+
+                        # after the deletion is done, prompt them input
+                        # then exit!
+                        print('---------------')
+                        print('Delete done. You can now get rid of any installer files. Thank you for using this installer! :3')
+                        input('Enter anything to exit: ')
+                        sys.exit()
+                    
+                    # if they do not want to delete, cancel then exit
+                    else:
+                        print('Cancelling deletion...')
+                        input('Enter anything to exit: ')
+                        sys.exit()
+
+                else:
+
+                    # formatting file path
+                    try:
+                        self.install_path = self.install_path_format(self.install_path)
+                        path_loop = self.install_path[1]
+                        self.install_path = self.install_path[0]
+
+                    except Exception as e:
+                        print('---------------')
+                        print(f'Path formatting error: {e}')
+                        print('Please restart installer and enter the correct path.')
+                        input('Enter anything to exit: ')
+                        sys.exit()
+                    print('---------------')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         # format install path
@@ -781,7 +792,7 @@ try:
 
         # runs all the functions in order, by config rules (can be changed in config.json)
         def run(self):
-
+            if self.rules['get_intents']: self.get_intents()
             if self.rules['safety_check']: self.safety_check()
             if self.rules['pre_clean']: self.pre_clean()
             if self.rules['setup']: self.setup()

@@ -33,6 +33,9 @@ everything/:
     - setup/:
       - delete.py:
       - fiesta-modern.py:
+        - NOTE: Revamp how the deletion system works and seperate that from the installer
+        - NOTE: Revamp how game data works so that it is accessible by users
+        - NOTE: Revamp the delete.py agent overall
       - fiesta.py: DONE (11/13/24)
       - setup_crash_handler.py: DONE (10/12/24)
       - FOMX/: DONE (10/18/24)
