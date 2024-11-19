@@ -43,34 +43,6 @@ try:
             # assigning self variables
             # if the program is in a folder
             self.in_folder = False
-
-            # this is an outline of how paths are established
-            # this just helps visualize it, because it is a nightmare
-            # and compiling with pyinstaller makes paths act a bit differently
-            # then they would act if it was a raw python script
-            '''
-            path behaviors (why do I have to do this UGH)
-            
-            - when in a setup folder: FAIL
-                - file paths will not go back enough. Instead, main will go back into setup, making it main/setup.
-                - setup will add one more setup, making it main/setup/setup.
-                - these will not pass the folder requirement and will FALSELY claim that it is not in a folder.
-
-            - when not in a setup folder: WORK
-                - file paths do go back enough, making main into main/ (with desktop example, it makes it into desktop).
-                - setup (using desktop example), becomes desktop/setup (not used, however, if it is detected properly).
-
-            - so what we want to do:
-                - get main path first
-                - check for setup in main path (if __ in __)
-                    - if yes, check if that path exists
-                        - if yes, set that path to setup path
-                        - rollback one more for main path
-                
-                    - if no, we know it is not in a setup folder
-                        - make sure path exists
-                            - if yes, set that to main AND setup 
-                '''
             
             # here, we just establish the current working directory
             internal_wDir = os.path.dirname(os.path.abspath(__file__))
@@ -141,36 +113,6 @@ try:
             # is created, so we can run python properly
             # with the right dependencies
             self.PYTHON_VENV_PATH = f'{self.setup_wDir}/venv/Scripts/python.exe'
-
-            # now, we open the file
-            # containing rules for what functions to run
-            # these are in a different file so it does not get
-            # hard-coded into the .exe when it is compiled,
-            # and therefore making it hard to edit
-            config_path = os.path.join(self.setup_wDir, 'config.json')
-            print(f'Loading config... ({config_path})')
-            rulesFile = open(config_path, 'r')
-            self.rules: dict = json.load(rulesFile)
-            rulesFile.close()
-
-            # next, we check if anything is set to True 
-            # within the rules. If nothing is true, then we can't do 
-            # anything, so we just exit
-            nonFalseFound = False
-            for key in self.rules.keys():
-                if self.rules[key] == True:
-                    nonFalseFound = True
-            
-            # if this is true, then that means there is
-            # at least something being executed. This means that
-            # the code will continue. Otherwise, print an error
-            # then exit
-            if not nonFalseFound:
-                print('---------------')
-                print(f'Nothing in {config_path} is set to True, exiting')
-                print('---------------')
-                input('Enter anything to exit: ')
-                sys.exit()
 
             # load the data from the data.json file
             data_path = os.path.join(self.setup_wDir, 'data.json')
@@ -248,6 +190,10 @@ try:
                     subprocess.run(f'{self.PYTHON_VENV_PATH} "{starter_callpath}"')
                     sys.exit() 
 
+            # if thef iel is not in shortcut mode,
+            # nothing can be done so the file just exists
+            # this should not be possible or done inentionally,
+            # but I suppose we prepare for any / all eventualities?
             else:
                 print('---------------')
                 print(f'Shortcut is not set to true in {data_path}, so this program can not do anything.')

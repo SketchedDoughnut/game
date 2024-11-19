@@ -1,4 +1,12 @@
-# importing builtin
+'''
+This is one of the two original pieces of this whole project.
+The job of this piece is to be used for starting the program as normal. It is the main, core component.
+It also manages updates whenever those occur, so it is truly crucial.
+--------------------------------------------------------------------------------------------------------------------------------
+This files adheres to the commenting guidelines :D
+'''
+
+# builtin modules
 import os
 import subprocess
 import time
@@ -6,206 +14,129 @@ import shutil
 import timeit
 import sys
 
-# downloader imports(?)
+# external modules
 import json
 import requests
 
-'''
-{
-    "remove_path": "", 
-    "abs_shortcut": "", 
-    "shortcut": false, 
-    "update": false, 
-    "bounds": "x"
-}
-'''
-in_folder = False
+
+
+
+# everything is inside of a try / except
+# this is to catch and crashes and log them
+# however, if a crash happens this high up, then it
+# is likely a fatal issue that would require a manual
+# recovery of files (or reverting to a previous, working version)
 try:
+
+    # this is the main class,
+    # containing all functions for updating, redirecting,
+    # etc
     class Install:
 
-        # init
-        def __init__(self, mode=0):
-            global in_folder
+        # this it the init class, called on
+        # when the class is being initialized into an object
+        # this detects if there are possible things to do,
+        # as well as some data formatting
+        def __init__(self):
 
-            # for run
-            # setting up all directories
-            '''
-            path behaviors (why do I have to do this UGH)
+            # assigning self variables
+            # if the program is in a folder
+            self.in_folder = False
             
-            - when in a setup folder: FAIL
-                - file paths will not go back enough. Instead, main will go back into setup, making it main/setup.
-                - setup will add one more setup, making it main/setup/setup.
-                - these will not pass the folder requirement and will FALSELY claim that it is not in a folder.
+            # here, we just establish the current working directory
+            internal_wDir = os.path.dirname(os.path.abspath(__file__))
 
-            - when not in a setup folder: WORK
-                - file paths do go back enough, making main into main/ (with desktop example, it makes it into desktop).
-                - setup (using desktop example), becomes desktop/setup (not used, however, if it is detected properly).
+            # we split the path by its path dividers
+            if '/' in internal_wDir: split_wDir = internal_wDir.split('/')
+            elif '\\' in internal_wDir: split_wDir = internal_wDir.split('\\')
 
-            - so what we want to do:
-                - get main path first
-                - check for setup in main path (if __ in __)
-                    - if yes, check if that path exists
-                        - if yes, set that path to setup path
-                        - rollback one more for main path
+            # this variable, in_folder, represents if the current file
+            # is in a setup folder or not
+            # if it is not in a setup folder, this will be false
+            # theoretically since this is always used for normal operation,
+            # it should be in a setup folder. However, you never know I guess?
+            in_setup_folder = False
+
+            # now, we remove anything extra from the internal_wDir
+            # this is not done in the most efficient way but oh well
+            # the goal of this is to get the proper paths of directories
+            while True:
+
+                # if the path still has _internal, we remove that
+                if split_wDir[-1] == '_internal':
+                    split_wDir.pop(-1)
                 
-                    - if no, we know it is not in a setup folder
-                        - make sure path exists
-                            - if yes, set that to main AND setup 
-                '''
-            
-            ####### NEW SYSTEM
-            # establish main directory
-            temp_main_wDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            # print('initial main', temp_main_wDir)
+                # if the last entry in the path is "setup",
+                # then we assign the appropriate variables then break
+                if split_wDir[-1] == 'setup':
+                    in_setup_folder = True
+                    joined_wDir = ''
+                    for path_section in split_wDir:
+                        joined_wDir += path_section
+                        joined_wDir += '\\'
+                    joined_wDir = joined_wDir.removesuffix('\\')
+                    self.setup_wDir = joined_wDir
 
-            # check for setup in main path
-            if 'setup' in temp_main_wDir:
-                if os.path.exists(temp_main_wDir):
-                    temp_setup_wDir = temp_main_wDir
-                    temp_main_wDir = os.path.dirname(temp_main_wDir)
+                    # to get the main path, we need to remove the 
+                    # "setup" that is at the end
+                    self.main_wDir = self.setup_wDir.removesuffix('\\setup')
 
-            else:
-                if os.path.exists(temp_main_wDir):
-                    temp_setup_wDir = temp_main_wDir
+                    # then we break
+                    break
 
-            # print('new main', temp_main_wDir)
-            # print('setup', temp_setup_wDir)
+                # if the last entry is not setup, we check if it is "main"
+                # if it is, then we assign the appropriate variables then break
+                if split_wDir[-1] == 'main':
+                    joined_wDir = ''
+                    for path_section in split_wDir:
+                        joined_wDir += path_section
+                        joined_wDir += '\\'
+                    joined_wDir = joined_wDir.removesuffix('\\')
+                    self.setup_wDir = os.path.join(joined_wDir, 'setup')
+                    self.main_wDir = joined_wDir
 
-            if os.path.exists(temp_setup_wDir):
-                in_folder = True
-
-            if in_folder:
+                    # then we break
+                    break
+                
+            # just some printing that is now just cosmetic,
+            # but eh we keep it in :3
+            if in_setup_folder:
                 print('It appears this file is in a setup folder. Defaulting to those paths.')
-                #self.setup_wDir = os.path.join(temp_setup_wDir, 'setup') # dont think we need this?
-                self.setup_wDir = temp_setup_wDir
-                self.main_wDir = temp_main_wDir
-                print(self.main_wDir)
-                print(self.setup_wDir)
             
-            elif not in_folder:
+            elif not in_setup_folder:
                 print('It appears this file is not within a setup folder. Defaulting to those paths.')
-                self.main_wDir = temp_main_wDir
-                self.setup_wDir = temp_main_wDir
-                print(self.main_wDir)
-                print(self.setup_wDir)
+            print(self.main_wDir)
+            print(self.setup_wDir)
 
-            self.rules1 = open(f'{self.setup_wDir}/config.json', 'r') # self.rules > self.rules1
+            # now, we open the file
+            # containing rules for what functions to run
+            # these are in a different file so it does not get
+            # hard-coded into the .exe when it is compiled,
+            # and therefore making it hard to edit
+            config_path = os.path.join(self.setup_wDir, 'config.json')
+            print(f'Loading config... ({config_path})')
+            rulesFile = open(config_path, 'r')
+            self.rules: dict = json.load(rulesFile)
+            rulesFile.close()
 
-            # will contain everything from config.json, including environment information
-            self.rules = json.load(self.rules1)
-
-            self.rules1.close() # self.rules > self.rules1, didn't close before
-
-            # always runs, mode is not used
-            if mode == 0: 
-
-                # assigning vars (local)
-                rules_list = [] # checking for whats true in config.json (44-66)
-
-                # iterate through rules dictionary and check for True
-                for key in self.rules:
-                    if self.rules[key] == False:
-                        rules_list.append(False)
-
-                    else:
-                        rules_list.append(True)
-
-                    if rules_list.count(True) > 0:
-                        pass
-
-                    # exit if no True in config.json
-                    else:
-                        print('---------------')
-                        print('Running no files; cancelling in 5s')
-                        print('---------------')
-                        time.sleep(5)
-                        sys.exit()
-
-                # check the rule for shortcut, ignore everything below if so
-                f = open(f'{self.setup_wDir}/data.json', 'r')
-                data_dict = json.load(f)
-                f.close()
-                if data_dict['shortcut']:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    """
-                    NOTE
-                        - THERE IS CURRENTLY NO WORKING UPDATE AGENT IN FIESTA-MODERN.PY / EXE.
-                        UPDATING CODE HAS BEEN ROLLED BACK TO THE OLD FIESTA.PY / EXE FOR THE MEANWHILE, UNTIL THIS NEW FEATURE IS FINISHED.
-                        DO NOT DIRECT ANYTHING INTO THIS FILE UNLESS FOR INSTALLATION PURPOSES. THIS FILE IS ALSO NOT CAPABLE OF REDIRECTING, 
-                        DUE TO A TEMPORARY FIX THAT IS NECESSARY FOR COMPILING.
-                    """
-                    if True:
-                        pass ####### REMOVE THIS PASS WHEN NEW FEATURES ARE OUT
-
-                    # if data_dict['update']:
-
-                    #     print('---------------')
-                    #     print('Installer is in update mode.')
-
-                    #     if data_dict['bounds'] == 'full':
-                    #         print('---------------')
-                    #         print('Installer is in full mode.')
-                    #         import update.fr_controller as frc
-                    #         frc.update_handler(
-                    #             setup_wDir = self.setup_wDir
-                    #         )
-                            
-
-                            
-                    #     if data_dict['bounds'] == 'top':
-                    #         print('---------------')
-                    #         print('Installer is in top mode.')
-                    #         import update.t_controller as tc
-                    #         tc.update_handler(
-                    #             main_wDir = self.main_wDir,
-                    #             setup_wDir = self.setup_wDir
-                    #         )
-
-
-
-                    #     if data_dict['bounds'] == 'game_data':
-                    #         print('---------------')
-                    #         print('Installer is in game_data mode.')
-                    #         import update.gd_controller as gdc
-                    #         gdc.update_handler(
-                    #             setup_wDir = self.main_wDir, 
-                    #             main_wDir = self.setup_wDir
-                    #         )
-
-
-
-                    else:
-                        print('---------------')
-                        print('Installer redirecting to starter file...')
-
-                        # FOR PYTHON
-                        self.top_wDir = (os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-                        # FOR COMPILE
-                        self.top_wDir = os.path.dirname(self.top_wDir)
-
-                        self.top_wDir = os.path.join(self.top_wDir, 'top')
-                        c2 = r'python {path}/starter.py'.format(path=self.top_wDir)
-                        # os.system(f'python {self.top_wDir}/starter.py')
-                        os.system(c2)
-                        sys.exit() 
+            # next, we check if anything is set to True 
+            # within the rules. If nothing is true, then we can't do 
+            # anything, so we just exit
+            nonFalseFound = False
+            for key in self.rules.keys():
+                if self.rules[key] == True:
+                    nonFalseFound = True
+            
+            # if this is true, then that means there is
+            # at least something being executed. This means that
+            # the code will continue. Otherwise, print an error
+            # then exit
+            if not nonFalseFound:
+                print('---------------')
+                print(f'Nothing in {config_path} is set to True, exiting')
+                print('---------------')
+                input('Enter anything to exit: ')
+                sys.exit()
 
 
 
@@ -860,18 +791,15 @@ try:
             if self.rules['edit_data']: self.edit_data()
             if self.rules['quit_install']: self.quit_install()
 
-    ########################################################################
-    ########################################################################
-    ########################################################################
-
 
     ## ONLY TWO ACTING LINES OF CODE
     # initializes Install class
+    # and also runs all of the code
     install = Install()
-
-    # calls on run function
     install.run()
 
+# in the event of an error, this logs that error
+# in a file and crashes gracefully
 except Exception as e:
     import os
     import traceback
