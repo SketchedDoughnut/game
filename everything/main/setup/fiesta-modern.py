@@ -8,7 +8,7 @@ This files adheres to the commenting guidelines :D
 
 # builtin modules
 import os
-import subprocess
+from enum import Enum
 import time
 import shutil
 import timeit
@@ -33,17 +33,25 @@ try:
     # etc
     class Install:
 
+        # we set up a class here of all constants we use
+        class Constants(Enum):
+            MAINFOLDERNAME = 'SDA_game_name'
+
         # this it the init class, called on
         # when the class is being initialized into an object
         # this detects if there are possible things to do,
         # as well as some data formatting
-        def __init__(self):
+        def __init__(self) -> None:
 
             # assigning self variables
             # if the program is in a folder
             self.in_folder = False
+            # the path to app data
+            self.app_data_path = os.environ['appData']
+            # the path to system drive (typically, C:/)
+            self.system_drive_path = os.environ['SystemDrive']
             # the path to program files
-            self.program_files_path = os.path.join(os.environ['SystemDrive'], '/Program Files')
+            self.program_files_path = os.path.join(self.system_drive_path, '/Program Files')
             
             # here, we just establish the current working directory
             internal_wDir = os.path.dirname(os.path.abspath(__file__))
@@ -145,7 +153,7 @@ try:
         # this functions job is to get the users intent
         # if they want to delete, then it will do that
         # otherwise this will act as a normal installer
-        def get_intents(self):
+        def get_intents(self) -> None:
             
             # print introductionary messages
             print('---------------')
@@ -156,8 +164,7 @@ Sources are in: (install location)/everything/credits/sources.txt""")
             
             # a loop continously runs
             # for them to enter a correct path.
-            path_loop = True
-            while path_loop:
+            while True:
                 print(f"""---------------
 Input the path to the folder you want to install in below.
 Note: This must be absolute path from the root. For example, the absolute path of this folder is:
@@ -168,147 +175,81 @@ The default file path, if nothing is entered, is set to Program Files. Game data
                 # here we get the install path inputted
                 self.install_path = input('--> ')
 
-                # if they type in "delete", then prompt
-                # the file for deletion
-                if self.install_path == "delete":
-                    print('---------------')
+                # here we format the file path, and get data back
 
-                    # if they are sure they want to delete, then continue on with it
-                    if input('Are you sure you want to delete?  \nType: "confirm-delete", anything else to cancel \n--> ') == 'confirm-delete':
-                        deleteFilePath = r'{path}/delete.py'.format(path=self.main_wDir)
-                        subprocess.run(f'python "{deleteFilePath}"')
-
-                        # after the deletion is done, prompt them input
-                        # then exit!
-                        print('---------------')
-                        print('Delete done. You can now get rid of any installer files. Thank you for using this installer! :3')
-                        input('Enter anything to exit: ')
-                        sys.exit()
-                    
-                    # if they do not want to delete, cancel then exit
-                    else:
-                        print('Cancelling deletion...')
-                        input('Enter anything to exit: ')
-                        sys.exit()
-
-                else:
-
-                    # formatting file path
-                    try:
-                        self.install_path = self.install_path_format(self.install_path)
-                        path_loop = self.install_path[1]
-                        self.install_path = self.install_path[0]
-
-                    except Exception as e:
-                        print('---------------')
-                        print(f'Path formatting error: {e}')
-                        print('Please restart installer and enter the correct path.')
-                        input('Enter anything to exit: ')
-                        sys.exit()
-                    print('---------------')
+                # we get data back, both the path and a boolean 
+                # that represents if the loop should continue
+                # (meaning it worked or not, false = worked, true = failed)
+                results = self.install_path_format(self.install_path)
+                path_loop = results[1]
+                if not path_loop: 
+                    self.install_path = results[0]
+                    break
 
 
 
 
 
 
+        # this is a tool function that makes it easier
+        # to format the instal path for future use!
+        def install_path_format(self, path: str) -> tuple[str, bool]:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        # format install path
-        def install_path_format(self, path):
-            # try:
-            #     programFiles = os.path.abspath("Program Files")
-            #     if not path:
-            #         print('Path is defaulting to Program Files.')
-            #         path = programFiles
-            #         path += '\game_name'
-            #         return path
-
+            # if the path is empty, then we default to program files
             if not path:
                 print('Path is defaulting to Program Files.')
-                try:
-                    path = os.path.abspath("Program Files")
-                    path = os.path.join(os.environ['SystemDrive'], '/Program Files')
-                    ns = ''
-                    next = False
-                    for letter in path:
-                        if next == False:
-                            ns += letter
-
-                        if next == True:
-                            ns += '/'
-                            ns += letter
-                            next = False
-
-                        if letter == ':':
-                            next = True
-
-                        else:
-                            next = False
-                    path = ns
+                path = self.program_files_path
             
-                except Exception as e:
-                    print(f'Default path error: {e}')
+            # now, we add the name of our folder directory to it
+            path = os.path.join(path, self.Constants.MAINFOLDERNAME)
 
-            new_string = ''
-            list = []
+            # now, we convert all slashes to forward
+            # slashes in the path
+            formattedPath = ''
+            for char in path:
+                if char == '\\': formattedPath += '/'
+                else: formattedPath += char
 
-            list = [str(i) for i in path]
-            for i in list:
-                if i == '\\':
-                    new_string += '/'
-                else:
-                    new_string += i
+            # we verify that the path exists,
+            # and return two things. the path, 
+            # and if the loop should continue or not
+            if os.path.exists(path): 
+                return (path, False)
 
-            path = new_string
-            path = [str(i) for i in path]
-            if path[len(path) - 1] == '/':
-                path.pop(len(path) - 1)
-
-            else:
-                pass
-
-            new_string = ''
-            for i in path:
-                new_string += i
-            path = new_string
-
-            if os.path.exists(path):
-                path += '/SDA_game_name' # used to be game_name
-                return [path, False]
-        
+            # if the pathd does not exist, then return this
             else:
                 print('---------------')
                 print('That path does not exist. Please try again.')
-                print('-->', path)
-                return [path, True]
+                print(f'--> {path}')
+                return (path, True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
             
 
         # making sure they are sure of their choice
