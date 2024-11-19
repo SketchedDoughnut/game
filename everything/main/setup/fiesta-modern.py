@@ -33,10 +33,6 @@ try:
     # etc
     class Install:
 
-        # we set up a class here of all constants we use
-        class Constants(Enum):
-            MAINFOLDERNAME = 'SDA_game_name'
-
         # this it the init class, called on
         # when the class is being initialized into an object
         # this detects if there are possible things to do,
@@ -46,6 +42,11 @@ try:
             # assigning self variables
             # if the program is in a folder
             self.in_folder = False
+            # the name of the folders
+            # containing both the game data and program
+            # files
+            # self.MAINFOLDERNAME = 'SDA_game_name'
+            self.MAINFOLDERNAME = 'SDA'
             # the path to app data
             self.app_data_path = os.environ['appData']
             # the path to system drive (typically, C:/)
@@ -156,21 +157,23 @@ try:
         def get_intents(self) -> None:
             
             # print introductionary messages
-            print('---------------')
-            print("""
-Welcome to the open-source installer created by Sketched Doughnut! 
+            print('---------------------------------------------')
+            print('---------------------------------------------')
+            print('---------------------------------------------')
+            print("""Welcome to the open-source installer created by Sketched Doughnut! 
 Code is written by Sketched Doughnut with snippets from others.
 Sources are in: (install location)/everything/credits/sources.txt""")
             
             # a loop continously runs
             # for them to enter a correct path.
             while True:
-                print(f"""---------------
-Input the path to the folder you want to install in below.
+                print('---------------')
+                print(f"""Input the path to the folder you want to install in below.
 Note: This must be absolute path from the root. For example, the absolute path of this folder is:
 - {os.getcwd()}
 The default file path, if nothing is entered, is set to Program Files. Game data is stored seperately.
-- {self.program_files_path}""")
+- program files path: {os.path.join(self.program_files_path, self.MAINFOLDERNAME)}
+- game data path: {os.path.join(self.program_files_path, self.MAINFOLDERNAME)}""")
                 
                 # here we get the install path inputted
                 self.install_path = input('--> ')
@@ -201,7 +204,7 @@ The default file path, if nothing is entered, is set to Program Files. Game data
                 path = self.program_files_path
             
             # now, we add the name of our folder directory to it
-            path = os.path.join(path, self.Constants.MAINFOLDERNAME)
+            path = os.path.join(path, self.MAINFOLDERNAME)
 
             # now, we convert all slashes to forward
             # slashes in the path
@@ -220,7 +223,7 @@ The default file path, if nothing is entered, is set to Program Files. Game data
             else:
                 print('---------------')
                 print('That path does not exist. Please try again.')
-                print(f'--> {path}')
+                print(f'- {path}')
                 return (path, True)
 
 
@@ -249,28 +252,55 @@ The default file path, if nothing is entered, is set to Program Files. Game data
 
 
 
-        
-            
 
-        # making sure they are sure of their choice
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        # making sure they are sure they want to continue
+        # as running the installer will try and clean the directory
+        # of any previous installations that it is installing into
         def safety_check(self):
-            print(f"""
-                You are running the installer; this will overwrite pre-existing files created by the installer previously
-                                            inside of {self.install_path}.
-                                    To confirm, type "confirm" below. Otherwise, type anything else.
-                """)
+            print('---------------')
+            print(f"""You are running the installer; this will overwrite pre-existing files created by the installer previously
+inside of {self.install_path}.
+To confirm, type "confirm" below. Otherwise, type anything else.""")
             
             # checking if input confirms proceeding, cancelling if not
-            if input('--> ') == "confirm":
+            continueChoice = input('--> ').lower()
+            if continueChoice == "confirm":
                 print('---------------')
-                pass
 
             # cancels program if doesn't confirm clearing
             else:
                 print('Cancelling...')
                 time.sleep(2)
                 sys.exit()
-
 
         # cleaning before any running
         def pre_clean(self, run_error=''):
@@ -304,6 +334,67 @@ The default file path, if nothing is entered, is set to Program Files. Game data
                 print('---------------')
 
         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         # getting info
         def setup(self):
             # getting inputs
@@ -461,19 +552,6 @@ The default file path, if nothing is entered, is set to Program Files. Game data
                 try:
                     self.start = timeit.default_timer()
                     
-
-
-
-
-
-
-
-
-
-
-
-
-                    
                     # creating directory
                     print('---------------')
                     print('Update: Cleaning tmp...')
@@ -555,26 +633,6 @@ The default file path, if nothing is entered, is set to Program Files. Game data
                         print('!!! UPDATE ERROR: The installed directory does not exist. Cancelling.')
                         input('Enter anything to exit: ')
                         sys.exit()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                     # writing run path to text file (not used, not up to date)
