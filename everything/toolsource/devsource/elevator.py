@@ -16,6 +16,8 @@ import os
 class Path_tools:
     def __init__(self) -> None:
         self.app_data_path = os.environ['appData']
+        self.system_drive_path = os.environ['SystemDrive']
+        self.program_files_path = os.path.join(self.system_drive_path, '/Program Files')
 
     # this function converts the slashes in paths
     # specifically, it converts / to \\ and \\ to /
